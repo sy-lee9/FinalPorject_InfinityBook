@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class BookReportController {
+public class BookReportListController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 

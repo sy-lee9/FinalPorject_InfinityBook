@@ -1,5 +1,5 @@
 package kr.co.book.mypage.dto;
 
-public class BookReportDTO {
+public class BookReportListDTO {
 
 }
