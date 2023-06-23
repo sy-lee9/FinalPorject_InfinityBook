@@ -109,10 +109,14 @@
 					<div class="action-menu">
 							<div class="search-bar">
 								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
+									<button class="icon icon-search" form="search"></button>
 								</a>
-								<form role="search" method="get" class="search-box" action="/search.do">
-									<input class="search-field text search-input" placeholder="Search" type="search" name="search">
+								<form role="search" method="get" class="search-box" action="/search.do" id ="search">
+									<input class="search-field text search-input" placeholder="Search" type="search" name="Query">
+									<input type="radio" value="Keyword" name="QueryType" checked="checked">제목+저자
+									<input type="radio" value="Title" name="QueryType">제목
+									<input type="radio" value="Author" name="QueryType">저자
+									<input type="radio" value="Publisher" name="QueryType">출판사
 								</form>
 							</div>
 						</div>
@@ -1061,6 +1065,10 @@
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
+<script>
+
+
+</script>
 
 </body>
 </html>	

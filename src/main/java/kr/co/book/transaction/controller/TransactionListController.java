@@ -1,10 +1,12 @@
 package kr.co.book.transaction.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,14 +26,18 @@ public class TransactionListController {
 	
 	
 	@GetMapping(value = "/search.do")
-	public HashMap<String, String> search(@RequestParam String search) {
+	public String search(
+			String Query, String QueryType, Model model) {
 		
  // http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?
  // ttbkey=ttbtyhn00000921001&Query=안녕&QueryType=Keyword&
  // MaxResults=100&Start=1&Cover=Big&SearchTarget=Book&output=JS
  // &Version=20131101
 		
-		return service.bookSearch(search);
+		Map<String, Object> result = service.bookSearch(Query, QueryType);
+		model.addAttribute("result", result);
+		
+		return "BookSearchResult";
 		
 	}
 
