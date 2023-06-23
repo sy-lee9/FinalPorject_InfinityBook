@@ -27,7 +27,7 @@
 
 <body>
 
-<div id="header-wrap">
+<div id="header-wrap" class="show">
 	
 	<div class="top-content">
 		<div class="container">
@@ -37,20 +37,12 @@
 						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
 						<a href="alarm.go" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
 
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
+
 					</div><!--top-right-->
 				</div>				
 			</div>
 		</div>
+
 	</div><!--top-content-->
 
 	<header id="header">
@@ -117,7 +109,20 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-
+					<div class="action-menu">
+							<div class="search-bar">
+								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+									<button class="icon icon-search" form="search"></button>
+								</a>
+								<form role="search" method="get" class="search-box" action="/search.do" id ="search">
+									<input class="search-field text search-input" placeholder="Search" type="search" name="Query">
+									<input type="radio" value="Keyword" name="QueryType" checked="checked">제목+저자
+									<input type="radio" value="Title" name="QueryType">제목
+									<input type="radio" value="Author" name="QueryType">저자
+									<input type="radio" value="Publisher" name="QueryType">출판사
+								</form>
+							</div>
+						</div>
 				<button class="prev slick-arrow">
 					<i class="icon icon-arrow-left"></i>
 				</button>
@@ -1063,6 +1068,10 @@
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
+<script>
+
+
+</script>
 
 </body>
 </html>	
