@@ -1234,11 +1234,15 @@ img.post-image {
 
 /* - Search Form hover Effects
 ------------------------------------------------------------- */
-#header-wrap .action-menu {
+ .action-menu {
+  width:100%;
   display: inline-block;
   align-items: baseline;
+  padding-left: 100px;
 }
-#header-wrap .action-menu span.opennav.openicon {
+  
+}
+.action-menu span.opennav.openicon {
   cursor: pointer;
 }
 .action-menu .icon {
@@ -1250,32 +1254,32 @@ img.post-image {
 }
 .action-menu .search-bar,
 .action-menu .open-icon-wrap {
-  width: 40px;
+  width: 80%;
   height: 40px;
   background: #efeee8;
   border-radius: 40px;
   margin-right: 25px;
   display: flex;
-  justify-content: right;
   align-items: center;
   cursor: pointer;
   transition: 0.3s width cubic-bezier(0, 0.75, 0.49, 0.99);
 }
-#header-wrap .search-button {
+.search-button {
   order: 1;
   padding-right: 10px;
   padding-left: 10px;
   text-decoration: none;
   color: var(--body-text-color);
 }
-#header-wrap.show .search-bar {
-  width: 300px;
+.search-bar {
+ margin-top: 20px;
 }
-#header-wrap .search-bar form {
+.search-bar form {
   margin: 0;
+  width: 100%;
 }
-#header-wrap .search-box .search-input {
-  width: 250px;
+.search-box .search-input {
+  width: 75%;
   border: 0;
   margin-bottom: 0;
   font-weight: 300;
@@ -1302,12 +1306,13 @@ img.post-image {
   text-decoration: none;
 }
 
+/*
 @media screen and (max-width: 768px){
   .action-menu .search-bar {
-    margin-top: 20px;
-    width: 100%;
+
   }
 }
+*/
 
 /* - Main Navigation
 ------------------------------------------------------------- */

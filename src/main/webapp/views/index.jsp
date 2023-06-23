@@ -27,7 +27,7 @@
 
 <body>
 
-<div id="header-wrap">
+<div id="header-wrap" class="show">
 	
 	<div class="top-content">
 		<div class="container">
@@ -37,20 +37,12 @@
 						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
 						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
 
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
+
 					</div><!--top-right-->
 				</div>				
 			</div>
 		</div>
+
 	</div><!--top-content-->
 
 	<header id="header">
@@ -114,7 +106,16 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-
+					<div class="action-menu">
+							<div class="search-bar">
+								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+									<i class="icon icon-search"></i>
+								</a>
+								<form role="search" method="get" class="search-box" action="/search.do">
+									<input class="search-field text search-input" placeholder="Search" type="search" name="search">
+								</form>
+							</div>
+						</div>
 				<button class="prev slick-arrow">
 					<i class="icon icon-arrow-left"></i>
 				</button>
