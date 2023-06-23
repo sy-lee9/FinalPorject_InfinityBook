@@ -35,7 +35,7 @@
 				<div class="col-md-12">
 					<div class="right-element">
 						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
+						<a href="alarm.go" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
 
 						<div class="action-menu">
 							<div class="search-bar">
@@ -72,7 +72,8 @@
 								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">독서모임</a>
+									<a href="#business" class="nav-link" data-effect="Pages">독서모임</a>
+
 
 									<ul>
 								        <li class="active"><a href="index.move">Home</a></li>
@@ -108,6 +109,8 @@
 	</header>
 		
 </div><!--header-wrap-->
+
+<jsp:include page="ey/alarm.jsp"/>
 
 <section id="billboard">
 
