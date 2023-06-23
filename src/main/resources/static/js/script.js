@@ -61,7 +61,8 @@
     })
 
 
-    $('#header-wrap').on('click', '.search-toggle', function(e) {
+/*
+ 	$('#header-wrap').on('click', '.search-toggle', function(e) {
       var selector = $(this).data('selector');
 
       $(selector).toggleClass('show').find('.search-input').focus();
@@ -69,6 +70,8 @@
 
       e.preventDefault();
     });
+    
+   */
 
 
     // close when click off of container
