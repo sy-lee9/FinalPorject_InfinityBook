@@ -106,9 +106,9 @@
 				<h2 class="section-title">Tracker</h2>
 				
 				<div class="search-bar" style="float: right;">
-					<form action="tracker" role="search" method="get" class="search-box">
-						<input class="search-field text search-input" placeholder="Search" type="search">
-						<input type="submit" value="검색"/>
+					<form action="trackerSearch.do" role="search" method="get" class="search-box">
+						<input class="search-field text search-input" placeholder="Search" type="search" name="title">
+				<button><i class="icon icon-search"></i></button>
 					</form>
 				</div>
 			</div>
