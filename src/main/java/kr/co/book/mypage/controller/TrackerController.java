@@ -23,9 +23,9 @@ public class TrackerController {
 	}
 	
 	@RequestMapping(value = "/trackerSearch.do")
-	public ModelAndView trackerSearch(String title) {	
+	public ModelAndView trackerBookSearch(String title) {	
 		logger.info("title : "+title);
-		return TrackerService.search(title);
+		return TrackerService.trackerBookSearch(title);
 	}
 
 }
