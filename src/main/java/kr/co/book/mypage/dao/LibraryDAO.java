@@ -1,6 +1,7 @@
 package kr.co.book.mypage.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,5 +17,9 @@ public interface LibraryDAO {
 	 */
 	
 	ArrayList<LibraryDTO> list();
+
+	void write(HashMap<String, String> bookData);
+
+	int bookChk(String MEMBER_IDX, String LIBRARY_ISBN);
 
 }

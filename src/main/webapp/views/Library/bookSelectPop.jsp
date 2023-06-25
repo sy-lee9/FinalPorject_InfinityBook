@@ -51,20 +51,30 @@
 		
 		<c:if test="${books.size() > 0 }">
 			<c:forEach items="${books}" var="books">
+			<form id="bookSelectForm" action="libraryWrite.go" method="post"> 
 				<tr>
-					<td>
-						<img src="${books.image}" style="width:250px; height:200px;" alt="Books" class="product-item">	
+					<td>						
+						<img src="${books.image}" style="width:200px; height:200px;" alt="Books" class="product-item">	
 					</td>
 					<td>
 						<div class="item-price">${books.title}</div>
 						<div class="item-price">${books.author}</div>
 						<div class="item-price">${books.publisher}</div>
-						<div class="item-price">${books.discount} 원</div>
-						<div class="item-price">${books.isbn}</div>
-						<div class="item-price">${books.pubdate}</div>
-						<a href="#" class="btn-accent-arrow" style="margin-left: 350px;">Select <i class="icon icon-ns-arrow-right"></i></a>
 					</td>
-				</tr>		
+						
+						<input type="hidden" name="LIBRARY_TITLE" id="LIBRARY_TITLE" value="${books.title}">
+						<input type="hidden" name="LIBRARY_AUTHOR" id="LIBRARY_AUTHOR" value="${books.author}">
+						<input type="hidden" name="LIBRARY_PUBLISHER" id="LIBRARY_PUBLISHER" value="${books.publisher}">
+						<input type="hidden" name="LIBRARY_COVER" id="LIBRARY_COVER" value="${books.image}">
+						<input type="hidden" name="LIBRARY_PRICE" id="LIBRARY_PRICE" value="${books.discount}">
+						<input type="hidden" name="LIBRARY_ISBN" id="LIBRARY_ISBN" value="${books.isbn}">
+						<input type="hidden" name="LIBRARY_PUBDATE" id="LIBRARY_PUBDATE" value="${books.pubdate}">
+						<input type="hidden" name="LIBRARY_DESCRIPTION" id="LIBRARY_DESCRIPTION" value="${books.description}">
+					<td>
+						<input type="submit"value="등록"/>
+					</td>
+				</tr>
+			</form>		
 			</c:forEach>
 		</c:if>
 	</table>
@@ -74,10 +84,9 @@
 </body>
 
 <script>
-function sub(){
-	$('#form').submit();
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
 }
-
-console.log("${books}");
 </script>
 </html>

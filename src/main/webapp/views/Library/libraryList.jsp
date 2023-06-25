@@ -120,14 +120,14 @@
 			<div class="products-grid grid">
 				<figure class="product-style">
 					<div class="btn-wrap align-left">
-						
+						<a href="libraryWrite.go" >
 						<a href="#" onclick="window.open('/bookSelectPop.go?text=','Infinity_Book','width=800px,height=600px')">
-							<img src="/images/client-image5.png" style="width:180px; height:230px;"" alt="Books" class="product-item"><br/> &nbsp; &nbsp; &nbsp;&nbsp; 책 등록하기
+							<img src="/images/client-image5.png" style="width:230px; height:290px;"" alt="Books" class="product-item">
+							<figcaption> <h4>책 등록하기</h4> </figcaption>
 						</a> 
 					</div>
 				</figure>
 				<c:if test="${books.size() == 0 }">
-					<h3>검색 결과가 존재하지 않습니다. </h3>
 				</c:if>
 				<c:if test="${books.size() > 0 }">
 					<c:forEach items="${books}" var="books">
@@ -135,7 +135,7 @@
 							<img src="${books.LIBRARY_COVER}" alt="Books" class="product-item">
 							<figcaption>
 								<h4>${books.LIBRARY_TITLE}</h4>
-								<p>${books.LIBRARY_AUTHOR}</p>discount
+								<p>${books.LIBRARY_AUTHOR}</p>
 							</figcaption>
 						</figure>
 					</c:forEach>
@@ -288,4 +288,5 @@
 
 
 </body>
+
 </html>	

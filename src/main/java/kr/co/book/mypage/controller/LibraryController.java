@@ -2,6 +2,7 @@ package kr.co.book.mypage.controller;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -31,15 +33,16 @@ public class LibraryController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	
 	@RequestMapping("/libraryList.get")
 	public String libraryList(Model model) {
 		
 		ArrayList<LibraryDTO> books = libraryService.list();
-		logger.info("books"+books);
 		model.addAttribute("books",books);
 		
-		return "libraryList";
+		return "/Library/libraryList";
 	}
+	
 	
 	@RequestMapping("/bookSelectPop.go")
 	public String list(String text, Model model) {
@@ -93,7 +96,29 @@ public class LibraryController {
 			}
 			
 
-			return "bookSelectPop";
+			return "/Library/bookSelectPop";
 		}
+	
+	@RequestMapping("/libraryWrite.go")
+	  public String libraryWriteGo(@RequestParam HashMap<String, String> bookInfo, Model model) {
+		logger.info("선택 책 정보 : " + bookInfo);
+		int chk = libraryService.bookChk(bookInfo.get("MEMBER_IDX"),bookInfo.get("LIBRARY_ISBN"));
+		logger.info("chk : " + chk );
+		if (chk == 0) {
+			model.addAttribute("book", bookInfo);
+			return "/Library/libraryWrite";
+		}else {
+			model.addAttribute("msg","이미 등록된 책 입니다. ");
+			return "/Library/bookSelectPop";
+		}
+		
+	  }
+	
+	@RequestMapping("/libraryWrite.do")
+	  public String libraryWrite(@RequestParam HashMap<String, String> bookData) {
+		logger.info("작성 책 정보 : " + bookData);
+		libraryService.write(bookData);
+	    return "/Library/libraryDone";
+	  }
 	}
 	
