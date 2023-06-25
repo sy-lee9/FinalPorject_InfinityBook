@@ -15,6 +15,7 @@ public class AladinDTO {
 	private String query;
 	private String searchCategoryId;
 	private String searchCategoryName;
+	private String logo;
 	private List<TrackerDTO> item;	
 	
 	public String getTitle() {
@@ -88,6 +89,12 @@ public class AladinDTO {
 	}
 	public void setItem(List<TrackerDTO> item) {
 		this.item = item;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 
 }
