@@ -68,15 +68,15 @@
 
 
 									<ul>
-								        <li class="active"><a href="index.move">Home</a></li>
-								        <li><a href="about.move">About</a></li>
-								        <li><a href="styles.move">Styles</a></li>
-								        <li><a href="blog.move">Blog</a></li>
-								        <li><a href="single-post.move">Post Single</a></li>
-								        <li><a href="shop.move">Our Store</a></li>
-								        <li><a href="single-product.move">Product Single</a></li>
+								        <li class="active"><a href="index.move">대여/교환</a></li>
+								        <li><a href="about.move">감상문</a></li>
+								        <li><a href="styles.move">독서모임</a></li>
+								        <li><a href="blog.move">공지사항</a></li>
+								        <li><a href="single-post.move">이벤트</a></li>
+								        <li><a href="shop.move">마이페이지</a></li>
+								        <!-- <li><a href="single-product.move">Product Single</a></li>
 								        <li><a href="contact.move">Contact</a></li>
-								        <li><a href="thank-you.move">Thank You</a></li>
+								        <li><a href="thank-you.move">Thank You</a></li> -->
 								     </ul>
 
 								</li>
