@@ -65,8 +65,6 @@
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item has-sub">
 									<a href="#business" class="nav-link" data-effect="Pages">독서모임</a>
-
-
 									<ul>
 								        <li class="active"><a href="index.move">Home</a></li>
 								        <li><a href="about.move">About</a></li>

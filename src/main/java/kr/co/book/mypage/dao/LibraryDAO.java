@@ -22,4 +22,10 @@ public interface LibraryDAO {
 
 	int bookChk(String MEMBER_IDX, String LIBRARY_ISBN);
 
+	LibraryDTO detail(String LIBRARY_IDX);
+
+	void libraryDelete(String lIBRARY_IDX);
+
+	void libraryUpdate(HashMap<String, String> updateData);
+
 }
