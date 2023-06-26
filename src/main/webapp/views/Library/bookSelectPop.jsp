@@ -13,18 +13,21 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-
+	    
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-
+	    
 		<!-- script -->
-		<script src="/js/modernizr.js"></script>
-		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		
 	</head>
 
 <body style="margin:30px;">
@@ -33,51 +36,28 @@
 		<h3 style="display:inline"><span class="item"> Select Book </span></h3>
 		<br/><br/>
 	</div>
-	<form action="bookSelectPop.go" method="get" class="search-box" style="text-align:center;" id="form">
-		<select id="gamePlay">
-		  <option value="default">검색 방식</option>
-		  <option value="title">제목</option>
-		  <option value="author">저자</option>
-		  <option value="isbn">ISBN</option>
-		</select>
-		<input name="text" class="search-field text search-input" placeholder="검색어 입력" type="search">
-		<a href="#" onclick="sub()"><i class="icon icon-search"></i></a>
+	<form onsubmit="call()" class="search-box" style="text-align:center;" id="form">
+		
+		<input type="hidden" name=start value="1">
+		<input id="text" name="text" class="search-field text search-input" placeholder="제목 또는 글쓴이를 입력해주세요" type="search">
+		<a href="#" onclick="call()"><i class="icon icon-search"></i></a>
 	</form>
 	<table>
-		<c:if test="${books.size() == 0 }">
-			<h3>검색 결과가 존재하지 않습니다. </h3>
-			<tr colspan="2"></tr>
-		</c:if>
-		
-		<c:if test="${books.size() > 0 }">
-			<c:forEach items="${books}" var="books">
-			<form id="bookSelectForm" action="libraryWrite.go" method="post"> 
-				<tr>
-					<td>						
-						<img src="${books.image}" style="width:200px; height:200px;" alt="Books" class="product-item">	
-					</td>
-					<td>
-						<div class="item-price">${books.title}</div>
-						<div class="item-price">${books.author}</div>
-						<div class="item-price">${books.publisher}</div>
-					</td>
-						
-						<input type="hidden" name="LIBRARY_TITLE" id="LIBRARY_TITLE" value="${books.title}">
-						<input type="hidden" name="LIBRARY_AUTHOR" id="LIBRARY_AUTHOR" value="${books.author}">
-						<input type="hidden" name="LIBRARY_PUBLISHER" id="LIBRARY_PUBLISHER" value="${books.publisher}">
-						<input type="hidden" name="LIBRARY_COVER" id="LIBRARY_COVER" value="${books.image}">
-						<input type="hidden" name="LIBRARY_PRICE" id="LIBRARY_PRICE" value="${books.discount}">
-						<input type="hidden" name="LIBRARY_ISBN" id="LIBRARY_ISBN" value="${books.isbn}">
-						<input type="hidden" name="LIBRARY_PUBDATE" id="LIBRARY_PUBDATE" value="${books.pubdate}">
-						<input type="hidden" name="LIBRARY_DESCRIPTION" id="LIBRARY_DESCRIPTION" value="${books.description}">
-					<td>
-						<input type="submit"value="등록"/>
-					</td>
-				</tr>
-			</form>		
-			</c:forEach>
-		</c:if>
+	  <tbody id="list">
+	  
+	  </tbody>
+	  <tr>
+	    <th colspan="3" id="paging" >
+	      <div class="container" style="text-align:center; width: 600px;">
+	        <hr/>
+	        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+	          <ul class="pagination justify-content-center" id="pagination"></ul>
+	        </nav>
+	      </div>
+	    </th>
+	  </tr>
 	</table>
+
 
 
 	
@@ -88,5 +68,86 @@ var msg = "${msg}";
 if(msg != ""){
 	alert(msg);
 }
+
+var showPage = 1;
+var text = '';
+
+function call() {
+	text=$('#text').val();
+	listCall(showPage,text);
+}
+
+function listCall(page,text){
+	   $.ajax({
+	      type:'get',
+	      url:'bookSearch.ajax',
+	      data:{
+	    	  'text':text,
+	    	  'start':page
+	      },
+	      dataType:'json',           
+	      success:function(data){
+	         console.log(data);
+	         listPrint(data);
+	        	         
+	         $('#pagination').twbsPagination({
+				startPage:1, // 시작 페이지
+				totalPages:10,// 총 페이지 수 
+				visiblePages:5,// 보여줄 페이지
+				onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+					console.log(page,showPage);
+					if(page != showPage){
+						showPage=page;
+						listCall(page,text);
+						
+					}
+				}
+	         });
+	      }
+	   });
+	}
+
+	function listPrint(list){
+		var content ='';
+		
+		list.forEach(function(item,idx){
+			
+			content += '  <tr>';
+			content += '    <td>';
+			content += '      <img src="' + item.image + '" style="width:200px; height:200px;" alt="Books" class="product-item">';
+			content += '    </td>';
+			content += '    <td>';
+			content += '      <div class="item-price">' + item.title + '</div>';
+			content += '      <div class="item-price">' + item.author + '</div>';
+			content += '      <div class="item-price">' + item.publisher + '</div>';
+			content += '      <div class="item-price">' + item.pubdate + '</div>';
+			content += '    </td>';
+			content += '    <td>';
+			content += '		<form action="libraryWrite.go" method="post">';
+			content += '      		<input type="hidden" name="LIBRARY_TITLE"value="' + item.title + '">';
+			content += '      		<input type="hidden" name="LIBRARY_AUTHOR"value="' + item.author + '">';
+			content += '      		<input type="hidden" name="LIBRARY_PUBLISHER" value="' + item.publisher + '">';
+			content += '      		<input type="hidden" name="LIBRARY_COVER" value="' + item.image + '">';
+			content += '      		<input type="hidden" name="LIBRARY_PRICE"  value="' + item.discount + '">';
+			content += '      		<input type="hidden" name="LIBRARY_ISBN"  value="' + item.isbn + '">';
+			content += '      		<input type="hidden" name="LIBRARY_PUBDATE"  value="' + item.pubdate + '">';
+			content += '      		<input type="hidden" name="LIBRARY_DESCRIPTION"  value="' + item.description + '">';
+			content += '      	<input type="submit" value="등록">';
+			content += '    </td>';
+			content += '  </tr>';
+			content += '</form>';
+
+		});
+		
+		$('#list').html(content);
+		
+		
+		console.log(content);
+	}
+
+
+
+
+
 </script>
 </html>

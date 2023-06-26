@@ -13,16 +13,13 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-		
-		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
 
 		<!-- script -->
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 		<script src="/js/modernizr.js"></script>
 		<script src="/js/jquery-1.11.0.min.js"></script>
 		<script src="/js/plugins.js"></script>
@@ -102,59 +99,60 @@
 			<div class="col-md-12">			
 				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
 				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="index.move"> My Book</a> / </span></h3>
-					<h3 style="display:inline"><span class="item"> WishList</span></h3>
+					<h3 style="display:inline"><span class="item">My Book</span></h3>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
-<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;">
+<section id="best-selling" class="leaf-pattern-overlay">
+	<div class="corner-pattern-overlay"></div>
 	<div class="container">
-		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="active tab">전체</li>
-			  <li data-tab-target="#business" class="tab">대여 가능</li>
-			  <li data-tab-target="#technology" class="tab">교환 가능</li>
-			  <li data-tab-target="#adventure" class="tab">소장</li>		
-		</ul>
-		
-		<div class="row" id="list">
-			<%-- <div class="products-grid grid">
-				<figure class="product-style">
-					<input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">
-					<a href="#" onclick="window.open('/bookSelectPop.go?start=1&text=','Infinity_Book','width=800px,height=600px')">
-						<img src="/images/client-image5.png" style="width:230px; height:290px;"" alt="Books" class="product-item">
-						<figcaption> <h4>책 등록하기</h4> </figcaption>
-					</a> 
-				</figure>
-				<c:if test="${books.size() == 0 }">
-				</c:if>
-				<c:if test="${books.size() > 0 }">
-					<c:forEach items="${books}" var="books">
-						
-							<figure class="product-style" style="text-align:center;">
-								<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${books.LIBRARY_USE}">
-								<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><img src="${books.LIBRARY_COVER}" alt="Books" class="product-item"></a>
-								<figcaption>
-									<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><h4 class="item-price">${books.LIBRARY_TITLE}</h4></a>
-									<p class="item-price">${books.LIBRARY_AUTHOR}</p>
-								</figcaption>
-							</figure>
-						</a>
-					</c:forEach>
-				</c:if>
-			</div> --%>
-	    </div>
-	    
-	    <div id="paging" style="text-align:center;">  
-			<div class="container">         
-				<nav aria-label="Page navigation">
-					<ul class="pagination justify-content-center" id="pagination"></ul>
-				</nav>
-			</div>
-		</div>
-	    
+		<table>
+			<tr>
+				<th rowspan="3" style="width: 40%;">
+					<img src="${book.LIBRARY_COVER}" alt="book" class="single-image">
+				</th>
+				<th rowspan="3" style="width: 5%;">
+					
+				</th>
+				<td style="width: 55%;">
+					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.LIBRARY_USE}">
+					
+					<table>
+						<tr>
+							<th colspan="3"><h3 class="item-title">${book.LIBRARY_TITLE}</h3></th>
+						</tr>
+						<tr>
+							<td><h4 class="author-name">By. ${book.LIBRARY_AUTHOR}</h4></td>
+							<td><div class="author-name">${book.LIBRARY_PUBLISHER}</div></td>
+							<td><div class="author-name">${book.LIBRARY_PUBDATE}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name">${book.LIBRARY_INFO}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<h4 class="item-title">Review</h4>
+								후기 1<br/>
+								후기 2<br/>
+								후기 3<br/>
+								후기 4<br/>
+								후기 5<br/>
+							</td>
+						</tr>
+						<tr>
+							<th colspan="3" style="text-align: left;">
+								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
+								<input type="button" onclick="location.href='libraryUpdate.go?LIBRARY_IDX='+${book.LIBRARY_IDX}" value="수정"> 
+								<input type="button" onclick="location.href='library.delete?LIBRARY_IDX='+${book.LIBRARY_IDX}" value="삭제">
+							</th>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	
 	</div>
 </section>
 
@@ -299,86 +297,5 @@
 
 
 </body>
-
-<script>
-	var showPage = 1;
-	listCall(showPage);
-	
-	function listCall(page){
-		   $.ajax({
-		      type:'post',
-		      url:'LibaryList.ajax',
-		      data:{
-		    	  'page':page,
-		      },
-		      dataType:'json',           
-		      success:function(data){
-		         console.log(data);
-		         listPrint(data.list);
-		         
-		         $('#pagination').twbsPagination({
-					startPage:1, // 시작 페이지
-					totalPages:data.pages,// 총 페이지 수 
-					visiblePages:5,// 보여줄 페이지
-					onPageClick:function(event,page){ 
-						console.log(page,showPage);
-						if(page != showPage){
-							showPage=page;
-							listCall(page);
-							
-						}
-					}
-		         });
-		      }
-		   });
-		}
-
-		function listPrint(list){
-			var content ='';
-			
-			list.forEach(function(item,idx){
-				
-				
-				content += '<tr>';
-				content += '<td id="gamePlay">' + item.gamePlay + ':' + item.gamePlay + '</td>';
-				content += '<td>' + item.gu + '</td>';
-				content += '<td id="gamePlayer">' + item.matchingNumforSure + '/' + item.matchingNum + '</td>';
-				content += '<td id="subject" style="text-align:left; padding-left:30px;"><a href="detail.go?matchingIdx=' + item.matchingIdx + '">' + item.subject + '</a></td>';
-				content += '<td>' + item.gameDate + '</td>';
-				content += '<td id="writerId"><a href="#" onclick="window.open(\'../userprofilepop.go?userId=' + item.writerId + '\',\'회원프로필\',\'width=400px,height=600px\')">' + item.writerId + '</a></td>';
-				content += '<td>' + item.bHit + '</td>';
-				content += '</tr>';
-				content += '<div class="products-grid grid">';
-				content += '<figure class="product-style">';
-				content += '<input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-				content += '<a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-				content += '<img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-				content += '<figcaption> <h4>책 등록하기</h4> </figcaption>';
-				content += '</a>';
-				content += '</figure>';
-				content += '<c:if test="${books.size() == 0 }">';
-				content += '</c:if>';
-				content += '<c:if test="${books.size() > 0 }">';
-				content += '<c:forEach items="${books}" var="books">';
-				content += '<figure class="product-style" style="text-align:center;">';
-				content += '<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${books.LIBRARY_USE}">';
-				content += '<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><img src="${books.LIBRARY_COVER}" alt="Books" class="product-item"></a>';
-				content += '<figcaption>';
-				content += '<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><h4 class="item-price">${books.LIBRARY_TITLE}</h4></a>';
-				content += '<p class="item-price">${books.LIBRARY_AUTHOR}</p>';
-				content += '</figcaption>';
-				content += '</figure>';
-				content += '</a>';
-				content += '</c:forEach>';
-				content += '</c:if>';
-				content += '</div>';
-
-				
-			});
-			$('#list').empty();
-			$('#list').append(content);
-		}
-
-</script>
 
 </html>	

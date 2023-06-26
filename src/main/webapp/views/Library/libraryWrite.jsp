@@ -49,7 +49,7 @@
 				<tr>
 					<td>
 						<select name="LIBRARY_USE">
-						  <option value="default">책의 용도</option>
+						  <option value="소장">책의 용도</option>
 						  <option value="소장">소장</option>
 						  <option value="대여">대여 가능</option>
 						  <option value="교환">교환 가능</option>
@@ -65,7 +65,7 @@
 						<div class="item-price"><h3>${book.LIBRARY_TITLE}</h3></div>
 						<div class="item-price"><h4>${book.LIBRARY_AUTHOR}</h4></div>
 						<div class="item-price"><h4>${book.LIBRARY_PUBLISHER}</h4></div>
-						<div class="item-price">${book.LIBRARY_DESCRIPTION}</div>
+						<div class="author-name">${book.LIBRARY_PUBDATE}</div>
 					</td>
 				</tr>
 				<tr>

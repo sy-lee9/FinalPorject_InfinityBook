@@ -69,12 +69,17 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
+								<li class="menu-item active"><a href="#home" data-effect="Home">책장</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item has-sub"><a href="#pages" class="nav-link" data-effect="Pages">독서모임</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
+								<li class="menu-item has-sub"><a href="#business" class="nav-link" data-effect="Pages">트래커</a></li>
+								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
+									<ul>
+								        <li class="active"><a href="index.move">회원정보</a></li>
+								        <li><a href="about.move">활동내역</a></li>
+								     </ul>
+								</li>
 							</ul>
 
 							<div class="hamburger">
@@ -93,31 +98,28 @@
 	</header>
 		
 </div><!--header-wrap-->
-
-<section id="popular-books" class="bookshelf">
+<section class="padding-large">
 	<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-
+		<div class="row">
+		
 			<div class="section-header align-center">
-				<div class="title">
-					<span></span>
-				</div>
 				<h2 class="section-title">Tracker</h2>
-				
-				<div class="search-bar" style="float: right;">
-					<form action="trackerSearch.do" role="search" method="get" class="search-box">
-						<input class="search-field text search-input" placeholder="Search" type="search" name="title">
-				<button><i class="icon icon-search"></i></button>
-					</form>
-				</div>
 			</div>
-			
-			<br/>
-			<br/>
-			<div class="tab-content">
-			  	<div class="row">
-					<c:if test="${list.size() == 0}">
+				<div class="search-bar" style="width: 300px; display: inline;">
+					<form action="trackerSearch.do" role="search" method="get" class="search-box">
+						<select name="searchType">
+							<option value="Title" >제목</option>
+							<option value="Author">저자</option>
+							<option value="Title">ISBN</option>
+						</select>
+						<input class="search-field text search-input" placeholder="Search" type="search" name="searchValue" style="width: 300px;">
+						<input type="submit" value="검색"/>
+					</form>
+				</div>			
+				<br>
+				<br>
+				<div class="products-grid grid">
+					<c:if test="${search eq false}">
 						<h3>검색 결과가 존재하지 않습니다. </h3>
 					</c:if>
 					
@@ -125,9 +127,11 @@
 						<c:if test="${status.index==2}"> 
 							<c:forEach var="book" items="${item.value}" varStatus="status">
 								<figure class="product-style">
-									<img src="${book.cover}" class="product-item">
+									<a href="trackerBookDetail.go"><img src="${book.cover}" class="product-item"></a>
+									<button onclick="window.open('trackerAddReadBook.go?','완독','width=500px,height=400px')" class="add-to-cart" style="width:70px; font-size: 13px; background-color: lightgrey; color:black;">완독!</button>
+									<button onclick="window.open('trackerAddReadingBook.go?','읽는 중','width=800px,height=400px')" class="add-to-cart" style="width:70px; font-size: 13px; margin-left: 80px;  background-color: lightgrey; color:black;">읽는 중!</button>
 									<figcaption>
-										<h3>${book.title}</h3>
+										<h3 style="font-size: 17; font-weight: 600;">${book.title}</h3>
 										<p>${book.author}</p>
 										<p>ISBN : ${book.isbn13}</p>
 									</figcaption>
@@ -135,14 +139,12 @@
 							</c:forEach>
 						</c:if>	
 					</c:forEach>
-		    	 </div>
-			  </div>
+		    	</div>
 
-		</div><!--inner-tabs-->
-			
 		</div>
 	</div>
 </section>
+
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">

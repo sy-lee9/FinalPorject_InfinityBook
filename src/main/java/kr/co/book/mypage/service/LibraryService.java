@@ -32,5 +32,17 @@ public class LibraryService {
 		
 		return libraryDAO.bookChk(MEMBER_IDX,LIBRARY_ISBN);
 	}
+
+	public LibraryDTO detail(String LIBRARY_IDX) {
+		return libraryDAO.detail(LIBRARY_IDX);
+	}
+
+	public void libraryDelete(String LIBRARY_IDX) {
+		libraryDAO.libraryDelete(LIBRARY_IDX);
+	}
+
+	public void update(HashMap<String, String> updateData) {
+		libraryDAO.libraryUpdate(updateData);
+	}
 	 
 }
