@@ -35,8 +35,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
+					<div class="right-element">						
+						<!-- <a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a> -->
 						<a href="alarm.go" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
 
 						<div class="action-menu">

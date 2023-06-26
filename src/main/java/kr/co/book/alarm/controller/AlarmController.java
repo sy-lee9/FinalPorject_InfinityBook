@@ -22,11 +22,7 @@ public class AlarmController {
 		return "ey/alarm_test";
 	}
 	
-	@RequestMapping(value="/")
-	public String main() {
-		logger.info("main으로 이동");
-		return "index";
-	}
+	
 	
 //	@PostMapping(value = "/reply.ajax")
 //	public 
