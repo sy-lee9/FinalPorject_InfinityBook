@@ -22,10 +22,61 @@ public class TrackerController {
 		return "/tracker/trackerSearch";
 	}
 	
-	@RequestMapping(value = "/trackerSearch.do")
-	public ModelAndView trackerSearch(String title) {	
-		logger.info("title : "+title);
-		return TrackerService.search(title);
+	@GetMapping(value = "/trackerSearch.do")
+	public ModelAndView trackerBookSearch(String searchType, String searchValue) {	
+		logger.info("searchType : {} / searchValue : {}",searchType,searchValue);
+		return TrackerService.trackerBookSearch(searchType,searchValue);
 	}
+	
+	@GetMapping(value = "/trackerAddReadBook.go")
+	public String trackerAddReadBook() {		
+		return "/tracker/trackerAddReadBook";
+	}
+	
+	@GetMapping(value = "/trackerAddReadingBook.go")
+	public String trackerAddReadingBook() {		
+		return "/tracker/trackerAddReadingBook";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

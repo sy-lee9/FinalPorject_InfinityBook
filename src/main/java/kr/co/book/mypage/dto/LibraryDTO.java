@@ -5,6 +5,7 @@ import java.sql.Date;
 import org.apache.ibatis.type.Alias;
 
 @Alias("library")
+
 public class LibraryDTO {
 	/*
 	 * LIBRARY_IDX,MEMBER_IDX,LIBRARY_ISBN,LIBRARY_TITLE,LIBRARY_COVER,

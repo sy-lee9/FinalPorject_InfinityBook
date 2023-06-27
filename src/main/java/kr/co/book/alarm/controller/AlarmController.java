@@ -22,25 +22,13 @@ public class AlarmController {
 		return "ey/alarm_test";
 	}
 	
+
 	@RequestMapping(value="/alarmCheck.go")
 	public String alarmCheck() {
 		logger.info("alarm으로 이동");
 		return "ey/alarm";
 	}
-	
-	
-	@RequestMapping(value="/")
-	public String main() {
-		logger.info("main으로 이동");
-		return "index";
-	}
-	
-	@RequestMapping(value="/login")
-	public String login() {
-		logger.info("main으로 이동");
-		return "redirect:/";
-	}
-	
+
 //	@PostMapping(value = "/reply.ajax")
 //	public 
 	

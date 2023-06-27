@@ -99,51 +99,60 @@
 			<div class="col-md-12">			
 				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
 				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="index.move"> My Book</a> / </span></h3>
-					<h3 style="display:inline"><span class="item"> WishList</span></h3>
+					<h3 style="display:inline"><span class="item">My Book</span></h3>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
-<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;">
+<section id="best-selling" class="leaf-pattern-overlay">
+	<div class="corner-pattern-overlay"></div>
 	<div class="container">
-		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="active tab">전체</li>
-			  <li data-tab-target="#business" class="tab">대여 가능</li>
-			  <li data-tab-target="#technology" class="tab">교환 가능</li>
-			  <li data-tab-target="#adventure" class="tab">소장</li>		
-		</ul>
-		
-		<div class="row">
-			<div class="products-grid grid">
-				<figure class="product-style">
-					<div class="btn-wrap align-left">
-						
-						<a href="#" onclick="window.open('/bookSelectPop.go?text=','Infinity_Book','width=800px,height=600px')">
-							<img src="/images/client-image5.png" style="width:180px; height:230px;"" alt="Books" class="product-item"><br/> &nbsp; &nbsp; &nbsp;&nbsp; 책 등록하기
-						</a> 
-					</div>
-				</figure>
-				<c:if test="${books.size() == 0 }">
-					<h3>검색 결과가 존재하지 않습니다. </h3>
-				</c:if>
-				<c:if test="${books.size() > 0 }">
-					<c:forEach items="${books}" var="books">
-						<figure class="product-style">
-							<img src="${books.LIBRARY_COVER}" alt="Books" class="product-item">
-							<figcaption>
-								<h4>${books.LIBRARY_TITLE}</h4>
-								<p>${books.LIBRARY_AUTHOR}</p>discount
-							</figcaption>
-						</figure>
-					</c:forEach>
-				</c:if>
-			</div>
-
-
-	    </div>
+		<table>
+			<tr>
+				<th rowspan="3" style="width: 40%;">
+					<img src="${book.LIBRARY_COVER}" alt="book" class="single-image">
+				</th>
+				<th rowspan="3" style="width: 5%;">
+					
+				</th>
+				<td style="width: 55%;">
+					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.LIBRARY_USE}">
+					
+					<table>
+						<tr>
+							<th colspan="3"><h3 class="item-title">${book.LIBRARY_TITLE}</h3></th>
+						</tr>
+						<tr>
+							<td><h4 class="author-name">By. ${book.LIBRARY_AUTHOR}</h4></td>
+							<td><div class="author-name">${book.LIBRARY_PUBLISHER}</div></td>
+							<td><div class="author-name">${book.LIBRARY_PUBDATE}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name">${book.LIBRARY_INFO}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<h4 class="item-title">Review</h4>
+								후기 1<br/>
+								후기 2<br/>
+								후기 3<br/>
+								후기 4<br/>
+								후기 5<br/>
+							</td>
+						</tr>
+						<tr>
+							<th colspan="3" style="text-align: left;">
+								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
+								<input type="button" onclick="location.href='libraryUpdate.go?LIBRARY_IDX='+${book.LIBRARY_IDX}" value="수정"> 
+								<input type="button" onclick="location.href='library.delete?LIBRARY_IDX='+${book.LIBRARY_IDX}" value="삭제">
+							</th>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	
 	</div>
 </section>
 
@@ -288,4 +297,5 @@
 
 
 </body>
+
 </html>	
