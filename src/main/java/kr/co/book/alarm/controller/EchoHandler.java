@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -34,7 +37,7 @@ public class EchoHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("Socket 연결");
 		sessions.add(session);
-		logger.info(sendPushUsername(session));				//현재 접속한 사람의 username이 출력됨
+		logger.info("현재 접속한 사람의 user name: "+sendPushUsername(session));	//현재 접속한 사람의 username이 출력됨
 		String senderId = sendPushUsername(session);
 		userSessionMap.put(senderId, session);
 	}
@@ -59,6 +62,8 @@ public class EchoHandler extends TextWebSocketHandler{
 				
 				TextMessage textMsg = new TextMessage("최은영님이 알람을 보냄: " + msg);
 				sendedPushSession.sendMessage(textMsg);
+				
+				//textMsg를 받고 그걸 html로 div에 찍는걸 gnb에 넣어줘
 				
 				//부모댓글
 //				if ("reply".equals(pushCategory) && sendedPushSession != null) {
@@ -92,13 +97,18 @@ public class EchoHandler extends TextWebSocketHandler{
 	private String sendPushUsername(WebSocketSession session) {
 		String loginUsername;
 		
-		logger.info("유저 정보: " + session.getPrincipal());
-		
-		if (session.getPrincipal() == null) {
-			loginUsername = null;
-		} else {
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        User user = (User) authentication.getPrincipal();
+//		
+//		logger.info("알림을 보내는 유저 정보: " + user);
+//		
+//		
+//		if (user == null) {
+//			loginUsername = null;
+//		} else {
 			loginUsername = session.getPrincipal().getName();
-		}
+//		}
 		return loginUsername;
 	}
 }

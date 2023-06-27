@@ -5,6 +5,7 @@ var socket = null;
 $(document).ready(function(){
 	//소켓 연결
 	connectWs();
+	
 });
 
 function connectWs(){
@@ -37,15 +38,19 @@ function connectWs(){
 
 /* 부모댓글 등록 */	
 $('#replyAddBtn').on('click', function(){
-console.log("댓글달기 알림-녕");
+console.log("댓글달기 알림-alarm.js");
 	//웹 소켓의 알림 메시지에 필요한 정보들
 	var replyForm = $('#replyForm').val();
-	var param = { "replyForm" : replyForm};
+	//var param = { "replyForm" : replyForm};
 	
 	if (socket){
 					alert('소켓에 메세지를 보냈습니다: ' + replyForm);
 					let socketMsg = "replyForm," + replyForm;
 					socket.send(socketMsg);
+					let $socketAlert = $('#socketAlert');
+        //EchoHandler에서 설정한 메세지 넣어줌
+		$socketAlert.html(replyForm)
+				
 			}
 
 /*

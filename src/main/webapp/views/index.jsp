@@ -64,7 +64,7 @@
 								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item has-sub">
-									<a href="#business" class="nav-link" data-effect="Pages">독서모임</a>
+									<a href="clubInsert.go" class="nav-link" data-effect="Pages">독서모임</a>
 
 
 									<ul>
@@ -102,7 +102,6 @@
 		
 </div><!--header-wrap-->
 
-<jsp:include page="ey/alarm.jsp"/>
 
 <section id="billboard">
 
