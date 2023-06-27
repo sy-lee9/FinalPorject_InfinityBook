@@ -1,7 +1,10 @@
 package kr.co.book.mypage.service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.catalina.util.URLEncoder;
@@ -60,11 +63,7 @@ public class TrackerService {
     		logger.info("resp : "+resp);
     		
     		mav.addObject("list", resp);
-    		
-    	}
-		
-        
-        
+    		}    		
 		return mav;
 	}
     

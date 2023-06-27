@@ -7,8 +7,8 @@
 	
 		<!-- Datetimepicker 라이브러리 불러오기 -->
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<title>Infinite B∞k</title>
 		<meta charset="utf-8">
@@ -45,16 +45,20 @@ table{
 <body>
 	<h3>읽은 책 추가</h3>
 	<hr>
-	<table>
-		<tr>
-			<th>독서 시작일</th>
-			<td><input type="text" name="startDate" id="startDate"  placeholder="독서 시작일" style="width:120px; margin-top: 20px;"></td>
-		</tr>
-		<tr>
-			<th>독서 종료일</th>
-			<td><input type="text" name="endDate" id="endDate"  placeholder="독서 종료일" style="width:120px; margin-top: 20px;"></td>
-		</tr>
-	</table>
+	<form action="trackerAddReadBook.do">
+		<input type="text" name="ISBN" value="${ISBN}">
+		<table>
+			<tr>
+				<th>독서 시작일</th>
+				<td><input type="text" name="startDate" id="startDate"  placeholder="독서 시작일" style="width:120px; margin-top: 20px;"></td>
+			</tr>
+			<tr>
+				<th>독서 종료일</th>
+				<td><input type="text" name="endDate" id="endDate"  placeholder="독서 종료일" style="width:120px; margin-top: 20px;"></td>
+			</tr>
+		</table>
+		<button>저장</button>
+	</form>
 </body>
 <script>
 

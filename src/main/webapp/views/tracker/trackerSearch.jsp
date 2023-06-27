@@ -126,9 +126,14 @@
 					<c:forEach var="item" items="${list}" varStatus="status">
 						<c:if test="${status.index==2}"> 
 							<c:forEach var="book" items="${item.value}" varStatus="status">
+								<input type="text" name="publisher" value="${book.publisher}">
+								<input type="text" name="description" value="${book.description}">
+								<input type="text" name="pubdate" value="${book.pubdate}">
+								<input type="text" name="category" value="${book.categoryName}">
+								<input type="text" name="totalpage" value="${book.itemPage}">
 								<figure class="product-style">
 									<a href="trackerBookDetail.go"><img src="${book.cover}" class="product-item"></a>
-									<button onclick="window.open('trackerAddReadBook.go?','완독','width=500px,height=400px')" class="add-to-cart" style="width:70px; font-size: 13px; background-color: lightgrey; color:black;">완독!</button>
+									<button onclick="addReadBook(${book.isbn13})" class="add-to-cart" style="width:70px; font-size: 13px; background-color: lightgrey; color:black;">완독!</button>
 									<button onclick="window.open('trackerAddReadingBook.go?','읽는 중','width=800px,height=400px')" class="add-to-cart" style="width:70px; font-size: 13px; margin-left: 80px;  background-color: lightgrey; color:black;">읽는 중!</button>
 									<figcaption>
 										<h3 style="font-size: 17; font-weight: 600;">${book.title}</h3>
@@ -172,4 +177,10 @@
 <script src="/js/script.js"></script>
 
 </body>
+<script>
+	function addReadBook(ISBN) {
+		console.log(ISBN);
+		window.open('trackerAddReadBook.go?ISBN='+ISBN+'','완독','width=500px,height=400px');
+	};
+</script>
 </html>	
