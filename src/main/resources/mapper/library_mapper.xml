@@ -4,10 +4,13 @@
 
 <mapper namespace="kr.co.book.mypage.dao.LibraryDAO">
 	
-	<select id="list" resultType="library">
-		SELECT LIBRARY_IDX, LIBRARY_TITLE,LIBRARY_COVER,LIBRARY_AUTHOR,LIBRARY_PUBLISHER,LIBRARY_SHARESTATE,LIBRARY_USE FROM LIBRARY WHERE MEMBER_IDX=1 AND LIBRARY_BLIND=0 ORDER BY LIBRARY_REG_DATE DESC
+	<select id="totalLibraryList" resultType="int">
+		SELECT COUNT(LIBRARY_IDX) FROM LIBRARY WHERE MEMBER_IDX=1 AND LIBRARY_BLIND=0 ORDER BY LIBRARY_REG_DATE DESC
 	</select>
-
+	 	
+	<select id="libraryList" resultType="library">
+		SELECT LIBRARY_IDX, LIBRARY_TITLE,LIBRARY_COVER,LIBRARY_AUTHOR,LIBRARY_PUBLISHER,LIBRARY_SHARESTATE,LIBRARY_USE FROM LIBRARY WHERE MEMBER_IDX=1 AND LIBRARY_BLIND=0 ORDER BY LIBRARY_REG_DATE DESC LIMIT 9 OFFSET #{offset}
+	</select>
 
 	<insert id="write" parameterType="hashmap">
 		
@@ -17,7 +20,13 @@
 	</insert>
 
 	<select id="bookChk" resultType="Integer">
-		SELECT COUNT(MEMBER_IDX) FROM library WHERE MEMBER_IDX=1 and LIBRARY_BLIND = 0 AND LIBRARY_ISBN =#{param2} 
+		SELECT COUNT(MEMBER_IDX) FROM library WHERE MEMBER_IDX=1 and LIBRARY_BLIND = 0 AND LIBRARY_USE NOT IN ('위시') AND LIBRARY_ISBN =#{param1} 
+	</select>
+	
+	
+	
+	<select id="wishChk" resultType="Integer">
+		SELECT COUNT(MEMBER_IDX) FROM library WHERE MEMBER_IDX=1 and LIBRARY_BLIND = 0 AND LIBRARY_USE='위시' AND LIBRARY_ISBN =#{param1} 
 	</select>
 	
 	<select id="detail" resultType="library">

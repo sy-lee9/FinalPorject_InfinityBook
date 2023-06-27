@@ -62,15 +62,14 @@
 						<img src="${book.LIBRARY_COVER}" style="width:200px; height:200px;" alt="Books" class="product-item">	
 					</td>
 					<td>
-						<div class="item-price"><h3>${book.LIBRARY_TITLE}</h3></div>
+						<div class="item-price" style="width:400px;"><h3>${book.LIBRARY_TITLE}</h3></div>
 						<div class="item-price"><h4>${book.LIBRARY_AUTHOR}</h4></div>
 						<div class="item-price"><h4>${book.LIBRARY_PUBLISHER}</h4></div>
-						<div class="author-name">${book.LIBRARY_PUBDATE}</div>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align:center;">
-						<input type="text" name="LIBRARY_INFO" id="LIBRARY_INFO" style="width:800px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. ">
+						<input type="text" name="LIBRARY_INFO" id="LIBRARY_INFO" style="width:600px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. ">
 						<input type="submit"value="등록"/>
 					</td>
 				</tr>
