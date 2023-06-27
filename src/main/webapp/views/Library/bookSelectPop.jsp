@@ -117,22 +117,23 @@ function listCall(page,text){
 			content += '      <img src="' + item.image + '" style="width:200px; height:200px;" alt="Books" class="product-item">';
 			content += '    </td>';
 			content += '    <td>';
-			content += '      <div class="item-price" style="width:400px;">' + item.title + '</div>';
+			content += '      <div class="item-price" style="width:500px;">' + item.title + '</div>';
 			content += '      <div class="item-price">' + item.author + '</div>';
 			content += '      <div class="item-price">' + item.publisher + '</div>';
 			content += '      <div class="item-price">' + item.pubdate + '</div>';
 			content += '    </td>';
 			content += '    <td>';
-			content += '		<form action="libraryWrite.go" method="post">';
-			content += '      		<input type="hidden" name="LIBRARY_TITLE"value="' + item.title + '">';
-			content += '      		<input type="hidden" name="LIBRARY_AUTHOR"value="' + item.author + '">';
-			content += '      		<input type="hidden" name="LIBRARY_PUBLISHER" value="' + item.publisher + '">';
-			content += '      		<input type="hidden" name="LIBRARY_COVER" value="' + item.image + '">';
-			content += '      		<input type="hidden" name="LIBRARY_PRICE"  value="' + item.discount + '">';
-			content += '      		<input type="hidden" name="LIBRARY_ISBN"  value="' + item.isbn + '">';
-			content += '      		<input type="hidden" name="LIBRARY_PUBDATE"  value="' + item.pubdate + '">';
-			content += '      		<input type="hidden" name="LIBRARY_DESCRIPTION"  value="' + item.description + '">';
-			content += '      	<input type="submit" value="등록">';
+			content += '		<form  method="post" name="bookForm">';
+			content += '      		<input type="hidden" name="library_title" id="library_title" value="' + item.title + '">';
+			content += '      		<input type="hidden" name="library_author" id="library_author" value="' + item.author + '">';
+			content += '      		<input type="hidden" name="library_publisher" id="library_publisher" value="' + item.publisher + '">';
+			content += '      		<input type="hidden" name="library_cover" id="library_cover" value="' + item.image + '">';
+			content += '      		<input type="hidden" name="library_price" id="library_price"  value="' + item.discount + '">';
+			content += '      		<input type="hidden" name="library_isbn" id="library_isbn"  value="' + item.isbn + '">';
+			content += '      		<input type="hidden" name="library_pubdate"  id="library_pubdate" value="' + item.pubdate + '">';
+			content += '      		<input type="hidden" name="library_description"  id="library_description" value="' + item.description + '">';
+			content += '      	<input type="submit" formaction="libraryWrite.go" value="등록"><br/>';
+			content += '      <input type="button" onclick="wishRegistAjax(this)" value="위시">';
 			content += '    </td>';
 			content += '  </tr>';
 			content += '</form>';
@@ -144,6 +145,27 @@ function listCall(page,text){
 		
 		console.log(content);
 	}
+	
+
+	function wishRegistAjax(button) {
+		  var form = button.closest("form");
+		  var formData = new FormData(form);
+
+		  // AJAX 요청을 보내는 코드 작성
+		  // 예를 들어, jQuery를 사용하여 AJAX 요청을 보낼 경우:
+		  $.ajax({
+		    url: "wishRegist.ajax",
+		    type: "POST",
+		    data: formData,
+		    processData: false,
+		    contentType: false,
+		    success: function(data) {
+		    	alert(data.msg);
+		       console.log(data);
+		    }
+		  });
+		}
+
 
 
 

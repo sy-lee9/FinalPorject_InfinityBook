@@ -3,42 +3,93 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.book.mypage.dao.LibraryDAO">
-	
+	<!-- int totalLibraryWishList();
+
+	ArrayList<LibraryDTO> libraryWishList(int offset);
+	 -->
+	 
 	<select id="totalLibraryList" resultType="int">
-		SELECT COUNT(LIBRARY_IDX) FROM LIBRARY WHERE MEMBER_IDX=1 AND LIBRARY_BLIND=0 ORDER BY LIBRARY_REG_DATE DESC
+		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 ORDER BY library_reg_date DESC
+	</select>
+	
+	<select id="totalLibraryRentList" resultType="int">
+		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '대여') ORDER BY library_reg_date DESC
+	</select>
+	
+	<select id="totalLibraryChangeList" resultType="int">
+		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '교환')  ORDER BY library_reg_date DESC
+	</select>
+	
+	<select id="totalLibraryOwnList" resultType="int">
+		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use = '소장' ORDER BY library_reg_date DESC
+	</select>
+	
+	<select id="totalLibraryWishList" resultType="int">
+		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use = '위시' ORDER BY library_reg_date DESC
 	</select>
 	 	
 	<select id="libraryList" resultType="library">
-		SELECT LIBRARY_IDX, LIBRARY_TITLE,LIBRARY_COVER,LIBRARY_AUTHOR,LIBRARY_PUBLISHER,LIBRARY_SHARESTATE,LIBRARY_USE FROM LIBRARY WHERE MEMBER_IDX=1 AND LIBRARY_BLIND=0 ORDER BY LIBRARY_REG_DATE DESC LIMIT 9 OFFSET #{offset}
+		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_sharestate=0 ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
 	</select>
-
+	
+	<select id="libraryRentList" resultType="library">
+		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '대여') ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+	</select>
+	
+	<select id="libraryChangeList" resultType="library">
+		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '교환') ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+	</select>
+	
+	<select id="libraryOwnList" resultType="library">
+		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use='소장' ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+	</select>
+	
+	<select id="libraryWishList" resultType="library">
+		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use='위시' ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+	</select>
+	
 	<insert id="write" parameterType="hashmap">
 		
-		INSERT INTO library(MEMBER_IDX,LIBRARY_ISBN,LIBRARY_TITLE,LIBRARY_COVER,LIBRARY_AUTHOR,LIBRARY_PRICE,LIBRARY_PUBLISHER,LIBRARY_DESCRIPTION,LIBRARY_PUBDATE,LIBRARY_INFO,LIBRARY_USE,LIBRARY_SHARESTATE,LIBRARY_BLIND,LIBRARY_REG_DATE) 
-		VALUES(#{MEMBER_IDX},#{LIBRARY_ISBN},#{LIBRARY_TITLE},#{LIBRARY_COVER},#{LIBRARY_AUTHOR},#{LIBRARY_PRICE},#{LIBRARY_PUBLISHER},#{LIBRARY_DESCRIPTION},#{LIBRARY_PUBDATE},#{LIBRARY_INFO},#{LIBRARY_USE},0,0,now());
+		INSERT INTO library(member_idx,library_isbn,library_title,library_cover,library_author,library_price,library_publisher,library_description,library_pubdate,library_info,library_use,library_sharestate,library_blind,library_reg_date) 
+		VALUES(#{member_idx},#{library_isbn},#{library_title},#{library_cover},#{library_author},#{library_price},#{library_publisher},#{library_description},#{library_pubdate},#{library_info},#{library_use},0,0,now());
+		
+	</insert>
+	
+	
+	<insert id="wishRegist" parameterType="hashmap">
+		
+		INSERT INTO library(member_idx,library_isbn,library_title,library_cover,library_author,library_price,library_publisher,library_description,library_pubdate,library_use,library_sharestate,library_blind,library_reg_date) 
+		VALUES(#{member_idx},#{library_isbn},#{library_title},#{library_cover},#{library_author},#{library_price},#{library_publisher},#{library_description},#{library_pubdate},'위시',0,0,now());
 		
 	</insert>
 
 	<select id="bookChk" resultType="Integer">
-		SELECT COUNT(MEMBER_IDX) FROM library WHERE MEMBER_IDX=1 and LIBRARY_BLIND = 0 AND LIBRARY_USE NOT IN ('위시') AND LIBRARY_ISBN =#{param1} 
+		SELECT COUNT(member_idx) FROM library WHERE member_idx=#{param2} and library_blind = 0 AND library_use NOT IN ('위시') AND library_isbn =#{param1} 
 	</select>
 	
-	
-	
 	<select id="wishChk" resultType="Integer">
-		SELECT COUNT(MEMBER_IDX) FROM library WHERE MEMBER_IDX=1 and LIBRARY_BLIND = 0 AND LIBRARY_USE='위시' AND LIBRARY_ISBN =#{param1} 
+		SELECT COUNT(member_idx) FROM library WHERE member_idx=#{param2} and library_blind = 0 AND library_use='위시' AND library_isbn =#{param1} 
 	</select>
 	
 	<select id="detail" resultType="library">
-		SELECT * FROM library WHERE LIBRARY_IDX=#{LIBRARY_IDX}
+		SELECT * FROM library WHERE library_idx=#{library_idx}
 	</select>
 	
 	<update id="libraryDelete">
-		UPDATE library SET LIBRARY_BLIND=1 WHERE LIBRARY_IDX = #{param1}
+		UPDATE library SET library_blind=1 WHERE library_idx = #{param1}
+	</update>
+	
+	<update id="libraryWishDelete">
+		UPDATE library SET library_blind=1 WHERE library_isbn = #{param1} AND member_idx=#{param2}
 	</update>
 	
 	<update id="libraryUpdate" parameterType="hashmap">
-		UPDATE library SET LIBRARY_USE=#{LIBRARY_USE}, LIBRARY_INFO=#{LIBRARY_INFO} WHERE  LIBRARY_IDX = #{LIBRARY_IDX}
+		UPDATE library SET library_use=#{library_use}, library_INFO=#{library_info} WHERE  library_idx = #{library_idx}
+	</update>
+	
+	<!-- int deleteLibrary(String library_idx,member_idx); -->
+	<update id="deleteLibrary">
+		UPDATE library SET library_blind=1 WHERE  library_idx = #{param1} AND member_idx=#{param2}
 	</update>
 	
 </mapper>

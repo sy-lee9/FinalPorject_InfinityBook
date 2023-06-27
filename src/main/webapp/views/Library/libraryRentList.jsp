@@ -62,7 +62,7 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="/"><img src="/images/bklogo.png" style="width:200px;height:60px;"alt="logo"></a>
+						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
@@ -101,7 +101,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">			
-				<h3 class="page-title" style="margin-top: 25px;"> Library </h3>
+				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
 				<div class="breadcrumbs">
 					<h3 style="display:inline"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
 					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryLendList.get">Lend List</a></span></h3>
@@ -113,14 +113,14 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
-	
 		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
+			  <li data-tab-target="#all-genre" class="tab"><a href="/libraryList.get">전체</a></li>
+			  <li data-tab-target="#business" class="active tab"><a href="/libraryRentList.get">대여</a></li>
 			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
 			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
+			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
+			
 		</ul>
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
@@ -292,7 +292,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'libaryList.ajax',
+		      url:'libaryRentList.ajax',
 		      data:{
 		    	  'page':page,
 		      },
@@ -331,7 +331,7 @@
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
 	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
+	    content += '      <figcaption> <h4>책 등록하기</h4> </figcaption>';
 	    content += '    </a>';
 	    content += '  </figure>';
 
@@ -344,8 +344,8 @@
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
+	        content += '  <a href="BookDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
@@ -362,7 +362,7 @@
 	    $('#list').empty();
 		$('#list').append(content);
 	}
-
+	
 	$('#all').click(function(e){
 		   var $chk = $('input[type="checkbox"]');
 		   console.log($chk);
@@ -373,6 +373,7 @@
 		   }
 		});
 	
+
 	function del(){
 	    
 	    var checkArr = [];
