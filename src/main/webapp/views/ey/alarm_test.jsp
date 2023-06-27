@@ -124,6 +124,12 @@
 
 	<input id="replyForm"></input>
 	<button id="replyAddBtn">댓글달기</button>
+	
+	<div id="socketAlertDiv">
+	<div id="socketAlert" class="alert alert-warning" role="alert"></div>
+</div>
+	
+	<a href="alarmCheck.go">알림 확인하기</a>
 
 	<!-- 본문 -->
 

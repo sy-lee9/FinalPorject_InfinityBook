@@ -22,8 +22,13 @@ public class AlarmController {
 		return "ey/alarm_test";
 	}
 	
-	
-	
+
+	@RequestMapping(value="/alarmCheck.go")
+	public String alarmCheck() {
+		logger.info("alarm으로 이동");
+		return "ey/alarm";
+	}
+
 //	@PostMapping(value = "/reply.ajax")
 //	public 
 	
