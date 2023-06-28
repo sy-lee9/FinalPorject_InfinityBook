@@ -32,31 +32,10 @@ public interface LibraryDAO {
 	
 	void libraryUpdate(HashMap<String, String> updateData);
 
-	int totalLibraryList(String member_idx);
+	int totalLibraryList(String member_idx, String type);
 	
-	ArrayList<LibraryDTO> libraryList(String member_idx,int offset);
-	
-	int totalLibraryRentList(String member_idx);
-	
-	ArrayList<LibraryDTO> libraryRentList(String member_idx,int offset);
-	
-	int totalLibraryChangeList(String member_idx);
-	
-	ArrayList<LibraryDTO> libraryChangeList(String member_idx,int offset);
-	
-	int totalLibraryOwnList(String member_idx);
-	
-	ArrayList<LibraryDTO> libraryOwnList(String member_idx,int offset);
-	
-	int totalLibraryWishList(String member_idx);
-
-	ArrayList<LibraryDTO> libraryWishList(String member_idx, int offset);
-
-	
-	
-	
-	
-	
+	ArrayList<LibraryDTO> libraryList(String member_idx,int offset, String type);
+		
 	void wishRegist(HashMap<String, String> bookInfo);
 
 	int deleteLibrary(String library_idx,String member_idx);
