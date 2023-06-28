@@ -103,8 +103,8 @@
 			<div class="col-md-12">			
 				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
 				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
-					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryWishList.get">WishList</a></span></h3>
+					<h3 style="display:inline; color:gray;"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
+					<h3 style="display:inline"><span class="item"> <a href="/libraryWishList.get">WishList</a></span></h3>
 				</div>
 			</div>
 		</div>
@@ -114,11 +114,11 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
 		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
+			  <li data-tab-target="#all-genre" class="tab"><a href="/libraryList.get">전체</a></li>
 			  <li data-tab-target="#business" class="tab"><a href="">대여</a></li>
 			  <li data-tab-target="#technology" class="tab"><a href="">교환</a></li>
 			  <li data-tab-target="#adventure" class="tab"><a href="">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
+			  <li data-tab-target="#business" class="active tab"><a href="/libraryWishList.get">위시</a></li>	
 		</ul>
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
@@ -327,9 +327,9 @@
 	    content += '<div id="products-grid" class="products-grid grid">';
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
+	    content += '    <a href="#" onclick="window.open(\'/wishSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h4>책 등록하기</h4> </figcaption>';
+	    content += '      <figcaption> <h4>책 찾아 보기</h4> </figcaption>';
 	    content += '    </a>';
 	    content += '  </figure>';
 
@@ -342,15 +342,15 @@
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
+	        content += '  <a href="BookDetail.go?LIBRARY_IDX=' + item.library_IDX + '">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_USE + '">';
-	        content += '  <a href="libraryDetail.go?LIBRARY_IDX=' + item.library_IDX + '">';
 	        content += '    <img src="' + item.library_COVER + '" alt="Books" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
 	        content += '    <a href="libraryDetail.go?LIBRARY_IDX=' + item.library_IDX + '">';
-	        content += '      <h>' + item.library_TITLE + '</h4>';
+	        content += '      <h4>' + item.library_TITLE + '</h4>';
 	        content += '    </a>';
-	        content += '    <p class="item-price">' + item.library_AUTHOR + '</p>';
+	        content += '    <p>' + item.library_AUTHOR + '</p>';
 	        content += '  </figcaption>';
 	        content += '</figure>';
 	    });

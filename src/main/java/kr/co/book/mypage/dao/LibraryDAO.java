@@ -20,12 +20,20 @@ public interface LibraryDAO {
 
 	void write(HashMap<String, String> bookData);
 
-	int bookChk(String MEMBER_IDX, String LIBRARY_ISBN);
+	int bookChk(String LIBRARY_ISBN);
+	
+	int wishChk(String LIBRARY_ISBN);
 
 	LibraryDTO detail(String LIBRARY_IDX);
 
 	void libraryDelete(String lIBRARY_IDX);
 
 	void libraryUpdate(HashMap<String, String> updateData);
+
+	ArrayList<LibraryDTO> libraryList(int offset);
+
+	int totalLibraryList();
+
+	
 
 }

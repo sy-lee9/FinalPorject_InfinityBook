@@ -123,7 +123,7 @@ function listCall(page,text){
 			content += '      <div class="item-price">' + item.pubdate + '</div>';
 			content += '    </td>';
 			content += '    <td>';
-			content += '		<form action="libraryWrite.go" method="post">';
+			content += '		<form action="wishRegist.go" method="post">';
 			content += '      		<input type="hidden" name="LIBRARY_TITLE"value="' + item.title + '">';
 			content += '      		<input type="hidden" name="LIBRARY_AUTHOR"value="' + item.author + '">';
 			content += '      		<input type="hidden" name="LIBRARY_PUBLISHER" value="' + item.publisher + '">';
