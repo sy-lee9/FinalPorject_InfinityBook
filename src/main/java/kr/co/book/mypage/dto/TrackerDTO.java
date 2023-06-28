@@ -2,11 +2,21 @@ package kr.co.book.mypage.dto;
 
 public class TrackerDTO {
 
+	private String isbn;
 	private String title;
 	private String cover;
 	private String author;
-	private String isbn13;
+	private String publisher;
+	private String description;
+	private String pubdate;
+	private int totalPage;
 	
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -25,11 +35,29 @@ public class TrackerDTO {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public String getIsbn13() {
-		return isbn13;
+	public String getPublisher() {
+		return publisher;
 	}
-	public void setIsbn13(String isbn13) {
-		this.isbn13 = isbn13;
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getPubdate() {
+		return pubdate;
+	}
+	public void setPubdate(String pubdate) {
+		this.pubdate = pubdate;
+	}
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
 	}
 
 }
