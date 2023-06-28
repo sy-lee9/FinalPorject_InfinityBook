@@ -7,7 +7,20 @@
 	<select id="bookInfoChk" resultType="int">
 		SELECT COUNT(isbn) FROM book WHERE isbn = #{param1}
 	</select>
+	
+	<insert id="saveBook" parameterType="TrackerDTO">
+		INSERT INTO book(isbn,title,cover,author,publisher,description,pubdate,totalPage,reg_member_idx,reg_screen)
+			VALUES(#{isbn},#{title},#{cover},#{author},#{publisher},#{description},#{pubdate},#{totalPage},#{loginIdx},#{jsp})
+	</insert>
 
+	 <insert id="saveTracker" parameterType="HashMap">
+		INSERT INTO tracker(member_idx,isbn,tracker_readpage,tracker_startdate,tracker_enddate,reg_member_idx,reg_screen)
+			VALUES(#{loginIdx},#{isbn},(SELECT totalPage FROM book WHERE isbn = #{isbn}),#{startDate},#{endDate},#{loginIdx},#{jsp})
+	</insert>
+	
+	<select id="TrackerDAO" resultType="int">
+		SELECT totalpage FROM book WHERE isbn = #{param1}
+	</select>
 
 
 

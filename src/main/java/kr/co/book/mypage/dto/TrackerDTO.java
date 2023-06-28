@@ -10,6 +10,8 @@ public class TrackerDTO {
 	private String description;
 	private String pubdate;
 	private int totalPage;
+	private String jsp;
+	private int loginIdx;
 	
 	public String getIsbn() {
 		return isbn;
@@ -58,6 +60,18 @@ public class TrackerDTO {
 	}
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
+	}
+	public String getJsp() {
+		return jsp;
+	}
+	public void setJsp(String jsp) {
+		this.jsp = jsp;
+	}
+	public int getLoginIdx() {
+		return loginIdx;
+	}
+	public void setLoginIdx(int loginIdx) {
+		this.loginIdx = loginIdx;
 	}
 
 }
