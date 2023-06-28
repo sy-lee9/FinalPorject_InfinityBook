@@ -113,14 +113,14 @@
 		<table>
 			<tr>
 				<th rowspan="3" style="width: 250px;">
-					<img src="${book.LIBRARY_COVER}" alt="book" class="single-image">
+					<img src="${book.library_cover}" alt="book" class="single-image">
 				</th>
 				<th rowspan="3" style="width: 5%;">
 					
 				</th>
 				<th style="width: 400px;">
-					<select name="LIBRARY_USE">
-						  <option value="${book.LIBRARY_USE}">${book.LIBRARY_USE}</option>
+					<select name="library_use">
+						  <option value="${book.library_use}">${book.library_use}</option>
 						  <option value="소장">소장</option>
 						  <option value="대여">대여 가능</option>
 						  <option value="교환">교환 가능</option>
@@ -128,25 +128,25 @@
 					</select>
 					<table>
 						<tr>
-							<th colspan="3"><h3 class="item-title">${book.LIBRARY_TITLE}</h3></th>
+							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
 						</tr>
 						<tr>
-							<td><h4 class="author-name">By. ${book.LIBRARY_AUTHOR}</h4></td>
-							<td><div class="author-name">${book.LIBRARY_PUBLISHER}</div></td>
-							<td><div class="author-name">${book.LIBRARY_PUBDATE}</div></td>
+							<td><h4 class="author-name">By. ${book.library_author}</h4></td>
+							<td><div class="author-name">${book.library_publisher}</div></td>
+							<td><div class="author-name">${book.library_pubdate}</div></td>
 						</tr>
 						<tr>
-							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name"><input type="text" name ="LIBRARY_INFO" style="width:800px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. " value="${book.LIBRARY_INFO}"/></div></td>
+							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name"><input type="text" name ="library_info" style="width:800px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. " value="${book.library_info}"/></div></td>
 						</tr>
 						<tr>
 							<td colspan="3">
-								<input type="hidden" name="LIBRARY_IDX" value="${book.LIBRARY_IDX}">
+								<input type="hidden" name="library_idx" value="${book.library_idx}">
 							</td>
 						</tr>
 						<tr>
 							<th colspan="3" style="text-align: right;">
 								<input type="submit" value="수정"> 
-								<input type="button" onclick="location.href='libraryDetail.go?LIBRARY_IDX='+${book.LIBRARY_IDX}" value="취소">
+								<input type="button" onclick="location.href='libraryDetail.go?library_idx='+${book.library_idx}" value="취소">
 							</th>
 						</tr>
 					</table>

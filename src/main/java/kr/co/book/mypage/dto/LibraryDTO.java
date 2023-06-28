@@ -8,118 +8,116 @@ import org.apache.ibatis.type.Alias;
 
 public class LibraryDTO {
 	/*
-	 * LIBRARY_IDX,MEMBER_IDX,LIBRARY_ISBN,LIBRARY_TITLE,LIBRARY_COVER,
-	 * LIBRARY_AUTHOR,
-	 * LIBRARY_PRICE,LIBRARY_PUBLISHER,LIBRARY_DESCRIPTION,LIBRARY_PUBDATE,
-	 * LIBRARY_INFO, LIBRARY_USE,LIBRARY_SHARESTATE,LIBRARY_BLIND,LIBRARY_REG_DATE
+	 * library_idx,member_idx,library_isbn,library_title,library_cover,
+	 * library_author,
+	 * library_price,library_publisher,library_description,library_pubdate,
+	 * library_info, library_use,library_sharestate,library_blind,library_reg_date
 	 */
 	
-	private int LIBRARY_IDX;
-	private int MEMBER_IDX;
-	private long LIBRARY_ISBN;
-	private String  LIBRARY_TITLE;
-	private String  LIBRARY_COVER;
-	private String LIBRARY_AUTHOR;
-	private int LIBRARY_PRICE;
-	private String LIBRARY_PUBLISHER;
-	private String LIBRARY_DESCRIPTION;
-	private Date LIBRARY_PUBDATE;
-	private String LIBRARY_INFO;
-	private String LIBRARY_USE;
-	private boolean LIBRARY_SHARESTATE;
-	private boolean LIBRARY_BLIND;
-	private Date LIBRARY_REG_DATE;
-	
-	
-	public int getLIBRARY_IDX() {
-		return LIBRARY_IDX;
+	private int library_idx;
+	private int member_idx;
+	private long library_isbn;
+	private String  library_title;
+	private String  library_cover;
+	private String library_author;
+	private int library_price;
+	private String library_publisher;
+	private String library_description;
+	private Date library_pubdate;
+	private String library_info;
+	private String library_use;
+	private boolean library_sharestate;
+	private boolean library_blind;
+	private Date library_reg_date;
+	public int getLibrary_idx() {
+		return library_idx;
 	}
-	public void setLIBRARY_IDX(int lIBRARY_IDX) {
-		LIBRARY_IDX = lIBRARY_IDX;
+	public void setLibrary_idx(int library_idx) {
+		this.library_idx = library_idx;
 	}
-	public int getMEMBER_IDX() {
-		return MEMBER_IDX;
+	public int getMember_idx() {
+		return member_idx;
 	}
-	public void setMEMBER_IDX(int mEMBER_IDX) {
-		MEMBER_IDX = mEMBER_IDX;
+	public void setMember_idx(int member_idx) {
+		this.member_idx = member_idx;
 	}
-	public long getLIBRARY_ISBN() {
-		return LIBRARY_ISBN;
+	public long getLibrary_isbn() {
+		return library_isbn;
 	}
-	public void setLIBRARY_ISBN(long lIBRARY_ISBN) {
-		LIBRARY_ISBN = lIBRARY_ISBN;
+	public void setLibrary_isbn(long library_isbn) {
+		this.library_isbn = library_isbn;
 	}
-	public String getLIBRARY_TITLE() {
-		return LIBRARY_TITLE;
+	public String getLibrary_title() {
+		return library_title;
 	}
-	public void setLIBRARY_TITLE(String lIBRARY_TITLE) {
-		LIBRARY_TITLE = lIBRARY_TITLE;
+	public void setLibrary_title(String library_title) {
+		this.library_title = library_title;
 	}
-	public String getLIBRARY_COVER() {
-		return LIBRARY_COVER;
+	public String getLibrary_cover() {
+		return library_cover;
 	}
-	public void setLIBRARY_COVER(String lIBRARY_COVER) {
-		LIBRARY_COVER = lIBRARY_COVER;
+	public void setLibrary_cover(String library_cover) {
+		this.library_cover = library_cover;
 	}
-	public String getLIBRARY_AUTHOR() {
-		return LIBRARY_AUTHOR;
+	public String getLibrary_author() {
+		return library_author;
 	}
-	public void setLIBRARY_AUTHOR(String lIBRARY_AUTHOR) {
-		LIBRARY_AUTHOR = lIBRARY_AUTHOR;
+	public void setLibrary_author(String library_author) {
+		this.library_author = library_author;
 	}
-	public int getLIBRARY_PRICE() {
-		return LIBRARY_PRICE;
+	public int getLibrary_price() {
+		return library_price;
 	}
-	public void setLIBRARY_PRICE(int lIBRARY_PRICE) {
-		LIBRARY_PRICE = lIBRARY_PRICE;
+	public void setLibrary_price(int library_price) {
+		this.library_price = library_price;
 	}
-	public String getLIBRARY_PUBLISHER() {
-		return LIBRARY_PUBLISHER;
+	public String getLibrary_publisher() {
+		return library_publisher;
 	}
-	public void setLIBRARY_PUBLISHER(String lIBRARY_PUBLISHER) {
-		LIBRARY_PUBLISHER = lIBRARY_PUBLISHER;
+	public void setLibrary_publisher(String library_publisher) {
+		this.library_publisher = library_publisher;
 	}
-	public String getLIBRARY_DESCRIPTION() {
-		return LIBRARY_DESCRIPTION;
+	public String getLibrary_description() {
+		return library_description;
 	}
-	public void setLIBRARY_DESCRIPTION(String lIBRARY_DESCRIPTION) {
-		LIBRARY_DESCRIPTION = lIBRARY_DESCRIPTION;
+	public void setLibrary_description(String library_description) {
+		this.library_description = library_description;
 	}
-	public Date getLIBRARY_PUBDATE() {
-		return LIBRARY_PUBDATE;
+	public Date getLibrary_pubdate() {
+		return library_pubdate;
 	}
-	public void setLIBRARY_PUBDATE(Date lIBRARY_PUBDATE) {
-		LIBRARY_PUBDATE = lIBRARY_PUBDATE;
+	public void setLibrary_pubdate(Date library_pubdate) {
+		this.library_pubdate = library_pubdate;
 	}
-	public String getLIBRARY_INFO() {
-		return LIBRARY_INFO;
+	public String getLibrary_info() {
+		return library_info;
 	}
-	public void setLIBRARY_INFO(String lIBRARY_INFO) {
-		LIBRARY_INFO = lIBRARY_INFO;
+	public void setLibrary_info(String library_info) {
+		this.library_info = library_info;
 	}
-	public String getLIBRARY_USE() {
-		return LIBRARY_USE;
+	public String getLibrary_use() {
+		return library_use;
 	}
-	public void setLIBRARY_USE(String lIBRARY_USE) {
-		LIBRARY_USE = lIBRARY_USE;
+	public void setLibrary_use(String library_use) {
+		this.library_use = library_use;
 	}
-	public boolean isLIBRARY_SHARESTATE() {
-		return LIBRARY_SHARESTATE;
+	public boolean isLibrary_sharestate() {
+		return library_sharestate;
 	}
-	public void setLIBRARY_SHARESTATE(boolean lIBRARY_SHARESTATE) {
-		LIBRARY_SHARESTATE = lIBRARY_SHARESTATE;
+	public void setLibrary_sharestate(boolean library_sharestate) {
+		this.library_sharestate = library_sharestate;
 	}
-	public boolean isLIBRARY_BLIND() {
-		return LIBRARY_BLIND;
+	public boolean isLibrary_blind() {
+		return library_blind;
 	}
-	public void setLIBRARY_BLIND(boolean lIBRARY_BLIND) {
-		LIBRARY_BLIND = lIBRARY_BLIND;
+	public void setLibrary_blind(boolean library_blind) {
+		this.library_blind = library_blind;
 	}
-	public Date getLIBRARY_REG_DATE() {
-		return LIBRARY_REG_DATE;
+	public Date getLibrary_reg_date() {
+		return library_reg_date;
 	}
-	public void setLIBRARY_REG_DATE(Date lIBRARY_REG_DATE) {
-		LIBRARY_REG_DATE = lIBRARY_REG_DATE;
+	public void setLibrary_reg_date(Date library_reg_date) {
+		this.library_reg_date = library_reg_date;
 	}
 	
 	

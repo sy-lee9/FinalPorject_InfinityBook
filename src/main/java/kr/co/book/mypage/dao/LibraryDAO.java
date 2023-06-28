@@ -10,29 +10,35 @@ import kr.co.book.mypage.dto.LibraryDTO;
 @Mapper
 public interface LibraryDAO {
 	/*
-	 * LIBRARY_IDX,MEMBER_IDX,LIBRARY_ISBN,LIBRARY_TITLE,LIBRARY_COVER,
-	 * LIBRARY_AUTHOR,
-	 * LIBRARY_PRICE,LIBRARY_PUBLISHER,LIBRARY_DESCRIPTION,LIBRARY_PUBDATE,
-	 * LIBRARY_INFO, LIBRARY_USE,LIBRARY_SHARESTATE,LIBRARY_BLIND,LIBRARY_REG_DATE
+	 * library_idx,member_idx,library_isbn,library_title,library_cover,
+	 * library_author,
+	 * library_price,library_publisher,library_description,library_pubdate,
+	 * library_info, library_use,library_sharestate,library_blind,library_reg_date
 	 */
 	
 	ArrayList<LibraryDTO> list();
 
 	void write(HashMap<String, String> bookData);
 
-	int bookChk(String LIBRARY_ISBN);
+	int bookChk(String library_isbn, String member_idx);
 	
-	int wishChk(String LIBRARY_ISBN);
+	int wishChk(String library_isbn, String member_idx);
 
-	LibraryDTO detail(String LIBRARY_IDX);
+	LibraryDTO detail(String library_idx);
 
-	void libraryDelete(String lIBRARY_IDX);
-
+	void libraryDelete(String library_idx);
+	
+	void libraryWishDelete(String library_isbn, String member_idx);
+	
 	void libraryUpdate(HashMap<String, String> updateData);
 
-	ArrayList<LibraryDTO> libraryList(int offset);
+	int totalLibraryList(String member_idx, String type);
+	
+	ArrayList<LibraryDTO> libraryList(String member_idx,int offset, String type);
+		
+	void wishRegist(HashMap<String, String> bookInfo);
 
-	int totalLibraryList();
+	int deleteLibrary(String library_idx,String member_idx);
 
 	
 

@@ -117,8 +117,8 @@
 			  <li data-tab-target="#all-genre" class="tab"><a href="/libraryList.get">전체</a></li>
 			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
 			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
-			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="active tab"><a href="/libraryWishList.get">위시</a></li>
+			  <li data-tab-target="#adventure" class="active tab"><a href="/libraryOwnList.get">소장</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 			
 		</ul>
@@ -292,7 +292,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'libaryWishList.ajax',
+		      url:'libaryOwnList.ajax',
 		      data:{
 		    	  'page':page,
 		      },
@@ -344,12 +344,12 @@
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="bookDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '  <a href="BookDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
 	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
-	        content += '    <a href="bookDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
 	        content += '    </br><h>' + item.library_author + '</h>';
 	        content += '    </a>';

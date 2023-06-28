@@ -62,7 +62,7 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/bklogo.png" style="width:200px;height:60px;"alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
@@ -104,7 +104,7 @@
 				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
 				<div class="breadcrumbs">
 					<h3 style="display:inline"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
-					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryWishList.get">WishList</a></span></h3>
+					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryLendList.get">Lend List</a></span></h3>
 				</div>
 			</div>
 		</div>
@@ -113,12 +113,14 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
+	
 		<ul class="tabs">
 			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="">대여</a></li>
-			  <li data-tab-target="#technology" class="tab"><a href="">교환</a></li>
-			  <li data-tab-target="#adventure" class="tab"><a href="">소장</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
+			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
+			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
 			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
+			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 		</ul>
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
@@ -329,7 +331,7 @@
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
 	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h4>책 등록하기</h4> </figcaption>';
+	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
 	    content += '    </a>';
 	    content += '  </figure>';
 
@@ -342,15 +344,15 @@
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_USE + '">';
-	        content += '  <a href="libraryDetail.go?LIBRARY_IDX=' + item.library_IDX + '">';
-	        content += '    <img src="' + item.library_COVER + '" alt="Books" class="product-item">';
+	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
+	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
-	        content += '    <a href="libraryDetail.go?LIBRARY_IDX=' + item.library_IDX + '">';
-	        content += '      <h>' + item.library_TITLE + '</h4>';
+	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
+	        content += '    </br><h>' + item.library_author + '</h>';
 	        content += '    </a>';
-	        content += '    <p class="item-price">' + item.library_AUTHOR + '</p>';
 	        content += '  </figcaption>';
 	        content += '</figure>';
 	    });
@@ -361,7 +363,49 @@
 		$('#list').append(content);
 	}
 
-
+	$('#all').click(function(e){
+		   var $chk = $('input[type="checkbox"]');
+		   console.log($chk);
+		   if($(this).is(':checked')){
+		      $chk.prop('checked',true);
+		   }else{
+		      $chk.prop('checked',false);
+		   }
+		});
+	
+	function del(){
+	    
+	    var checkArr = [];
+	    
+	    // checkbox에 value를 지정하지 않으먄 스스로를 on으로 지정한다. 
+	    $('input[type="checkbox"]:checked').each(function(idx,item){
+	      if($(this).val() != 'on'){
+	         checkArr.push($(this).val());
+	      }
+	       
+	    });
+	    
+	    console.log(checkArr);
+	    
+	   $.ajax({
+	      type:'get',
+	      url:'deleteLibrary.ajax',
+	      data:{'delList':checkArr},
+	      dataType:'json',
+	      success:function(data){
+	         console.log(data);
+	         if(data.success){
+	            alert(data.msg);
+	            
+	            listCall(showPage);
+	         }
+	      },
+	      error:function(e){
+	         console.log(e);
+	      }
+	   });
+	   
+	}
 </script>
 
 </html>	
