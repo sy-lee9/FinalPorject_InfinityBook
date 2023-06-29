@@ -13,17 +13,21 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-
+	    
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-
+	    
 		<!-- script -->
-		<script src="/js/modernizr.js"></script>
-		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
+		
 	</head>
 
 <body>
@@ -58,20 +62,20 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/bklogo.png" style="width:200px;height:60px;"alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">일정</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">보증금</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내 정보</a>
+									<a href="#pages" class="nav-link">내 정보</a>
 									<ul>
 								        <li class="active"><a href="index.move">회원 정보</a></li>
 								        <li><a href="about.move">활동 내역</a></li>
@@ -97,64 +101,55 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title">Library</h2>
+				<h2 class="section-title">Deposit</h2>
 			</div>
 		</div>
 	</div>
 </section>
 
-
-<section id="best-selling" class="leaf-pattern-overlay">
-	<div class="corner-pattern-overlay"></div>
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
-	
-	<form action="libraryUpdate.do" method="get">
-		<table>
-			<tr>
-				<th rowspan="3" style="width: 250px;">
-					<img src="${book.library_cover}" alt="book" class="single-image">
-				</th>
-				<th rowspan="3" style="width: 5%;">
-					
-				</th>
-				<th style="width: 400px;">
-					<select name="library_use">
-						  <option value="${book.library_use}">${book.library_use}</option>
-						  <option value="소장">소장</option>
-						  <option value="대여">대여 가능</option>
-						  <option value="교환">교환 가능</option>
-						  <option value="대여교환">대여/교환 가능</option>
-					</select>
-					<table>
-						<tr>
-							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
-						</tr>
-						<tr>
-							<td><h4 class="author-name">By. ${book.library_author}</h4></td>
-							<td><div class="author-name">${book.library_publisher}</div></td>
-							<td><div class="author-name">${book.library_pubdate}</div></td>
-						</tr>
-						<tr>
-							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name"><input type="text" name ="library_info" style="width:800px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. " value="${book.library_info}"/></div></td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<input type="hidden" name="library_idx" value="${book.library_idx}">
-							</td>
-						</tr>
-						<tr>
-							<th colspan="3" style="text-align: right;">
-								<input type="submit" value="수정"> 
-								<input type="button" onclick="location.href='libraryDetail.go?library_idx='+${book.library_idx}" value="취소">
-							</th>
-						</tr>
-					</table>
-				</th>
-			</tr>
-		</table>
-	</form>
+		<h2 class="menu-item">충전 / 결제</h2>
+		<hr/>
+		<div style="text-align:center;">
+			<form onsubmit="submitForm(event)">
+
+				<h3 style="display:inline; margin-right:100px;">현재 잔액 : 5000 원</h3>
+				<select name="deposit_type">
+					<option value="충전">충전</option>
+					<option value="출금">출금</option>
+				</select>
+				<select name="deposit_price_sel" id="deposit_price_sel">
+					<option value="0">직접 입력하기</option>
+					<option value="1000">1,000 원</option>
+					<option value="5000">5,000 원</option>
+					<option value="10000">10,000 원</option>
+				</select>
+				<input type="number" name="deposit_price" style="text-align:right;" placeholder="0"> 원
+				<input type="submit" value="요청" style="margin-left:100px; ">
+			</form>
+		</div>
+		
+		
+		
+			
+		<h3 class="menu-item">사용 내역</h3>
+			<div style="text-align:center;">
+				<hr/>	
+				<div class="row" id="list">
+				</div>
+					    
+				<div  id="paging" >
+					<div class="container" style="text-align:center; width: 600px;">
+						<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+					          <ul class="pagination justify-content-center" id="pagination"></ul>
+					    </nav>
+					</div>
+				</div>
+			</div>
 	</div>
 </section>
+
 
 
 <footer id="footer">
@@ -296,6 +291,114 @@
 
 
 
+
 </body>
+
+<script>
+
+function submitForm(event) {
+	  // 폼 제출 이벤트를 중지하여 페이지 이동을 막습니다.
+	  event.preventDefault();
+
+	  // 선택된 값 가져오기
+	  var depositType = document.getElementsByName('deposit_type')[0].value;
+
+	  // 출금이면 urlA로, 충전이면 urlB로 데이터를 보냅니다.
+	  var url;
+	  if (depositType === '출금') {
+	    url = '/depositMinus.go';
+	  } else if (depositType === '충전') {
+	    url = '/depositPlus.go';
+	  }
+
+	  // 데이터 전송
+	  var formElement = event.target;
+	  var formData = new FormData(formElement);
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('POST', url, true);
+	  xhr.send(formData);
+
+	  // 팝업창 열기
+	  window.open(url,'Infinity_Book','width=800px,height=600px');
+	}
+
+
+function handleOptionChange() {
+    var selectedOption = document.getElementById("deposit_price_sel").value; // 선택된 옵션의 값 가져오기
+    var depositPrice = document.getElementsByName("deposit_price")[0]; // deposit_price 필드 가져오기
+
+    depositPrice.value = selectedOption; // deposit_price 필드에 선택된 값 설정
+  }
+
+  // 선택 옵션 변경 이벤트 처리
+  var selectElement = document.getElementById("deposit_price_sel");
+  selectElement.addEventListener("change", handleOptionChange);
+
+
+
+
+var showPage = 1;
+	listCall(showPage);
+	
+	function listCall(page){
+		   $.ajax({
+		      type:'post',
+		      url:'depositUseList.ajax',
+		      data:{
+		    	  'page':page,
+		      },
+		      dataType:'json',           
+		      success:function(data){
+		         console.log(data);
+		         listPrint(data.list);
+		         
+		        
+		         
+		         $('#pagination').twbsPagination({
+						startPage:1, // 시작 페이지
+						totalPages:data.pages,// 총 페이지 수 
+						visiblePages:5,// 보여줄 페이지
+						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+							console.log(page,showPage);
+							if(page != showPage){
+								showPage=page;
+								listCall(page);
+								
+							}
+						}
+			         });
+		         
+		         
+		         
+		      }
+		   });
+		}
+
+	function listPrint(list) {
+	    var content = '';
+	    
+	    content += '<table style=" text-align:center; width:90%;">';
+	    content += '<tr>';
+	    content += '	<th style="width:30%;"> 사용일자 </th>';
+	    content += '	<th style="width:30%;"> 사용금액 </th>';
+	    content += '	<th style="width:40%;"> 사용내역 </th>';
+	    content += '</tr>';
+	    
+	   
+	    list.forEach(function(item) {
+	    	content += '<tr>';
+		    content += '	<td>'+item.deposit_use_date+'</td>';
+		    content += '	<td>'+item.deposit_use_price+'</td>';
+		    content += '	<td>'+item.deposit_use_state+' 했습니다.</td>';
+		    content += '</tr>';
+	    });
+
+	    content += '</table>';
+
+	    $('#list').empty();
+		$('#list').append(content);
+	}
+ 
+</script>
 
 </html>	

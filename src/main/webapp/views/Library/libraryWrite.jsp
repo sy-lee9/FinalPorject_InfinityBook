@@ -32,11 +32,8 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item">책 등록</span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
 			</div>
 		</div>
 	</div>
@@ -48,7 +45,7 @@
 			<table>
 				<tr>
 					<td>
-						<select name="LIBRARY_USE">
+						<select name="library_use">
 						  <option value="소장">책의 용도</option>
 						  <option value="소장">소장</option>
 						  <option value="대여">대여 가능</option>
@@ -59,31 +56,29 @@
 				</tr>
 				<tr>
 					<td>
-						<img src="${book.LIBRARY_COVER}" style="width:200px; height:200px;" alt="Books" class="product-item">	
+						<img src="${book.library_cover}" style="width:200px; height:200px;" alt="Books" class="product-item">	
 					</td>
 					<td>
-						<div class="item-price"><h3>${book.LIBRARY_TITLE}</h3></div>
-						<div class="item-price"><h4>${book.LIBRARY_AUTHOR}</h4></div>
-						<div class="item-price"><h4>${book.LIBRARY_PUBLISHER}</h4></div>
-						<div class="author-name">${book.LIBRARY_PUBDATE}</div>
+						<div class="item-price" style="width:600px;"><h3>${book.library_title}</h3></div>
+						<div class="item-price"><h4>${book.library_author}</h4></div>
+						<div class="item-price"><h4>${book.library_ppublisher}</h4></div>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align:center;">
-						<input type="text" name="LIBRARY_INFO" id="LIBRARY_INFO" style="width:800px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. ">
+						<input type="text" name="library_info" id="library_info" style="width:700px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. ">
 						<input type="submit"value="등록"/>
 					</td>
 				</tr>
 			</table>
-			<input type="hidden" name="MEMBER_IDX" value="1">	
-			<input type="hidden" name="LIBRARY_COVER"value="${book.LIBRARY_COVER}">		
-			<input type="hidden" name="LIBRARY_TITLE"value="${book.LIBRARY_TITLE}">				
-			<input type="hidden" name="LIBRARY_AUTHOR" value="${book.LIBRARY_AUTHOR}">				
-			<input type="hidden" name="LIBRARY_PUBLISHER" value="${book.LIBRARY_PUBLISHER}">				
-			<input type="hidden" name="LIBRARY_PRICE" value="${book.LIBRARY_PRICE}">						
-			<input type="hidden" name="LIBRARY_ISBN" value="${book.LIBRARY_ISBN}">							
-			<input type="hidden" name="LIBRARY_PUBDATE" value="${book.LIBRARY_PUBDATE}">
-			<input type="hidden" name="LIBRARY_DESCRIPTION" value="${book.LIBRARY_DESCRIPTION}">
+			<input type="hidden" name="library_cover" value="${book.library_cover}">		
+			<input type="hidden" name="library_title" value="${book.library_title}">				
+			<input type="hidden" name="library_author" value="${book.library_author}">				
+			<input type="hidden" name="library_publisher" value="${book.library_publisher}">				
+			<input type="hidden" name="library_price" value="${book.library_price}">						
+			<input type="hidden" name="library_isbn" value="${book.library_isbn}">							
+			<input type="hidden" name="library_pubdate" value="${book.library_pubdate}">
+			<input type="hidden" name="library_description" value="${book.library_description}">
 		</form>
 	</div>
 	<div style="text-align:center;">

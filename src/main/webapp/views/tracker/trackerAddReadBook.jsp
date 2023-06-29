@@ -7,8 +7,8 @@
 	
 		<!-- Datetimepicker 라이브러리 불러오기 -->
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<title>Infinite B∞k</title>
 		<meta charset="utf-8">
@@ -37,8 +37,9 @@ body{
 	margin:30px;	
 }
 table{
-	width: 450px;
+	width: 100%;
 }
+
 </style>
 	</head>
 
@@ -54,9 +55,44 @@ table{
 			<th>독서 종료일</th>
 			<td><input type="text" name="endDate" id="endDate"  placeholder="독서 종료일" style="width:120px; margin-top: 20px;"></td>
 		</tr>
+		<tr>
+			<th colspan="2"><input type=button value="저장" onclick="trackerAddReadBook(${isbn})"/></th>
+		</tr>
 	</table>
 </body>
 <script>
+
+	function trackerAddReadBook(isbn) {
+		console.log(isbn);
+	    
+	    $.ajax({
+	        url: 'trackerAddReadBook.ajax',
+	        type: 'get',
+	        data: {
+	            'isbn': isbn,
+	            'startDate':document.getElementById("startDate").value,
+	            'endDate':document.getElementById("endDate").value,
+	            'jsp':"trackerAddReadBook.jsp"
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data);
+				if(data.success){
+					console.log("추가 완료");
+					if (window.opener && !window.opener.closed) {
+						  window.alert("트래커에 추가 되었습니다.");
+						  window.close(); // 창 닫기
+					}
+				}else{
+					console.log("추가 실패");
+				}
+
+	        },
+			error:function(e){
+				console.log(e);
+			}
+	    });
+	}	
 
 	$.datepicker.setDefaults({
 	    dateFormat: 'yy-mm-dd',

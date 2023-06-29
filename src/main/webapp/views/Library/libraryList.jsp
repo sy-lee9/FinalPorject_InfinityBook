@@ -13,20 +13,21 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-		
+	    
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-
+	    
 		<!-- script -->
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-		<script src="/js/modernizr.js"></script>
-		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
+		
 	</head>
 
 <body>
@@ -61,18 +62,18 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/bklogo.png" style="width:200px;height:60px;"alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">일정</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">보증금</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/tracker/trackerSearch.go" >트래커</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#pages" class="nav-link" data-effect="Pages">내 정보</a>
 									<ul>
@@ -99,64 +100,44 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="index.move"> My Book</a> / </span></h3>
-					<h3 style="display:inline"><span class="item"> WishList</span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;">
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
+	
 		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="active tab">전체</li>
-			  <li data-tab-target="#business" class="tab">대여 가능</li>
-			  <li data-tab-target="#technology" class="tab">교환 가능</li>
-			  <li data-tab-target="#adventure" class="tab">소장</li>		
+			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
+			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
+			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
+			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 		</ul>
-		
-		<div class="row" id="list">
-			<%-- <div class="products-grid grid">
-				<figure class="product-style">
-					<input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">
-					<a href="#" onclick="window.open('/bookSelectPop.go?start=1&text=','Infinity_Book','width=800px,height=600px')">
-						<img src="/images/client-image5.png" style="width:230px; height:290px;"" alt="Books" class="product-item">
-						<figcaption> <h4>책 등록하기</h4> </figcaption>
-					</a> 
-				</figure>
-				<c:if test="${books.size() == 0 }">
-				</c:if>
-				<c:if test="${books.size() > 0 }">
-					<c:forEach items="${books}" var="books">
-						
-							<figure class="product-style" style="text-align:center;">
-								<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${books.LIBRARY_USE}">
-								<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><img src="${books.LIBRARY_COVER}" alt="Books" class="product-item"></a>
-								<figcaption>
-									<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><h4 class="item-price">${books.LIBRARY_TITLE}</h4></a>
-									<p class="item-price">${books.LIBRARY_AUTHOR}</p>
-								</figcaption>
-							</figure>
-						</a>
-					</c:forEach>
-				</c:if>
-			</div> --%>
-	    </div>
-	    
-	    <div id="paging" style="text-align:center;">  
-			<div class="container">         
-				<nav aria-label="Page navigation">
-					<ul class="pagination justify-content-center" id="pagination"></ul>
-				</nav>
-			</div>
-		</div>
-	    
+		<div class="tab-content">
+			<div id="all-genre" data-tab-content class="active">
+				<div class="row" id="list">
+					
+			    </div>
+			    
+			     <div  id="paging" >
+			      <div class="container" style="text-align:center; width: 600px;">
+			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+			          <ul class="pagination justify-content-center" id="pagination"></ul>
+			        </nav>
+			      </div>
+			    </div>
+		    </div>
+		    
+
+	    </div>	    
 	</div>
 </section>
+
 
 
 <footer id="footer">
@@ -307,7 +288,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'LibaryList.ajax',
+		      url:'libaryList.ajax',
 		      data:{
 		    	  'page':page,
 		      },
@@ -316,69 +297,111 @@
 		         console.log(data);
 		         listPrint(data.list);
 		         
+		        
+		         
 		         $('#pagination').twbsPagination({
-					startPage:1, // 시작 페이지
-					totalPages:data.pages,// 총 페이지 수 
-					visiblePages:5,// 보여줄 페이지
-					onPageClick:function(event,page){ 
-						console.log(page,showPage);
-						if(page != showPage){
-							showPage=page;
-							listCall(page);
-							
+						startPage:1, // 시작 페이지
+						totalPages:data.pages,// 총 페이지 수 
+						visiblePages:5,// 보여줄 페이지
+						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+							console.log(page,showPage);
+							if(page != showPage){
+								showPage=page;
+								listCall(page);
+								
+							}
 						}
-					}
-		         });
+			         });
+		         
+		         
+		         
 		      }
 		   });
 		}
 
-		function listPrint(list){
-			var content ='';
-			
-			list.forEach(function(item,idx){
-				
-				
-				content += '<tr>';
-				content += '<td id="gamePlay">' + item.gamePlay + ':' + item.gamePlay + '</td>';
-				content += '<td>' + item.gu + '</td>';
-				content += '<td id="gamePlayer">' + item.matchingNumforSure + '/' + item.matchingNum + '</td>';
-				content += '<td id="subject" style="text-align:left; padding-left:30px;"><a href="detail.go?matchingIdx=' + item.matchingIdx + '">' + item.subject + '</a></td>';
-				content += '<td>' + item.gameDate + '</td>';
-				content += '<td id="writerId"><a href="#" onclick="window.open(\'../userprofilepop.go?userId=' + item.writerId + '\',\'회원프로필\',\'width=400px,height=600px\')">' + item.writerId + '</a></td>';
-				content += '<td>' + item.bHit + '</td>';
-				content += '</tr>';
-				content += '<div class="products-grid grid">';
-				content += '<figure class="product-style">';
-				content += '<input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-				content += '<a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-				content += '<img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-				content += '<figcaption> <h4>책 등록하기</h4> </figcaption>';
-				content += '</a>';
-				content += '</figure>';
-				content += '<c:if test="${books.size() == 0 }">';
-				content += '</c:if>';
-				content += '<c:if test="${books.size() > 0 }">';
-				content += '<c:forEach items="${books}" var="books">';
-				content += '<figure class="product-style" style="text-align:center;">';
-				content += '<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${books.LIBRARY_USE}">';
-				content += '<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><img src="${books.LIBRARY_COVER}" alt="Books" class="product-item"></a>';
-				content += '<figcaption>';
-				content += '<a href="libraryDetail.go?LIBRARY_IDX=${books.LIBRARY_IDX}"><h4 class="item-price">${books.LIBRARY_TITLE}</h4></a>';
-				content += '<p class="item-price">${books.LIBRARY_AUTHOR}</p>';
-				content += '</figcaption>';
-				content += '</figure>';
-				content += '</a>';
-				content += '</c:forEach>';
-				content += '</c:if>';
-				content += '</div>';
+	function listPrint(list) {
+	    var content = '';
 
-				
-			});
-			$('#list').empty();
+	    content += '<div id="products-grid" class="products-grid grid">';
+	    content += '  <figure class="product-style">';
+	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
+	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
+	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
+	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
+	    content += '    </a>';
+	    content += '  </figure>';
+
+	    if (list.length === 0) {
+	        content += '</div>';
+	        $('#list').empty();
 			$('#list').append(content);
-		}
+	        return;
+	    }
 
+	    list.forEach(function(item) {
+	        content += '<figure class="product-style" style="text-align:center;">';
+	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
+	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
+	        content += '  </a>';
+	        content += '  <figcaption>';
+	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
+	        content += '    </br><h>' + item.library_author + '</h>';
+	        content += '    </a>';
+	        content += '  </figcaption>';
+	        content += '</figure>';
+	    });
+
+	    content += '</div>';
+
+	    $('#list').empty();
+		$('#list').append(content);
+	}
+
+	$('#all').click(function(e){
+		   var $chk = $('input[type="checkbox"]');
+		   console.log($chk);
+		   if($(this).is(':checked')){
+		      $chk.prop('checked',true);
+		   }else{
+		      $chk.prop('checked',false);
+		   }
+		});
+	
+	function del(){
+	    
+	    var checkArr = [];
+	    
+	    // checkbox에 value를 지정하지 않으먄 스스로를 on으로 지정한다. 
+	    $('input[type="checkbox"]:checked').each(function(idx,item){
+	      if($(this).val() != 'on'){
+	         checkArr.push($(this).val());
+	      }
+	       
+	    });
+	    
+	    console.log(checkArr);
+	    
+	   $.ajax({
+	      type:'get',
+	      url:'deleteLibrary.ajax',
+	      data:{'delList':checkArr},
+	      dataType:'json',
+	      success:function(data){
+	         console.log(data);
+	         if(data.success){
+	            alert(data.msg);
+	            
+	            listCall(showPage);
+	         }
+	      },
+	      error:function(e){
+	         console.log(e);
+	      }
+	   });
+	   
+	}
 </script>
 
 </html>	

@@ -96,40 +96,38 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item">My Book</span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
 			</div>
 		</div>
 	</div>
 </section>
+
 <section id="best-selling" class="leaf-pattern-overlay">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
 		<table>
 			<tr>
 				<th rowspan="3" style="width: 40%;">
-					<img src="${book.LIBRARY_COVER}" alt="book" class="single-image">
+					<img src="${book.library_cover}" alt="book" class="single-image">
 				</th>
 				<th rowspan="3" style="width: 5%;">
 					
 				</th>
 				<td style="width: 55%;">
-					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.LIBRARY_USE}">
+					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.library_use}">
 					
 					<table>
 						<tr>
-							<th colspan="3"><h3 class="item-title">${book.LIBRARY_TITLE}</h3></th>
+							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
 						</tr>
 						<tr>
-							<td><h4 class="author-name">By. ${book.LIBRARY_AUTHOR}</h4></td>
-							<td><div class="author-name">${book.LIBRARY_PUBLISHER}</div></td>
-							<td><div class="author-name">${book.LIBRARY_PUBDATE}</div></td>
+							<td><div class="author-name">By. ${book.library_author}</div></td>
+							<td><div class="author-name">${book.library_publisher}</div></td>
+							<td><div class="author-name">${book.library_pubdate}</div></td>
 						</tr>
 						<tr>
-							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name">${book.LIBRARY_INFO}</div></td>
+							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name">${book.library_info}</div></td>
 						</tr>
 						<tr>
 							<td colspan="3">
@@ -142,10 +140,10 @@
 							</td>
 						</tr>
 						<tr>
-							<th colspan="3" style="text-align: left;">
+							<th colspan="3" style="text-align: rigtht;">
 								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
-								<input type="button" onclick="location.href='libraryUpdate.go?LIBRARY_IDX='+${book.LIBRARY_IDX}" value="수정"> 
-								<input type="button" onclick="location.href='library.delete?LIBRARY_IDX='+${book.LIBRARY_IDX}" value="삭제">
+								<input type="button" onclick="location.href='libraryUpdate.go?library_idx='+${book.library_idx}" value="수정"> 
+								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="삭제">
 							</th>
 						</tr>
 					</table>
