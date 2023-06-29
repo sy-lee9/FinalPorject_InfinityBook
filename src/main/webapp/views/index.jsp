@@ -22,7 +22,7 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-
+		 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png">		
 	</head>
 
 <body>
@@ -34,10 +34,10 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
-
-
+					    ${loginBox}						
+						<!-- <a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a> -->
+						    <a href="#" onclick="openLoginPopup()">로그인/회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="alarm.go" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
 					</div><!--top-right-->
 				</div>				
 			</div>
@@ -51,6 +51,7 @@
 
 				<div class="col-md-2">
 					<div class="main-logo">
+					
 						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
 					</div>
 
@@ -64,18 +65,23 @@
 								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">독서모임</a>
+<<<<<<< HEAD
+									<a href="clubInsert.go" class="nav-link" data-effect="Pages">독서모임</a>
 
+
+=======
+									<a href="#business" class="nav-link" data-effect="Pages">독서모임</a>
+>>>>>>> origin/master
 									<ul>
-								        <li class="active"><a href="index.move">Home</a></li>
-								        <li><a href="about.move">About</a></li>
-								        <li><a href="styles.move">Styles</a></li>
-								        <li><a href="blog.move">Blog</a></li>
-								        <li><a href="single-post.move">Post Single</a></li>
-								        <li><a href="shop.move">Our Store</a></li>
-								        <li><a href="single-product.move">Product Single</a></li>
+								        <li class="active"><a href="index.move">대여/교환</a></li>
+								        <li><a href="#">감상문</a></li>
+								        <li><a href="#">독서모임</a></li>
+								        <li><a href="#">공지사항</a></li>
+								        <li><a href="#">이벤트</a></li>
+								        <li><a href="#">마이페이지</a></li>
+								        <!-- <li><a href="single-product.move">Product Single</a></li>
 								        <li><a href="contact.move">Contact</a></li>
-								        <li><a href="thank-you.move">Thank You</a></li>
+								        <li><a href="thank-you.move">Thank You</a></li> -->
 								     </ul>
 
 								</li>
@@ -100,6 +106,7 @@
 	</header>
 		
 </div><!--header-wrap-->
+
 
 <section id="billboard">
 
@@ -1066,6 +1073,21 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
 <script>
+function openLoginPopup() {
+	  var width = 500;  // 팝업 창의 너비
+	  var height = 400; // 팝업 창의 높이
+	  var left = (window.innerWidth - width) / 2;  // 화면 가운데에 위치하도록 좌표 계산
+	  var top = (window.innerHeight - height) / 2;
+	  var options = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+
+	  // 팝업 창을 열기 위한 URL을 여기에 입력하세요.
+	  var loginUrl = 'login.go';
+
+	  var loginPopup = window.open(loginUrl, 'loginPopup', options);
+	  loginPopup.moveTo(left, top); // 팝업 창 위치 수정
+	  loginPopup.resizeTo(width, height);
+	  loginPopup.focus();
+}
 
 
 </script>

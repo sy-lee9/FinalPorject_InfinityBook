@@ -69,12 +69,17 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
+								<li class="menu-item active"><a href="#home" data-effect="Home">책장</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item has-sub"><a href="#pages" class="nav-link" data-effect="Pages">독서모임</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
+								<li class="menu-item has-sub"><a href="#business" class="nav-link" data-effect="Pages">트래커</a></li>
+								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
+									<ul>
+								        <li class="active"><a href="index.move">회원정보</a></li>
+								        <li><a href="about.move">활동내역</a></li>
+								     </ul>
+								</li>
 							</ul>
 
 							<div class="hamburger">
@@ -93,152 +98,53 @@
 	</header>
 		
 </div><!--header-wrap-->
-
-<section id="popular-books" class="bookshelf">
+<section class="padding-large">
 	<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-
+		<div class="row">
+		
 			<div class="section-header align-center">
-				<div class="title">
-					<span></span>
-				</div>
 				<h2 class="section-title">Tracker</h2>
-				
-				<div class="search-bar" style="float: right;">
-					<form action="tracker" role="search" method="get" class="search-box">
-						<input class="search-field text search-input" placeholder="Search" type="search">
+			</div>
+				<div class="search-bar" style="width: 300px; display: inline;">
+					<form action="trackerSearch.do" role="search" method="get" class="search-box">
+						<select name="searchType">
+							<option value="Title" >제목</option>
+							<option value="Author">저자</option>
+							<option value="Title">ISBN</option>
+						</select>
+						<input class="search-field text search-input" placeholder="Search" type="search" name="searchValue" style="width: 300px;">
 						<input type="submit" value="검색"/>
 					</form>
-				</div>
-			</div>
-			
-			<br/>
-			<br/>
-			<div class="tab-content">
-			  	<div class="row">
-					<c:if test="${list.size() == 0 }">
-					<h3>검색 결과가 존재하지 않습니다. </h3>
-				</c:if>
-				<c:if test="${list.size() > 0 }">
-					<c:forEach items="${list}" var="book">
-						<figure class="product-style">
-							<img src="${book.image}" alt="Books" class="product-item">
-							<figcaption>
-								<h3>${book.title}</h3>
-								<p>${book.author}</p>
-								<p>ISBN : ${book.isbn13}</p>
-							</figcaption>
-						</figure>
+				</div>			
+				<br>
+				<br>
+				<div class="products-grid grid">
+					<c:if test="${search eq false}">
+						<h3>검색 결과가 존재하지 않습니다. </h3>
+					</c:if>
+					
+					<c:forEach var="item" items="${list}" varStatus="status">
+						<c:if test="${status.index==2}"> 
+							<c:forEach var="book" items="${item.value}" varStatus="status">
+								<figure class="product-style">
+									<a href="trackerBookDetail.go"><img id="cover" src="${book.cover}" class="product-item"></a>
+									<button onclick="addReadBook(${book.isbn13})" class="add-to-cart" style="width: 90px; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
+									<button onclick="addReadingBook(${book.isbn13})" class="add-to-cart" style="width: 90px; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
+									<figcaption>
+										<h3 id="title" style="font-size: 17; font-weight: 600;">${book.title}</h3>
+										<p id="author">${book.author}</p>
+										<p>ISBN : ${book.isbn13}</p>
+									</figcaption>
+								</figure>					
+							</c:forEach>
+						</c:if>	
 					</c:forEach>
-				</c:if>
-				<!-- 
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item1.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Portrait photography</h3>
-								<p>Adam Silber</p>
-								<div class="item-price">$ 40.00</div>
-							</figcaption>
-						</figure>
-					</div>
+		    	</div>
 
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item2.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Once upon a time</h3>
-								<p>Klien Marry</p>
-								<div class="item-price">$ 35.00</div>
-							</figcaption>
-						</figure>
-					</div>
-
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item3.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Tips of simple lifestyle</h3>
-								<p>Bratt Smith</p>
-								<div class="item-price">$ 40.00</div>
-							</figcaption>
-						</figure>
-					</div>
-
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item4.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Just felt from outside</h3>
-								<p>Nicole Wilson</p>
-								<div class="item-price">$ 40.00</div>
-							</figcaption>
-						</figure>
-					</div>
-
-				</div>
-				<div class="row">
-
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item5.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Peaceful Enlightment</h3>
-								<p>Marmik Lama</p>
-								<div class="item-price">$ 40.00</div>
-							</figcaption>
-						</figure>
-					</div>
-
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item6.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Great travel at desert</h3>
-								<p>Sanchit Howdy</p>
-								<div class="item-price">$ 40.00</div>
-							</figcaption>
-						</figure>
-					</div>
-
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item7.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Life among the pirates</h3>
-								<p>Armor Ramsey</p>
-								<div class="item-price">$ 40.00</div>
-							</figcaption>
-						</figure>
-					</div>
-
-				  	<div class="col-md-3">
-					  	<figure class="product-style">
-							<img src="/images/tab-item8.jpg" alt="Books" class="product-item">
-							<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
-							<figcaption>
-								<h3>Simple way of piece life</h3>
-								<p>Armor Ramsey</p>
-								<div class="item-price">$ 40.00</div>
-							</figcaption>
-						</figure>
-					</div>
-		    	 </div>
-			  </div>
- -->
-		</div><!--inner-tabs-->
-			
 		</div>
 	</div>
 </section>
+
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">
@@ -266,4 +172,17 @@
 <script src="/js/script.js"></script>
 
 </body>
+<script>
+
+	function addReadBook(isbn) {
+		console.log(isbn);
+		window.open('trackerAddReadBook.go?isbn='+isbn+'','완독!','width=400px,height=500px');
+	};
+	
+	function addReadingBook(isbn) {
+		console.log(isbn);
+		window.open('trackerAddReadingBook.go?isbn='+isbn+'','읽는 중','width=400px,height=500px');
+	};
+	
+</script>
 </html>	
