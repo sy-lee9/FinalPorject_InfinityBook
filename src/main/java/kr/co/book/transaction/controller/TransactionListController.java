@@ -47,10 +47,23 @@ public class TransactionListController {
 		
 		logger.info("Isbn = "+Isbn);
 		
+		model.addAttribute("list", service.searchUser(Isbn));
 		
 		
+		return "BookSearchResultUser";
 		
-		return service.searchUser(Isbn);
+	}
+	
+	@GetMapping(value = "/searchDetail.do")
+	public String searchDetail(
+			String LIBRARY_IDX, Model model) {
+		
+		logger.info("LIBRARY_IDX = "+LIBRARY_IDX);
+		
+		model.addAttribute("book", service.searchDetail(LIBRARY_IDX));
+		
+		
+		return "BookSearchResultDetail";
 		
 	}
 

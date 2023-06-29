@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import kr.co.book.transaction.dto.TransactionListDTO;
 import reactor.core.publisher.Mono;
 
 @Service
+@MapperScan(value= {"kr.co.book.transaction.dao"})
 public class TransactionListService {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -54,15 +56,18 @@ public class TransactionListService {
 	}
 
 
-	public String searchUser(String isbn) {
-		String page = "BookSearchResultUser";
-		
-		
+	public ArrayList<TransactionListDTO> searchUser(String isbn) {
+
 		ArrayList<TransactionListDTO> list = dao.searchUser(isbn);
 		
+
+		return list;
+	}
+
+
+	public TransactionListDTO searchDetail(String LIBRARY_IDX) {
 		
-		
-		return page;
+		return dao.searchDetail(LIBRARY_IDX);
 	}
 
 }

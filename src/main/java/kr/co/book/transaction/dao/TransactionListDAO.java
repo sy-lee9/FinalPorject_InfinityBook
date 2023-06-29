@@ -11,4 +11,6 @@ public interface TransactionListDAO {
 
 	ArrayList<TransactionListDTO> searchUser(String isbn);
 
+	TransactionListDTO searchDetail(String LIBRARY_IDX);
+
 }
