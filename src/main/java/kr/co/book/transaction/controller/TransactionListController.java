@@ -40,5 +40,18 @@ public class TransactionListController {
 		return "BookSearchResult";
 		
 	}
+	
+	@GetMapping(value = "/searchUser.do")
+	public String searchUser(
+			String Isbn, Model model) {
+		
+		logger.info("Isbn = "+Isbn);
+		
+		
+		
+		
+		return service.searchUser(Isbn);
+		
+	}
 
 }
