@@ -59,7 +59,6 @@ table{
 			<th colspan="2"><input type=button value="저장" onclick="trackerAddReadBook(${isbn})"/></th>
 		</tr>
 	</table>
-	
 </body>
 <script>
 
@@ -70,16 +69,24 @@ table{
 	        url: 'trackerAddReadBook.ajax',
 	        type: 'get',
 	        data: {
-	            'isbn': isbn
+	            'isbn': isbn,
+	            'startDate':document.getElementById("startDate").value,
+	            'endDate':document.getElementById("endDate").value,
+	            'jsp':"trackerAddReadBook.jsp"
 	        },
 			dataType:'json',
 			success: function(data) {
-	        	 console.log("추가 완료");
-	        	 
-	        	 if (window.opener && !window.opener.closed) {
-					  window.alert("트래커에 추가 되었습니다.");
-					  window.close(); // 창 닫기
+				console.log(data);
+				if(data.success){
+					console.log("추가 완료");
+					if (window.opener && !window.opener.closed) {
+						  window.alert("트래커에 추가 되었습니다.");
+						  window.close(); // 창 닫기
 					}
+				}else{
+					console.log("추가 실패");
+				}
+
 	        },
 			error:function(e){
 				console.log(e);
