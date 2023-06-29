@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.book.club.dao.ClubDAO">
+
+	<insert id="fileWrite">
+		INSERT INTO photo(CODE_IDX,IDX,MEMBER_IDX,PHOTO_ORINAME,PHOTO_NEWNAME)
+		VALUES('1',#{param3},'3', #{param1}, #{param2})
+	</insert>
+
+	<insert id="clubApply">
+		INSERT INTO club(MEMBER_IDX,ISBN,CLUB_NAME,CLUB_CONTENT,CLUB_MEETDATE,CODE_IDX,CLUB_ONOFF,CLUB_NUM, CLUB_STATE)
+		VALUES(#{member_idx},1234567890123,#{clubName},#{clubContent},#{clubDatetime},'1',#{clubOnOff},#{clubNum},'모집중')
+	</insert>
+	
+	<select id="clubList" resultType="kr.co.book.club.dto.ClubDTO">
+	SELECT c.CLUB_IDX, m.MEMBER_EMAIL, c.CLUB_NAME, c.CLUB_DATE, c.CLUB_MEETDATE, c.CLUB_STATE, o.CODE_CODENAME as 지역, d.CODE_CODENAME as 대면유무 from club c 
+		LEFT JOIN code o ON c.CODE_IDX = o.CODE_CODE and o.CODE_UPCODE = 'region'
+		left join code d on c.CLUB_ONOFF = d.CODE_CODE and d.CODE_UPCODE = 'onoff'
+		LEFT JOIN member m ON m.MEMBER_IDX = c.MEMBER_IDX
+		order by CLUB_IDX DESC;
+	</select>
+	
+	<select id="clubDetail" resultType="kr.co.book.club.dto.ClubDTO">
+SELECT c.CLUB_CONTENT, c.CLUB_NUM, c.CLUB_IDX, m.MEMBER_EMAIL, c.CLUB_NAME, c.CLUB_DATE, c.CLUB_MEETDATE, c.CLUB_STATE,
+    o.CODE_CODENAME AS 지역, d.CODE_CODENAME AS 대면유무
+FROM club c
+    LEFT JOIN code o ON c.CODE_IDX = o.CODE_CODE AND o.CODE_UPCODE = 'region'
+    LEFT JOIN code d ON c.CLUB_ONOFF = d.CODE_CODE AND d.CODE_UPCODE = 'onoff'
+    LEFT JOIN member m ON m.MEMBER_IDX = c.MEMBER_IDX
+WHERE c.CLUB_IDX = #{CLUB_IDX}
+ORDER BY CLUB_IDX DESC
+	</select>
+	
+		<select id="clubDetailPhoto" resultType="String">
+		SELECT p.PHOTO_NEWNAME FROM photo p 
+			INNER JOIN club c ON c.CLUB_IDX = p.IDX
+		AND p.CODE_IDX = '1' AND c.CLUB_IDX = #{clubIdx}
+	</select>
+	
+	
+</mapper>
