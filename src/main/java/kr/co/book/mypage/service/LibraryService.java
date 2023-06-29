@@ -3,6 +3,7 @@ package kr.co.book.mypage.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,15 @@ public class LibraryService {
 		 return libraryDAO.list(); 
 	}
 	
-	public HashMap<String, Object> libraryList(String member_idx,String sPage) {
+	public HashMap<String, Object> libraryList(String member_idx,String sPage, String type) {
 		HashMap<String, Object> books = new HashMap<String, Object>();	
 		ArrayList<LibraryDTO> list = null;
 		int page = Integer.parseInt(String.valueOf(sPage)); 
 		int offset = 9*(page-1);
 		int total = 0;
 		
-		total = libraryDAO.totalLibraryList(member_idx);
-		list = libraryDAO.libraryList(member_idx,offset);
+		total = libraryDAO.totalLibraryList(member_idx,type);
+		list = libraryDAO.libraryList(member_idx,offset,type);
 		int range = total%9  == 0 ? total/9 : total/9+1;
 		page = page>range ? range:page;
 		books.put("offset", offset);
@@ -41,87 +42,6 @@ public class LibraryService {
 		
 		return books;
 	}
-
-	public HashMap<String, Object> libraryRentList(String member_idx,String sPage) {
-		HashMap<String, Object> books = new HashMap<String, Object>();	
-		ArrayList<LibraryDTO> list = null;
-		int page = Integer.parseInt(String.valueOf(sPage)); 
-		int offset = 9*(page-1);
-		int total = 0;
-		
-		total = libraryDAO.totalLibraryRentList(member_idx);
-		list = libraryDAO.libraryRentList(member_idx,offset);
-		int range = total%9  == 0 ? total/9 : total/9+1;
-		page = page>range ? range:page;
-		books.put("offset", offset);
-		books.put("list", list);
-		books.put("currPage", page);
-		books.put("pages", range);
-		
-		return books;
-	} 
-	
-	public HashMap<String, Object> libraryChangeList(String member_idx,String sPage) {
-		HashMap<String, Object> books = new HashMap<String, Object>();	
-		ArrayList<LibraryDTO> list = null;
-		int page = Integer.parseInt(String.valueOf(sPage)); 
-		int offset = 9*(page-1);
-		int total = 0;
-		
-		total = libraryDAO.totalLibraryChangeList(member_idx);
-		list = libraryDAO.libraryChangeList(member_idx,offset);
-		int range = total%9  == 0 ? total/9 : total/9+1;
-		page = page>range ? range:page;
-		books.put("offset", offset);
-		books.put("list", list);
-		books.put("currPage", page);
-		books.put("pages", range);
-		
-		return books;
-	} 
-	
-	public HashMap<String, Object> libraryOwnList(String member_idx,String sPage) {
-		HashMap<String, Object> books = new HashMap<String, Object>();	
-		ArrayList<LibraryDTO> list = null;
-		int page = Integer.parseInt(String.valueOf(sPage)); 
-		int offset = 9*(page-1);
-		int total = 0;
-		
-		total = libraryDAO.totalLibraryOwnList(member_idx);
-		list = libraryDAO.libraryOwnList(member_idx,offset);
-		int range = total%9  == 0 ? total/9 : total/9+1;
-		page = page>range ? range:page;
-		books.put("offset", offset);
-		books.put("list", list);
-		books.put("currPage", page);
-		books.put("pages", range);
-		
-		return books;
-	} 
-	
-	public HashMap<String, Object> libraryWishList(String member_idx,String sPage) {
-		HashMap<String, Object> books = new HashMap<String, Object>();	
-		ArrayList<LibraryDTO> list = null;
-		int page = Integer.parseInt(String.valueOf(sPage)); 
-		int offset = 9*(page-1);
-		int total = 0;
-		
-		total = libraryDAO.totalLibraryWishList(member_idx);
-		list = libraryDAO.libraryWishList(member_idx,offset);
-		int range = total%9  == 0 ? total/9 : total/9+1;
-		page = page>range ? range:page;
-		books.put("offset", offset);
-		books.put("list", list);
-		books.put("currPage", page);
-		books.put("pages", range);
-		
-		return books;
-	} 
-	
-	
-	
-	
-	
 	
 	public void write(HashMap<String, String> bookData) {
 		libraryDAO.write(bookData);		

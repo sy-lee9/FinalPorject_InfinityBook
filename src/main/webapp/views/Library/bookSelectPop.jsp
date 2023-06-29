@@ -31,11 +31,16 @@
 	</head>
 
 <body style="margin:30px;">
-	<div class="breadcrumbs" >
-		<br/>
-		<h3 style="display:inline"><span class="item"> Select Book </span></h3>
-		<br/><br/>
+	<section class="hero-section jarallax">
+	
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
+			</div>
+		</div>
 	</div>
+</section>
 	<form onsubmit="call()" class="search-box" style="text-align:center;" id="form">
 		
 		<input type="hidden" name=start value="1">

@@ -14,6 +14,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,108 +38,32 @@ public class LibraryController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
-	
-	@RequestMapping("/libraryList.get")
-	public String libraryList(HttpSession session) {
+
+	@RequestMapping("/library{type}List.get")
+	public String libraryPageList(HttpSession session,@PathVariable String type) {
 		session.setAttribute("loginIdx", "1");
 		session.setAttribute("loginNickname", "명아");
-		return "/Library/libraryList";
+		return "/Library/library"+type+"List";
 	}
 	
-	@RequestMapping("/libraryRentList.get")
-	public String libraryRentList() {
-
-		return "/Library/libraryRentList";
-	}
 	
-	@RequestMapping("/libraryChangeList.get")
-	public String libraryChangeList() {
-
-		return "/Library/libraryChangeList";
-	}
-	
-	@RequestMapping("/libraryOwnList.get")
-	public String libraryOwnList() {
-
-		return "/Library/libraryOwnList";
-	}
-	
-	@RequestMapping("/libraryWishList.get")
-	public String libraryWishList() {
-
-		return "/Library/libraryWishList";
-	}
-	
-	 @RequestMapping("/libaryList.ajax") 
+	 @RequestMapping("/libary{type}List.ajax") 
 	 @ResponseBody
-	 public HashMap<String, Object> LibaryListAjax(@RequestParam String page,HttpSession session) {
+	 public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,HttpSession session) {
+		 logger.info("type : "+type);
 		 String member_idx = (String) session.getAttribute("loginIdx"); 
-		 HashMap<String, Object> books = libraryService.libraryList(member_idx,page);
-		 return books; 
-	 }
-	 
-	 @RequestMapping("/libaryRentList.ajax") 
-	 @ResponseBody
-	 public HashMap<String, Object> LibaryRentListAjax(@RequestParam String page,HttpSession session) {
-		 String member_idx = (String) session.getAttribute("loginIdx"); 
-		 HashMap<String, Object> books = libraryService.libraryRentList(member_idx,page);
-		 return books; 
-	 }
-	 
-	 @RequestMapping("/libaryChangeList.ajax") 
-	 @ResponseBody
-	 public HashMap<String, Object> LibaryChangeListAjax(@RequestParam String page,HttpSession session) {
-		 String member_idx = (String) session.getAttribute("loginIdx"); 
-		 HashMap<String, Object> books = libraryService.libraryChangeList(member_idx,page);
-		 return books; 
-	 }
-	 
-	 @RequestMapping("/libaryOwnList.ajax") 
-	 @ResponseBody
-	 public HashMap<String, Object> LibaryOwnListAjax(@RequestParam String page,HttpSession session) {
-		 String member_idx = (String) session.getAttribute("loginIdx"); 
-		 HashMap<String, Object> books = libraryService.libraryOwnList(member_idx,page);
-		 return books; 
-	 }
-	 
-	 @RequestMapping("/libaryWishList.ajax") 
-	 @ResponseBody
-	 public HashMap<String, Object> LibaryWishListAjax(@RequestParam String page,HttpSession session) {
-		 String member_idx = (String) session.getAttribute("loginIdx"); 
-		 HashMap<String, Object> books = libraryService.libraryWishList(member_idx,page);
+		 HashMap<String, Object> books = libraryService.libraryList(member_idx,page,type);
 		 return books; 
 	 }
 	 
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-
-	@RequestMapping("/libraryDetail.go")
-	public String libraryDetail(@RequestParam String library_idx, Model model) {
+	@RequestMapping("/{type}Detail.go")
+	public String libraryDetail(@PathVariable String type,@RequestParam String library_idx, Model model) {
 		LibraryDTO book = libraryService.detail(library_idx);
 		model.addAttribute("book", book);
-		return "/Library/libraryDetail";
+		return "/Library/"+type+"Detail";
 	}
+	
 
 	
 

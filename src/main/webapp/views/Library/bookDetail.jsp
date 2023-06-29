@@ -13,21 +13,17 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-	    
-		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-	    
+
 		<!-- script -->
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-		<script src="/js/twbsPagination.js"></script>    
-		<script src="/js/modernizr.js"></script>		
+		<script src="/js/modernizr.js"></script>
+		<script src="/js/jquery-1.11.0.min.js"></script>
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
-		
 	</head>
 
 <body>
@@ -107,37 +103,49 @@
 	</div>
 </section>
 
-<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
+<section id="best-selling" class="leaf-pattern-overlay">
+	<div class="corner-pattern-overlay"></div>
 	<div class="container">
-		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
-			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
-			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="active tab"><a href="/libraryWishList.get">위시</a></li>
-			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
-			
-		</ul>
-		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list">
+		<table>
+			<tr>
+				<th rowspan="3" style="width: 40%;">
+					<img src="${book.library_cover}" alt="book" class="single-image">
+				</th>
+				<th rowspan="3" style="width: 5%;">
 					
-			    </div>
-			    
-			     <div  id="paging" >
-			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-			          <ul class="pagination justify-content-center" id="pagination"></ul>
-			        </nav>
-			      </div>
-			    </div>
-		    </div>
-		    
-
-	    </div>	    
+				</th>
+				<td style="width: 55%;">
+					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.library_use}">
+					
+					<table>
+						<tr>
+							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
+						</tr>
+						<tr>
+							<td><div class="author-name">By. ${book.library_author}</div></td>
+							<td><div class="author-name">${book.library_publisher}</div></td>
+							<td><div class="author-name">${book.library_pubdate}</div></td>
+						</tr>
+						
+						<tr>
+							<td colspan="3">
+								<h4 class="item-title">Book Info</h4>
+								${book.library_description}
+							</td>
+						</tr>
+						<tr>
+							<th colspan="3" style="text-align: right;">
+								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
+								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="삭제">
+							</th>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	
 	</div>
 </section>
-
 
 
 <footer id="footer">
@@ -280,129 +288,5 @@
 
 
 </body>
-
-<script>
-	var showPage = 1;
-	listCall(showPage);
-	
-	function listCall(page){
-		   $.ajax({
-		      type:'post',
-		      url:'libaryWishList.ajax',
-		      data:{
-		    	  'page':page,
-		      },
-		      dataType:'json',           
-		      success:function(data){
-		         console.log(data);
-		         listPrint(data.list);
-		         
-		        
-		         
-		         $('#pagination').twbsPagination({
-						startPage:1, // 시작 페이지
-						totalPages:data.pages,// 총 페이지 수 
-						visiblePages:5,// 보여줄 페이지
-						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
-							console.log(page,showPage);
-							if(page != showPage){
-								showPage=page;
-								listCall(page);
-								
-							}
-						}
-			         });
-		         
-		         
-		         
-		      }
-		   });
-		}
-
-	function listPrint(list) {
-	    var content = '';
-
-	    content += '<div id="products-grid" class="products-grid grid">';
-	    content += '  <figure class="product-style">';
-	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h4>책 등록하기</h4> </figcaption>';
-	    content += '    </a>';
-	    content += '  </figure>';
-
-	    if (list.length === 0) {
-	        content += '</div>';
-	        $('#list').empty();
-			$('#list').append(content);
-	        return;
-	    }
-
-	    list.forEach(function(item) {
-	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="bookDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
-	        content += '  </a>';
-	        content += '  <figcaption>';
-	        content += '    <a href="bookDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
-	        content += '    </br><h>' + item.library_author + '</h>';
-	        content += '    </a>';
-	        content += '  </figcaption>';
-	        content += '</figure>';
-	    });
-
-	    content += '</div>';
-
-	    $('#list').empty();
-		$('#list').append(content);
-	}
-	
-	$('#all').click(function(e){
-		   var $chk = $('input[type="checkbox"]');
-		   console.log($chk);
-		   if($(this).is(':checked')){
-		      $chk.prop('checked',true);
-		   }else{
-		      $chk.prop('checked',false);
-		   }
-		});
-	
-
-	function del(){
-	    
-	    var checkArr = [];
-	    
-	    // checkbox에 value를 지정하지 않으먄 스스로를 on으로 지정한다. 
-	    $('input[type="checkbox"]:checked').each(function(idx,item){
-	      if($(this).val() != 'on'){
-	         checkArr.push($(this).val());
-	      }
-	       
-	    });
-	    
-	    console.log(checkArr);
-	    
-	   $.ajax({
-	      type:'get',
-	      url:'deleteLibrary.ajax',
-	      data:{'delList':checkArr},
-	      dataType:'json',
-	      success:function(data){
-	         console.log(data);
-	         if(data.success){
-	            alert(data.msg);
-	            
-	            listCall(showPage);
-	         }
-	      },
-	      error:function(e){
-	         console.log(e);
-	      }
-	   });
-	   
-	}
-</script>
 
 </html>	

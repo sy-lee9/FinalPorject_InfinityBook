@@ -69,11 +69,11 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">일정</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">보증금</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/tracker/trackerSearch.go" >트래커</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#pages" class="nav-link" data-effect="Pages">내 정보</a>
 									<ul>
@@ -100,12 +100,8 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h3 class="page-title" style="margin-top: 25px;"> Library </h3>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
-					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryLendList.get">Lend List</a></span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
 			</div>
 		</div>
 	</div>

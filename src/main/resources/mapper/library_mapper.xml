@@ -3,50 +3,49 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.book.mypage.dao.LibraryDAO">
-	<!-- int totalLibraryWishList();
-
-	ArrayList<LibraryDTO> libraryWishList(int offset);
-	 -->
-	 
+		 
 	<select id="totalLibraryList" resultType="int">
-		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 ORDER BY library_reg_date DESC
+		SELECT COUNT(library_idx) FROM library 
+		<where>
+			<if test="param2.equals('')">
+				member_idx=#{param1} AND library_blind=0 ORDER BY library_reg_date DESC
+			</if>
+			<if test="param2.equals('Rent')">
+				member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '대여') ORDER BY library_reg_date DESC
+			</if>
+			<if test="param2.equals('Change')">
+				member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '교환')  ORDER BY library_reg_date DESC
+			</if>
+			<if test="param2.equals('Own')">
+				member_idx=#{param1} AND library_blind=0 AND library_use = '소장' ORDER BY library_reg_date DESC
+			</if>
+			<if test="param2.equals('Wish')">
+				member_idx=#{param1} AND library_blind=0 AND library_use = '위시' ORDER BY library_reg_date DESC
+			</if>
+		</where>
 	</select>
 	
-	<select id="totalLibraryRentList" resultType="int">
-		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '대여') ORDER BY library_reg_date DESC
-	</select>
-	
-	<select id="totalLibraryChangeList" resultType="int">
-		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '교환')  ORDER BY library_reg_date DESC
-	</select>
-	
-	<select id="totalLibraryOwnList" resultType="int">
-		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use = '소장' ORDER BY library_reg_date DESC
-	</select>
-	
-	<select id="totalLibraryWishList" resultType="int">
-		SELECT COUNT(library_idx) FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use = '위시' ORDER BY library_reg_date DESC
-	</select>
-	 	
 	<select id="libraryList" resultType="library">
-		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_sharestate=0 ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library 
+		<where>
+			<if test="param3.equals('')">
+				member_idx=#{param1} AND library_blind=0 AND library_sharestate=0 ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+			</if>
+			<if test="param3.equals('Rent')">
+				member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '대여') ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+			</if>
+			<if test="param3.equals('Change')">
+				member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '교환') ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+			</if>
+			<if test="param3.equals('Own')">
+				member_idx=#{param1} AND library_blind=0 AND library_use='소장' ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+			</if>
+			<if test="param3.equals('Wish')">
+				member_idx=#{param1} AND library_blind=0 AND library_use='위시' ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
+			</if>
+		</where>
 	</select>
 	
-	<select id="libraryRentList" resultType="library">
-		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '대여') ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
-	</select>
-	
-	<select id="libraryChangeList" resultType="library">
-		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use IN('대여교환', '교환') ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
-	</select>
-	
-	<select id="libraryOwnList" resultType="library">
-		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use='소장' ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
-	</select>
-	
-	<select id="libraryWishList" resultType="library">
-		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library WHERE member_idx=#{param1} AND library_blind=0 AND library_use='위시' ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{param2}
-	</select>
 	
 	<insert id="write" parameterType="hashmap">
 		

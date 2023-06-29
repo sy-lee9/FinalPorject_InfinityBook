@@ -96,15 +96,13 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item">My Book</span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
 			</div>
 		</div>
 	</div>
 </section>
+
 <section id="best-selling" class="leaf-pattern-overlay">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
@@ -124,7 +122,7 @@
 							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
 						</tr>
 						<tr>
-							<td><h4 class="author-name">By. ${book.library_author}</h4></td>
+							<td><div class="author-name">By. ${book.library_author}</div></td>
 							<td><div class="author-name">${book.library_publisher}</div></td>
 							<td><div class="author-name">${book.library_pubdate}</div></td>
 						</tr>
@@ -142,7 +140,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th colspan="3" style="text-align: left;">
+							<th colspan="3" style="text-align: rigtht;">
 								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
 								<input type="button" onclick="location.href='libraryUpdate.go?library_idx='+${book.library_idx}" value="수정"> 
 								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="삭제">

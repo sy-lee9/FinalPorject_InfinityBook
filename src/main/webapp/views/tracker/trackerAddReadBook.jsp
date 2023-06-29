@@ -37,30 +37,62 @@ body{
 	margin:30px;	
 }
 table{
-	width: 450px;
+	width: 100%;
 }
+
 </style>
 	</head>
 
 <body>
 	<h3>읽은 책 추가</h3>
 	<hr>
-	<form action="trackerAddReadBook.do">
-		<input type="text" name="ISBN" value="${ISBN}">
-		<table>
-			<tr>
-				<th>독서 시작일</th>
-				<td><input type="text" name="startDate" id="startDate"  placeholder="독서 시작일" style="width:120px; margin-top: 20px;"></td>
-			</tr>
-			<tr>
-				<th>독서 종료일</th>
-				<td><input type="text" name="endDate" id="endDate"  placeholder="독서 종료일" style="width:120px; margin-top: 20px;"></td>
-			</tr>
-		</table>
-		<button>저장</button>
-	</form>
+	<table>
+		<tr>
+			<th>독서 시작일</th>
+			<td><input type="text" name="startDate" id="startDate"  placeholder="독서 시작일" style="width:120px; margin-top: 20px;"></td>
+		</tr>
+		<tr>
+			<th>독서 종료일</th>
+			<td><input type="text" name="endDate" id="endDate"  placeholder="독서 종료일" style="width:120px; margin-top: 20px;"></td>
+		</tr>
+		<tr>
+			<th colspan="2"><input type=button value="저장" onclick="trackerAddReadBook(${isbn})"/></th>
+		</tr>
+	</table>
 </body>
 <script>
+
+	function trackerAddReadBook(isbn) {
+		console.log(isbn);
+	    
+	    $.ajax({
+	        url: 'trackerAddReadBook.ajax',
+	        type: 'get',
+	        data: {
+	            'isbn': isbn,
+	            'startDate':document.getElementById("startDate").value,
+	            'endDate':document.getElementById("endDate").value,
+	            'jsp':"trackerAddReadBook.jsp"
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data);
+				if(data.success){
+					console.log("추가 완료");
+					if (window.opener && !window.opener.closed) {
+						  window.alert("트래커에 추가 되었습니다.");
+						  window.close(); // 창 닫기
+					}
+				}else{
+					console.log("추가 실패");
+				}
+
+	        },
+			error:function(e){
+				console.log(e);
+			}
+	    });
+	}	
 
 	$.datepicker.setDefaults({
 	    dateFormat: 'yy-mm-dd',
