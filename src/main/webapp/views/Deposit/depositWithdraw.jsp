@@ -39,13 +39,22 @@
 				<h2 class="section-title">Deposit</h2>
 			</div>
 		</div>
+		<div class="row" style="text-align:center;">
+			<h3>본인확인을 위해 로그인한 계정의 비밀번호를 입력해 주세요</h3>
+			<form action="depositWithdrawChk" method="post">
+				<input type="password" name="member_pw" placeholder="비밀번호를 입력해주세요."> &nbsp; 
+				<input type="submit" value="확인">
+				<input type="hidden" name="deposit_type"  value="${withdrawData.deposit_type}">
+				<input type="hidden" name="deposit_price"  value="${withdrawData.deposit_price}">
+				<input type="hidden" name="member_idx"  value="${withdrawData.member_idx}">
+			</form>
+		</div>
 	</div>
 </section>
 	
 </body>
 
 <script>
-
 
 </script>
 </html>

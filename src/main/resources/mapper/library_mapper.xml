@@ -46,6 +46,48 @@
 		</where>
 	</select>
 	
+	<select id="totalLibrarySearchList" resultType="int">
+		SELECT COUNT(library_idx) FROM library 
+		<where>
+			<if test="type.equals('')">
+				member_idx=#{member_idx} AND library_blind=0 AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC
+			</if>
+			<if test="type.equals('Rent')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use IN('대여교환', '대여') AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC
+			</if>
+			<if test="type.equals('Change')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use IN('대여교환', '교환') AND (library_title LIKE CONCAT('%' #{searchText} '%'))  ORDER BY library_reg_date DESC
+			</if>
+			<if test="type.equals('Own')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use = '소장' AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC
+			</if>
+			<if test="type.equals('Wish')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use = '위시' AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC
+			</if>
+		</where>
+	</select>
+	
+	<select id="librarySearchList" parameterType="hashmap" resultType="library">
+		SELECT library_idx, library_title,library_cover,library_author,library_publisher,library_sharestate,library_use FROM library 
+		<where>
+			<if test="type.equals('')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_sharestate=0 AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{offset}
+			</if>
+			<if test="type.equals('Rent')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use IN('대여교환', '대여') AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{offset}
+			</if>
+			<if test="type.equals('Change')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use IN('대여교환', '교환') AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{offset}
+			</if>
+			<if test="type.equals('Own')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use='소장' AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{offset}
+			</if>
+			<if test="type.equals('Wish')">
+				member_idx=#{member_idx} AND library_blind=0 AND library_use='위시' AND (library_title LIKE CONCAT('%' #{searchText} '%')) ORDER BY library_reg_date DESC LIMIT 9 OFFSET #{offset}
+			</if>
+		</where>
+	</select>
+	
 	
 	<insert id="write" parameterType="hashmap">
 		

@@ -38,4 +38,45 @@ public class DepositService {
 		
 		return map;         
 	}
+
+	public int depositNow(String member_idx) {
+		return depositDAO.depositNow(member_idx);
+	}
+
+	public int depositPwChk(String member_idx, String member_pw) {
+		return depositDAO.depositPwChk(member_idx, member_pw);
+	}
+
+	public ArrayList<HashMap<String, String>> bankList() {
+		return depositDAO.bankList();
+	}
+
+	public void depositWithdrawReq(HashMap<String, String> data) {
+		//deposit 테이블에 출금 요청
+		depositDAO.depositWithdrawReq(data);
+		
+		//deposit_use 테이블에서 출금
+		int deposit_use_price = Integer.parseInt(data.get("deposit_price"));
+		
+		if(data.get("deposit_type").equals("출금")) {
+			deposit_use_price *= -1; 
+		}
+		
+		data.put("deposit_use_price", String.valueOf(deposit_use_price));
+		data.put("deposit_use_state", data.get("deposit_type"));
+		 
+		depositDAO.depositUse(data);
+	}
+
+	public void depositChargedrawReq(HashMap<String, String> data) {
+		//deposit 테이블에 충전 요청
+		depositDAO.depositChargedrawReq(data);
+		
+		//deposit_use 테이블에서 충전
+		String deposit_use_price = data.get("deposit_price");
+		data.put("deposit_use_price", String.valueOf(deposit_use_price));
+		data.put("deposit_use_state", data.get("deposit_type"));
+		
+		depositDAO.depositUse(data);
+	}
 }

@@ -65,13 +65,13 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">일정</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">보증금</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내 정보</a>
+									<a href="#pages" class="nav-link">내 정보</a>
 									<ul>
 								        <li class="active"><a href="index.move">회원 정보</a></li>
 								        <li><a href="about.move">활동 내역</a></li>
