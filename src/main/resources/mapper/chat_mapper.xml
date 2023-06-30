@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+   <mapper namespace="kr.co.book.chat.dao.ChatDAO">
+   	
+   		<select id="login" resultType="hashmap">
+   			SELECT MEMBER_IDX,MEMBER_NICKNAME FROM MEMBER WHERE MEMBER_EMAIL=#{param1} AND MEMBER_PW=#{param2} 
+   		</select>
+   		
+   
+	   <!-- 메세지 리스트 가져오기 -->
+		<select id="message_list" parameterType="chat" resultType="chat">
+			SELECT DISTINCT c.CHAT_IDX, c.CODE_IDX,c.IDX,c.CHAT_SENDER,c.CHAT_RECIEVER,c.CHAT_CHAT,c.CHAT_CHECK,CHAT_DATE FROM CHAT c, CHAT_ROOM cr 
+			WHERE c.CHAT_IDX IN (SELECT MAX(CHAT_IDX) FROM CHAT GROUP BY IDX) AND (c.CHAT_SENDER = #{MEMBER_IDX} or c.CHAT_RECIEVER = #{MEMBER_IDX}) AND cr.CHAT_ROOM_STATE=0
+			ORDER BY C.CHAT_IDX DESC;
+		</select>
+	
+		<!-- 메세지 list에서 상대방 profile 가져오기
+		<select id="get_other_profile" parameterType="chat" resultType="String">
+		    select profile from user
+		    <choose>
+		        <when test="send_nick == nick">
+		            where nick = #{recv_nick}
+		        </when>
+		        <otherwise>
+		            where nick = #{send_nick}
+		        </otherwise>
+		    </choose>
+		</select>
+		 -->
+	
+		<!-- 안읽은 메세지 갯수 가져오기 -->
+		<!--   select count(no) from message 
+		    where recv_nick=#{nick} and read_chk=0 and room=#{room}
+		     -->
+		<select id="count_unread" parameterType="chat" resultType="Int">		  
+		    SELECT COUNT(CHAT_IDX) FROM CHAT
+		    WHERE CHAT_RECIEVER = #{MEMBER_IDX} AND CODE_IDX=#{CODE_IDX} AND IDX=#{IDX} AND CHAT_CHECK = 0 
+		</select>
+		
+		<!-- 메세지 내용 가져오기 -->
+		<select id="room_content_list" parameterType="chat" resultType="chat">
+		    <!-- select m.no, m.room, m.send_nick, m.recv_nick, date_format(m.send_time, '%Y-%m-%d %H:%i') send_time, m.read_time, m.content, m.read_chk
+		    from message m left outer join user u
+		    on m.send_nick = u.nick
+		    <choose>
+		        <when test="room != 0">
+		            where room=#{room}
+		        </when>
+		        <otherwise>
+		            where (recv_nick = #{recv_nick} and send_nick = #{nick}) or (send_nick = #{recv_nick} and recv_nick = #{nick})
+		        </otherwise>
+		    </choose>
+			ORDER BY m.send_time
+			 -->
+			select CHAT_IDX, CODE_IDX, IDX, CHAT_SENDER, CHAT_RECIEVER, CHAT_CHAT, CHAT_CHECK, CHAT_DATE from CHAT 
+			where CODE_IDX = #{CODE_IDX} and IDX = #{IDX} 
+			order by CHAT_DATE; 
+			
+		</select>
+		
+		<!-- 메세지 읽음 처리 -->		
+		<update id="message_read_chk" parameterType="chat">
+		<!-- 
+		    update message set read_chk=1
+		    <choose>
+		        <when test="room != 0">
+		            where room=#{room} and read_chk=0 and recv_nick=#{nick}
+		        </when>
+		        <otherwise>
+		            where send_nick=#{recv_nick} and read_chk=0 and recv_nick=#{nick}
+		        </otherwise>
+		    </choose>
+		     -->
+		    UPDATE CHAT SET CHAT_CHECK = 1, CHAT_CHECKDATE = now()
+		    WHERE CODE_IDX = #{CODE_IDX} AND IDX = #{IDX} AND CHAT_RECIEVER = #{MEMBER_IDX} AND CHAT_CHECK = 0	
+		</update>
+		
+		<!-- 메세지리스트에서 메세지 보내기 -->
+		<insert id="messageSendInlist" parameterType="chat">
+		<!-- 
+		    <choose>
+		        <when test="room != 0">
+		            insert into message values(0, #{room}, #{send_nick}, #{recv_nick}, now(), now(), #{content}, 0);
+		        </when>
+		        <otherwise>
+		            insert into message values(0, #{room}, #{send_nick}, #{recv_nick}, now(), now(), #{content}, 0);
+		        </otherwise>
+		    </choose>
+		     -->
+		    INSERT INTO CHAT(CODE_IDX,IDX,CHAT_SENDER,CHAT_RECIEVER,CHAT_CHAT,CHAT_CHECK,CHAT_DATE) 
+		    VALUES(#{CODE_IDX},#{IDX},#{CHAT_SENDER},#{CHAT_RECIEVER},#{CHAT_CHAT},0,now())
+		</insert>
+		
+		<!-- 아직 사용안함
+		room 번호 최댓값 구하기 
+		<select id="max_room"  parameterType="chat" resultType="Int">
+		    select max(room) from message
+		</select>
+		
+		메세지 이력이 있는지 검색 
+		<select id="exist_chat" parameterType="chat" resultType="Int">
+		    select count(no) from message 
+		    where (recv_nick = #{recv_nick} and send_nick=#{send_nick}) or (send_nick = #{recv_nick} and recv_nick=#{send_nick})
+		</select>
+		
+		 기존 메세지 내역의 room 번호를 가져옴 
+		<select id="select_room"  parameterType="chat" resultType="String">
+		    select room from message
+		    where (recv_nick = #{recv_nick} and send_nick=#{send_nick}) or (send_nick = #{recv_nick} and recv_nick=#{send_nick})
+		    limit 0,1
+		</select>
+    -->
+    	
+		<!-- 메세지에서 사진전송 -->
+		<insert id="fileWrite">
+			INSERT INTO PHOTO(CODE_IDX, IDX, MEMBER_IDX, PHOTO_ORINAME, PHOTO_NEWNAME, PHOTO_BLIND)
+			VALUES(#{param1},#{param2},#{param3},#{param4},#{param5},0);
+		</insert>
+		 
+
+    
+   
+   </mapper>

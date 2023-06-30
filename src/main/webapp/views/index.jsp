@@ -22,7 +22,7 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-		 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png">		
+		 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">		
 	</head>
 
 <body>
@@ -36,7 +36,7 @@
 					<div class="right-element">
 					    ${loginBox}						
 						<!-- <a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a> -->
-						    <a href="#" onclick="openLoginPopup()">로그인/회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						    <a href="login.go">로그인 / 회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="alarm.go" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
 					</div><!--top-right-->
 				</div>				
@@ -1068,8 +1068,8 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
 <script>
-function openLoginPopup() {
-	  var width = 500;  // 팝업 창의 너비
+/* function openLoginPopup() {
+	  var width = 550;  // 팝업 창의 너비
 	  var height = 400; // 팝업 창의 높이
 	  var left = (window.innerWidth - width) / 2;  // 화면 가운데에 위치하도록 좌표 계산
 	  var top = (window.innerHeight - height) / 2;
@@ -1082,7 +1082,7 @@ function openLoginPopup() {
 	  loginPopup.moveTo(left, top); // 팝업 창 위치 수정
 	  loginPopup.resizeTo(width, height);
 	  loginPopup.focus();
-}
+} */
 
 
 </script>

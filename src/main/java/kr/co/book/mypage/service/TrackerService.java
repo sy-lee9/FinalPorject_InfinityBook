@@ -1,5 +1,6 @@
 package kr.co.book.mypage.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class TrackerService {
 	
 	private static final String KEY = "ttbxmfhxmtm0939001";
    
+	//트래커에 저장할 책 검색 
     public ModelAndView trackerBookSearch(String searchType, String searchValue) {
     	
     	String uri = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
@@ -65,9 +67,9 @@ public class TrackerService {
 		return mav;
 	}
 
-    //트래커에 완독한 책 추가
-	public boolean trackerAddReadBook(HashMap<String, Object> params) {
-		logger.info("params : "+params);
+    //트래커에 책 추가
+	public boolean trackerAddBook(HashMap<String, Object> params) {
+		logger.info("params : {}",params);
 		boolean success = false;
 		
 		String isbn = (String) params.get("isbn");
@@ -171,6 +173,23 @@ public class TrackerService {
 			}
 		}		
 		return totalPage;
+	}
+
+	public ModelAndView trackerList(int loginIdx) {
+		logger.info("trackerList loginIdx : "+loginIdx);
+		
+		ModelAndView mav = new ModelAndView("/tracker/trackerList");
+		
+		ArrayList<HashMap<String, Object>> trackerList = null;
+		if(String.valueOf(loginIdx) != null) {
+			trackerList = TrackerDAO.getTrackerList(loginIdx);
+			if(trackerList != null) {
+				logger.info("trackerList : "+trackerList);
+				mav.addObject(trackerList);
+			}
+		}
+		
+		return mav;
 	}
     
 

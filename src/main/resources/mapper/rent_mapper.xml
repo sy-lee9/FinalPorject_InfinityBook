@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+   <mapper namespace="kr.co.book.transaction.dao.RentDAO">
+   	   
+		<!-- 대여신청 -->
+		<insert id="rentapply" parameterType="hashmap">
+			INSERT INTO RENT(LIBRARY_IDX, MEMBER_IDX, RENT_DEPOSIT, RENT_STARTDATE, RENT_ENDDATE, RENT_STATE)
+			VALUES(#{LIBRARY_IDX},#{MEMBER_IDX},#{RENT_DEPOSIT},#{RENT_STARTDATE},#{RENT_ENDDATE},0)
+		</insert>
+		
+		<!-- 대여신청 idx 찾기 -->
+		<select id="findrent_idx" parameterType="hashmap" resultType="String">		
+			SELECT RENT_IDX  FROM RENT
+			WHERE LIBRARY_IDX = #{LIBRARY_IDX} AND MEMBER_IDX = #{MEMBER_IDX}			
+		</select>
+		
+   </mapper>

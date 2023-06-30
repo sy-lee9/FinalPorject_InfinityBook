@@ -35,6 +35,10 @@ public interface LibraryDAO {
 	int totalLibraryList(String member_idx, String type);
 	
 	ArrayList<LibraryDTO> libraryList(String member_idx,int offset, String type);
+	
+	int totalLibrarySearchList(HashMap<String, Object> data);
+	
+	ArrayList<LibraryDTO> librarySearchList(HashMap<String, Object> data);
 		
 	void wishRegist(HashMap<String, String> bookInfo);
 

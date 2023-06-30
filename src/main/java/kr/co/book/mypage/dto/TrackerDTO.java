@@ -13,6 +13,7 @@ public class TrackerDTO {
 	private String jsp;
 	private int loginIdx;
 	
+	
 	public String getIsbn() {
 		return isbn;
 	}
