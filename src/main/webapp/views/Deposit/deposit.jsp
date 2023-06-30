@@ -100,12 +100,8 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
-					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryLendList.get">Lend List</a></span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title">Deposit</h2>
 			</div>
 		</div>
 	</div>
@@ -113,32 +109,44 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
-	
-		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
-			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
-			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
-			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
-		</ul>
-		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list">
-					
-			    </div>
-			    
-			     <div  id="paging" >
-			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-			          <ul class="pagination justify-content-center" id="pagination"></ul>
-			        </nav>
-			      </div>
-			    </div>
-		    </div>
-		    
+		<h2 class="menu-item">충전 / 결제</h2>
+		<hr/>
+		<div style="text-align:center;">
+			<form onsubmit="submitForm(event)">
 
-	    </div>	    
+				<h3 style="display:inline; margin-right:100px;">현재 잔액 : 5000 원</h3>
+				<select name="deposit_type">
+					<option value="충전">충전</option>
+					<option value="출금">출금</option>
+				</select>
+				<select name="deposit_price_sel" id="deposit_price_sel">
+					<option value="0">직접 입력하기</option>
+					<option value="1000">1,000 원</option>
+					<option value="5000">5,000 원</option>
+					<option value="10000">10,000 원</option>
+				</select>
+				<input type="number" name="deposit_price" style="text-align:right;" placeholder="0"> 원
+				<input type="submit" value="요청" style="margin-left:100px; ">
+			</form>
+		</div>
+		
+		
+		
+			
+		<h3 class="menu-item">사용 내역</h3>
+			<div style="text-align:center;">
+				<hr/>	
+				<div class="row" id="list">
+				</div>
+					    
+				<div  id="paging" >
+					<div class="container" style="text-align:center; width: 600px;">
+						<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+					          <ul class="pagination justify-content-center" id="pagination"></ul>
+					    </nav>
+					</div>
+				</div>
+			</div>
 	</div>
 </section>
 
@@ -283,16 +291,59 @@
 
 
 
+
 </body>
 
 <script>
-	var showPage = 1;
+
+function submitForm(event) {
+	  // 폼 제출 이벤트를 중지하여 페이지 이동을 막습니다.
+	  event.preventDefault();
+
+	  // 선택된 값 가져오기
+	  var depositType = document.getElementsByName('deposit_type')[0].value;
+
+	  // 출금이면 urlA로, 충전이면 urlB로 데이터를 보냅니다.
+	  var url;
+	  if (depositType === '출금') {
+	    url = '/depositMinus.go';
+	  } else if (depositType === '충전') {
+	    url = '/depositPlus.go';
+	  }
+
+	  // 데이터 전송
+	  var formElement = event.target;
+	  var formData = new FormData(formElement);
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('POST', url, true);
+	  xhr.send(formData);
+
+	  // 팝업창 열기
+	  window.open(url,'Infinity_Book','width=800px,height=600px');
+	}
+
+
+function handleOptionChange() {
+    var selectedOption = document.getElementById("deposit_price_sel").value; // 선택된 옵션의 값 가져오기
+    var depositPrice = document.getElementsByName("deposit_price")[0]; // deposit_price 필드 가져오기
+
+    depositPrice.value = selectedOption; // deposit_price 필드에 선택된 값 설정
+  }
+
+  // 선택 옵션 변경 이벤트 처리
+  var selectElement = document.getElementById("deposit_price_sel");
+  selectElement.addEventListener("change", handleOptionChange);
+
+
+
+
+var showPage = 1;
 	listCall(showPage);
 	
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'libaryList.ajax',
+		      url:'depositUseList.ajax',
 		      data:{
 		    	  'page':page,
 		      },
@@ -325,87 +376,29 @@
 
 	function listPrint(list) {
 	    var content = '';
-
-	    content += '<div id="products-grid" class="products-grid grid">';
-	    content += '  <figure class="product-style">';
-	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
-	    content += '    </a>';
-	    content += '  </figure>';
-
-	    if (list.length === 0) {
-	        content += '</div>';
-	        $('#list').empty();
-			$('#list').append(content);
-	        return;
-	    }
-
+	    
+	    content += '<table style=" text-align:center; width:90%;">';
+	    content += '<tr>';
+	    content += '	<th style="width:30%;"> 사용일자 </th>';
+	    content += '	<th style="width:30%;"> 사용금액 </th>';
+	    content += '	<th style="width:40%;"> 사용내역 </th>';
+	    content += '</tr>';
+	    
+	   
 	    list.forEach(function(item) {
-	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
-	        content += '  </a>';
-	        content += '  <figcaption>';
-	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
-	        content += '    </br><h>' + item.library_author + '</h>';
-	        content += '    </a>';
-	        content += '  </figcaption>';
-	        content += '</figure>';
+	    	content += '<tr>';
+		    content += '	<td>'+item.deposit_use_date+'</td>';
+		    content += '	<td>'+item.deposit_use_price+'</td>';
+		    content += '	<td>'+item.deposit_use_state+' 했습니다.</td>';
+		    content += '</tr>';
 	    });
 
-	    content += '</div>';
+	    content += '</table>';
 
 	    $('#list').empty();
 		$('#list').append(content);
 	}
-
-	$('#all').click(function(e){
-		   var $chk = $('input[type="checkbox"]');
-		   console.log($chk);
-		   if($(this).is(':checked')){
-		      $chk.prop('checked',true);
-		   }else{
-		      $chk.prop('checked',false);
-		   }
-		});
-	
-	function del(){
-	    
-	    var checkArr = [];
-	    
-	    // checkbox에 value를 지정하지 않으먄 스스로를 on으로 지정한다. 
-	    $('input[type="checkbox"]:checked').each(function(idx,item){
-	      if($(this).val() != 'on'){
-	         checkArr.push($(this).val());
-	      }
-	       
-	    });
-	    
-	    console.log(checkArr);
-	    
-	   $.ajax({
-	      type:'get',
-	      url:'deleteLibrary.ajax',
-	      data:{'delList':checkArr},
-	      dataType:'json',
-	      success:function(data){
-	         console.log(data);
-	         if(data.success){
-	            alert(data.msg);
-	            
-	            listCall(showPage);
-	         }
-	      },
-	      error:function(e){
-	         console.log(e);
-	      }
-	   });
-	   
-	}
+ 
 </script>
 
 </html>	

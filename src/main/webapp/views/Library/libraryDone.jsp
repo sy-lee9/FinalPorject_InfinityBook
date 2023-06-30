@@ -26,15 +26,26 @@
 
   <style>
     body {
-      margin-top: 300px;
+  
       text-align: center;
     }
   </style>
 </head>
 
 <body>
+<section class="hero-section jarallax">
+	
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
+			</div>
+		</div>
+	</div>
+</section>
+
   <div class="container">
-    <div style="text-align: center;">
+    <div style="text-align: center; margin-top:200px;">
       <h4><span class="item">책 등록이 완료되었습니다.</span></h4>
       <input type="button" onclick="closeRe()" id="closeBtn" value="닫기" />
     </div>

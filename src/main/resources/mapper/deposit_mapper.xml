@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.book.mypage.dao.DepositDAO">
+
+	<select id="totalListCnt" resultType="int">
+			SELECT COUNT(deposit_use_idx) FROM deposit_use WHERE member_idx=#{param1} ORDER BY deposit_use_date DESC
+	</select>
+	
+	
+	<select id="depositUseList" resultType="deposit">
+			SELECT deposit_use_idx, member_idx, deposit_use_price, deposit_use_state, deposit_use_date, rent_idx FROM deposit_use 
+			WHERE member_idx=#{param1} ORDER BY deposit_use_date DESC LIMIT 9 OFFSET #{param2}
+	</select>
+
+
+</mapper>

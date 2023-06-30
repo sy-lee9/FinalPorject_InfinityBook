@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,8 @@ public class TransactionListController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	private final TransactionListService service;
-	
-	public TransactionListController(TransactionListService service) {
-		this.service = service;
-	}
-	
-	
-	
+	@Autowired TransactionListService service;
+
 	@GetMapping(value = "/search.do")
 	public String search(
 			String Query, String QueryType, Model model) {
@@ -38,6 +33,32 @@ public class TransactionListController {
 		model.addAttribute("result", result);
 		
 		return "BookSearchResult";
+		
+	}
+	
+	@GetMapping(value = "/searchUser.do")
+	public String searchUser(
+			String Isbn, Model model) {
+		
+		logger.info("Isbn = "+Isbn);
+		
+		model.addAttribute("list", service.searchUser(Isbn));
+		
+		
+		return "BookSearchResultUser";
+		
+	}
+	
+	@GetMapping(value = "/searchDetail.do")
+	public String searchDetail(
+			String LIBRARY_IDX, Model model) {
+		
+		logger.info("LIBRARY_IDX = "+LIBRARY_IDX);
+		
+		model.addAttribute("book", service.searchDetail(LIBRARY_IDX));
+		
+		
+		return "BookSearchResultDetail";
 		
 	}
 
