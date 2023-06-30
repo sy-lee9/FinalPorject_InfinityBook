@@ -65,13 +65,8 @@
 								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item has-sub">
-<<<<<<< HEAD
 									<a href="clubInsert.go" class="nav-link" data-effect="Pages">독서모임</a>
 
-
-=======
-									<a href="#business" class="nav-link" data-effect="Pages">독서모임</a>
->>>>>>> origin/master
 									<ul>
 								        <li class="active"><a href="index.move">대여/교환</a></li>
 								        <li><a href="#">감상문</a></li>
