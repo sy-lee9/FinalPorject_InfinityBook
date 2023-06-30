@@ -24,15 +24,27 @@ public class LibraryService {
 		 return libraryDAO.list(); 
 	}
 	
-	public HashMap<String, Object> libraryList(String member_idx,String sPage, String type) {
+	public HashMap<String, Object> libraryList(String member_idx,String sPage, String type, String searchText) {
 		HashMap<String, Object> books = new HashMap<String, Object>();	
 		ArrayList<LibraryDTO> list = null;
 		int page = Integer.parseInt(String.valueOf(sPage)); 
 		int offset = 9*(page-1);
 		int total = 0;
 		
-		total = libraryDAO.totalLibraryList(member_idx,type);
-		list = libraryDAO.libraryList(member_idx,offset,type);
+		if(searchText.equals("")) {
+			total = libraryDAO.totalLibraryList(member_idx,type);
+			list = libraryDAO.libraryList(member_idx,offset,type);
+		}else {
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			data.put("member_idx", member_idx);
+			data.put("offset", offset);
+			data.put("type", type);
+			data.put("searchText", searchText);
+			logger.info("data"+data);
+			total = libraryDAO.totalLibrarySearchList(data);
+			list = libraryDAO.librarySearchList(data);
+		}
+		
 		int range = total%9  == 0 ? total/9 : total/9+1;
 		page = page>range ? range:page;
 		books.put("offset", offset);

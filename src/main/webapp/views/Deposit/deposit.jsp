@@ -21,6 +21,10 @@
 	    <link rel="stylesheet" type="text/css" href="/style.css">
 	    
 		<!-- script -->
+		<!-- jQuery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+		<!-- iamport.payment.js -->
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 		<script src="/js/twbsPagination.js"></script>    
@@ -62,12 +66,13 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="/"><img src="/images/bklogo.png" style="width:200px;height:60px;"alt="logo"></a>
+						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
@@ -101,7 +106,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title">Deposit</h2>
+				<h2 class="section-title" style="margin-botton:25px;">Deposit</h2>
 			</div>
 		</div>
 	</div>
@@ -112,9 +117,8 @@
 		<h2 class="menu-item">충전 / 결제</h2>
 		<hr/>
 		<div style="text-align:center;">
-			<form onsubmit="submitForm(event)">
-
-				<h3 style="display:inline; margin-right:100px;">현재 잔액 : 5000 원</h3>
+			<form onsubmit="submitForm(event)" id="depositForm">
+				<h3 style="display:inline; margin-right:100px;">현재 잔액 : ${deposit_now} 원</h3>
 				<select name="deposit_type">
 					<option value="충전">충전</option>
 					<option value="출금">출금</option>
@@ -125,7 +129,8 @@
 					<option value="5000">5,000 원</option>
 					<option value="10000">10,000 원</option>
 				</select>
-				<input type="number" name="deposit_price" style="text-align:right;" placeholder="0"> 원
+				<input type="hidden" id="member_idx" name="member_idx" value="${member_idx}">
+				<input type="number" id="deposit_price" name="deposit_price" style="text-align:right;" placeholder="0" min="0" max="100000" onblur="checkInput()"> 원
 				<input type="submit" value="요청" style="margin-left:100px; ">
 			</form>
 		</div>
@@ -296,37 +301,111 @@
 
 <script>
 
-function submitForm(event) {
-	  // 폼 제출 이벤트를 중지하여 페이지 이동을 막습니다.
+var amount = document.getElementById("deposit_price").value;
+var member_idx = document.getElementById("member_idx").value;
+
+document.getElementById("deposit_price").addEventListener("input", function() {
+   amount = document.getElementById("deposit_price").value;
+    console.log(amount);
+});
+
+function checkInput() {
+	  var deposit = document.getElementsByName("deposit_price")[0].value;
+	  if (deposit % 1000 !== 0) {
+	    alert(" 충전은 1000원 단위로만 가능 합니다.");
+	    var depositPrice = document.getElementsByName("deposit_price")[0];
+	    depositPrice.value = 0;
+	    return false;
+	  }
+	  
+	  var depositType = document.getElementsByName("deposit_type")[0].value;
+	  var depositPrice = parseInt(document.getElementById("deposit_price").value);
+	  var depositNow = parseInt("${deposit_now}");
+
+	  if (depositType === "출금" && depositPrice > depositNow) {
+	    alert("현재 잔액보다 큰 금액은 출금이 불가능합니다.");
+	    depositPrice.value = 0;
+	  }
+	}
+
+var IMP = window.IMP; 
+IMP.init("imp58827418");
+
+var today = new Date();
+var merchant_uid = member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+today.getTime();
+console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+today.getTime());
+
+ function requestPay() {
+     
+      IMP.request_pay({ // param
+          pg: "INIBillTst",
+          pay_method : 'card',
+          merchant_uid: merchant_uid, 
+          name : 'InfinityBook',
+          amount : amount,
+          buyer_email : 'Iamport@chai.finance',
+          buyer_name : 'InfinityBook',
+          buyer_tel : '010-1234-5678',
+          buyer_addr : '서울특별시 강남구 삼성동',
+          buyer_postcode : '123-456'
+          
+          
+      }, function (rsp) { // callback
+    	  if (rsp.success) {
+             alert("보증금 충전이 완료되었습니다. ");
+             var formData = new FormData(document.getElementById("depositForm")); 
+             // 카드 승인번호
+             formData.append("apply_num", rsp.apply_num);
+ 			
+             // AJAX 요청 보내기
+             var xhr = new XMLHttpRequest();
+             xhr.open('post', '/depositCharge.ajax', true);
+             xhr.send(formData);
+             alert(rsp.apply_num);
+             
+          } else {
+        	  alert("보증금 충전이 중 문제가 발생했습니다. 다시 시도해 주세요.");
+        	  
+        	  
+              
+          }
+      });
+    }
+
+
+ function submitForm(event) {
 	  event.preventDefault();
 
-	  // 선택된 값 가져오기
 	  var depositType = document.getElementsByName('deposit_type')[0].value;
-
-	  // 출금이면 urlA로, 충전이면 urlB로 데이터를 보냅니다.
-	  var url;
-	  if (depositType === '출금') {
-	    url = '/depositMinus.go';
-	  } else if (depositType === '충전') {
-	    url = '/depositPlus.go';
-	  }
-
-	  // 데이터 전송
 	  var formElement = event.target;
-	  var formData = new FormData(formElement);
-	  var xhr = new XMLHttpRequest();
-	  xhr.open('POST', url, true);
-	  xhr.send(formData);
-
-	  // 팝업창 열기
-	  window.open(url,'Infinity_Book','width=800px,height=600px');
+	  
+	  if (depositType === '출금') {
+	    var url = '/depositWithdraw.go';
+	    
+	    // 팝업창 열기
+	    var popupWindow = window.open('', 'Infinity_Book', 'width=600px,height=500px');
+	    
+	    // 폼 데이터를 팝업창에 전송하는 코드
+	    formElement.target = 'Infinity_Book';
+	    formElement.action = url;
+	    formElement.method = 'POST';
+	    formElement.submit();
+	    
+	    // 팝업창에 전송된 데이터 확인
+	    popupWindow.onload = function() {
+	      console.log('데이터 전송 완료');
+	    };
+	  } else if (depositType === '충전') {
+	    requestPay();
+	  }
 	}
 
 
 function handleOptionChange() {
     var selectedOption = document.getElementById("deposit_price_sel").value; // 선택된 옵션의 값 가져오기
     var depositPrice = document.getElementsByName("deposit_price")[0]; // deposit_price 필드 가져오기
-
+    amount=selectedOption;
+    console.log(amount);
     depositPrice.value = selectedOption; // deposit_price 필드에 선택된 값 설정
   }
 
