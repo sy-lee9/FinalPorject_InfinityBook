@@ -21,4 +21,6 @@ public interface ClubDAO {
 
 	ArrayList<String> clubDetailPhoto(String clubIdx);
 
+	void saveBook(HashMap<String, String> bookInfo);
+
 }

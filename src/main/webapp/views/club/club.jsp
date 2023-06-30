@@ -163,32 +163,39 @@
 <input type="hidden" name="memberEmail" value="user01@naver.com"/>
   <div class="form-container">
     <form action="clubInsert.do" method="post" enctype="multipart/form-data" onsubmit="return apply()" >
+    <div class="form-group">
+        <label for="club_book" class="form-label">*함께 읽을 책을 선택해주세요📕</label>
+        <input type="button" onclick="location.href='./bookSelect.go?text='" name="clubBook" id="clubBook" value="검색"/>
+        <input type="text" name="clubBookName" id="clubBookName" value="${bookInfo.library_title}" width="300px" readonly>
+        <input type="hidden" name="clubBookIsbn" value="${bookInfo.library_isbn}">
+      </div>
       <div class="form-group">
-        <label for="club_name" class="form-label">모임 이름:</label>
+        <label for="club_name" class="form-label">*모임 이름을 등록해주세요</label>
         <input type="text" name="clubName" id="clubName" class="form-input">
       </div>
       <div class="form-group">
-        <label for="club_book" class="form-label">썸네일을 등록해주세요 &nbsp;&nbsp;</label>
+        <label for="club_photo" class="form-label">썸네일을 등록해주세요</label>
         <input type="file" name="photo" class="form-input">
+        <%-- <c:if test="${new_photo_name eq null}"> --%>
         <img src="/photo/${new_photo_name}" style="width: 130px;"/>
       </div>
      
       <div class="form-group">
-        <label for="club_content" class="form-label">모임 소개:</label>
+        <label for="club_content" class="form-label">* 모임 소개하는 글을 작성해주세요</label>
         <textarea id="clubContent" name="clubContent" class="form-textarea"></textarea>
       </div>
       <div class="form-group">
-        <label for="club_meetdate" class="form-label">모임 일자:</label>
+        <label for="club_meetdate" class="form-label">* 모임 일자를 선택해주세요</label>
         <input type="date" name="clubMeetDate" id="clubMeetDate" class="form-input">
         <input type="time" name="clubMeetTime" id="clubMeetTime" class="form-input">
       </div>
       <div class="form-group">
-        <label for="club_onoff" class="form-label">대면 여부:</label>
+        <label for="club_onoff" class="form-label">* 대면 여부를 선택해주세요</label>
          <input type="radio" name="clubOnOff" value="0" checked>대면
          <input type="radio" name="clubOnOff" value="1">비대면
       </div>
       <div class="form-group">
-        <label for="club_num" class="form-label">모집 인원:</label>
+        <label for="club_num" class="form-label">* 최대 인원을 선택해주세요</label>
         <input type="number" name="clubNum" id="clubNum" class="form-input">
       </div>
       <button type="submit" class="form-submit" onclick="apply()">모임 등록</button>
@@ -240,7 +247,7 @@ function apply(){
         $clubName.focus();
         return false;
     }else if($clubContent.val() == ''){
-        alert('모임 내용을 등록해주세요!');
+        alert('모임 소개를 등록해주세요!');
 				console.log("$clubContent 값 없음");
 				$clubContent.focus();
         return false;
@@ -250,7 +257,7 @@ function apply(){
         console.log("$clubMeetDate 값 없음");
         return false;
     }else if($clubNum.val() == null){
-        alert('모임 인원을 등록해주세요!');
+        alert('모임 최대 인원을 등록해주세요!');
         console.log("$clubNum 값 없음");
         return false;
     }}

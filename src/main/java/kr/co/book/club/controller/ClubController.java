@@ -3,6 +3,9 @@ package kr.co.book.club.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +83,24 @@ public class ClubController {
 		
 		return page;
 	}
+	
+	@RequestMapping("/bookSelect.go")
+	public String bookListPop() {
+		return "/club/clubBookSelect";
+	}
+	
+	@RequestMapping("/bookSelect.do")
+	public String bookSelect(@RequestParam HashMap<String, String> bookInfo, Model model,HttpSession session) {
+
+		logger.info("선택 책 정보 : " + bookInfo);
+		model.addAttribute("bookInfo",bookInfo);
+		//bookInfo에 있는 책 제목이 book테이블에 없다면
+		service.saveBook(bookInfo);
+		return "club/club";
+		
+
+	}
+	
 	//파일 가져올때
 	//String user_id = (String) session.getAttribute("loginId"); 로그인 구현하면 넣을 것
 //			String email = "user01@naver.com";

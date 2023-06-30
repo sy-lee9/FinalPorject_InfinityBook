@@ -6,12 +6,12 @@
 
 	<insert id="fileWrite">
 		INSERT INTO photo(CODE_IDX,IDX,MEMBER_IDX,PHOTO_ORINAME,PHOTO_NEWNAME)
-		VALUES('1',#{param3},'3', #{param1}, #{param2})
+		VALUES('34',#{IDX},'3', #{PHOTO_ORINAME}, #{PHOTO_NEWNAME})
 	</insert>
 
 	<insert id="clubApply">
 		INSERT INTO club(MEMBER_IDX,ISBN,CLUB_NAME,CLUB_CONTENT,CLUB_MEETDATE,CODE_IDX,CLUB_ONOFF,CLUB_NUM, CLUB_STATE)
-		VALUES(#{member_idx},1234567890123,#{clubName},#{clubContent},#{clubDatetime},'1',#{clubOnOff},#{clubNum},'모집중')
+		VALUES(#{MEMBER_IDX},#{ISBN},#{CLUB_NAME},#{CLUB_CONTENT},#{CLUB_MEETDATE},'34',#{CLUB_ONOFF},#{CLUB_NUM},'모집중')
 	</insert>
 	
 	<select id="clubList" resultType="kr.co.book.club.dto.ClubDTO">
@@ -24,7 +24,7 @@
 	
 	<select id="clubDetail" resultType="kr.co.book.club.dto.ClubDTO">
 SELECT c.CLUB_CONTENT, c.CLUB_NUM, c.CLUB_IDX, m.MEMBER_EMAIL, c.CLUB_NAME, c.CLUB_DATE, c.CLUB_MEETDATE, c.CLUB_STATE,
-    o.CODE_CODENAME AS 지역, d.CODE_CODENAME AS 대면유무
+    o.CODE_CODENAME AS 지역, d.CODE_CODENAME AS 대면유무	
 FROM club c
     LEFT JOIN code o ON c.CODE_IDX = o.CODE_CODE AND o.CODE_UPCODE = 'region'
     LEFT JOIN code d ON c.CLUB_ONOFF = d.CODE_CODE AND d.CODE_UPCODE = 'onoff'
@@ -38,6 +38,11 @@ ORDER BY CLUB_IDX DESC
 			INNER JOIN club c ON c.CLUB_IDX = p.IDX
 		AND p.CODE_IDX = '1' AND c.CLUB_IDX = #{clubIdx}
 	</select>
+	
+	<insert id="saveBook" parameterType="hashmap">
+		INSERT INTO book(isbn,title,cover,author,publisher,description,pubdate)
+			VALUES(#{library_isbn},#{library_title},#{library_cover},#{library_author},#{library_publisher},#{library_description},#{library_pubdate})
+	</insert>
 	
 	
 </mapper>

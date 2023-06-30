@@ -37,35 +37,40 @@ public class ClubService {
 	public HashMap<String, String>clubApply(MultipartFile photo, HashMap<String, String> params) throws IOException {
 		String MEMBER_IDX = "3"; //로그인 기능 완성 후 세션 저장된 값으로 바꿔줘야합니다
 		params.put("member_idx", MEMBER_IDX);
-		logger.info("독서모임 등록시 필요한 params : "+params);
 		logger.info("photo 여부 :"+photo.isEmpty());
 		String page = "redirect:/index";
 		String IDX = params.get("IDX");
 		
 		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("page", page);
+		
+		if(photo.isEmpty()==false) {
 		map = fileSave(IDX, photo);
+		String new_photo_name = map.get("new_photo_name");
+		logger.info("서비스 바뀐이름 : "+ new_photo_name);
+		params.put("new_photo_name", new_photo_name);
+		map.put("new_photo_name", new_photo_name);
+		
+		}
 		try {
 			Thread.sleep(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String new_photo_name = map.get("new_photo_name");
-		logger.info("서비스 바뀐이름 : "+ new_photo_name);
-		map.put("page", page);
-		map.put("new_photo_name", new_photo_name);
-		params.put("new_photo_name", new_photo_name);
-		logger.info("독서모임 등록 map에 담겨있는 것 : "+ map);
-		logger.info("독서모임 등록 params에 담겨있는 것 : "+ params);
+
 		String date = params.get("clubMeetDate");
 		String time = params.get("clubMeetTime");
 		String clubDate = date.concat("/");
 		String clubDatetime = clubDate.concat(time);
 		params.put("clubDatetime", clubDatetime);
+		
+		logger.info("독서모임 등록 map에 담겨있는 것 : "+ map);
+		logger.info("독서모임 등록 params에 담겨있는 것 : "+ params);
+		
 		dao.clubApply(params);
-		
-		
-;		return map;
+
+		return map;
 	}
 
 	private HashMap<String, String> fileSave(String IDX, MultipartFile photo) throws IOException {
@@ -89,6 +94,7 @@ public class ClubService {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("page", page);
 		map.put("new_photo_name", new_photo_name);
+		
 		return map;
 
 	}
@@ -106,6 +112,11 @@ public class ClubService {
 	public ArrayList<String> clubDetailPhoto(String clubIdx) {
 		// TODO Auto-generated method stub
 		return dao.clubDetailPhoto(clubIdx);
+	}
+
+	public void saveBook(HashMap<String, String> bookInfo) {
+		dao.saveBook(bookInfo);
+		
 	}
 
 }
