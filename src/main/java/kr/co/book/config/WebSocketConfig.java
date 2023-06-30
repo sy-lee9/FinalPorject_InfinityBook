@@ -1,26 +1,20 @@
 package kr.co.book.config;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
-import kr.co.book.alarm.controller.EchoHandler;
-import lombok.RequiredArgsConstructor;
+/*
+ * 일반적으로 스프링에서 빈들은 싱클톤으로 관리되지만  
+ * @ServerEndpoint 어노테이션이 달린 클래스들은 WebSocket이 생성될 때 마다 인스턴스가 생성되고 
+ * JMA에 의해 관리되기 때문에 스프링의 @Autowired 설정된 멤버들이 정상적으로 초기화 되지 않는다.
+ * 이때 이를 연결해주고 초기화해주는 클래스가 필요하다.
+ */
 
-@Configuration
-@EnableWebSocket					//웹소켓 활성화
-@RequiredArgsConstructor
-public class WebSocketConfig implements WebSocketConfigurer {
-
-	private final EchoHandler echoHandler = new EchoHandler();
-
-	@Override
-	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-    	//클라이언트에서 웹소켓에 접속하기위한 경로(ex: localhost:8080/push)
-        //도메인이 다른 서버에서도 접속 가능하도록 CORS 설정 추가
-        //소켓을 지원하지 않는 브라우저의 경우 SockJS 사용하도록 설정 추가
-		registry.addHandler(echoHandler, "/push").setAllowedOriginPatterns("*").withSockJS();
+@Component
+public class WebSocketConfig {
+	@Bean
+	public ServerEndpointExporter serverEndpointExporter() {
+		return new ServerEndpointExporter();
 	}
-
 }
