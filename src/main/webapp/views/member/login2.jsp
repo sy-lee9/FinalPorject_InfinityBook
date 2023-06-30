@@ -27,8 +27,8 @@ input[type="submit"]{
 </head>
 <body>	
 	  <div class="input-container">
-	  <input type="email" name="member_email" placeholder="이메일을 입력하세요." style="display: block;">	  
-	  <input type="password" name="member_pw" placeholder="비밀번호를 입력하세요.">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <input type="email" placeholder="이메일을 입력하세요." style="display: block;">	  
+	  <input type="password" placeholder="비밀번호를 입력하세요.">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	  <input type="submit" value="로그인" style="display: inline-block; margin-top: -45px;">
 	  <br>
 	  <label for="remember">
