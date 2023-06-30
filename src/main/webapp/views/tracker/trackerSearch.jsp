@@ -127,9 +127,9 @@
 						<c:if test="${status.index==2}"> 
 							<c:forEach var="book" items="${item.value}" varStatus="status">
 								<figure class="product-style">
-									<a href="trackerBookDetail.go"><img id="cover" src="${book.cover}" class="product-item"></a>
-									<button onclick="addReadBook(${book.isbn13})" class="add-to-cart" style="width: 90px; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
-									<button onclick="addReadingBook(${book.isbn13})" class="add-to-cart" style="width: 90px; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
+									<img id="cover" src="${book.cover}" class="product-item">
+									<button onclick="addReadBook(${book.isbn13})" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
+									<button onclick="addReadingBook(${book.isbn13})" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
 									<figcaption>
 										<h3 id="title" style="font-size: 17; font-weight: 600;">${book.title}</h3>
 										<p id="author">${book.author}</p>
@@ -176,12 +176,12 @@
 
 	function addReadBook(isbn) {
 		console.log(isbn);
-		window.open('trackerAddReadBook.go?isbn='+isbn+'','완독!','width=400px,height=500px');
+		window.open('tracker/add/Read/book.go?isbn='+isbn+'','완독!','width=400px,height=455px');
 	};
 	
 	function addReadingBook(isbn) {
 		console.log(isbn);
-		window.open('trackerAddReadingBook.go?isbn='+isbn+'','읽는 중','width=400px,height=500px');
+		window.open('tracker/add/Reading/book.go?isbn='+isbn+'','읽는 중','width=400px,height=455px');
 	};
 	
 </script>

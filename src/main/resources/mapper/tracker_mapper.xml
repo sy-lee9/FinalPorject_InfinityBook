@@ -15,11 +15,39 @@
 
 	 <insert id="saveTracker" parameterType="HashMap">
 		INSERT INTO tracker(member_idx,isbn,tracker_readpage,tracker_startdate,tracker_enddate,reg_member_idx,reg_screen)
-			VALUES(#{loginIdx},#{isbn},(SELECT totalPage FROM book WHERE isbn = #{isbn}),#{startDate},#{endDate},#{loginIdx},#{jsp})
+			VALUES(#{loginIdx},#{isbn},			
+				<choose>
+		            <when test="state.equals('read')">
+		                (SELECT totalPage FROM book WHERE isbn = #{isbn})
+		            </when>
+		            <otherwise>
+		                #{readPage}
+		            </otherwise>
+		        </choose>
+			,#{startDate},#{endDate},#{loginIdx},#{jsp})
 	</insert>
 	
-	<select id="TrackerDAO" resultType="int">
-		SELECT totalpage FROM book WHERE isbn = #{param1}
+	<select id="getTotalPage" resultType="int">
+		SELECT totalPage FROM book WHERE isbn = #{param}
+	</select>
+	
+	<select id="getTrackerList" resultType="hashMap">
+		SELECT
+		    t.isbn,
+		    (SELECT title FROM book b WHERE b.isbn = t.isbn) AS title,
+		    (SELECT author FROM book b WHERE b.isbn = t.isbn) AS author,
+		    (SELECT cover FROM book b WHERE b.isbn = t.isbn) AS cover,
+		    t.tracker_startDate,
+		    t.tracker_endDate,
+		    FLOOR((t.TRACKER_READPAGE / b.totalPage) * 100) AS progress,
+		    t.tracker_readPage,
+		    (SELECT totalPage FROM book b WHERE b.isbn = t.isbn) AS totalPage
+		FROM
+		    tracker t
+		LEFT JOIN
+		    book b ON t.isbn = b.isbn
+		WHERE
+		    t.MEMBER_IDX = #{param}
 	</select>
 
 

@@ -28,24 +28,26 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-body,h3{
-	font-family: 'IBM Plex Sans KR', serif;	
-}
-body{
-	margin:30px;	
-}
-table{
-	width: 100%;
-}
-
-</style>
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+	body,h3{
+		font-family: 'IBM Plex Sans KR', serif;	
+	}
+	body{
+		margin:30px;	
+	}
+	table{
+		width: 100%;
+	}
+	input[type="button"]{
+		margin-left: 40%;
+	}
+	</style>
 	</head>
 
 <body>
 	<h3>읽은 책 추가</h3>
-	<hr>
+	<hr style="width:100%; margin: 0px;">
 	<table>
 		<tr>
 			<th>독서 시작일</th>
@@ -64,9 +66,9 @@ table{
 
 	function trackerAddReadBook(isbn) {
 		console.log(isbn);
-	    
+		
 	    $.ajax({
-	        url: 'trackerAddReadBook.ajax',
+	        url: '/tracker/add/read/book.ajax',
 	        type: 'get',
 	        data: {
 	            'isbn': isbn,
@@ -111,7 +113,10 @@ table{
 	    $('#startDate').datepicker({
 	    	format: 'Y-m-d',  // 입력값의 형식을 지정
 		    lang: 'ko',  // 언어 설정
-		    maxDate: new Date()
+		    maxDate: new Date(),
+		    onSelect: function(selectedDate) {
+		        $('#endDate').datepicker('option', 'minDate', selectedDate); // 선택한 시작일로 endDate의 최소값 업데이트
+		      }
 	    });
 	  });
 	
@@ -122,6 +127,12 @@ table{
 	      maxDate: new Date()
 	    });
 	  });
+	
+	var msg = "${msg}";
+	if(msg != ''){
+		alert(msg);
+		 window.close(); // 창 닫기
+	}
 
 </script>
 </html>

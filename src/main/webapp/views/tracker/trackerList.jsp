@@ -24,7 +24,14 @@
 		<script src="/js/modernizr.js"></script>
 
 	</head>
-
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+		h3{
+			font-family: 'IBM Plex Sans KR', serif;	
+			font-weight: 600;
+			margin: 10 0 0 0;
+		}
+	</style>
 <body>
 
 <div id="header-wrap">
@@ -99,49 +106,57 @@
 		
 </div><!--header-wrap-->
 
-<section id="best-selling" class="leaf-pattern-overlay">
-	<div class="corner-pattern-overlay"></div>
+<section id="padding-large">
 	<div class="container">
 		<div class="row">
+			<div class="col-md-12">
 
-			<div class="col-md-8 col-md-offset-2">
-
+				<div class="section-header align-center">
+					<h2 class="section-title">Tracker</h2>
+				</div>					
+				<input type="button" value="Add" onclick="trackerSearch.go" style="float: right; bottom: 80px;">
 				<div class="row">
-
-					<div class="col-md-6">
-						<figure class="products-thumb">
-							<img src="/images/single-image.jpg" alt="book" class="single-image">
-						</figure>	
-					</div>
-
-					<div class="col-md-6">
-						<div class="product-entry">
-							<h2 class="section-title divider">Best Selling Book</h2>
-
-							<div class="products-content">
-								<div class="author-name">By Timbur Hood</div>
-								<h3 class="item-title">Birds gonna be happy</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac.</p>
-								<div class="item-price">$ 45.00</div>
-								<div class="btn-wrap">
-									<a href="#" class="btn-accent-arrow">shop it now <i class="icon icon-ns-arrow-right"></i></a>
+					<c:if test="${trackerList.size eq 0}">
+						<h3>읽고 있는 책을 추가해보세요!</h3>
+					</c:if>
+					
+						<div class="col-md-4">
+	
+							<article class="column" data-aos="fade-up">
+								<c:forEach items="${trackerList}" var="book">
+								<figure>
+									<a href="#" class="image-hvr-effect">
+										<img src="${book.cover}" alt="post" class="post-image">			
+									</a>
+								</figure>
+								<div class="post-item">			
+								    <h3>${book.title}</h3>
+									<div class="meta-date" style="margin-bottom: 10">${book.author}</div>	
+	
+								    <div class="links-element">
+									    <div class="categories" style="float: left; font-size: 14; font-weight: 600;">${book.startDate}</div>
+									    <div class="categories" style="float: right; font-size: 14; font-weight: 600;">${book.endDate}</div>
+									    <div class="social-links" ><progress value="${book.progress}" min="0" max="100" style="width: 100%; height: 3%; color: #c5a992;"></progress></div>
+									    <div class="categories" style="float: left; font-size: 14; font-weight: 600;">${book.progress}%</div>
+									    <div class="categories" style="float: right; font-size: 14;">${book.readPage} / ${book.totalPage} page</div>
+									</div><!--links-element-->
+	
 								</div>
-							</div>
-
+								</c:forEach>
+							</article>
+							
 						</div>
-					</div>
-
+					
 				</div>
-				<!-- / row -->
 
-			</div>
-
+			</div>	
 		</div>
 	</div>
 </section>
 
 
-<div id="footer-bottom">
+
+<div id="footer-bottom" style="margin-top:5%">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">

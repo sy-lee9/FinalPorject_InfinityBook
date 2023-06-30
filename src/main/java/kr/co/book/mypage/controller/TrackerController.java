@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,54 +27,51 @@ public class TrackerController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	//트래커에 추가할 책 검색 페이지 이동
-	@RequestMapping(value = "/tracker/trackerSearch.go")
+	@RequestMapping(value = "/trackerSearch.go")
 	public String tracker() {		
 		return "/tracker/trackerSearch";
 	}
 	
 	//트래커에 추가할 책 검색
-	@GetMapping(value = "/tracker/trackerSearch.do")
+	@GetMapping(value = "/trackerSearch.do")
 	public ModelAndView trackerBookSearch(String searchType, String searchValue) {	
 		logger.info("searchType : {} / searchValue : {}",searchType,searchValue);
 		return TrackerService.trackerBookSearch(searchType,searchValue);
 	}
 	
-	//트래커에 완독한 책 추가
-	@GetMapping(value = "/tracker/trackerAddReadBook.go")
-	public String trackerAddReadBookGo(String isbn, Model model) {	
-		logger.info("trackerAddReadBookGo isbn : "+isbn);
+	//트래커 추가 페이지로 이동
+	@GetMapping(value = "/tracker/add/{state}/book.go")
+	public String trackerAddBookGo(String isbn, Model model,@PathVariable String state) {	
+		logger.info("trackerAddBookGo isbn : "+isbn);
+		if(!isbn.equals("undefined")) {
 		model.addAttribute("isbn",isbn);
-		return "/tracker/trackerAddReadBook";
+		}else {
+			model.addAttribute("msg","해당 도서는 추가할 수 없습니다.");
+		}
+		return "/tracker/trackerAdd"+state+"Book";
 	}
 	
-	//읽은 책 등록
-	@GetMapping(value = "/tracker/trackerAddReadBook.ajax")
+	//트래커에 완독 / 읽고 있는 책 추가
+	@GetMapping(value = "/tracker/add/{state}/book.ajax")
 	@ResponseBody
-	public HashMap<String, Object> trackerAddReadBook(HttpSession session, @RequestParam HashMap<String, Object> params) {
-		logger.info("params : "+params);
+	public HashMap<String, Object> trackerAddBook(HttpSession session, @PathVariable String state, @RequestParam HashMap<String, Object> params) {
+		logger.info("state : {} / params : {}",state,params);
 		
 		HashMap<String, Object> map =  new HashMap<String, Object>();
 		session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
-		params.put("loginIdx", loginIdx);
 		logger.info("loginIdx : "+loginIdx);
+		params.put("loginIdx", loginIdx);
+		params.put("state", state);
 		
-		boolean success = TrackerService.trackerAddReadBook(params);
+		boolean success = TrackerService.trackerAddBook(params);
 		
 		map.put("success",success);
 		return map;
 	}
 	
-	//읽고 있는 책 등록 페이지 이동
-	@GetMapping(value = "/tracker/trackerAddReadingBook.go")
-	public String trackerAddReadingBookGo(String isbn, Model model) {	
-		
-		model.addAttribute("isbn",isbn);
-		return "/tracker/trackerAddReadingBook";
-	}
-	
 	//읽고 있는 책 등록 페이지에 총페이지 수 가져가기
-	@GetMapping(value = "/tracker/getTotalPage.ajax")
+	@GetMapping(value = "/getTotalPage.ajax")
 	@ResponseBody
 	public HashMap<String, Object> getTotalPage(HttpSession session, @RequestParam HashMap<String, Object> params) {
 		logger.info("params : "+params);
@@ -90,6 +88,14 @@ public class TrackerController {
 
 		map.put("totalPage",totalPage);
 		return map;
+	}
+	
+	@GetMapping(value = "/trackerList.go")
+	public ModelAndView trackerListGo(HttpSession session) {
+		session.setAttribute("loginIdx", 3);
+		int loginIdx = (int) session.getAttribute("loginIdx");
+		logger.info("loginIdx : "+loginIdx);		
+		return TrackerService.trackerList(loginIdx);
 	}
 
 	
