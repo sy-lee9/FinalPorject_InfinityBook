@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.book.transaction.dao.TransactionListDAO">
+
+	<select id="searchUser" parameterType="TransactionListDTO">
+		select m.MEMBER_NICKNAME,c.CODE_CODENAME,l.LIBRARY_IDX from library l inner join member m on l.MEMBER_IDX = m.MEMBER_IDX inner join code c on m.CODE_IDX = c.CODE_IDX
+		where l.LIBRARY_ISBN = #{isbn} and l.LIBRARY_USE = '교환';
+	</select>
+
+		<select id="searchDetail" resultType="TransactionListDTO">
+		SELECT * FROM library WHERE LIBRARY_IDX=#{LIBRARY_IDX}
+	</select>
+
+</mapper>

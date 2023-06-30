@@ -56,26 +56,27 @@
 			</div>
 		</div>
 	</div><!--top-content-->
-
+	
 	<header id="header">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">일정</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">보증금</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내 정보</a>
+									<a href="#pages" class="nav-link">내 정보</a>
 									<ul>
 								        <li class="active"><a href="index.move">회원 정보</a></li>
 								        <li><a href="about.move">활동 내역</a></li>
@@ -100,12 +101,8 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
-					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryLendList.get">Lend List</a></span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-botton:25px;">Library</h2>
 			</div>
 		</div>
 	</div>
@@ -113,14 +110,21 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
-		<ul class="tabs">
+	
+		<ul class="tabs" style="margin:10">
 			  <li data-tab-target="#all-genre" class="tab"><a href="/libraryList.get">전체</a></li>
 			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
 			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
 			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
 			  <li data-tab-target="#business" class="active tab"><a href="/libraryWishList.get">위시</a></li>
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
-			
+		</ul>
+		<ul class="tab">
+			<li class="search-box" style="text-align:center;list-style-type: none;">
+				<i class="icon icon-search"></i> 
+				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
+				<input type="button" id="searchButton" value="검색">	
+			</li>
 		</ul>
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
@@ -286,42 +290,52 @@
 </body>
 
 <script>
-	var showPage = 1;
-	listCall(showPage);
+var showPage = 1;
+var searchText = '';
+listCall(showPage);
 	
-	function listCall(page){
-		   $.ajax({
-		      type:'post',
-		      url:'libaryWishList.ajax',
-		      data:{
-		    	  'page':page,
-		      },
-		      dataType:'json',           
-		      success:function(data){
-		         console.log(data);
-		         listPrint(data.list);
-		         
-		        
-		         
-		         $('#pagination').twbsPagination({
-						startPage:1, // 시작 페이지
-						totalPages:data.pages,// 총 페이지 수 
-						visiblePages:5,// 보여줄 페이지
-						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
-							console.log(page,showPage);
-							if(page != showPage){
-								showPage=page;
-								listCall(page);
-								
-							}
+$('#searchButton').click(function(){
+	searchText = $('#serchText').val();
+	listCall(showPage);
+	searchText = 'default';
+	$('#pagination').twbsPagination('destroy');
+});
+
+
+function listCall(page){
+	   $.ajax({
+	      type:'post',
+	      url:'libaryWishList.ajax',
+	      data:{
+	    	  'page':page,
+	    	  'searchText':searchText
+	      },
+	      dataType:'json',           
+	      success:function(data){
+	         console.log(data);
+	         listPrint(data.list);
+	         
+	        
+	         
+	         $('#pagination').twbsPagination({
+					startPage:1, // 시작 페이지
+					totalPages:data.pages,// 총 페이지 수 
+					visiblePages:5,// 보여줄 페이지
+					onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+						console.log(page,showPage);
+						if(page != showPage){
+							showPage=page;
+							listCall(page);
+							
 						}
-			         });
-		         
-		         
-		         
-		      }
-		   });
-		}
+					}
+		         });
+	         
+	         
+	         
+	      }
+	   });
+	}
 
 	function listPrint(list) {
 	    var content = '';
@@ -346,7 +360,7 @@
 	        content += '<figure class="product-style" style="text-align:center;">';
 	        content += '  <a href="bookDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
+	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
 	        content += '    <a href="bookDetail.go?library_idx=' + item.library_idx + '">';

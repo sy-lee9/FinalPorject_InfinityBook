@@ -31,16 +31,22 @@
 	</head>
 
 <body style="margin:30px;">
-	<div class="breadcrumbs" >
-		<br/>
-		<h3 style="display:inline"><span class="item"> Select Book </span></h3>
-		<br/><br/>
+	<section class="hero-section jarallax">
+	
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h2 class="section-title">Library</h2>
+			</div>
+		</div>
 	</div>
+</section>
 	<form onsubmit="call()" class="search-box" style="text-align:center;" id="form">
 		
 		<input type="hidden" name=start value="1">
+		<i class="icon icon-search"></i> 
 		<input id="text" name="text" class="search-field text search-input" placeholder="제목 또는 글쓴이를 입력해주세요" type="search">
-		<a href="#" onclick="call()"><i class="icon icon-search"></i></a>
+		<input type="button" onclick="call()" value="검색">
 	</form>
 	<table>
 	  <tbody id="list">

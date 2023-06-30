@@ -1,22 +1,29 @@
 package kr.co.book.transaction.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.DefaultUriBuilderFactory.EncodingMode;
 
+import kr.co.book.transaction.dao.TransactionListDAO;
+import kr.co.book.transaction.dto.TransactionListDTO;
 import reactor.core.publisher.Mono;
 
 @Service
+@MapperScan(value= {"kr.co.book.transaction.dao"})
 public class TransactionListService {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	@Autowired TransactionListDAO dao;
 
 	public Map<String, Object> bookSearch(String Query, String QueryType) {
 		
@@ -46,6 +53,21 @@ public class TransactionListService {
 		
 		
 		return resp;
+	}
+
+
+	public ArrayList<TransactionListDTO> searchUser(String isbn) {
+
+		ArrayList<TransactionListDTO> list = dao.searchUser(isbn);
+		
+
+		return list;
+	}
+
+
+	public TransactionListDTO searchDetail(String LIBRARY_IDX) {
+		
+		return dao.searchDetail(LIBRARY_IDX);
 	}
 
 }

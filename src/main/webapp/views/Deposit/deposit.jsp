@@ -21,6 +21,10 @@
 	    <link rel="stylesheet" type="text/css" href="/style.css">
 	    
 		<!-- script -->
+		<!-- jQuery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+		<!-- iamport.payment.js -->
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 		<script src="/js/twbsPagination.js"></script>    
@@ -62,12 +66,13 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="/"><img src="/images/bklogo.png" style="width:200px;height:60px;"alt="logo"></a>
+						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
@@ -100,12 +105,8 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">			
-				<h2 class="page-title" style="margin-top: 25px;"> Library </h2>
-				<div class="breadcrumbs">
-					<h3 style="display:inline"><span class="item"><a href="/libraryList.get"> My Book</a> / </span></h3>
-					<h3 style="display:inline; color:gray;"><span class="item"> <a href="/libraryLendList.get">Lend List</a></span></h3>
-				</div>
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-botton:25px;">Deposit</h2>
 			</div>
 		</div>
 	</div>
@@ -113,32 +114,44 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
-	
-		<ul class="tabs">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
-			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
-			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
-			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
-		</ul>
-		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
+		<h2 class="menu-item">충전 / 결제</h2>
+		<hr/>
+		<div style="text-align:center;">
+			<form onsubmit="submitForm(event)" id="depositForm">
+				<h3 style="display:inline; margin-right:100px;">현재 잔액 : ${deposit_now} 원</h3>
+				<select name="deposit_type">
+					<option value="충전">충전</option>
+					<option value="출금">출금</option>
+				</select>
+				<select name="deposit_price_sel" id="deposit_price_sel">
+					<option value="0">직접 입력하기</option>
+					<option value="1000">1,000 원</option>
+					<option value="5000">5,000 원</option>
+					<option value="10000">10,000 원</option>
+				</select>
+				<input type="hidden" id="member_idx" name="member_idx" value="${member_idx}">
+				<input type="number" id="deposit_price" name="deposit_price" style="text-align:right;" placeholder="0" min="0" max="100000" onblur="checkInput()"> 원
+				<input type="submit" value="요청" style="margin-left:100px; ">
+			</form>
+		</div>
+		
+		
+		
+			
+		<h3 class="menu-item">사용 내역</h3>
+			<div style="text-align:center;">
+				<hr/>	
 				<div class="row" id="list">
-					
-			    </div>
-			    
-			     <div  id="paging" >
-			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-			          <ul class="pagination justify-content-center" id="pagination"></ul>
-			        </nav>
-			      </div>
-			    </div>
-		    </div>
-		    
-
-	    </div>	    
+				</div>
+					    
+				<div  id="paging" >
+					<div class="container" style="text-align:center; width: 600px;">
+						<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+					          <ul class="pagination justify-content-center" id="pagination"></ul>
+					    </nav>
+					</div>
+				</div>
+			</div>
 	</div>
 </section>
 
@@ -283,16 +296,133 @@
 
 
 
+
 </body>
 
 <script>
-	var showPage = 1;
+
+var amount = document.getElementById("deposit_price").value;
+var member_idx = document.getElementById("member_idx").value;
+
+document.getElementById("deposit_price").addEventListener("input", function() {
+   amount = document.getElementById("deposit_price").value;
+    console.log(amount);
+});
+
+function checkInput() {
+	  var deposit = document.getElementsByName("deposit_price")[0].value;
+	  if (deposit % 1000 !== 0) {
+	    alert(" 충전은 1000원 단위로만 가능 합니다.");
+	    var depositPrice = document.getElementsByName("deposit_price")[0];
+	    depositPrice.value = 0;
+	    return false;
+	  }
+	  
+	  var depositType = document.getElementsByName("deposit_type")[0].value;
+	  var depositPrice = parseInt(document.getElementById("deposit_price").value);
+	  var depositNow = parseInt("${deposit_now}");
+
+	  if (depositType === "출금" && depositPrice > depositNow) {
+	    alert("현재 잔액보다 큰 금액은 출금이 불가능합니다.");
+	    depositPrice.value = 0;
+	  }
+	}
+
+var IMP = window.IMP; 
+IMP.init("imp58827418");
+
+var today = new Date();
+var merchant_uid = member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+today.getTime();
+console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+today.getTime());
+
+ function requestPay() {
+     
+      IMP.request_pay({ // param
+          pg: "INIBillTst",
+          pay_method : 'card',
+          merchant_uid: merchant_uid, 
+          name : 'InfinityBook',
+          amount : amount,
+          buyer_email : 'Iamport@chai.finance',
+          buyer_name : 'InfinityBook',
+          buyer_tel : '010-1234-5678',
+          buyer_addr : '서울특별시 강남구 삼성동',
+          buyer_postcode : '123-456'
+          
+          
+      }, function (rsp) { // callback
+    	  if (rsp.success) {
+             alert("보증금 충전이 완료되었습니다. ");
+             var formData = new FormData(document.getElementById("depositForm")); 
+             // 카드 승인번호
+             formData.append("apply_num", rsp.apply_num);
+ 			
+             // AJAX 요청 보내기
+             var xhr = new XMLHttpRequest();
+             xhr.open('post', '/depositCharge.ajax', true);
+             xhr.send(formData);
+             alert(rsp.apply_num);
+             
+          } else {
+        	  alert("보증금 충전이 중 문제가 발생했습니다. 다시 시도해 주세요.");
+        	  
+        	  
+              
+          }
+      });
+    }
+
+
+ function submitForm(event) {
+	  event.preventDefault();
+
+	  var depositType = document.getElementsByName('deposit_type')[0].value;
+	  var formElement = event.target;
+	  
+	  if (depositType === '출금') {
+	    var url = '/depositWithdraw.go';
+	    
+	    // 팝업창 열기
+	    var popupWindow = window.open('', 'Infinity_Book', 'width=600px,height=500px');
+	    
+	    // 폼 데이터를 팝업창에 전송하는 코드
+	    formElement.target = 'Infinity_Book';
+	    formElement.action = url;
+	    formElement.method = 'POST';
+	    formElement.submit();
+	    
+	    // 팝업창에 전송된 데이터 확인
+	    popupWindow.onload = function() {
+	      console.log('데이터 전송 완료');
+	    };
+	  } else if (depositType === '충전') {
+	    requestPay();
+	  }
+	}
+
+
+function handleOptionChange() {
+    var selectedOption = document.getElementById("deposit_price_sel").value; // 선택된 옵션의 값 가져오기
+    var depositPrice = document.getElementsByName("deposit_price")[0]; // deposit_price 필드 가져오기
+    amount=selectedOption;
+    console.log(amount);
+    depositPrice.value = selectedOption; // deposit_price 필드에 선택된 값 설정
+  }
+
+  // 선택 옵션 변경 이벤트 처리
+  var selectElement = document.getElementById("deposit_price_sel");
+  selectElement.addEventListener("change", handleOptionChange);
+
+
+
+
+var showPage = 1;
 	listCall(showPage);
 	
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'libaryList.ajax',
+		      url:'depositUseList.ajax',
 		      data:{
 		    	  'page':page,
 		      },
@@ -325,87 +455,29 @@
 
 	function listPrint(list) {
 	    var content = '';
-
-	    content += '<div id="products-grid" class="products-grid grid">';
-	    content += '  <figure class="product-style">';
-	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
-	    content += '    </a>';
-	    content += '  </figure>';
-
-	    if (list.length === 0) {
-	        content += '</div>';
-	        $('#list').empty();
-			$('#list').append(content);
-	        return;
-	    }
-
+	    
+	    content += '<table style=" text-align:center; width:90%;">';
+	    content += '<tr>';
+	    content += '	<th style="width:30%;"> 사용일자 </th>';
+	    content += '	<th style="width:30%;"> 사용금액 </th>';
+	    content += '	<th style="width:40%;"> 사용내역 </th>';
+	    content += '</tr>';
+	    
+	   
 	    list.forEach(function(item) {
-	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="Books" class="product-item">';
-	        content += '  </a>';
-	        content += '  <figcaption>';
-	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
-	        content += '    </br><h>' + item.library_author + '</h>';
-	        content += '    </a>';
-	        content += '  </figcaption>';
-	        content += '</figure>';
+	    	content += '<tr>';
+		    content += '	<td>'+item.deposit_use_date+'</td>';
+		    content += '	<td>'+item.deposit_use_price+'</td>';
+		    content += '	<td>'+item.deposit_use_state+' 했습니다.</td>';
+		    content += '</tr>';
 	    });
 
-	    content += '</div>';
+	    content += '</table>';
 
 	    $('#list').empty();
 		$('#list').append(content);
 	}
-
-	$('#all').click(function(e){
-		   var $chk = $('input[type="checkbox"]');
-		   console.log($chk);
-		   if($(this).is(':checked')){
-		      $chk.prop('checked',true);
-		   }else{
-		      $chk.prop('checked',false);
-		   }
-		});
-	
-	function del(){
-	    
-	    var checkArr = [];
-	    
-	    // checkbox에 value를 지정하지 않으먄 스스로를 on으로 지정한다. 
-	    $('input[type="checkbox"]:checked').each(function(idx,item){
-	      if($(this).val() != 'on'){
-	         checkArr.push($(this).val());
-	      }
-	       
-	    });
-	    
-	    console.log(checkArr);
-	    
-	   $.ajax({
-	      type:'get',
-	      url:'deleteLibrary.ajax',
-	      data:{'delList':checkArr},
-	      dataType:'json',
-	      success:function(data){
-	         console.log(data);
-	         if(data.success){
-	            alert(data.msg);
-	            
-	            listCall(showPage);
-	         }
-	      },
-	      error:function(e){
-	         console.log(e);
-	      }
-	   });
-	   
-	}
+ 
 </script>
 
 </html>	

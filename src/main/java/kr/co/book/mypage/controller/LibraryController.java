@@ -49,10 +49,11 @@ public class LibraryController {
 	
 	 @RequestMapping("/libary{type}List.ajax") 
 	 @ResponseBody
-	 public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,HttpSession session) {
+	 public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,@RequestParam String searchText,HttpSession session) {
 		 logger.info("type : "+type);
+		 logger.info("searchText : "+searchText);
 		 String member_idx = (String) session.getAttribute("loginIdx"); 
-		 HashMap<String, Object> books = libraryService.libraryList(member_idx,page,type);
+		 HashMap<String, Object> books = libraryService.libraryList(member_idx,page,type,searchText);
 		 return books; 
 	 }
 	 

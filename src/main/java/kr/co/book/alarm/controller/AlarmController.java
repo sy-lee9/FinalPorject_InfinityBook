@@ -19,14 +19,14 @@ public class AlarmController {
 	@RequestMapping(value="/alarm.go")
 	public String alarm() {
 		logger.info("alarm으로 이동");
-		return "ey/alarm_test";
+		return "alarm/alarm_test";
 	}
 	
 
 	@RequestMapping(value="/alarmCheck.go")
 	public String alarmCheck() {
 		logger.info("alarm으로 이동");
-		return "ey/alarm";
+		return "alarm/alarm";
 	}
 
 //	@PostMapping(value = "/reply.ajax")

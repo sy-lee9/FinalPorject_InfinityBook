@@ -4,53 +4,45 @@
 <html>
 	<meta charset="UTF-8">
 	<head>
-	  <style>
-    /* 폼 컨테이너 스타일 */
-    .form-container {
-      max-width: 400px;
+<style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .club-container {
+      max-width: 600px;
       margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 5px;
     }
 
-    /* 폼 요소 스타일 */
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-label {
+    #club-thumbnail {
       display: block;
-      margin-bottom: 5px;
+      margin: 10px auto;
+      width: 130px;
+    }
+
+    #club-name {
+      font-size: 24px;
       font-weight: bold;
+      margin-bottom: 10px;
     }
 
-    .form-input {
-      width: 100%;
-      padding: 8px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+    #club-content {
+      margin-bottom: 10px;
     }
 
-    .form-textarea {
-      width: 100%;
-      height: 100px;
-      padding: 8px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .form-submit {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .form-submit:hover {
-      background-color: #45a049;
+    #club-meet-date,
+    #club-onoff,
+    #club-num {
+      font-weight: bold;
     }
   </style>
 		<title>Infinite B∞k</title>
@@ -62,12 +54,15 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-
+			
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-
+	    <!-- Datetimepicker 라이브러리 불러오기 -->
+			
+	    
+	    
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
@@ -94,6 +89,7 @@
 									<i class="icon icon-search"></i>
 								</a>
 								<form role="search" method="get" class="search-box">
+						
 									<input class="search-field text search-input" placeholder="Search" type="search">
 								</form>
 							</div>
@@ -127,15 +123,9 @@
 
 
 									<ul>
-								        <li class="active"><a href="index.move">Home</a></li>
-								        <li><a href="about.move">About</a></li>
-								        <li><a href="styles.move">Styles</a></li>
-								        <li><a href="blog.move">Blog</a></li>
-								        <li><a href="single-post.move">Post Single</a></li>
-								        <li><a href="shop.move">Our Store</a></li>
-								        <li><a href="single-product.move">Product Single</a></li>
-								        <li><a href="contact.move">Contact</a></li>
-								        <li><a href="thank-you.move">Thank You</a></li>
+								        <li class="clubList"><a href="index.move">독서모임 리스트</a></li>
+								        <li><a href="club">독서모임 등록</a></li>
+								        <li><a href="styles.move">독서모임 </a></li>
 								     </ul>
 
 								</li>
@@ -163,34 +153,20 @@
 
 <!-- 본문 -->
 
-  <div class="form-container">
-    <form action="clubInsert.do" method="post">
-      <div class="form-group">
-        <label for="club_name" class="form-label">모임 이름:</label>
-        <input type="text" id="club_name" class="form-input">
-      </div>
-      <div class="form-group">
-        <label for="club_content" class="form-label">모임 소개:</label>
-        <textarea id="club_content" class="form-textarea"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="club_meetdate" class="form-label">모임 일자:</label>
-        <input type="text" id="club_meetdate" class="form-input">
-      </div>
-      <div class="form-group">
-        <label for="club_onoff" class="form-label">대면 여부:</label>
-        <input type="checkbox" id="club_onoff" class="form-input">
-      </div>
-      <div class="form-group">
-        <label for="club_num" class="form-label">모집 인원:</label>
-        <input type="number" id="club_num" class="form-input">
-      </div>
-      <button type="submit" class="form-submit">모임 등록</button>
-    </form>
+ <h1>${clubDetail.CLUB_NAME}</h1>
+  
+  <div class="club-container">
+    <img id="club-thumbnail" src="/photo/${clubDetail.PHOTO_NEWNAME}">
+    <p id="club-content">모임 소개 </p>
+    ${clubDetail.CLUB_CONTENT}
+    <p id="club-meet-date">모임 일자</p>
+    ${clubDetail.CLUB_MEETDATE}
+    <p id="club-onoff">대면 여부</p>
+    ${clubDetail.CLUB_ONOFF}
+    <p id="club-num">모집 인원</p>
+    ${clubDetail.CLUB_NUM}
   </div>
-
-
-
+  
 
 <!-- 본문 -->
 
@@ -221,6 +197,9 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
 <script src="/js/alarm.js"></script>
+<script>
+
+</script>
 
 </body>
 </html>	
