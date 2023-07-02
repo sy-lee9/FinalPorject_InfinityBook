@@ -31,18 +31,10 @@
 					<label for="email">이메일</label>
 				</th>
 				<td>
-                    <input type="text" id="member_email" placeholder="이메일">
-                    <span id="email_msg1"></span>
-                    <select id="member_email2">
-                    	<option>이메일 선택</option>
-                        <option>@naver.com</option>
-                        <option>@daum.net</option>
-                        <option>@gmail.com</option>
-                        <option>@hanmail.com</option>
-                        <option>@yahoo.co.kr</option>
-                    </select>
+                    <input type="email" id="member_email" placeholder="이메일">
+                    <span id="email_msg"></span>                    
                     &nbsp;
-                    <button onclick="findmember()">확인</button>
+                    <button onclick="member_email_check()">확인</button>
                 </td>
 	        </tr>
 	        <tr>
@@ -50,7 +42,7 @@
 	            	인증번호 확인
 	            </th>		
 	            <td>
-	            	<input type="text" id="email_confirm" placeholder="인증번호 6자리를 입력하세요.">
+	            	<input type="text" id="email_confirm" placeholder="인증번호 6자리를 입력하세요."><br>
 	            	<span id="email_msg2"></span>
 	            </td>		
 			</tr>		
@@ -105,6 +97,8 @@ var pweq = false;
 var overlayNicknameChk = false;
 //이메일 중복 체크
 var overlayEmailChk = false;
+
+var check = '';
 //회원가입 버튼 클릭시 실행되는 함수
 function join(){
 	// 변수 선언
@@ -141,7 +135,7 @@ function join(){
 	}else if(pweq && overlayEmailChk && overlayNicknameChk){
 			// 입력한 값을 배열에? 담음
 			var param = {};
-			param.member_email = $member_email.val() + $member_email2.val();
+			param.member_email = $member_email.val();
 			param.member_pw = $member_pw.val();
 			param.member_nickname = $member_nickname.val();
 			param.location = $location.val();
@@ -286,32 +280,68 @@ document.getElementById("address_kakao").addEventListener("click", function(){
     }).open();
 });
 
-/* 
-ㄴ 나는 입력한 이메일에 대해 인증버튼을 누르면
-ㄴ 인증번호를 메일로 줌(그메일이 아이디가 되는거네)
-ㄴ 이메일 인증이됨과 동시에 아이디가 가능하다고 떠야함 */
-function member_email_check(){
-	   $.ajax({
-	      type:'post'
-	         ,url:'member_email_check.ajax'
-	         ,data:{
-	        	 member_email:$('#member_email').val(),
-	        	 member_email2 : $('#member_email2').val()
-	         }
-	         ,dataType:'json'
-	         ,success:function(data){
-	            console.log(data);
-	            if(data.findpw != null){               
-	               alert('입력하신 이메일로 인증번호를 전송했습니다.\r\n 인증번호를 확인 해주세요.');	               
-	            }else{
-	               alert('입력한 이메일은 존재하지 않습니다.');
-	            }
-	         }
-	         ,error:function(e){
-	            console.log(e);
-	            alert('오류가 발생했습니다. 잠시 후 다시 시도해 주세요');
-	         }      
-	   });   
-}
+function member_email_check() {
+	  $.ajax({
+	    type: 'post',
+	    url: 'member_email_check.ajax',
+	    data: {
+	      member_email: $('#member_email').val()
+	    },
+	    dataType: 'json',
+	    success: function(data) {
+	      console.log(data);
+	      if (data.check != null) {
+	        alert('입력한 이메일로 인증번호를 전송했습니다.\r\n 인증번호를 확인 해주세요.');
+	        
+	        check = data.check;
+	        
+	      }else if (data.check == null) {
+			alert('가입된 이메일이 존재합니다.');
+		  }else {
+	        alert('입력한 이메일은 존재하지 않습니다.');
+	      }
+	      
+	      
+	    },
+	    error: function(e) {
+	      console.log(e);
+	      alert('오류가 발생했습니다. 잠시 후 다시 시도해 주세요');
+	    }
+	  });
+	}
+
+// 1. 인증번호를 입력하고 나갈떄(keyup)
+// 2. 인증번호를 확인해서
+// 3. msg에 일치하는지 표시
+
+$('#email_confirm').keyup(function() {
+
+    if (check === $('#email_confirm').val()) {
+        $('#email_msg2').html('인증번호가 일치합니다.').css('color', 'green');
+    } else {
+        if ($('#email_confirm').val() !== '') {
+            $('#email_msg2').html('인증번호가 일치하지 않습니다.').css('color', 'red');
+        } else {
+            $('#email_msg2').html('인증번호를 입력해주세요.').css('color', 'red');
+        }
+    }
+});
+
+$('#email_confirm').keyup(function() {
+
+    if (check === $('#email_confirm').val()) {
+        $('#email_msg2').html('인증번호가 일치합니다.').css('color', 'green');
+    } else {
+        if ($('#email_confirm').val() !== '') {
+            $('#email_msg2').html('인증번호가 일치하지 않습니다.').css('color', 'red');
+        } else {
+            $('#email_msg2').html('인증번호를 입력해주세요.').css('color', 'red');
+        }
+    }
+});
+
+
+
+
 </script>
 </html>
