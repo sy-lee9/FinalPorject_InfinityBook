@@ -7,11 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,29 +38,40 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@PostMapping(value = "/login.do")
-	public String login(Model model, HttpSession session, @RequestParam HashMap<String, String > params) {
-		
-		logger.info("로그인시도");
-		
-		String page = "login";
-		
-		String member_email = params.get("member_email") + params.get("userEmail2");
-		String member_pw = params.get("member_pw");
-		
-		logger.info("id : " + member_email, "pw : " + member_pw);
-		
-		MemberDTO dto = service.login(member_email,member_pw);
-		
-		if (dto != null) {
-			page = "redirect:/";
-			session.setAttribute("loginIdx", dto.getMember_idx());
-			session.setAttribute("loginNickname", dto.getMember_nickname());			
-		}else {
-			model.addAttribute("msg","로그인에 실패했습니다.");
-		}
-		
-		return page;
+	@RequestMapping(value = "/login.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> login(@RequestParam String member_email, 
+	                                     @RequestParam String member_pw, HttpSession session) {
+	    logger.info("로그인시도");
+	    logger.info("email : " + member_email + ", pw : " + member_pw);
+	    
+	    MemberDTO dto = service.login(member_email);
+	    
+	    HashMap<String, Object> map = new HashMap<String, Object>();
+	    
+	    if (dto != null) {
+	        String encodePassWord = dto.getMember_pw();
+	        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	        boolean isMatched = encoder.matches(member_pw, encodePassWord);
+	        
+	        if (isMatched) {
+	        	logger.info("컨트롤러" + isMatched);
+	            map.put("success", 1);
+	            session.setAttribute("loginIdx", dto.getMember_idx());
+	            session.setAttribute("loginNickname", dto.getMember_nickname());
+	        }
+	    }
+	    
+	    return map;
+	}
+
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		logger.info("로그아웃 함");
+		session.removeAttribute("loginNickname");
+		session.removeAttribute("loginIdx");
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/join.go")
@@ -66,10 +79,15 @@ public class MemberController {
 		return "member/joinForm";
 	}
 	
-	@RequestMapping(value="/join.ajax")
+	@RequestMapping(value="/join.ajax",method = RequestMethod.POST)
     @ResponseBody
     public HashMap<String, Object> join(@RequestParam HashMap<String, String> params){
 	   logger.info("params: {}"+params);
+	   String location = params.get("location");
+	   
+	   int code = service.findLocationCode(location);
+	   
+	   params.put("code_idx", String.valueOf(code));
 	   
 	return service.join(params);		   
     }
@@ -148,11 +166,15 @@ public class MemberController {
 				     map.put("check", email_check);
 			 }else {
 				
-			}
-			 
-		     
-			 
-		   		   		   		   		  
+			}   		   		   		  
 		     return map;
-	}
+	}	
+	   @RequestMapping(value="/overlaynickname.ajax")
+	   @ResponseBody
+	   public HashMap<String, Object> overlaynickname(@RequestParam String member_nickname){
+		   logger.info("overlaynickname : "+member_nickname);
+		   
+	      return service.overlaynickname(member_nickname);      
+
+	   }
 }

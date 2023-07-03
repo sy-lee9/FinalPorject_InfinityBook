@@ -51,7 +51,7 @@
 					비밀번호
 				</th>				
 				<td>						
-					<input type="password" id="member_pw" placeholder="비밀번호 8자리 이상 입력하세요.">
+					<input type="password" id="member_pw" placeholder="비밀번호 8자리 이상 입력하세요."><br>
 					<span id="pw_msg1"></span>					
 				</td>								
 			</tr>
@@ -60,7 +60,7 @@
 					비밀번호 확인
 				</th>				
 				<td>						
-					<input type="password" id="pw_confirm" placeholder="비밀번호 확인">
+					<input type="password" id="pw_confirm" placeholder="비밀번호 확인"><br>
 					<span id="pw_msg2"></span>				
 				</td>								
 			</tr>
@@ -69,7 +69,7 @@
 					닉네임
 				</th>
 				<td>						
-					<input type="text" id="member_nickname" placeholder="닉네임을 입력하세요.">
+					<input type="text" id="member_nickname" placeholder="닉네임을 입력하세요."><br>
 					<span id="nickname_msg"></span>				
 				</td>								
 			</tr>
@@ -82,7 +82,7 @@
 		    </tr>
 			<tr>
 				<th colspan="2">
-					<button onclick="location.href='/join'">회원가입</button>									
+					<button onclick="join()">회원가입</button>								
 					<button onclick="location.href='/login.go'">취소</button>
 				</th>
 			</tr>
@@ -101,110 +101,78 @@ var overlayEmailChk = false;
 var check = '';
 //회원가입 버튼 클릭시 실행되는 함수
 function join(){
-	// 변수 선언
-	var $member_email1 = $('#member_email');
-	var $member_email2 = $('#member_email2');
-	var $member_pw = $('#member_pw');
-	var $member_nickname = $('#member_nickname');
-	var $location = $('#location');
 	
-	// 회원가입 버튼 클릭시 실행되는 빈칸 체크
-	if($member_email1.val()==''){
-		alert('이메일을 입력해 주세요!');
-		$member_email1.focus();
-	}else if($('#member_email1').val().length <= 4){
-		alert('이메일을 5자리 이상 입력해 주세요!'); 
-		$member_email1.focus();
-	}else if($('#member_email2').val().length <= 6){
-		alert('이메일 주소를 선택해주세요!'); 
-		$member_email.focus();	
-	}else if($member_pw.val()==''){
-		alert('비밀번호를 입력해 주세요!');			
-		$member_pw.focus();			
-	}else if($member_pw.val().length <= 7){
-		alert('비밀번호를 8자리 이상 입력해 주세요!');
-		$member_pw.focus();
-	}else if($member_nickname.val()==''){
-		alert('닉네임를 입력해 주세요!');
-		$member_nickname.focus();			
-	}else if($('#member_nickname').val().length <=1 || $('#member_nickname').val().length >=11){			
-		alert('닉네임을 2글자 이상  10글자 이하로입력해주세요.');
-		$member_nickname.focus();
-	}else if($location.val()==''){
-		alert('지역을 선택해 주세요!');
-	}else if(pweq && overlayEmailChk && overlayNicknameChk){
-			// 입력한 값을 배열에? 담음
-			var param = {};
-			param.member_email = $member_email.val();
-			param.member_pw = $member_pw.val();
-			param.member_nickname = $member_nickname.val();
-			param.location = $location.val();
-						
-			console.log(param);
-			// 컨트롤러에 통신
-			$.ajax({
-				type:'post'
-				,url:'join.ajax'
-				,data:param
-				,dataType:'json'
-				,success:function(data){
-					console.log(data);
-					if(data.success == 1){
-						alert('회원가입이 완료 되었습니다.');
-						location.href ='./login.go';
-					}else{
-						alert('회원가입에 실패 했습니다.\r\n 다시 시도해 주세요');						
-					}
-				},
-				error:function(e){
-					console.log(e);
-					alert('회원가입에 실패 했습니다.\r\n 다시 시도해 주세요');
-				}
-			});
-			// 컨트롤러에서 갔다왔는데
-		}else if(!overlayEmailChk){
-			alert('중복된 이메일 입니다.');
-			$member_email.focus();
-		}else if(!overlayNicknameChk){
-			alert('중복된 닉네임 입니다.');
-			$member_nickname.focus();
-		}
+	
+	console.log('클릭');
+  // 변수 선언
+  var $member_email = $('#member_email');
+  var $member_pw = $('#member_pw');
+  var $member_nickname = $('#member_nickname');
+  var $location = $('#location');
+  var specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  
+  // 회원가입 버튼 클릭시 실행되는 빈칸 체크
+  if($member_email.val()==''){
+    alert('이메일을 입력해 주세요!');
+    $member_email.focus();
+  } else if($member_email.val().length <= 4){
+    alert('이메일을 5자리 이상 입력해 주세요!'); 
+    $member_email.focus();    
+  } else if($member_pw.val()==''){
+    alert('비밀번호를 입력해 주세요!');      
+    $member_pw.focus();      
+  } else if($member_pw.val().length <= 7){
+    alert('비밀번호는 8자리 이상 입력해 주세요!');
+    $member_pw.focus();
+  } else if($member_nickname.val()==''){
+    alert('닉네임를 입력해 주세요!');
+    $member_nickname.focus();      
+  } else if($member_nickname.val().length <= 1 || $member_nickname.val().length >= 11){      
+    alert('닉네임을 2글자 이상 10글자 이하로 입력해주세요.');
+    $member_nickname.focus();
+  } else if (specialChars.test($member_nickname.val())) {
+	alert('특수문자는 ‘!, @, #, $, %, ^, &, *’만 사용 가능합니다.');
+	$member_nickname.focus();
+  } else if($location.val()==''){
+    alert('주소를 입력해 주세요!');
+  } else if(pweq && overlayNicknameChk){
+    // 입력한 값을 배열에 담음
+    var param = {};
+    param.member_email = $member_email.val();
+    param.member_pw = $member_pw.val();
+    param.member_nickname = $member_nickname.val();
+    param.location = $location.val();
+    console.log('클릭2');
+    console.log(param);
+    // 컨트롤러에 통신
+    $.ajax({
+      type: 'post',
+      url: 'join.ajax',
+      data: param,
+      dataType: 'json',
+      success: function(data){
+        console.log(data);
+        console.log('클릭3');
+        if(data.success == 1){
+       	
+          alert('회원가입이 완료되었습니다.');
+          location.href ='./login.go';
+        } else{
+          console.log('회원가입실패');
+          alert('회원가입에 실패했습니다. 다시 시도해 주세요');            
+        }
+      },
+      error: function(e){
+        console.log(e);
+        alert('회원가입에 실패했습니다. 다시 시도해 주세요');
+      }
+    });
+  } else if(!overlayNicknameChk){
+    alert('중복된 닉네임입니다.');
+    $member_nickname.focus();
+  }
+  console.log('컨트롤러도 못탐');
 }
-
-$('#member_email').on('keyup', function(e){
-
- var chkEmail = $('#member_email').val();      
- overlayEmailChk=false;
- console.log("중복체크 요청 : " + chkEmail);
- console.log($('#member_email').val().length);
- 
- $.ajax({
-    type: 'get'
-    ,url: 'overlayEmail.ajax'
-    ,data:{'member_email':chkEmail}
-    ,dataType:'json'
-    ,success:function(data){
-       console.log(data);
-
-       if($('#member_email').val().length <=4){
-     	  $('#email_msg1').css({'font-size': '10px','color': 'red'});
-     		$('#email_msg1').html('이메일을 5자리 이상 입력해주세요.');
-       }else if(data.overlayid==0){
-    	   overlayEmailChk=true;
-          $('#email_msg1').css({'font-size': '10px','color': 'darkgreen'});
-   		$('#email_msg1').html('사용 가능한 이메일 입니다.');
-       } else {             
-    	   overlayEmailChk=false;
-          $('#email_msg1').css({'font-size': '10px','color': 'red'});
-    		$('#email_msg1').html('이미 가입된 이메일 입니다.');
-       }
-    }
-    ,error:function(e){
-       console.log(e);
-    }
- });      
-
-});
 
 
 $('#member_nickname').on('keyup', function(e){
@@ -245,7 +213,7 @@ $('#member_nickname').on('keyup', function(e){
 
 $('#member_pw').on('keyup',function(e){
 
-	if($('#member_pw.').val().length <=7){
+	if($('#member_pw').val().length <=7){
 		$('#pw_msg1').css({'font-size': '10px','color': 'red'});
 		$('#pw_msg1').html('비밀번호를 8자리 이상 입력해주세요');
 	}else{
@@ -255,9 +223,9 @@ $('#member_pw').on('keyup',function(e){
 });
 
 
-$('#confirm').on('keyup',function(e){
+$('#pw_confirm').on('keyup',function(e){
 	pweq = false;
-	if($('#pw_confirm').val() == $(this).val()){
+	if($('#pw_confirm').val() == $('#member_pw').val()){
 		$('#pw_msg2').css({'font-size': '10px','color': 'darkgreen'});
 		$('#pw_msg2').html('비밀번호가 일치 합니다.');
 		pweq = true;
@@ -295,7 +263,7 @@ function member_email_check() {
 	        
 	        check = data.check;
 	        
-	      }else if (data.check == null) {
+	      }else if (data.check != null) {
 			alert('가입된 이메일이 존재합니다.');
 		  }else {
 	        alert('입력한 이메일은 존재하지 않습니다.');

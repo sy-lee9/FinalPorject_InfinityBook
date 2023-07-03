@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.member.dao.MemberDAO;
 import kr.co.book.member.dto.MemberDTO;
@@ -42,9 +41,9 @@ public class MemberService {
 	
 	}
 
-	public MemberDTO login(String email, String pw) {
+	public MemberDTO login(String member_email) {
 		
-		return dao.login(email, pw);
+		return dao.login(member_email);
 	}
 
 	public String randomCheck(String member_email, String member_email2) {
@@ -139,6 +138,20 @@ public class MemberService {
            sb+=randomChar;
        }
 		return sb;
+	}
+
+	public HashMap<String, Object> overlaynickname(String member_nickname) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		// 같은 닉네임이 있는가? 있으면 1 없으면 0	
+		map.put("overlaynickname", dao.overlaynickname(member_nickname));	
+		
+		return map;
+	}
+
+	public int findLocationCode(String location) {
+
+		return dao.findLocationCode(location);
 	}
 
 }
