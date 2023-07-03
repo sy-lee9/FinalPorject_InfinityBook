@@ -130,7 +130,7 @@
 					<option value="10000">10,000 원</option>
 				</select>
 				<input type="hidden" id="member_idx" name="member_idx" value="${member_idx}">
-				<input type="number" id="deposit_price" name="deposit_price" style="text-align:right;" placeholder="0" min="0" max="100000" onblur="checkInput()"> 원
+				<input type="number" id="deposit_price" name="deposit_price" style="text-align:right;" placeholder="0" step="1000" min="0" max="100000" onblur="checkInput()"> 원
 				<input type="submit" value="요청" style="margin-left:100px; ">
 			</form>
 		</div>
