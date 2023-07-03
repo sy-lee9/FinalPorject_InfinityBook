@@ -6,10 +6,14 @@ import kr.co.book.member.dto.MemberDTO;
 
 public interface MemberDAO {
 
-	MemberDTO login(String email, String pw);
+	MemberDTO login(String member_email);
 
 	int join(HashMap<String, String> params);
 
 	int emailOverCheck(String member_email);
+
+	Object overlaynickname(String member_nickname);
+
+	int findLocationCode(String location);
 
 }
