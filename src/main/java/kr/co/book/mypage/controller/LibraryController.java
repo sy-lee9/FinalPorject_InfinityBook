@@ -46,16 +46,16 @@ public class LibraryController {
 		return "/Library/library"+type+"List";
 	}
 	
-	
-	 @RequestMapping("/libary{type}List.ajax") 
-	 @ResponseBody
-	 public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,@RequestParam String searchText,HttpSession session) {
-		 logger.info("type : "+type);
-		 logger.info("searchText : "+searchText);
-		 String member_idx = (String) session.getAttribute("loginIdx"); 
-		 HashMap<String, Object> books = libraryService.libraryList(member_idx,page,type,searchText);
-		 return books; 
-	 }
+
+	@RequestMapping("/libary{type}List.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,@RequestParam String searchText,HttpSession session) {
+		logger.info("type : "+type);
+		logger.info("searchText : "+searchText);
+		String member_idx = (String) session.getAttribute("loginIdx"); 
+		HashMap<String, Object> books = libraryService.libraryList(member_idx,page,type,searchText);
+		return books; 
+	}
 	 
 	 
 	@RequestMapping("/{type}Detail.go")
@@ -64,8 +64,6 @@ public class LibraryController {
 		model.addAttribute("book", book);
 		return "/Library/"+type+"Detail";
 	}
-	
-
 	
 
 	@RequestMapping("/bookSelectPop.go")
@@ -158,7 +156,6 @@ public class LibraryController {
 				return data;
 			}
 		}
-		
 		
 	}
 	

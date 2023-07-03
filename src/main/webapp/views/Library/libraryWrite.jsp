@@ -39,7 +39,7 @@
 	</div>
 </section>
 
-<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;">
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
 	<div class="container" >
 		<form action="libraryWrite.do" method="post">
 			<table>

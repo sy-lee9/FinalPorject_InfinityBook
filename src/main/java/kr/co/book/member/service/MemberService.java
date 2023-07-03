@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.member.dao.MemberDAO;
 import kr.co.book.member.dto.MemberDTO;
@@ -36,15 +35,15 @@ public class MemberService {
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	String encodedPassword = encoder.encode(password);
 	params.replace("member_pw", password, encodedPassword);
-	map.put("success", dao.join(params));	
-
+	map.put("success", dao.join(params));
+	
 	return map;
 	
 	}
 
-	public MemberDTO login(String email, String pw) {
+	public MemberDTO login(String member_email) {
 		
-		return dao.login(email, pw);
+		return dao.login(member_email);
 	}
 
 	public String randomCheck(String member_email, String member_email2) {
@@ -118,6 +117,41 @@ public class MemberService {
 			      }		
 			      // 이렇게 메일로 임시 비번 보냄...
 			    return sb;
+	}
+
+	public int emailOverCheck(String member_email) {
+		
+		return dao.emailOverCheck(member_email);
+	}
+
+	public String confirmNumCheck(String member_email) {
+	   
+       String NUMBER = "0123456789";
+       String Email_ALLOW_BASE = NUMBER;
+       int email_length = 6;
+       SecureRandom random = new SecureRandom();             
+       String sb = "";
+       
+       for (int i = 0; i < email_length; i++) {
+           int randomIndex = random.nextInt(Email_ALLOW_BASE.length());
+           char randomChar = Email_ALLOW_BASE.charAt(randomIndex);
+           sb+=randomChar;
+       }
+		return sb;
+	}
+
+	public HashMap<String, Object> overlaynickname(String member_nickname) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		// 같은 닉네임이 있는가? 있으면 1 없으면 0	
+		map.put("overlaynickname", dao.overlaynickname(member_nickname));	
+		
+		return map;
+	}
+
+	public int findLocationCode(String location) {
+
+		return dao.findLocationCode(location);
 	}
 
 }

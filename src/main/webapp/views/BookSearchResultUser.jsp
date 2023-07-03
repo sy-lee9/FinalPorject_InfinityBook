@@ -10,8 +10,8 @@
 <body>
 			
 		<c:forEach var="user" items="${list}" varStatus="status">
-			<h3>${user.MEMBER_NICKNAME}</h3>
-			<h3>${user.CODE_CODENAME}</h3>
+			<h3>${user.member_nickname}</h3>
+			<h3>${user.code_codename}</h3>
 			<button type="button" onclick="(function() {
 				  var url = '/searchDetail.do?LIBRARY_IDX=' + '${user.library_idx}';
 				  window.opener.location.href = url;

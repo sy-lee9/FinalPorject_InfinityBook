@@ -32,77 +32,14 @@
 
 <body>
 
-<div id="header-wrap">
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
 
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
-
-	<header id="header">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-2">
-					<div class="main-logo">
-						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<nav id="navbar">
-						<div class="main-menu stellarnav">
-						<br/><br/>
-							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" >감상문</a></li>
-								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
-								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link">내 정보</a>
-									<ul>
-								        <li class="active"><a href="index.move">회원 정보</a></li>
-								        <li><a href="about.move">활동 내역</a></li>
-								        <li><a href="styles.move">문의 내역</a></li>
-								     </ul>
-								</li>								
-							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</header>
-</div>
 
 <section class="hero-section jarallax">
 	
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:25px;">Library</h2>
+				<h2 class="section-title" style="margin-botton:25px;">Admin-Book</h2>
 			</div>
 		</div>
 	</div>
@@ -110,22 +47,7 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
-	
-		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
-			  <li data-tab-target="#technology" class="active tab"><a href="/libraryChangeList.get">교환</a></li>
-			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>
-			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
-		</ul>
-		<ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<i class="icon icon-search"></i> 
-				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
-				<input type="button" id="searchButton" value="검색">	
-			</li>
-		</ul>
+
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
 				<div class="row" id="list">
@@ -146,6 +68,8 @@
 	</div>
 </section>
 
+
+
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">
@@ -158,6 +82,7 @@
 							<hr/>
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
+
 						
 
 					</div>
@@ -173,52 +98,52 @@
 </body>
 
 <script>
-var showPage = 1;
-var searchText = '';
-listCall(showPage);
-	
-$('#searchButton').click(function(){
-	searchText = $('#serchText').val();
+	var showPage = 1;
+	var searchText = '';
 	listCall(showPage);
-	searchText = 'default';
-	$('#pagination').twbsPagination('destroy');
-});
-
-
-function listCall(page){
-	   $.ajax({
-	      type:'post',
-	      url:'libaryChangeList.ajax',
-	      data:{
-	    	  'page':page,
-	    	  'searchText':searchText
-	      },
-	      dataType:'json',           
-	      success:function(data){
-	         console.log(data);
-	         listPrint(data.list);
-	         
-	        
-	         
-	         $('#pagination').twbsPagination({
-					startPage:1, // 시작 페이지
-					totalPages:data.pages,// 총 페이지 수 
-					visiblePages:5,// 보여줄 페이지
-					onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
-						console.log(page,showPage);
-						if(page != showPage){
-							showPage=page;
-							listCall(page);
-							
+		
+	$('#searchButton').click(function(){
+		searchText = $('#serchText').val();
+		listCall(showPage);
+		searchText = 'default';
+		$('#pagination').twbsPagination('destroy');
+	});
+	
+	
+	function listCall(page){
+		   $.ajax({
+		      type:'post',
+		      url:'libaryList.ajax',
+		      data:{
+		    	  'page':page,
+		    	  'searchText':searchText
+		      },
+		      dataType:'json',           
+		      success:function(data){
+		         console.log(data);
+		         listPrint(data.list);
+		         
+		        
+		         
+		         $('#pagination').twbsPagination({
+						startPage:1, // 시작 페이지
+						totalPages:data.pages,// 총 페이지 수 
+						visiblePages:5,// 보여줄 페이지
+						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+							console.log(page,showPage);
+							if(page != showPage){
+								showPage=page;
+								listCall(page);
+								
+							}
 						}
-					}
-		         });
-	         
-	         
-	         
-	      }
-	   });
-	}
+			         });
+		         
+		         
+		         
+		      }
+		   });
+		}
 
 	function listPrint(list) {
 	    var content = '';
@@ -228,7 +153,7 @@ function listCall(page){
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
 	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h4>책 등록하기</h4> </figcaption>';
+	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
 	    content += '    </a>';
 	    content += '  </figure>';
 
@@ -241,8 +166,8 @@ function listCall(page){
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="BookDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
+	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
@@ -259,7 +184,7 @@ function listCall(page){
 	    $('#list').empty();
 		$('#list').append(content);
 	}
-	
+
 	$('#all').click(function(e){
 		   var $chk = $('input[type="checkbox"]');
 		   console.log($chk);
@@ -270,7 +195,6 @@ function listCall(page){
 		   }
 		});
 	
-
 	function del(){
 	    
 	    var checkArr = [];
