@@ -32,77 +32,14 @@
 
 <body>
 
-<div id="header-wrap">
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
 
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
-
-	<header id="header">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-2">
-					<div class="main-logo">
-						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<nav id="navbar">
-						<div class="main-menu stellarnav">
-						<br/><br/>
-							<ul class="menu-list">
-								<li class="menu-item"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item active"><a href="/myBookreportList.get">감상문</a></li>
-								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
-								<li class="menu-item"><a href="/deposit">보증금</a></li>
-								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link">내 정보</a>
-									<ul>
-								        <li class="active"><a href="index.move">회원 정보</a></li>
-								        <li><a href="about.move">활동 내역</a></li>
-								        <li><a href="styles.move">문의 내역</a></li>
-								     </ul>
-								</li>								
-							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</header>
-</div>
 
 <section class="hero-section jarallax">
 	
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:25px;">Library</h2>
+				<h2 class="section-title" style="margin-botton:25px;">Admin-Book</h2>
 			</div>
 		</div>
 	</div>
@@ -110,17 +47,7 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
-		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#" class="tab"><a href="/myBookreportList.get">내 감상문</a></li>
-			  <li data-tab-target="#" class="active tab"><a href="/myLikeList.get">❤️</a></li>
-		</ul>
-		<ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<i class="icon icon-search"></i> 
-				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
-				<input type="button" id="searchButton" value="검색">	
-			</li>
-		</ul>
+
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
 				<div class="row" id="list">
@@ -142,6 +69,7 @@
 </section>
 
 
+
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">
@@ -154,6 +82,9 @@
 							<hr/>
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
+
+						
+
 					</div>
 				</div><!--grid-->
 
@@ -182,7 +113,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'/myLikeList.ajax',
+		      url:'libaryList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -220,9 +151,9 @@
 	    content += '<div id="products-grid" class="products-grid grid">';
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#">';
+	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>감상문 작성하기</h> </figcaption>';
+	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
 	    content += '    </a>';
 	    content += '  </figure>';
 
@@ -232,22 +163,21 @@
 			$('#list').append(content);
 	        return;
 	    }
-	    
-	   
-	  list.forEach(function(item) {
+
+	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="#">';
-	        content += '    <img src="' + item.cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
+	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
+	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
-	        content += '    <a href="#">';
-	        content += '      	<h>' + item.book_report_title + '</h>';
-	        content += '		<br/><h> ❤️ </h>';
-	        content += '		<br/><h>' + item.book_report_date + '</h>';
+	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
+	        content += '    </br><h>' + item.library_author + '</h>';
 	        content += '    </a>';
 	        content += '  </figcaption>';
 	        content += '</figure>';
-	    }); 
+	    });
 
 	    content += '</div>';
 
@@ -255,7 +185,49 @@
 		$('#list').append(content);
 	}
 
+	$('#all').click(function(e){
+		   var $chk = $('input[type="checkbox"]');
+		   console.log($chk);
+		   if($(this).is(':checked')){
+		      $chk.prop('checked',true);
+		   }else{
+		      $chk.prop('checked',false);
+		   }
+		});
 	
+	function del(){
+	    
+	    var checkArr = [];
+	    
+	    // checkbox에 value를 지정하지 않으먄 스스로를 on으로 지정한다. 
+	    $('input[type="checkbox"]:checked').each(function(idx,item){
+	      if($(this).val() != 'on'){
+	         checkArr.push($(this).val());
+	      }
+	       
+	    });
+	    
+	    console.log(checkArr);
+	    
+	   $.ajax({
+	      type:'get',
+	      url:'deleteLibrary.ajax',
+	      data:{'delList':checkArr},
+	      dataType:'json',
+	      success:function(data){
+	         console.log(data);
+	         if(data.success){
+	            alert(data.msg);
+	            
+	            listCall(showPage);
+	         }
+	      },
+	      error:function(e){
+	         console.log(e);
+	      }
+	   });
+	   
+	}
 </script>
 
 </html>	

@@ -151,11 +151,10 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12">
+						<div class="col-md-12" style="text-align:center;">
+							<hr/>
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
-
-						
 
 					</div>
 				</div><!--grid-->
