@@ -1,8 +1,7 @@
 package kr.co.book.admin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ public class AdminBookController {
 	
 	@RequestMapping("/adminBook")
 	public String adminBook(){
-		return "/admin/book";
+		return "/admin/adminBook";
 	}
 	
 	@RequestMapping("/adminBookList.ajax")
@@ -35,4 +34,22 @@ public class AdminBookController {
 		return adminBook;
 	}
 	
+	
+	@RequestMapping("/resetBookInfo.ajax")
+	@ResponseBody
+	public HashMap<String, Object> resetBookInfoAjax(@RequestParam(value="resetList[]") ArrayList<String> resetList){
+		HashMap<String, Object> map = adminBookService.resetBookInfo(resetList);
+		return map; 
+	}
+	
+	@RequestMapping("/bookBlind.ajax")
+	@ResponseBody
+	public HashMap<String, Object> bookBlindAjax(@RequestParam String blind,@RequestParam String library_idx){
+		logger.info("blind : "+blind);
+		logger.info("library_idx : "+library_idx);
+		adminBookService.bookBlind(blind,library_idx);
+		HashMap<String, Object> adminBook = new HashMap<String, Object>();
+		
+		return adminBook;
+	}
 }

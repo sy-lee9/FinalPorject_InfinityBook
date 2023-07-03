@@ -32,10 +32,9 @@
 <section id="popular-books" class="bookshelf" style="margin-bottom: 0px;">
 	<div class="container">
 	<div class="row">
-		<div class="col-md-12">
-
+		<a href="/" style="font-size:20;"> ← Main</a>
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin:100px;">Admin</h2>
+				<h2 class="section-title">Admin</h2>
 			</div>
 			
 			<div class="tab-content">
@@ -58,7 +57,7 @@
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='#'"  class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">보증금관리</button>
+								<button type="button" onclick="location.href='/adminDeposit'"  class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">보증금관리</button>
 							</figcaption>
 						</figure>
 					
@@ -112,7 +111,7 @@
 
 		</div><!--inner-tabs-->
 		</div>	
-		</div>
+		
 	</div>
 </section>
 

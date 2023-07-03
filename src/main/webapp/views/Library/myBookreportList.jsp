@@ -294,9 +294,7 @@
 	      dataType:'json',
 	      success:function(data){
 	         console.log(data);
-	         if(data.success){
-	            alert(data.msg);
-	            
+	         if(data.success){           
 	            listCall(showPage);
 	         }
 	      },

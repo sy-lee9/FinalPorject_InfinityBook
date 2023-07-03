@@ -77,6 +77,16 @@ public class MyBookReportService {
 		
 		return myLike;
 	}		
-		
+	
+	public HashMap<String, Object> deleteMyBookreport(ArrayList<String> delList) {
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		int successCnt = 0;
+		for (String book_report_idx : delList) {
+			successCnt += myBookReportDAO.deleteMyBookreport(book_report_idx);
+		}
+		map.put("msg", successCnt+" 개 삭제 되었습니다.");	
+		map.put("success", true);
+		return map;
+	}
 
 }

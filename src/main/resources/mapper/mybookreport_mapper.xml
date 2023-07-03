@@ -82,5 +82,9 @@
 		HAVING SUM(l.like_state) > 0
 		ORDER BY book_report_idx DESC LIMIT 9 OFFSET #{offset}
 	 </select>
+	 
+	 <update id="deleteMyBookreport">
+		UPDATE book_report SET book_report_blind=1 WHERE  book_report_idx = #{param1}
+	</update>
 	
 </mapper>

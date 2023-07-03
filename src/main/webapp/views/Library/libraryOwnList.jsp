@@ -116,7 +116,8 @@
 			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
 			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
 			  <li data-tab-target="#adventure" class="active tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
+			  <li data-tab-target="#business" class="tab"><a href="/libraryLendingList.get">대여/예약</a></li>
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 		</ul>
 		<ul class="tab">
@@ -187,7 +188,7 @@ $('#searchButton').click(function(){
 function listCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'libaryOwnList.ajax',
+	      url:'libraryOwnList.ajax',
 	      data:{
 	    	  'page':page,
 	    	  'searchText':searchText

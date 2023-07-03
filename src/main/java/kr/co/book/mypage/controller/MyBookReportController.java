@@ -1,5 +1,6 @@
 package kr.co.book.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -49,4 +50,13 @@ public class MyBookReportController {
 		
 		return myLike;
 	}
+	
+	@RequestMapping("/deleteMyBookreport.ajax")
+	@ResponseBody
+	public HashMap<String, Object> deleteMyBookreport(@RequestParam(value="delList[]") ArrayList<String> delList,HttpSession session){
+		HashMap<String, Object> map = myBookReportService.deleteMyBookreport(delList);
+		return map; 
+	}
+	
+	
 }

@@ -39,7 +39,7 @@ public class AdminBookService {
 			list = adminBookDAO.adminBookListSearch(data);
 		}
 		
-		int range = total%9  == 0 ? total/9 : total/9+1;
+		int range = total%10  == 0 ? total/10 : total/10+1;
 		page = page>range ? range:page;
 		adminBook.put("offset", offset);
 		adminBook.put("list", list);
@@ -47,6 +47,23 @@ public class AdminBookService {
 		adminBook.put("pages", range);
 		
 		return adminBook;
+	}
+
+	public void bookBlind(String blind, String library_idx) {
+		adminBookDAO.bookBlind(blind,library_idx);
+		
+	}
+
+	public HashMap<String, Object> resetBookInfo(ArrayList<String> resetList) {
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		int resetSize = resetList.size();
+		int successCnt = 0;
+		for (String library_idx : resetList) {
+			successCnt += adminBookDAO.resetBookInfo(library_idx);
+		}				
+		map.put("success", true);
+		return map;
+		
 	}
 
 }

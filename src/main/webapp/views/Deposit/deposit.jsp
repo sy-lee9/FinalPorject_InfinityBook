@@ -75,8 +75,8 @@
 						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
-								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
+								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/tracker/trackerSerach.go" >트래커</a></li>
 								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
 								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">

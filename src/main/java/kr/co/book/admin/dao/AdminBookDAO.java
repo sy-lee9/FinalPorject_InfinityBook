@@ -17,4 +17,8 @@ public interface AdminBookDAO {
 
 	ArrayList<AdminBookDTO> adminBookListSearch(HashMap<String, Object> data);
 
+	void bookBlind(String blind, String library_idx);
+
+	int resetBookInfo(String library_idx);
+
 }

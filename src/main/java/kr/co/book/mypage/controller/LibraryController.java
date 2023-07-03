@@ -47,7 +47,7 @@ public class LibraryController {
 	}
 	
 
-	@RequestMapping("/libary{type}List.ajax") 
+	@RequestMapping("/library{type}List.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,@RequestParam String searchText,HttpSession session) {
 		logger.info("type : "+type);
@@ -166,7 +166,10 @@ public class LibraryController {
 		HashMap<String, Object> map = libraryService.deleteLibrary(delList,member_idx);
 		return map; 
 	}
-
+	
+	
+	
+	
 	@RequestMapping("/bookSearch.ajax")
 	@ResponseBody
 	public List<BookSearchDTO> bookSearchList(String text, int start) {

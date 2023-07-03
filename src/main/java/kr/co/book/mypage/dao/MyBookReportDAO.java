@@ -29,6 +29,6 @@ public interface MyBookReportDAO {
 
 	ArrayList<MyBookReportDTO> myLikeSearch(HashMap<String, Object> data);
 
-	
+	int deleteMyBookreport(String book_report_idx);
 
 }

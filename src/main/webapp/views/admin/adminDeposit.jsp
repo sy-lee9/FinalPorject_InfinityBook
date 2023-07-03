@@ -38,8 +38,9 @@
 	
 	<div class="container">
 		<div class="row">
+		<a href="/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:25px;">Admin-Book</h2>
+				<h2 class="section-title" style="margin-bottom:25px;">Admin-Deposit</h2>
 			</div>
 		</div>
 	</div>
@@ -48,10 +49,15 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 
-		<div class="tab-content" style="text-aling:center;">
-			<div id="all-genre" style="text-aling:center;" data-tab-content class="active">
-				
-				<div class="row" style="text-aling:center;" id="list">
+		<div class="tab-content" >
+			<div id="all-genre" data-tab-content class="active">
+				<div style="font-size:20;">
+					<input type="radio" name="deposit_type" value="default" checked="checked"> 전체 &nbsp; 
+					<input type="radio" name="deposit_type" value="출금"> 출금 &nbsp;
+					<input type="radio" name="deposit_type" value="충전"> 충전 &nbsp;
+					<br/><br/>
+				</div>
+				<div class="row" style="text-align:center;" id="list">
 					
 			    </div>
 			    
@@ -100,24 +106,26 @@
 
 <script>
 	var showPage = 1;
-	var searchText = '';
+	var deposit_type = 'default';
 	listCall(showPage);
 		
-	$('#searchButton').click(function(){
-		searchText = $('#serchText').val();
+	$('input[type="radio"]').click(function(){
+		deposit_type = $(this).val();
+		console.log(deposit_type);
 		listCall(showPage);
-		searchText = 'default';
+		deposit_type = 'default';
 		$('#pagination').twbsPagination('destroy');
 	});
+	
 	
 	
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'adminBookList.ajax',
+		      url:'adminDepositList.ajax',
 		      data:{
 		    	  'page':page,
-		    	  'searchText':searchText
+		    	  'deposit_type':deposit_type
 		      },
 		      dataType:'json',           
 		      success:function(data){
@@ -148,74 +156,43 @@
 
 	function listPrint(list) {
 	    var content = '';
-	    content += '<table  width="90%" style="text-align:center;">';
+	    
+	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
-	    content += '	<th width="10%">도서 IDX</th>';
-	    content += '	<th width="10%">회원 IDX</th>';
-	    content += '	<th width="30%">도서 제목</th>';
-	    content += '	<th width="20%">도서 정보</th>';
-		content += '	<th width="10%">블라인드</th>';
+	    content += '	<th width="10%" style="text-align:center;">결제 IDX</th>';
+	    content += '	<th width="10%" style="text-align:center;">회원 IDX</th>';
+	    content += '	<th width="20%" style="text-align:center;">결제</th>';
+	    content += '	<th width="20%" style="text-align:center;">결제 정보 </th>';
+		content += '	<th width="10%" style="text-align:center;">결제 금액</th>';
+		content += '	<th width="10%" style="text-align:center;">상태</th>';
+		content += '	<th width="20%" style="text-align:center;">결제 일시</th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
-	        content += '<tr>';
-	        content += '	<td>'+item.library_idx+'</td>';
-		    content += '	<td>'+item.member_idx+'</td>';
-		    content += '	<td>'+item.library_title+'</td>';
-		    content += '	<td>'+item.library_info+'</td>';
-			content += '	<td>'+item.library_blind+'</td>';
-	        content += '</tr>';
+	    	content += '<tr>';
+	 	    content += '	<th style="text-align:center;">'+item.deposit_idx+'</th>';
+	 	    content += '	<th style="text-align:center;">'+item.member_idx+'</th>';
+	 	    content += '	<th style="text-align:center;">'+item.deposit_type+'</th>';
+	 	    content += '	<th style="text-align:center;">'+item.deposit_info+'</th>';
+	 		content += '	<th style="text-align:center;">'+item.deposit_price+'</th>';
+	 		if (item.deposit_type=="충전") {
+	 			content += '	<th style="text-align:center;"><a href="#">결제 취소</a></th>';
+			}else{
+				content += '	<th style="text-align:center;"><a href="#">출금 거절</a></th>';
+			}
+	 		
+	 		content += '	<th style="text-align:center;">'+item.deposit_date+'</th>';
+	 		content += '<tr>';
 	    });
 
 	    content += '</table>'; 
-
+	    
 	    $('#list').empty();
 		$('#list').append(content);
 	}
-
-/* 	$('#all').click(function(e){
-		   var $chk = $('input[type="checkbox"]');
-		   console.log($chk);
-		   if($(this).is(':checked')){
-		      $chk.prop('checked',true);
-		   }else{
-		      $chk.prop('checked',false);
-		   }
-		});
 	
-	function resetBookInfo(){
-	    
-	    var checkArr = [];
-	    
-	    // checkbox에 value를 지정하지 않으먄 스스로를 on으로 지정한다. 
-	    $('input[type="checkbox"]:checked').each(function(idx,item){
-	      if($(this).val() != 'on'){
-	         checkArr.push($(this).val());
-	      }
-	       
-	    });
-	    
-	    console.log(checkArr);
-	    
-	   $.ajax({
-	      type:'get',
-	      url:'deleteLibrary.ajax',
-	      data:{'delList':checkArr},
-	      dataType:'json',
-	      success:function(data){
-	         console.log(data);
-	         if(data.success){
-	            alert(data.msg);
-	            
-	            listCall(showPage);
-	         }
-	      },
-	      error:function(e){
-	         console.log(e);
-	      }
-	   });
-	   
-	} */
+	
+
 </script>
 
 </html>	
