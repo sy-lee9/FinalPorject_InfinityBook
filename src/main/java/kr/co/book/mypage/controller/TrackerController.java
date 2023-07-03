@@ -41,10 +41,12 @@ public class TrackerController {
 	
 	//트래커 추가 페이지로 이동
 	@GetMapping(value = "/tracker/add/{state}/book.go")
-	public String trackerAddBookGo(String isbn, Model model,@PathVariable String state) {	
-		logger.info("trackerAddBookGo isbn : "+isbn);
-		if(!isbn.equals("undefined")) {
-		model.addAttribute("isbn",isbn);
+	public String trackerAddBookGo(@RequestParam HashMap<String, Object> params, Model model,@PathVariable String state) {	
+		logger.info("trackerAddBookGo params : ",params);
+		if(!params.get("isbn").equals("undefined")) {
+			model.addAttribute("isbn",params.get("isbn"));
+			model.addAttribute("cover",params.get("cover"));
+			model.addAttribute("jsp",params.get("jsp"));
 		}else {
 			model.addAttribute("msg","해당 도서는 추가할 수 없습니다.");
 		}
@@ -90,6 +92,7 @@ public class TrackerController {
 		return map;
 	}
 	
+	//트래커 리스트로 이동
 	@GetMapping(value = "/trackerList.go")
 	public ModelAndView trackerListGo(HttpSession session) {
 		session.setAttribute("loginIdx", 3);
@@ -97,10 +100,53 @@ public class TrackerController {
 		logger.info("loginIdx : "+loginIdx);		
 		return TrackerService.trackerList(loginIdx);
 	}
+	
+	//트래커 디테일
+	@GetMapping(value = "/trackerDetail.go")
+	public ModelAndView trackerDetail(HttpSession session, String isbn) {
+		session.setAttribute("loginIdx", 3);
+		int loginIdx = (int) session.getAttribute("loginIdx");
+		logger.info("loginIdx : "+loginIdx);		
+		return TrackerService.trackerDetail(loginIdx,isbn);
+	}
 
+	//트래커 업데이트 페이지로 이동
+	@GetMapping(value = "/trackerUpdateBook.go")
+	public String trackerUpdateBookGo(@RequestParam HashMap<String, Object> params, Model model) {	
+		logger.info("params : ",params);
+			model.addAttribute("isbn",params.get("isbn"));
+			model.addAttribute("readPage",params.get("readPage"));
+			model.addAttribute("startDate",params.get("startDate"));
+			model.addAttribute("jsp",params.get("jsp"));
+		return "/tracker/trackerAddReadingBook";
+	}
 	
+	//트래커 수정
+	@GetMapping(value = "/trackerUpdateBook.ajax")
+	@ResponseBody
+	public HashMap<String, Object> trackerUpdateBook(HttpSession session, @RequestParam HashMap<String, Object> params) {
+		session.setAttribute("loginIdx", 3);
+		int loginIdx = (int) session.getAttribute("loginIdx");
+		logger.info("loginIdx : "+loginIdx);		
+		params.put("loginIdx", loginIdx);			
+		return TrackerService.trackerUpdateBook(params);
+	}
 	
-	
+	//트래커 삭제
+	@GetMapping(value = "/trackerDeleteBook.ajax")
+	@ResponseBody
+	public HashMap<String, Object> trackerDeleteBook(HttpSession session, String isbn) {
+		session.setAttribute("loginIdx", 3);
+		int loginIdx = (int) session.getAttribute("loginIdx");
+		logger.info("loginIdx : "+loginIdx);		
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(TrackerService.trackerDeleteBook(isbn,loginIdx) == 1) {
+			map.put("success", "success");
+		}
+		
+		return map;
+	}
 	
 	
 	

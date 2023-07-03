@@ -44,7 +44,7 @@ public class TrackerService {
     	}else {    		
     		String MaxResults = "100";
     		String Start = "1";
-    		String Cover = "Small";
+    		String Cover = "MidBig";
     		String SearchTarget = "Book";
     		String output = "JS";
     		String Version = "20131101";
@@ -124,11 +124,12 @@ public class TrackerService {
 		
 		TrackerDTO dto = new TrackerDTO();
 		
+		dto.setCover((String) params.get("cover"));
+		
 		if (bookInfo != null) {
 		    for (Map<String, Object> detail : bookInfo) {
 		    	dto.setIsbn((String) detail.get("isbn13"));
 		    	dto.setTitle((String) detail.get("title"));
-		    	dto.setCover((String) detail.get("cover"));
 		    	dto.setAuthor((String) detail.get("author"));
 		    	dto.setPublisher((String) detail.get("publisher"));
 		    	dto.setDescription((String) detail.get("description"));
@@ -146,7 +147,6 @@ public class TrackerService {
 		    
 		    row = TrackerDAO.saveBook(dto);
 		    logger.info("row : "+row);
-		    		    
 		}    				
 		return row;
 	}
@@ -163,6 +163,7 @@ public class TrackerService {
 	public int getTotalPage(HashMap<String, Object> params) {
 		int totalPage = 0;
 		String isbn = String.valueOf(params.get("isbn"));
+		logger.info("isbn : "+isbn);
 		
 		if(TrackerDAO.bookInfoChk(isbn) == 1) {
 			totalPage = TrackerDAO.getTotalPage(isbn);
@@ -175,6 +176,7 @@ public class TrackerService {
 		return totalPage;
 	}
 
+	//트래커 리스트 가져오기
 	public ModelAndView trackerList(int loginIdx) {
 		logger.info("trackerList loginIdx : "+loginIdx);
 		
@@ -185,11 +187,45 @@ public class TrackerService {
 			trackerList = TrackerDAO.getTrackerList(loginIdx);
 			if(trackerList != null) {
 				logger.info("trackerList : "+trackerList);
-				mav.addObject(trackerList);
+				mav.addObject("trackerList",trackerList);
 			}
 		}
 		
 		return mav;
+	}
+
+	//트래커 책 상세보기
+	public ModelAndView trackerDetail(int loginIdx, String isbn) {
+		ModelAndView mav = new ModelAndView("/tracker/trackerDetail");
+		HashMap<String, Object> map = TrackerDAO.trackerDetail(loginIdx,isbn);
+		mav.addObject("book",map);
+		return mav;
+	}
+	
+	//트래커 수정
+	public HashMap<String, Object> trackerUpdateBook(HashMap<String, Object> params) {
+		logger.info("params : "+params);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row = TrackerDAO.trackerUpdateBook(params);
+		if(row == 1) {
+			logger.info("수정완료");
+			map.put("success", "수정완료");
+		}
+		
+		int totalPage = TrackerDAO.getTotalPage((String) params.get("isbn"));
+		
+		//읽은 페이지랑 총페이지가 같을 경우 종료일 저장
+		if(Integer.parseInt((String) params.get("readPage")) == totalPage) {
+			TrackerDAO.saveEndDate((String) params.get("loginIdx"),(String) params.get("isbn"));
+		}		
+		
+		return map;
+	}
+
+	//트래커 삭제
+	public int trackerDeleteBook(String isbn, int loginIdx) {
+		return TrackerDAO.trackerDeleteBook(isbn,loginIdx);
 	}
     
 

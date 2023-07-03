@@ -121,8 +121,8 @@ figure {
 img {
   display: inline-block;
   border: 0;
-  max-width: 150%;
-  height: 190px;
+  max-width: 100%;
+  height: auto;
   vertical-align: middle;
 }
 ::selection {

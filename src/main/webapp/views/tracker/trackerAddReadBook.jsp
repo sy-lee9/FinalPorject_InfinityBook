@@ -46,8 +46,6 @@
 	</head>
 
 <body>
-	<h3>읽은 책 추가</h3>
-	<hr style="width:100%; margin: 0px;">
 	<table>
 		<tr>
 			<th>독서 시작일</th>
@@ -58,20 +56,22 @@
 			<td><input type="text" name="endDate" id="endDate"  placeholder="독서 종료일" style="width:120px; margin-top: 20px;"></td>
 		</tr>
 		<tr>
-			<th colspan="2"><input type=button value="저장" onclick="trackerAddReadBook(${isbn})"/></th>
+			<th colspan="2"><input type=button value="저장" onclick="trackerAddReadBook('${isbn}','${cover}')"/></th>
 		</tr>
 	</table>
 </body>
 <script>
 
-	function trackerAddReadBook(isbn) {
+	function trackerAddReadBook(isbn,cover) {
 		console.log(isbn);
+		console.log(cover);
 		
 	    $.ajax({
 	        url: '/tracker/add/read/book.ajax',
 	        type: 'get',
 	        data: {
 	            'isbn': isbn,
+	            'cover': cover,
 	            'startDate':document.getElementById("startDate").value,
 	            'endDate':document.getElementById("endDate").value,
 	            'jsp':"trackerAddReadBook.jsp"
@@ -81,9 +81,12 @@
 				console.log(data);
 				if(data.success){
 					console.log("추가 완료");
-					if (window.opener && !window.opener.closed) {
+					if (data != null) {
 						  window.alert("트래커에 추가 되었습니다.");
-						  window.close(); // 창 닫기
+						  window.close(); 
+						  if (window.opener) {
+						      window.opener.location.href = '/trackerList.go';
+						   }
 					}
 				}else{
 					console.log("추가 실패");

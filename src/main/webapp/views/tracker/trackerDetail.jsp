@@ -26,25 +26,11 @@
 	</head>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-		h3{
-			font-family: 'IBM Plex Sans KR', serif;	
-			font-weight: 600;
-			margin: 10 0 0 0;
-		}
-		.post-item{
+		.item-price{
 			font-family: 'IBM Plex Sans KR', serif;	
 		}
-		progress {	   
-			width: 100%;
-		    height: 3%;
-		    color: #c5a992;
-		    border-radius: 50px;
-		}
-		progress::-webkit-progress-bar {
-		   background-color: azure;
-		}
-		progress::-webkit-progress-value {
-		   background-color: #c5a992e3;
+		#myProgress::-webkit-progress-value {
+		  background-color: red; 
 		}
 	</style>
 <body>
@@ -120,56 +106,50 @@
 	</header>
 		
 </div><!--header-wrap-->
+	<div class="section-header align-center" style="margin: 5%;">
+		<h2 class="section-title">Tracker</h2>
+	</div>					
+	<input type="button" value="삭제" onclick="trackerDelete()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
+	<input type="button" value="수정" onclick="trackerUpdate()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
+<section id="best-selling" class="leaf-pattern-overlay" style="margin-top: 6%;">
+	
+	<div class="corner-pattern-overlay"></div>
+	<div class="container">	
+		<div class="row" style=" padding-left: 0px; padding-right: 13%;">			
+			<div class="col-md-8 col-md-offset-2">				
+				<div class="row">	
+					<div class="col-md-6" style="height: 48%;">
+						<figure class="products-thumb" style="height: 96%; padding: 13% 0% 9% 22%; width: 100%;">
+							<img src="${book.cover}" alt="book" class="single-image" style="height: auto; width: 72%;">
+						</figure>	
+					</div>
 
-<section id="padding-large">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12" style="margin-top:5%;">
+					<div class="col-md-6">
+						<div class="product-entry">
+							<h2 class="section-title divider" style=" width: 161%; height: 12%; font-size: 30px; font-weight: 600; margin-bottom: 5%; top: -30;">${book.title}</h2>
 
-				<div class="section-header align-center">
-					<h2 class="section-title">Tracker</h2>
-				</div>					
-				<input type="button" value="추가" onclick="location.href='trackerSearch.go'" style="float: right; bottom: 80px;">
-				<div class="row" style="margin-top: 15%;">
-					<c:if test="${trackerList.size() eq 0}">
-						<h3 style="text-align: center;">읽고 있는 책을 추가 해보세요!</h3>
-					</c:if>
-						<c:forEach items="${trackerList}" var="book">
-						<div class="col-md-4" style="margin-bottom: 10%; height: 541px;">
-	
-							<article class="column" data-aos="fade-up">
-								
-								<figure style="text-align: center; height: 48%;">
-									<a href="/trackerDetail.go?isbn=${book.isbn}">
-										<img src="${book.cover}" alt="post" class="post-image"  style="width: 170px; height: auto;">		
-									</a>										
-								</figure>
-								<div class="post-item">	
-									<h3 style="height: 20%;"><a href="/trackerDetail.go?isbn=${book.isbn}">${book.title}</a></h3>
-									<div class="meta-date" style="margin-bottom: 10; height:12%;">${book.author}</div>	
-	
-								    <div class="links-element">
-									    <div class="categories" style="float: left; font-size: 14; font-weight: 600;">${book.startDate}</div>
-									    <div class="categories" style="float: right; font-size: 14; font-weight: 600;">${book.endDate}</div>
-									    <div class="social-links" ><progress value="${book.progress}" min="0" max="100" style=" border-radius: 50px;"></progress></div>
-									    <div class="categories" style="float: left; font-size: 14; font-weight: 600;">${book.progress}%</div>
-									    <div class="categories" style="float: right; font-size: 14;">${book.readPage} / ${book.totalPage} page</div>
-									</div>
-	
+							<div class="products-content">
+								<div class="item-price" style=" font-size: 20px; font-weight: 600; height: 9%; width: 160%; margin-bottom: 5%;">${book.author}</div>
+								<div class="links-element" style="width: 155%;">
+								    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.startDate}</div>
+								    <div class="categories" style="float: right; font-size: 16; font-weight: 600;">${book.endDate}</div>
+								    <div class="social-links" ><progress value="${book.progress}" min="0" max="100" style="width: 100%; height: 5%; color: #c5a992;"></progress></div>
+								    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.progress}%</div>
+								    <div class="categories" style="float: right; font-size: 16;">${book.readPage} / ${book.totalPage} page</div>
 								</div>
-								
-							</article>
-							
-						</div>
-					</c:forEach>
-				</div>
+							</div>
 
-			</div>	
+						</div>
+					</div>
+
+				</div>
+				<!-- / row -->
+
+			</div>
+
 		</div>
 	</div>
 </section>
-
-
 
 <div id="footer-bottom" style="margin-top:5%">
 	<div class="container">
@@ -199,7 +179,47 @@
 
 </body>
 <script>
-	var trackerList = "${trackerList}";
-	console.log(trackerList);
+
+	var isbn = "${book.isbn}";
+	var readPage = "${book.readPage}";
+	var startDate = "${book.startDate}";
+	var jsp = 'trackerDetail.jsp';
+
+	function trackerUpdate() {
+		console.log(isbn);
+		window.open('/trackerUpdateBook.go?isbn='+isbn+'&readPage='+readPage+'&jsp='+jsp+'&startDate='+startDate,'읽는 중','width=473px,height=400px');
+	};
+	
+	function trackerDelete() {
+		var result = confirm("정말 삭제하시겠습니까?"); 
+
+		if (result) {
+			
+			$.ajax({
+		        url: '/trackerDeleteBook.ajax',
+		        type: 'get',
+		        data: {
+		            'isbn': isbn
+		        },
+				dataType:'json',
+				success: function(data) {
+					console.log(data);
+					if(data.success){
+							console.log("삭제 완료");
+							alert("삭제되었습니다.");
+					      	window.location.href = '/trackerList.go';
+					}else{
+						console.log("삭제 실패");
+					}
+		
+		        },
+				error:function(e){
+					console.log(e);
+				}
+		    });
+			
+		} 
+	};
+	
 </script>
 </html>	
