@@ -46,7 +46,7 @@ public class LibraryController {
 		return "/Library/library"+type+"List";
 	}
 	
-	
+
 	@RequestMapping("/libary{type}List.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,@RequestParam String searchText,HttpSession session) {
