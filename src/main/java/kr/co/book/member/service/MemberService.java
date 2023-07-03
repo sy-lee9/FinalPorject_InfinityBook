@@ -36,8 +36,8 @@ public class MemberService {
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	String encodedPassword = encoder.encode(password);
 	params.replace("member_pw", password, encodedPassword);
-	map.put("success", dao.join(params));	
-
+	map.put("success", dao.join(params));
+	
 	return map;
 	
 	}
@@ -118,6 +118,27 @@ public class MemberService {
 			      }		
 			      // 이렇게 메일로 임시 비번 보냄...
 			    return sb;
+	}
+
+	public int emailOverCheck(String member_email) {
+		
+		return dao.emailOverCheck(member_email);
+	}
+
+	public String confirmNumCheck(String member_email) {
+	   
+       String NUMBER = "0123456789";
+       String Email_ALLOW_BASE = NUMBER;
+       int email_length = 6;
+       SecureRandom random = new SecureRandom();             
+       String sb = "";
+       
+       for (int i = 0; i < email_length; i++) {
+           int randomIndex = random.nextInt(Email_ALLOW_BASE.length());
+           char randomChar = Email_ALLOW_BASE.charAt(randomIndex);
+           sb+=randomChar;
+       }
+		return sb;
 	}
 
 }

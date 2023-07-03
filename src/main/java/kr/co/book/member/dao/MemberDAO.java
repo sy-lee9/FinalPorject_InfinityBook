@@ -10,4 +10,6 @@ public interface MemberDAO {
 
 	int join(HashMap<String, String> params);
 
+	int emailOverCheck(String member_email);
+
 }

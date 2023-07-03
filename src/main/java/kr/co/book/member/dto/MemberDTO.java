@@ -6,8 +6,7 @@ public class MemberDTO {
 	private String member_email;
 	private String member_pw;
 	private String member_nickname;	
-	private String address;
-	private int code_idx;
+	private String location;
 	
 	public int getMember_idx() {
 		return member_idx;
@@ -32,18 +31,12 @@ public class MemberDTO {
 	}
 	public void setMember_nickname(String member_nickname) {
 		this.member_nickname = member_nickname;
+	}	
+	public String getLocation() {
+		return location;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public int getCode_idx() {
-		return code_idx;
-	}
-	public void setCode_idx(int code_idx) {
-		this.code_idx = code_idx;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 	

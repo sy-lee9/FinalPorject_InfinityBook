@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -95,18 +96,63 @@ public class MemberController {
 	
 	@RequestMapping(value="/member_email_check.ajax")	
 	@ResponseBody
-	public HashMap<String, Object> findmemberpw(@RequestParam String member_email, HttpSession session){
+	public HashMap<String, Object> member_email_check(@RequestParam String member_email, HttpSession session){
 		   		   		  
-		   logger.info(member_email+"/"+" 이메일");		   
-		   // 맵에 넣기
+		   logger.info(member_email+"/"+" 이메일");
 		   HashMap<String, Object> map = new HashMap<String, Object>();
-		   // 서비스에서 받아온 임시 비번을 변수에 전달
-			/*
-			 * String email_check =(String) service.randomCheck(member_email);
-			 * logger.info("인증번호: "+email_check); // 멥에 저장 map.put("email_check",
-			 * email_check);
-			 */
+		     // 중복된 값 확인
+		     int success = service.emailOverCheck(member_email);
+		     // 이메일 중복이 없을 떄 인증번호 전송 
+		     if (success == 0) {
+		    	 String email_check =(String) service.confirmNumCheck(member_email);
+				 logger.info("이메일 인증번호: "+email_check); // 멥에 저장 map.put("email_check",
+				 String charSet = "UTF-8";
+			       String hostSMTP = "smtp.naver.com"; //네이버 이용시 smtp.naver.com / 구글 사용시 smtp.gmail.com
+			       String hostSMTPid = "vzoo8204@naver.com";
+			       String hostSMTPpwd = "?gtp6418";
+
+			       // 보내는 사람 EMail, 제목, 내용
+			       String fromEmail = "vzoo8204@naver.com";
+			       String fromName = "Infinity BooK";
+			       String subject = "";
+			       String msg = "";
+			         
+			       subject = "Infinity BooK 인증번호 입니다.";
+			       msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+			       msg += "<h3 style='color: skyblue;'>";
+			       msg += "이메일(아이디) : "+ member_email + " 의 인증번호 입니다.</h3>";
+			       msg += "<p>인증번호 : ";
+			       msg += email_check + "</p></div>";
+
+			         // 받는 사람 E-Mail 주소
+			         String mail = member_email;
+			         try {
+			            HtmlEmail email = new HtmlEmail();
+			            email.setDebug(true);
+			            email.setCharset(charSet);
+			            email.setSSL(true);
+			            email.setHostName(hostSMTP);
+			            email.setSmtpPort(587); //네이버 이용시 587 / 구글 이용시 465
+
+			            email.setAuthentication(hostSMTPid, hostSMTPpwd);
+			            email.setTLS(true);
+			            email.addTo(mail, charSet);
+			            email.setFrom(fromEmail, fromName, charSet);
+			            email.setSubject(subject);
+			            email.setHtmlMsg(msg);
+			            email.send();
+			         } catch (Exception e) {
+			            logger.info("메일발송 실패 : " + e);
+			         }   
+			         
+				     map.put("check", email_check);
+			 }else {
+				
+			}
+			 
+		     
+			 
 		   		   		   		   		  
-		return  map;
+		     return map;
 	}
 }
