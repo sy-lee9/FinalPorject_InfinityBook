@@ -48,9 +48,10 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 
-		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list">
+		<div class="tab-content" style="text-aling:center;">
+			<div id="all-genre" style="text-aling:center;" data-tab-content class="active">
+				
+				<div class="row" style="text-aling:center;" id="list">
 					
 			    </div>
 			    
@@ -113,7 +114,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'libaryList.ajax',
+		      url:'adminBookList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -147,45 +148,32 @@
 
 	function listPrint(list) {
 	    var content = '';
-
-	    content += '<div id="products-grid" class="products-grid grid">';
-	    content += '  <figure class="product-style">';
-	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
-	    content += '    </a>';
-	    content += '  </figure>';
-
-	    if (list.length === 0) {
-	        content += '</div>';
-	        $('#list').empty();
-			$('#list').append(content);
-	        return;
-	    }
-
+	    content += '<table  width="90%" style="text-align:center;">';
+	    content += '<tr>';
+	    content += '	<th width="10%">도서 IDX</th>';
+	    content += '	<th width="10%">회원 IDX</th>';
+	    content += '	<th width="30%">도서 제목</th>';
+	    content += '	<th width="20%">도서 정보</th>';
+		content += '	<th width="10%">블라인드</th>';
+		content += '<tr>';
+	
 	    list.forEach(function(item) {
-	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
-	        content += '  </a>';
-	        content += '  <figcaption>';
-	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
-	        content += '    </br><h>' + item.library_author + '</h>';
-	        content += '    </a>';
-	        content += '  </figcaption>';
-	        content += '</figure>';
+	        content += '<tr>';
+	        content += '	<td>'+item.library_idx+'</td>';
+		    content += '	<td>'+item.member_idx+'</td>';
+		    content += '	<td>'+item.library_title+'</td>';
+		    content += '	<td>'+item.library_info+'</td>';
+			content += '	<td>'+item.library_blind+'</td>';
+	        content += '</tr>';
 	    });
 
-	    content += '</div>';
+	    content += '</table>'; 
 
 	    $('#list').empty();
 		$('#list').append(content);
 	}
 
-	$('#all').click(function(e){
+/* 	$('#all').click(function(e){
 		   var $chk = $('input[type="checkbox"]');
 		   console.log($chk);
 		   if($(this).is(':checked')){
@@ -195,7 +183,7 @@
 		   }
 		});
 	
-	function del(){
+	function resetBookInfo(){
 	    
 	    var checkArr = [];
 	    
@@ -227,7 +215,7 @@
 	      }
 	   });
 	   
-	}
+	} */
 </script>
 
 </html>	
