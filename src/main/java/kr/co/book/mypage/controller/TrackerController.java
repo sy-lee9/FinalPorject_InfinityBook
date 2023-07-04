@@ -103,11 +103,8 @@ public class TrackerController {
 	
 	//트래커 디테일
 	@GetMapping(value = "/trackerDetail.go")
-	public ModelAndView trackerDetail(HttpSession session, String isbn) {
-		session.setAttribute("loginIdx", 3);
-		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);		
-		return TrackerService.trackerDetail(loginIdx,isbn);
+	public ModelAndView trackerDetail(HttpSession session, String trackerIdx) {
+		return TrackerService.trackerDetail(trackerIdx);
 	}
 
 	//트래커 업데이트 페이지로 이동
@@ -146,6 +143,28 @@ public class TrackerController {
 		}
 		
 		return map;
+	}
+	
+	//메모 저장
+	@PostMapping(value = "/trackerAddMemo.ajax")
+	@ResponseBody
+	public HashMap<String, Object> trackerAddMemo(HttpSession session, @RequestParam HashMap<String, Object> params) {
+		logger.info("memo params: "+params);
+		
+		session.setAttribute("loginIdx", 3);
+		int loginIdx = (int) session.getAttribute("loginIdx");
+		logger.info("loginIdx : "+loginIdx);	
+		
+		params.put("loginIdx", loginIdx);
+		
+		return TrackerService.trackerAddMemo(params);
+	}
+	
+	@PostMapping(value = "/getMemoList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> getMemoList(String trackerIdx){
+		logger.info("memo trackerIdx : "+trackerIdx);
+		return TrackerService.getMemoList(trackerIdx);
 	}
 	
 	

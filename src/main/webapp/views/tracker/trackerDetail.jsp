@@ -29,8 +29,27 @@
 		.item-price{
 			font-family: 'IBM Plex Sans KR', serif;	
 		}
-		#myProgress::-webkit-progress-value {
-		  background-color: red; 
+		progress {	   
+			width: 100%;
+		    height: 3%;
+		    color: #c5a992;
+		    border-radius: 50px;
+		}
+		progress::-webkit-progress-bar {
+		   background-color: azure;
+		}
+		progress::-webkit-progress-value {
+		   background-color: #c5a992e3;
+		}
+		#memo-div{
+			position: relative; 
+			width: 100%; 
+			height:auto; 
+			resize: none; 
+			background-color: #dcc8b799; 
+			margin-bottom: 0%; 
+			box-sizing: border-box; 
+			margin-top: 8%;
 		}
 	</style>
 <body>
@@ -111,29 +130,29 @@
 	</div>					
 	<input type="button" value="삭제" onclick="trackerDelete()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
 	<input type="button" value="수정" onclick="trackerUpdate()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
-<section id="best-selling" class="leaf-pattern-overlay" style="margin-top: 6%;">
-	
+<section id="best-selling" class="leaf-pattern-overlay" style="margin-top: 6%; margin-bottom: 1%">
+	<input type="hidden" id="trackerIdx" name="trackerIdx" value="${book.tracker_idx}">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">	
 		<div class="row" style=" padding-left: 0px; padding-right: 13%;">			
 			<div class="col-md-8 col-md-offset-2">				
 				<div class="row">	
 					<div class="col-md-6" style="height: 48%;">
-						<figure class="products-thumb" style="height: 96%; padding: 13% 0% 9% 22%; width: 100%;">
-							<img src="${book.cover}" alt="book" class="single-image" style="height: auto; width: 72%;">
+						<figure class="products-thumb" style="height: 96%; width: 100%; display: flex; justify-content: center; align-items: center;">
+							<img src="${book.cover}" alt="book" class="single-image" style="height: 90%; width: 72%;">
 						</figure>	
 					</div>
 
 					<div class="col-md-6">
 						<div class="product-entry">
-							<h2 class="section-title divider" style=" width: 161%; height: 12%; font-size: 30px; font-weight: 600; margin-bottom: 5%; top: -30;">${book.title}</h2>
+							<h2 class="section-title divider" style=" width: 161%; height: 12%; font-size: 30px; font-weight: 600; margin-bottom: 5%; top: -43px; font-family: 'IBM Plex Sans KR', serif; line-height: 40px;">${book.title}</h2>
 
 							<div class="products-content">
 								<div class="item-price" style=" font-size: 20px; font-weight: 600; height: 9%; width: 160%; margin-bottom: 5%;">${book.author}</div>
 								<div class="links-element" style="width: 155%;">
 								    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.startDate}</div>
 								    <div class="categories" style="float: right; font-size: 16; font-weight: 600;">${book.endDate}</div>
-								    <div class="social-links" ><progress value="${book.progress}" min="0" max="100" style="width: 100%; height: 5%; color: #c5a992;"></progress></div>
+								    <div class="social-links" ><progress value="${book.progress}" min="0" max="100"></progress></div>
 								    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.progress}%</div>
 								    <div class="categories" style="float: right; font-size: 16;">${book.readPage} / ${book.totalPage} page</div>
 								</div>
@@ -147,6 +166,43 @@
 
 			</div>
 
+		</div>
+	</div>
+</section>
+
+<section id="subscribe" style="padding-top: 0%;">
+	<div class="col-md-6" style=" padding: 1% 1% 2% 20%;">
+		<div class="title-element">
+			<h2 class="section-title divider">MEMO</h2>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-8 col-md-offset-2" style="width: 75%; margin-left: 14%;">
+				<div class="row">
+
+					<div class="col-md-6" style="width: 94%; margin-left: 4%;">
+
+						<div class="subscribe-content" data-aos="fade-up">
+							<div style="display: flex; align-items: center;">
+								<textarea id="content" placeholder="메모할 내용을 입력하세요." style="width: 90%; resize: none;"></textarea>
+								<button onclick="trackerAddMemo()" class="btn-subscribe" style="width: 11%; margin-bottom: 2%;">
+									<span>save</span> 
+									<i class="icon icon-send"></i>
+								</button>
+							</div>
+							<hr>
+							<div id="list" style="position: relative;">
+								<!-- list 출력 영역 -->
+							</div>							
+						</div>
+
+					</div>
+					
+				</div>
+			</div>
+			
 		</div>
 	</div>
 </section>
@@ -179,6 +235,76 @@
 
 </body>
 <script>
+
+	$(document).ready(function() {	
+		listCall();
+	});
+	
+	function trackerAddMemo() {
+	    
+	    $.ajax({
+	        url: '/trackerAddMemo.ajax',
+	        type: 'post',
+	        data: {
+	        	'content':document.getElementById("content").value,
+	        	'trackerIdx':document.getElementById("trackerIdx").value,
+	            'jsp':"trackerDetail.jsp"
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data.success);
+				if(data.success == 1){
+					document.getElementById("content").value = "";
+					listCall();	
+				}
+	        },
+			error:function(e){
+				console.log(e);
+			}
+	    });
+	}
+	
+	function listCall(){
+		$.ajax({
+			type:'post',
+			url:'getMemoList.ajax',
+			data:{
+	        	'trackerIdx':document.getElementById("trackerIdx").value
+			},
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				listPrint(data.list);					
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}
+	
+	function listPrint(list){
+		var content = '';
+		
+		list.forEach(function(list){			
+			content +='<div id="memo-div">';
+			content +='<p style="width: 90%; padding:0.5% 1% 0.5% 1%; margin-bottom: 0px;">'+list.content.replace(/\n/g, "<br>")+'</p><p style="width: 90%;">•••</p>;	
+			content +='</div>';
+			content +='<p style="position: absolute; right: 0; margin-top: 0%; font-size: 13px;">'+list.regDate+'</p>';
+		}); 
+		$('#list').empty();
+		$('#list').append(content);
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	var isbn = "${book.isbn}";
 	var readPage = "${book.readPage}";

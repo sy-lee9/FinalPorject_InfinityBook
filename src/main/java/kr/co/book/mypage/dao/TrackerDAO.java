@@ -2,6 +2,7 @@ package kr.co.book.mypage.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,12 +20,16 @@ public interface TrackerDAO {
 
 	ArrayList<HashMap<String, Object>> getTrackerList(int loginIdx);
 
-	HashMap<String, Object> trackerDetail(int loginIdx, String isbn);
+	HashMap<String, Object> trackerDetail(String trackerIdx);
 
 	int trackerUpdateBook(HashMap<String, Object> params);
 
 	void saveEndDate(String loginIdx, String isbn);
 
 	int trackerDeleteBook(String isbn, int loginIdx);
+
+	int trackerAddMemo(HashMap<String, Object> params);
+
+	List<HashMap<String, Object>> getMemoList(String trackerIdx);
 
 }
