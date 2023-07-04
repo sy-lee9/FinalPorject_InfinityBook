@@ -92,16 +92,17 @@ public class LibraryService {
 
 	public HashMap<String, Object> deleteLibrary(ArrayList<String> delList,String member_idx) {
 		HashMap<String, Object> map = new HashMap<String, Object>();		
-		int delSize = delList.size();
 		int successCnt = 0;
 		for (String library_idx : delList) {
 			successCnt += libraryDAO.deleteLibrary(library_idx,member_idx);
 		}		
-		map.put("msg", delSize+" 요청중 "+successCnt+" 개 삭제 했습니다.");		
+		map.put("msg", successCnt+" 개 삭제 되었습니다.");		
 		map.put("success", true);
 		return map;
 		
 	}
+
+	
 
 
 

@@ -31,6 +31,21 @@
 			font-weight: 600;
 			margin: 10 0 0 0;
 		}
+		.post-item{
+			font-family: 'IBM Plex Sans KR', serif;	
+		}
+		progress {	   
+			width: 100%;
+		    height: 3%;
+		    color: #c5a992;
+		    border-radius: 50px;
+		}
+		progress::-webkit-progress-bar {
+		   background-color: azure;
+		}
+		progress::-webkit-progress-value {
+		   background-color: #c5a992e3;
+		}
 	</style>
 <body>
 
@@ -109,44 +124,44 @@
 <section id="padding-large">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" style="margin-top:5%;">
 
 				<div class="section-header align-center">
 					<h2 class="section-title">Tracker</h2>
 				</div>					
-				<input type="button" value="Add" onclick="trackerSearch.go" style="float: right; bottom: 80px;">
-				<div class="row">
-					<c:if test="${trackerList.size eq 0}">
-						<h3>읽고 있는 책을 추가해보세요!</h3>
+				<input type="button" value="추가" onclick="location.href='trackerSearch.go'" style="float: right; bottom: 80px;">
+				<div class="row" style="margin-top: 15%;">
+					<c:if test="${trackerList.size() eq 0}">
+						<h3 style="text-align: center;">읽고 있는 책을 추가 해보세요!</h3>
 					</c:if>
-					
-						<div class="col-md-4">
+						<c:forEach items="${trackerList}" var="book">
+						<div class="col-md-4" style="margin-bottom: 10%; height: 541px;">
 	
 							<article class="column" data-aos="fade-up">
-								<c:forEach items="${trackerList}" var="book">
-								<figure>
-									<a href="#" class="image-hvr-effect">
-										<img src="${book.cover}" alt="post" class="post-image">			
-									</a>
+								
+								<figure style="text-align: center; height: 48%;">
+									<a href="/trackerDetail.go?isbn=${book.isbn}">
+										<img src="${book.cover}" alt="post" class="post-image"  style="width: 170px; height: auto;">		
+									</a>										
 								</figure>
-								<div class="post-item">			
-								    <h3>${book.title}</h3>
-									<div class="meta-date" style="margin-bottom: 10">${book.author}</div>	
+								<div class="post-item">	
+									<h3 style="height: 20%;"><a href="/trackerDetail.go?isbn=${book.isbn}">${book.title}</a></h3>
+									<div class="meta-date" style="margin-bottom: 10; height:12%;">${book.author}</div>	
 	
 								    <div class="links-element">
 									    <div class="categories" style="float: left; font-size: 14; font-weight: 600;">${book.startDate}</div>
 									    <div class="categories" style="float: right; font-size: 14; font-weight: 600;">${book.endDate}</div>
-									    <div class="social-links" ><progress value="${book.progress}" min="0" max="100" style="width: 100%; height: 3%; color: #c5a992;"></progress></div>
+									    <div class="social-links" ><progress value="${book.progress}" min="0" max="100" style=" border-radius: 50px;"></progress></div>
 									    <div class="categories" style="float: left; font-size: 14; font-weight: 600;">${book.progress}%</div>
 									    <div class="categories" style="float: right; font-size: 14;">${book.readPage} / ${book.totalPage} page</div>
-									</div><!--links-element-->
+									</div>
 	
 								</div>
-								</c:forEach>
+								
 							</article>
 							
 						</div>
-					
+					</c:forEach>
 				</div>
 
 			</div>	
@@ -183,4 +198,8 @@
 <script src="/js/script.js"></script>
 
 </body>
+<script>
+	var trackerList = "${trackerList}";
+	console.log(trackerList);
+</script>
 </html>	

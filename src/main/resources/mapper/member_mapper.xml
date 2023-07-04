@@ -4,13 +4,28 @@
 
 <mapper namespace="kr.co.book.member.dao.MemberDAO">
 	
-	<select id="login" resultType="MemberDTO">
-	    SELECT MEMBER_IDX, MEMBER_NICKNAME FROM member WHERE MEMBER_EMAIL = #{member_email}
+	<select id="login" resultType="kr.co.book.member.dto.MemberDTO">
+	    SELECT * FROM member WHERE member_email = #{member_email}
 	</select>
 	
-	<insert id="join" >
-		INSERT FROM MEMBER INTO(concat())
+	<insert id="join">
+    INSERT INTO member(code_idx, member_email, member_pw, member_nickname, member_state, member_grade, member_level,
+    reg_member_idx, reg_screen, mod_member_idx, mod_screen)
+    VALUES(#{code_idx},#{member_email}, #{member_pw}, #{member_nickname}, '정상', 0, 1,
+    #{reg_member_idx}, #{reg_screen}, #{mod_member_idx}, #{mod_screen})
 	</insert>
 
+	<select id="emailOverCheck">
+		SELECT count(member_idx) from member where member_email = #{member_emil}
+	</select>
+	
+	<select id="overlaynickname" resultType="int">
+		SELECT COUNT(member_nickname) FROM member
+			WHERE member_nickname = #{param1}
+	</select>
+	
+	<select id="findLocationCode" resultType="int">
+		SELECT CODE_IDX FROM code c WHERE CODE_CODENAME = #{param1}
+	</select>
 	
 </mapper>

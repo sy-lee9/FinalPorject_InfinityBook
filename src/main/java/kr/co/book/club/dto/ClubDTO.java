@@ -1,225 +1,196 @@
 package kr.co.book.club.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("club")
 public class ClubDTO {
 
-    private String CLUB_IDX;
-    private String MEMBER_IDX;
-    private String ISBN;
-    private String CLUB_NAME;
-    private String CLUB_CONTENT;
-    private String CLUB_DATE;
-    private String CLUB_MEETDATE;
-    private String CODE_IDX;
-    private String CLUB_ONOFF;
-    private String CLUB_NUM;
-    private String CLUB_BLIND;
-    private String CLUB_STATE;
-    private String REG_MEMBER_IDX;
-    private String REG_DATE;
-    private String REG_SCREEN;
-    private String MOD_MEMBER_IDX;
-    private String MOD_DATE;
-    private String MOD_SCREEN;
-    
-    private String CODE_CODENAME;
-    private String CODE_UPCODE;
-    
-    
-    
-    private String MEMBER_EMAIL;
-    private String MEMBER_PW;
-    private String MEMBER_NICKNAME;
-    private String MEMBER_STATE;
-    private String MEMBER_GRADE;
-    private String MEMBER_LEVEL;
-    private String MEMBER_JOINDATE;
-    private String MEMBER_PDATE;
-    
-    private String PHOTO_ORINAME;
-    private String PHOTO_NEWNAME;
-    
 
-  
-	public String getCODE_CODENAME() {
-		return CODE_CODENAME;
-	}
-	public void setCODE_CODENAME(String CODE_CODENAME) {
-		this.CODE_CODENAME = CODE_CODENAME;
-	}
-	public String getCODE_UPCODE() {
-		return CODE_UPCODE;
-	}
-	public void setCODE_UPCODE(String CODE_UPCODE) {
-		this.CODE_UPCODE = CODE_UPCODE;
-	}
-	public String getPHOTO_ORINAME() {
-		return PHOTO_ORINAME;
-	}
-	public void setPHOTO_ORINAME(String PHOTO_ORINAME) {
-		this.PHOTO_ORINAME = PHOTO_ORINAME;
-	}
-	public String getPHOTO_NEWNAME() {
-		return PHOTO_NEWNAME;
-	}
-	public void setPHOTO_NEWNAME(String PHOTO_NEWNAME) {
-		this.PHOTO_NEWNAME = PHOTO_NEWNAME;
-	}
-	public String getCLUB_IDX() {
-		return CLUB_IDX;
-	}
-	public void setCLUB_IDX(String CLUB_IDX) {
-		this.CLUB_IDX = CLUB_IDX;
-	}
-	public String getMEMBER_IDX() {
-		return MEMBER_IDX;
-	}
-	public void setMEMBER_IDX(String MEMBER_IDX) {
-		this.MEMBER_IDX = MEMBER_IDX;
-	}
-	public String getISBN() {
-		return ISBN;
-	}
-	public void setISBN(String ISBN) {
-		this.ISBN = ISBN;
-	}
-	public String getCLUB_NAME() {
-		return CLUB_NAME;
-	}
-	public void setCLUB_NAME(String CLUB_NAME) {
-		this.CLUB_NAME = CLUB_NAME;
-	}
-	public String getCLUB_CONTENT() {
-		return CLUB_CONTENT;
-	}
-	public void setCLUB_CONTENT(String CLUB_CONTENT) {
-		this.CLUB_CONTENT = CLUB_CONTENT;
-	}
-	public String getCLUB_DATE() {
-		return CLUB_DATE;
-	}
-	public void setCLUB_DATE(String CLUB_DATE) {
-		this.CLUB_DATE = CLUB_DATE;
-	}
-	public String getCLUB_MEETDATE() {
-		return CLUB_MEETDATE;
-	}
-	public void setCLUB_MEETDATE(String CLUB_MEETDATE) {
-		this.CLUB_MEETDATE = CLUB_MEETDATE;
-	}
-	public String getCODE_IDX() {
-		return CODE_IDX;
-	}
-	public void setCODE_IDX(String CODE_IDX) {
-		this.CODE_IDX = CODE_IDX;
-	}
-	public String getCLUB_ONOFF() {
-		return CLUB_ONOFF;
-	}
-	public void setCLUB_ONOFF(String CLUB_ONOFF) {
-		this.CLUB_ONOFF = CLUB_ONOFF;
-	}
-	public String getCLUB_NUM() {
-		return CLUB_NUM;
-	}
-	public void setCLUB_NUM(String CLUB_NUM) {
-		this.CLUB_NUM = CLUB_NUM;
-	}
-	public String getCLUB_BLIND() {
-		return CLUB_BLIND;
-	}
-	public void setCLUB_BLIND(String CLUB_BLIND) {
-		this.CLUB_BLIND = CLUB_BLIND;
-	}
-	public String getCLUB_STATE() {
-		return CLUB_STATE;
-	}
-	public void setCLUB_STATE(String CLUB_STATE) {
-		this.CLUB_STATE = CLUB_STATE;
-	}
-	public String getREG_MEMBER_IDX() {
-		return REG_MEMBER_IDX;
-	}
-	public void setREG_MEMBER_IDX(String REG_MEMBER_IDX) {
-		this.REG_MEMBER_IDX = REG_MEMBER_IDX;
-	}
-	public String getREG_DATE() {
-		return REG_DATE;
-	}
-	public void R(String REG_DATE) {
-		this.REG_DATE = REG_DATE;
-	}
-	public String getREG_SCREEN() {
-		return REG_SCREEN;
-	}
-	public void setREG_SCREEN(String REG_SCREEN) {
-		this.REG_SCREEN = REG_SCREEN;
-	}
-	public String getMOD_MEMBER_IDX() {
-		return MOD_MEMBER_IDX;
-	}
-	public void setMOD_MEMBER_IDX(String MOD_MEMBER_IDX) {
-		this.MOD_MEMBER_IDX = MOD_MEMBER_IDX;
-	}
-	public String getMOD_DATE() {
-		return MOD_DATE;
-	}
-	public void setMOD_DATE(String MOD_DATE) {
-		this.MOD_DATE = MOD_DATE;
-	}
-	public String getMOD_SCREEN() {
-		return MOD_SCREEN;
-	}
-	public void setMOD_SCREEN(String MOD_SCREEN) {
-		this.MOD_SCREEN = MOD_SCREEN;
-	}
-	public String getMEMBER_EMAIL() {
-		return MEMBER_EMAIL;
-	}
-	public void setMEMBER_EMAIL(String MEMBER_EMAIL) {
-		this.MEMBER_EMAIL = MEMBER_EMAIL;
-	}
-	public String getMEMBER_PW() {
-		return MEMBER_PW;
-	}
-	public void setMEMBER_PW(String MEMBER_PW) {
-		this.MEMBER_PW = MEMBER_PW;
-	}
-	public String getMEMBER_NICKNAME() {
-		return MEMBER_NICKNAME;
-	}
-	public void setMEMBER_NICKNAME(String MEMBER_NICKNAME) {
-		this.MEMBER_NICKNAME = MEMBER_NICKNAME;
-	}
-	public String getMEMBER_STATE() {
-		return MEMBER_STATE;
-	}
-	public void setMEMBER_STATE(String MEMBER_STATE) {
-		this.MEMBER_STATE = MEMBER_STATE;
-	}
-	public String getMEMBER_GRADE() {
-		return MEMBER_GRADE;
-	}
-	public void setMEMBER_GRADE(String MEMBER_GRADE) {
-		this.MEMBER_GRADE = MEMBER_GRADE;
-	}
-	public String getMEMBER_LEVEL() {
-		return MEMBER_LEVEL;
-	}
-	public void setMEMBER_LEVEL(String MEMBER_LEVEL) {
-		this.MEMBER_LEVEL = MEMBER_LEVEL;
-	}
-	public String getMEMBER_JOINDATE() {
-		return MEMBER_JOINDATE;
-	}
-	public void setMEMBER_JOINDATE(String MEMBER_JOINDATE) {
-		this.MEMBER_JOINDATE = MEMBER_JOINDATE;
-	}
-	public String getMEMBER_PDATE() {
-		return MEMBER_PDATE;
-	}
-	public void setMEMBER_PDATE(String MEMBER_PDATE) {
-		this.MEMBER_PDATE = MEMBER_PDATE;
-	}
+    private String club_idx;
+    private String member_idx;
+    private String isbn;
+    private String title;
+    private String cover;
+    private String club_name;
+    private String club_content;
+    private String club_date;
+    private String club_meetdate;
+    private String code_idx;
+    private String club_onoff;
+    private String meet_num;
+    private String club_num;
+    private String club_blind;
+    private String club_state;
     
+    private String club_appdate;
+    private String club_appstate;
+    
+    
+    private String code_codename;
+    private String code_upcode;
+    
+    
+    
+    private String member_email;
+    private String member_pw;
+    private String member_nickname;
+    private String member_state;
+    private String member_grade;
+    private String member_level;
+    
+    
+	public String getClub_idx() {
+		return club_idx;
+	}
+	public void setClub_idx(String club_idx) {
+		this.club_idx = club_idx;
+	}
+	public String getMember_idx() {
+		return member_idx;
+	}
+	public void setMember_idx(String member_idx) {
+		this.member_idx = member_idx;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public String getClub_name() {
+		return club_name;
+	}
+	public void setClub_name(String club_name) {
+		this.club_name = club_name;
+	}
+	public String getClub_content() {
+		return club_content;
+	}
+	public void setClub_content(String club_content) {
+		this.club_content = club_content;
+	}
+	public String getClub_date() {
+		return club_date;
+	}
+	public void setClub_date(String club_date) {
+		this.club_date = club_date;
+	}
+	public String getClub_meetdate() {
+		return club_meetdate;
+	}
+	public void setClub_meetdate(String club_meetdate) {
+		this.club_meetdate = club_meetdate;
+	}
+	public String getCode_idx() {
+		return code_idx;
+	}
+	public void setCode_idx(String code_idx) {
+		this.code_idx = code_idx;
+	}
+	public String getClub_onoff() {
+		return club_onoff;
+	}
+	public void setClub_onoff(String club_onoff) {
+		this.club_onoff = club_onoff;
+	}
+	public String getClub_num() {
+		return club_num;
+	}
+	public void setClub_num(String club_num) {
+		this.club_num = club_num;
+	}
+	public String getClub_blind() {
+		return club_blind;
+	}
+	public void setClub_blind(String club_blind) {
+		this.club_blind = club_blind;
+	}
+	public String getClub_state() {
+		return club_state;
+	}
+	public void setClub_state(String club_state) {
+		this.club_state = club_state;
+	}
+	public String getClub_appdate() {
+		return club_appdate;
+	}
+	public void setClub_appdate(String club_appdate) {
+		this.club_appdate = club_appdate;
+	}
+	public String getClub_appstate() {
+		return club_appstate;
+	}
+	public void setClub_appstate(String club_appstate) {
+		this.club_appstate = club_appstate;
+	}
+	public String getCode_codename() {
+		return code_codename;
+	}
+	public void setCode_codename(String code_codename) {
+		this.code_codename = code_codename;
+	}
+	public String getCode_upcode() {
+		return code_upcode;
+	}
+	public void setCode_upcode(String code_upcode) {
+		this.code_upcode = code_upcode;
+	}
+	public String getMember_email() {
+		return member_email;
+	}
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+	public String getMember_pw() {
+		return member_pw;
+	}
+	public void setMember_pw(String member_pw) {
+		this.member_pw = member_pw;
+	}
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
+	public String getMember_state() {
+		return member_state;
+	}
+	public void setMember_state(String member_state) {
+		this.member_state = member_state;
+	}
+	public String getMember_grade() {
+		return member_grade;
+	}
+	public void setMember_grade(String member_grade) {
+		this.member_grade = member_grade;
+	}
+	public String getMember_level() {
+		return member_level;
+	}
+	public void setMember_level(String member_level) {
+		this.member_level = member_level;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getCover() {
+		return cover;
+	}
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
+	public String getMeet_num() {
+		return meet_num;
+	}
+	public void setMeet_num(String meet_num) {
+		this.meet_num = meet_num;
+	}
+   
+        
+
     
 }

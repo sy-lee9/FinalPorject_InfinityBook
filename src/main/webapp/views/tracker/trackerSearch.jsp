@@ -23,6 +23,21 @@
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
 
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+		h3{
+			font-family: 'IBM Plex Sans KR', serif;	
+			font-weight: 600;
+			margin: 10 0 0 0;
+		}
+		.popup{
+		  position: fixed;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		}
+	</style>
+
 	</head>
 
 <body>
@@ -112,7 +127,7 @@
 							<option value="Author">저자</option>
 							<option value="Title">ISBN</option>
 						</select>
-						<input class="search-field text search-input" placeholder="Search" type="search" name="searchValue" style="width: 300px;">
+						<input class="search-field text search-input" placeholder="검색어를 입력하세요." type="search" name="searchValue" style="width: 300px;">
 						<input type="submit" value="검색"/>
 					</form>
 				</div>			
@@ -122,21 +137,23 @@
 					<c:if test="${search eq false}">
 						<h3>검색 결과가 존재하지 않습니다. </h3>
 					</c:if>
-					
 					<c:forEach var="item" items="${list}" varStatus="status">
-						<c:if test="${status.index==2}"> 
-							<c:forEach var="book" items="${item.value}" varStatus="status">
-								<figure class="product-style">
-									<img id="cover" src="${book.cover}" class="product-item">
-									<button onclick="addReadBook(${book.isbn13})" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
-									<button onclick="addReadingBook(${book.isbn13})" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
-									<figcaption>
-										<h3 id="title" style="font-size: 17; font-weight: 600;">${book.title}</h3>
-										<p id="author">${book.author}</p>
-										<p>ISBN : ${book.isbn13}</p>
-									</figcaption>
-								</figure>					
-							</c:forEach>
+						<c:if test="${status.index==2}"> 						
+								<c:forEach var="book" items="${item.value}" varStatus="status">
+									<figure class="product-style" style="margin-bottom: 40px;">
+										<input type="hidden" name=isbn value="${book.isbn13}">
+										<input type="hidden" name="cover" value="${book.cover}">
+										<input type="hidden" name="jsp" value="trackerSearch.jsp">
+											<img id="cover" src="${book.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
+											<button onclick="addReadBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
+											<button onclick="addReadingBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
+											<figcaption>
+												<p style="font-weight: 600;">ISBN : ${book.isbn13}</p>
+												<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${book.title}</h3>
+												<p id="author" style="height: 11%; font-size: 15;">${book.author}</p>
+											</figcaption>
+										</figure>												
+								</c:forEach>							
 						</c:if>	
 					</c:forEach>
 		    	</div>
@@ -174,14 +191,16 @@
 </body>
 <script>
 
-	function addReadBook(isbn) {
+	var jsp = 'trackerSearch.jsp';
+
+	function addReadBook(isbn,cover) {
 		console.log(isbn);
-		window.open('tracker/add/Read/book.go?isbn='+isbn+'','완독!','width=400px,height=455px');
-	};
+		window.open('tracker/add/Read/book.go?isbn='+isbn+'&cover='+cover+'&jsp='+jsp+'','완독!','width=473px,height=400px');
+	}; 
 	
-	function addReadingBook(isbn) {
+	function addReadingBook(isbn,cover) {
 		console.log(isbn);
-		window.open('tracker/add/Reading/book.go?isbn='+isbn+'','읽는 중','width=400px,height=455px');
+		window.open('tracker/add/Reading/book.go?isbn='+isbn+'&cover='+cover+'&jsp='+jsp+'','읽는 중','width=473px,height=400px');
 	};
 	
 </script>

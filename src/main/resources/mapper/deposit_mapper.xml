@@ -15,7 +15,7 @@
 	</select>
 
 	<select id="depositNow" resultType="int">
-		SELECT SUM(deposit_use_price) FROM deposit_use WHERE member_idx=#{param1}
+		SELECT COALESCE(SUM(deposit_use_price), 0) FROM deposit_use WHERE member_idx=#{param1}
 	</select>
 	
 	<!-- int depositPwChk(String member_idx, String member_pw); -->

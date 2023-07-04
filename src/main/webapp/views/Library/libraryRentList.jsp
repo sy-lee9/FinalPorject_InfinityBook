@@ -71,7 +71,7 @@
 						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" >감상문</a></li>
 								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
 								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
 								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
@@ -108,7 +108,7 @@
 	</div>
 </section>
 
-<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 	
 	<ul class="tabs" style="margin:10">
@@ -116,7 +116,8 @@
 			  <li data-tab-target="#business" class="active tab"><a href="/libraryRentList.get">대여</a></li>
 			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
 			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
+			  <li data-tab-target="#business" class="tab"><a href="/libraryLendingList.get">대여 중</a></li>
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 		</ul>
 		<ul class="tab">
@@ -146,123 +147,6 @@
 	</div>
 </section>
 
-
-
-<footer id="footer">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-4">
-				
-				<div class="footer-item">
-					<div class="company-brand">
-						<img src="/images/main-logo.png" alt="logo" class="footer-logo">
-						<p>Infinity Book은 한권의 책으로 무한의 책을 읽을 수 있도록 해주는 중고 책 대여/교환 서비스 입니다. </p>
-					</div>
-				</div>
-				
-			</div>
-
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>About Us</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							이명아
-						</li>
-						<li class="menu-item">
-							이수연
-						</li>
-						<li class="menu-item">
-							최은영
-						</li>
-						<li class="menu-item">
-							엄상원
-						</li>
-						<li class="menu-item">
-							이창훈
-						</li>
-						<li class="menu-item">
-							박희준
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Discover</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Home</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Books</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Authors</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Subjects</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Advanced Search</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>My account</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Sign In</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">View Cart</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">My Wishtlist</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Track My Order</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Help</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Help center</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Report a problem</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Suggesting edits</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Contact us</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-
-		</div>
-		<!-- / row -->
-
-	</div>
-</footer>
-
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">
@@ -271,12 +155,10 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12">
+					<div class="col-md-12" style="text-align:center;">
+							<hr/>
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
-
-						
-
 					</div>
 				</div><!--grid-->
 
@@ -305,7 +187,7 @@ $('#searchButton').click(function(){
 function listCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'libaryRentList.ajax',
+	      url:'libraryRentList.ajax',
 	      data:{
 	    	  'page':page,
 	    	  'searchText':searchText

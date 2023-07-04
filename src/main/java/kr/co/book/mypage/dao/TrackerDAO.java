@@ -19,4 +19,12 @@ public interface TrackerDAO {
 
 	ArrayList<HashMap<String, Object>> getTrackerList(int loginIdx);
 
+	HashMap<String, Object> trackerDetail(int loginIdx, String isbn);
+
+	int trackerUpdateBook(HashMap<String, Object> params);
+
+	void saveEndDate(String loginIdx, String isbn);
+
+	int trackerDeleteBook(String isbn, int loginIdx);
+
 }

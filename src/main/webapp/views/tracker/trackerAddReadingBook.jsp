@@ -45,37 +45,55 @@
 </head>
 
 <body>
-	<h3>읽고 있는 책 추가</h3>
-	<hr style="width:100%; margin: 0px;">
+
 	<table>
 		<tr>
 			<th>독서 시작일</th>
-			<td><input type="text" name="startDate" id="startDate"  placeholder="독서 시작일" style="width:120px; margin-top: 20px;"></td>
+			<td>
+				<c:if test="${jsp == 'trackerSearch.jsp'}">
+					<input type="text" name="startDate" id="startDate"  placeholder="독서 시작일" style="width:120px; margin-top: 20px;">
+				</c:if>
+				<c:if test="${jsp == 'trackerDetail.jsp'}">
+					<input type="text" name="startDate" id="startDate"  value="${startDate}" style="width:120px; margin-top: 20px;">
+				</c:if>
+			</td>
 		</tr>
 		<tr>
 			<th>읽은 페이지 수</th>
 			<td>
-				<input type="text" name="readPage" id="readPage"  placeholder="읽은 페이지 수" value="0" style="width:60px; margin-top: 20px;">
+				<c:if test="${jsp == 'trackerSearch.jsp'}">
+					<input type="text" name="readPage" id="readPage" placeholder="읽은 페이지 수" value="0" style="width:60px; margin-top: 20px;">
+				</c:if>
+				<c:if test="${jsp == 'trackerDetail.jsp'}">
+					<input type="text" name="readPage" id="readPage" value="${readPage}" style="width:60px; margin-top: 20px;">
+				</c:if>
 				<input type="text" name="totalPage" id="totalPage"  placeholder="총 페이지 수" style="width:60px; margin-top: 20px;" readonly>
 			</td>
 		</tr>
 		<tr>
-			<th colspan="2"><input type=button value="저장" onclick="trackerAddReadingBook(${isbn})"/></th>
+			<c:if test="${jsp == 'trackerSearch.jsp'}">
+				<th colspan="2"><input type=button value="저장" onclick="trackerAddReadingBook()"/></th>
+			</c:if>
+			<c:if test="${jsp == 'trackerDetail.jsp'}">
+				<th colspan="2"><input type=button value="저장" onclick="trackerUpdateReadingBook()"/></th>
+			</c:if>
 		</tr>
 	</table>
 </body>
 <script>
 
 	var isbn = "${isbn}";
-	console.log(isbn);
+	var cover = "${cover}";
+	var jsp = "${jsp}";
+	console.log("isbn : "+isbn+"cover : "+cover+"jsp : "+jsp);
 	
-	$(document).ready(function() {
-		console.log("시작했니");
+	$(document).ready(function() {	
 	    $.ajax({
 	        url: '/getTotalPage.ajax',
 	        type: 'get',
 	        data: {
 	            'isbn': isbn,
+	            'cover': cover,
 	            'jsp': "trackerAddReadingBook.jsp"
 	        },
 	        dataType: 'json',
@@ -90,9 +108,18 @@
 	        }
 	    });
 	});
+	
+	$('#readPage').on('input', function() {
+	    var readPage = parseInt($('#readPage').val());
+	    var totalPage = parseInt($('#totalPage').val());
 
-	function trackerAddReadingBook(isbn) {
-		console.log(isbn);
+	    if (readPage > totalPage) {
+	        alert("읽은 페이지 수는 총 페이지 수를 초과할 수 없습니다.");
+	        $('#readPage').val(0);
+	    }
+	});
+
+	function trackerAddReadingBook() {
 	    
 	    $.ajax({
 	        url: '/tracker/add/reading/book.ajax',
@@ -101,7 +128,7 @@
 	            'isbn': isbn,
 	            'startDate':document.getElementById("startDate").value,
 	            'readPage':document.getElementById("readPage").value,
-	            'jsp':"trackerAddReadingBook.jsp"
+	            'jsp':jsp
 	        },
 			dataType:'json',
 			success: function(data) {
@@ -110,7 +137,10 @@
 					console.log("추가 완료");
 					if (window.opener && !window.opener.closed) {
 						  window.alert("트래커에 추가 되었습니다.");
-						  window.close(); // 창 닫기
+						  window.close(); 
+						  if (window.opener) {
+						      window.opener.location.href = '/trackerList.go';
+						   }
 					}
 				}else{
 					console.log("추가 실패");
@@ -121,7 +151,34 @@
 				console.log(e);
 			}
 	    });
-	};	
+	}
+	
+	function trackerUpdateReadingBook() {
+	    
+	    $.ajax({
+	        url: '/trackerUpdateBook.ajax',
+	        type: 'get',
+	        data: {
+	            'isbn': isbn,
+	            'startDate':document.getElementById("startDate").value,
+	            'readPage':document.getElementById("readPage").value,
+	            'jsp':jsp
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data);
+					console.log(data);
+					if (window.opener && !window.opener.closed) {
+						  window.alert("수정되었습니다.");
+						  window.close(); 
+						  window.opener.location.reload();
+					}
+	        },
+			error:function(e){
+				console.log(e);
+			}
+	    });
+	}
 
 	$.datepicker.setDefaults({
 	    dateFormat: 'yy-mm-dd',

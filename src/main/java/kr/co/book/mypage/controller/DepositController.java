@@ -28,8 +28,6 @@ public class DepositController {
 	
 	@RequestMapping("/deposit")
 	public String deposit(HttpSession session,Model model) {
-		session.setAttribute("loginIdx", "1");
-		session.setAttribute("loginNickname", "명아");
 		String member_idx = (String)session.getAttribute("loginIdx");
 		int deposit_now = depositService.depositNow(member_idx); 
 		model.addAttribute("deposit_now", deposit_now);
