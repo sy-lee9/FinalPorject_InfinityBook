@@ -41,8 +41,8 @@ public class LibraryController {
 
 	@RequestMapping("/library{type}List.get")
 	public String libraryPageList(HttpSession session,@PathVariable String type) {
-		session.setAttribute("loginIdx", "1");
-		session.setAttribute("loginNickname", "명아");
+		session.setAttribute("loginIdx", "3");
+		session.setAttribute("loginNickname", "은영");
 		return "/Library/library"+type+"List";
 	}
 	

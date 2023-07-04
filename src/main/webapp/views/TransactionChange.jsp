@@ -106,46 +106,7 @@
 <section id="best-selling" class="leaf-pattern-overlay">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
-		<table>
-			<tr>
-				<th rowspan="3" style="width: 40%;">
-					<img src="${book.library_cover}" alt="book" class="single-image">
-				</th>
-				<th rowspan="3" style="width: 5%;">
-					
-				</th>
-				<td style="width: 55%;">
-					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.library_use}">
-					
-					<table>
-						<tr>
-							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
-						</tr>
-						<tr>
-							<td><div class="author-name">By. ${book.library_author}</div></td>
-							<td><div class="author-name">${book.library_publisher}</div></td>
-							<td><div class="author-name">${book.library_pubdate}</div></td>
-						</tr>
-						<tr>
-							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name">${book.library_info}</div></td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<h4 class="item-title">책 소개</h4>
-							${book.library_description}<br/>
-							</td>
-						</tr>
-						<tr>
-							<th colspan="3" style="text-align: rigtht;">
-								<input type="button" onclick="location.href='TransactionChange.do?library_idx='+${book.library_idx}" value="교환신청"> 
-								<input type="button" onclick="location.href='TransactionRent.do?library_idx='+${book.library_idx}" value="대여신청"> 
-								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="리스트">
-							</th>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+		<h3></h3>
 	
 	</div>
 </section>

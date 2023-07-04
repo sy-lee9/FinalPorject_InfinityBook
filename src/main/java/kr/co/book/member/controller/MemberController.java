@@ -66,7 +66,7 @@ public class MemberController {
 	}
 
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		logger.info("로그아웃 함");
 		session.removeAttribute("loginNickname");
@@ -91,11 +91,6 @@ public class MemberController {
 	   
 	return service.join(params);		   
     }
-	
-	@RequestMapping(value = "/id_Search.go")
-	public String id_Search() {
-		return "member/id_Search";
-	}
 	
 	@RequestMapping(value = "/pw_Search.go")
 	public String pw_Search() {
@@ -177,4 +172,30 @@ public class MemberController {
 	      return service.overlaynickname(member_nickname);      
 
 	   }
+	   
+	   @RequestMapping(value="/findmemberpw.ajax")	
+	   @ResponseBody
+	   // 3개를 입력해야 비번 찾아주는듯
+	   public HashMap<String, Object> findmemberpw(@RequestParam String member_email, 
+			   @RequestParam String member_nickname, HttpSession session){
+		   		   		  
+		   logger.info(member_email+"/"+member_nickname);		   
+		   // 맵에 넣기
+		   HashMap<String, Object> map = new HashMap<String, Object>();
+		   // 서비스에서 비번 찾으면 1
+		   int success = service.findmemberpw(member_email, member_nickname);
+		   
+		   logger.info("findsuccess: "+ success);
+		   // 1이면
+		   if(success == 1) {
+			   // 서비스에서 받아온 임시 비번을 변수에 전달
+			   String findpw =(String) service.RandomPassword(member_email, member_nickname);
+			   logger.info("임시비밀번호: "+findpw);
+			   // 멥에 저장
+			   map.put("findpw", findpw);
+		   }		   		   		   		  
+		return  map;
+	   }	 
+	   
+	   
 }

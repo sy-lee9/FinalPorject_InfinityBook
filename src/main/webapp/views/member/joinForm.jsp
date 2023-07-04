@@ -76,14 +76,14 @@
 		    <tr>
 		        <th>주소(시/군/구)</th>	              
 				<td>
-				<input type="text" id="location" name="location"  readonly /> &nbsp;&nbsp;
-				<input type="button" id="address_kakao" value="검색" style="margin: 5px; font-size:15;" class="btn btn-outline-dark"/>
+				<input type="text" id="location" name="location"  readonly /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" id="address_kakao" value="주소 검색" style="width: 150px margin: 5px; font-size:15;" class="btn btn-outline-dark"/>
 				</td>
 		    </tr>
 			<tr>
 				<th colspan="2">
-					<button onclick="join()">회원가입</button>								
-					<button onclick="location.href='/login.go'">취소</button>
+					<button onclick="join()">회원가입</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;							
+					<button onclick="location.href='./'">취소</button>
 				</th>
 			</tr>
 		</table>

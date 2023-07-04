@@ -16,4 +16,8 @@ public interface MemberDAO {
 
 	int findLocationCode(String location);
 
+	int findmemberpw(String member_email, String member_nickname);
+
+	void RandomPassword(String member_email, String member_nickname, String encodedPassword);
+
 }

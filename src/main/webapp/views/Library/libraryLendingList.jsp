@@ -116,7 +116,7 @@
 			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
 			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
 			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
-			  <li data-tab-target="#business" class="active tab"><a href="/libraryLendingList.get">대여/예약</a></li>	
+			  <li data-tab-target="#business" class="active tab"><a href="/libraryLendingList.get">대여 중</a></li>	
 		</ul>
 		<ul class="tab">
 			<li class="search-box" style="text-align:center;list-style-type: none;">
