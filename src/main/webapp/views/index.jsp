@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<head>
 		<title>Infinite B∞k</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,29 +23,22 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-		 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">		
+		 <link rel="icon" href="/images/KakaoTalk_20230630_091136316.png" class="images">		
 	</head>
 
 <body>
 
 <div id="header-wrap" class="show">
 	
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-					    ${loginBox}						
-						<!-- <a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a> -->
-						    <a href="login.go">로그인 / 회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="alarm.go" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-
-	</div><!--top-content-->
-
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
+	
 	<header id="header">
 		<div class="container">
 			<div class="row">
@@ -52,7 +46,7 @@
 				<div class="col-md-2">
 					<div class="main-logo">
 					
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="index.move"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -1045,9 +1039,6 @@
 						<div class="col-md-12">
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
-
-						
-
 					</div>
 				</div><!--grid-->
 
@@ -1060,7 +1051,7 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
 <script>
-/* function openLoginPopup() {
+function openLoginPopup() {
 	  var width = 550;  // 팝업 창의 너비
 	  var height = 400; // 팝업 창의 높이
 	  var left = (window.innerWidth - width) / 2;  // 화면 가운데에 위치하도록 좌표 계산
@@ -1074,7 +1065,11 @@
 	  loginPopup.moveTo(left, top); // 팝업 창 위치 수정
 	  loginPopup.resizeTo(width, height);
 	  loginPopup.focus();
-} */
+	  
+	  var close = window.close();
+	  close();
+	  
+}
 
 
 </script>

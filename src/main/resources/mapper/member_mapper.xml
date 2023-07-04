@@ -28,4 +28,13 @@
 		SELECT CODE_IDX FROM code c WHERE CODE_CODENAME = #{param1}
 	</select>
 	
+	<select id="findmemberpw" resultType="int">
+		SELECT COUNT(member_email) FROM member WHERE
+		member_email = #{param1} AND member_nickname = #{param2} AND member_state = '정상'
+	</select>
+	
+	<update id="RandomPassword">
+		UPDATE member SET member_pw = #{param3} WHERE 
+		member_email = #{member_email} AND member_nickname = #{param2}
+	</update>	
 </mapper>

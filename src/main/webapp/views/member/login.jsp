@@ -30,51 +30,15 @@ input[type="submit"] {
   <input type="password" id="member_pw" name="member_pw" placeholder="비밀번호를 입력하세요.">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="button" onclick="login()" value="로그인" style="display: inline-block; margin-top: -45px;">
   <br>
-  <label for="remember">
-    <input type="checkbox" id="remember" onchange="toggleRemember()">
-    자동 로그인
-  </label>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="join.go">회원가입</a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="id_Search.go">아이디</a>&nbsp;/&nbsp;<a href="pw_Search.go">비밀번호 찾기</a>
+  	 <input type="checkbox" id="rememberMe">&nbsp;&nbsp;&nbsp;<label for="rememberMe" style="display: inline-block; vertical-align: middle;">로그인 유지</label>
+
+  <br>	
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="join.go" onclick="closePopup1()">회원가입</a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="pw_Search.go" onclick="closePopup2()">비밀번호 찾기</a>
 </div>
 <script>
-function toggleRemember() {
-	  var rememberCheckbox = document.getElementById("remember");
-	  
-	  if (rememberCheckbox) {
-	    var emailInput = document.getElementById("member_email");
-	    var passwordInput = document.getElementById("member_pw");
 
-	    if (rememberCheckbox.checked) {
-	      // 체크박스를 체크한 경우 이메일과 비밀번호를 로컬 스토리지에 저장
-	      localStorage.setItem("member_email", emailInput.value);
-	      localStorage.setItem("member_pw", passwordInput.value);
-	    } else {
-	      // 체크박스를 해제한 경우 로컬 스토리지에서 이메일과 비밀번호 제거
-	      localStorage.removeItem("member_email");
-	      localStorage.removeItem("member_pw");
-	    }
-	  }
-	}
-
-	// 페이지 로드 시 자동 로그인 상태 확인
-	window.onload = function() {
-	  var rememberCheckbox = document.getElementById("remember");
-	  
-	  if (rememberCheckbox) {
-	    var storedEmail = localStorage.getItem("member_email");
-	    var storedPassword = localStorage.getItem("member_pw");
-
-	    if (rememberCheckbox.checked && storedEmail && storedPassword) {
-	      // 자동 로그인을 체크한 경우 저장된 이메일과 비밀번호를 사용하여 로그인 처리
-	      document.getElementById("member_email").value = storedEmail;
-	      document.getElementById("member_pw").value = storedPassword;
-	      // 로그인 처리 로직 호출
-	      login();
-	    }
-	  }
-	}
+setRememberMeCookie()
 
 // 로그인 처리
 function login() {
@@ -109,6 +73,59 @@ function login() {
     });
   }
 }
+
+function setRememberMeCookie() {
+	  var rememberMe = document.getElementById("rememberMe").checked;
+	  if (rememberMe) {
+	    var email = document.getElementById("member_email").value;
+	    var password = document.getElementById("member_pw").value;
+
+	    // 쿠키 만료일을 7일로 설정
+	    var expires = new Date();
+	    expires.setDate(expires.getDate() + 7);
+
+	    // 쿠키에 이메일과 비밀번호를 저장
+	    document.cookie = "email=" + encodeURIComponent(email) + "; expires=" + expires.toUTCString() + "; path=/";
+	    document.cookie = "password=" + encodeURIComponent(password) + "; expires=" + expires.toUTCString() + "; path=/";
+	  } else {
+	    // 로그인 유지 체크가 해제되면 쿠키를 삭제
+	    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	    document.cookie = "password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	  }
+	}
+
+	function checkRememberMe() {
+	  var email = getCookie("email");
+	  var password = getCookie("password");
+
+	  if (email && password) {
+	    // 이메일과 비밀번호 필드에 쿠키 값 채우기
+	    document.getElementById("member_email").value = decodeURIComponent(email);
+	    document.getElementById("member_pw").value = decodeURIComponent(password);
+	    document.getElementById("rememberMe").checked = true;
+	  }
+	}
+
+	function getCookie(name) {
+	  var cookieArr = document.cookie.split(";");
+
+	  for (var i = 0; i < cookieArr.length; i++) {
+	    var cookiePair = cookieArr[i].split("=");
+
+	    if (name === cookiePair[0].trim()) {
+	      return decodeURIComponent(cookiePair[1]);
+	    }
+	  }
+
+	  return null;
+	}
+
+	// 페이지 로드 시 자동으로 로그인 유지 체크 여부 확인
+	checkRememberMe();
+	
+	
+
+
 </script>
 </body>
 </html>

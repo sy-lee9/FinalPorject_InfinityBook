@@ -154,4 +154,91 @@ public class MemberService {
 		return dao.findLocationCode(location);
 	}
 
+	public int findmemberpw(String member_email, String member_nickname) {
+		
+		return dao.findmemberpw(member_email, member_nickname);
+	}
+
+	public String RandomPassword(String member_email, String member_nickname) {
+		
+		String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
+		// 전부를 모두 대문자로
+	    String CHAR_UPPER = CHAR_LOWER.toUpperCase();
+	    // 숫잦ㄴ부
+	    String NUMBER = "0123456789";
+	    // 랜덤 임시비번
+	    String PASSWORD_ALLOW_BASE = CHAR_LOWER + CHAR_UPPER + NUMBER;
+	    // 임시비번은 8자리
+	    int PASSWORD_LENGTH = 8;
+	    // 랜덤 변수
+	    SecureRandom random = new SecureRandom();
+	    // 저장될 문자열
+	    String sb = "";
+	    // 임시비번8자리가 될떄까지 랜덤 돌림
+	    for (int i = 0; i < PASSWORD_LENGTH; i++) {
+	        int randomIndex = random.nextInt(PASSWORD_ALLOW_BASE.length());
+	        char randomChar = PASSWORD_ALLOW_BASE.charAt(randomIndex);
+	        sb+=randomChar;
+	    }
+	    
+	    logger.info("임시 비밀번호"+sb);
+	    // 암호ㅗ하
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		// 임시비번을 암호화해서 저장
+		String encodedPassword = encoder.encode(sb);
+		// 디비에 저장(기록때문인듯)
+		dao.RandomPassword(member_email, member_nickname, encodedPassword);
+		// 드디어 메일
+		String charSet = "UTF-8";
+	    String hostSMTP = "smtp.naver.com"; //네이버 이용시 smtp.naver.com / 구글 사용시 smtp.gmail.com
+	    // 메일 아이디
+	    String hostSMTPid = "vzoo8204@naver.com";
+	    // 메일 비번
+	    String hostSMTPpwd = "?gtp6418";
+
+	    // 보내는 사람 EMail, 제목, 내용
+	    String fromEmail = "vzoo8204@naver.com";
+	    String fromName = "B∞K";
+	    String subject = "";
+	    String msg = "";
+	   // 메일에 추가할거
+       subject = "B∞K 임시 비밀번호 입니다.";
+       msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+       msg += "<h3 style='color: skyblue;'>";
+       msg += "아이디: "+ member_email + " 의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+       msg += "<p>임시 비밀번호 : ";
+       msg += sb + "</p></div>";
+
+	      // 받는 사람 E-Mail 주소
+	      String mail = member_email;
+	      try {
+	    	 // 메일 객체화
+	         HtmlEmail email = new HtmlEmail();
+	         // 메일에 디버그를 성공
+	         email.setDebug(true);
+	         // 메일에 한글형식
+	         email.setCharset(charSet);
+	         // 권장하지 않고 곧 없어질건데 트루
+	         email.setSSL(true);
+	         // 보낼사람이 이용할 메일
+	         email.setHostName(hostSMTP);
+	         
+	         email.setSmtpPort(587); //네이버 이용시 587 / 구글 이용시 465
+	         // 보낼사람 정보
+	         email.setAuthentication(hostSMTPid, hostSMTPpwd);	         
+	         email.setTLS(true);
+	         // 받을 사람 메일과 한글 타입
+	         email.addTo(mail, charSet);
+	         // 보내는 사람 타입
+	         email.setFrom(fromEmail, fromName, charSet);
+	         email.setSubject(subject);
+	         email.setHtmlMsg(msg);
+	         email.send();
+	      } catch (Exception e) {
+	         logger.info("메일발송 실패 : " + e);
+	      }		
+	      // 이렇게 메일로 임시 비번 보냄...
+	    return sb;
+	}
+
 }
