@@ -65,18 +65,10 @@
 								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item has-sub">
-									<a href="clubInsert.go" class="nav-link" data-effect="Pages">독서모임</a>
-
+									<a href="clubList.go" class="nav-link" data-effect="Pages">독서모임</a>
 									<ul>
-								        <li class="active"><a href="index.move">대여/교환</a></li>
-								        <li><a href="#">감상문</a></li>
-								        <li><a href="#">독서모임</a></li>
-								        <li><a href="#">공지사항</a></li>
-								        <li><a href="#">이벤트</a></li>
-								        <li><a href="#">마이페이지</a></li>
-								        <!-- <li><a href="single-product.move">Product Single</a></li>
-								        <li><a href="contact.move">Contact</a></li>
-								        <li><a href="thank-you.move">Thank You</a></li> -->
+								        <li class="active"><a href="index.move">독서모임 리스트</a></li>
+								        <li><a href="#">참여 독서모임</a></li>
 								     </ul>
 
 								</li>

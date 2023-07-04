@@ -4,47 +4,6 @@
 <html>
 	<meta charset="UTF-8">
 	<head>
-<style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
-    .club-container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f5f5f5;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    #club-thumbnail {
-      display: block;
-      margin: 10px auto;
-      width: 130px;
-    }
-
-    #club-name {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    #club-content {
-      margin-bottom: 10px;
-    }
-
-    #club-meet-date,
-    #club-onoff,
-    #club-num {
-      font-weight: bold;
-    }
-  </style>
 		<title>Infinite B∞k</title>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,34 +13,30 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-			
+
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-	    <!-- Datetimepicker 라이브러리 불러오기 -->
-			
-	    
-	    
-		<!-- script
-		================================================== -->
-		<script src="/js/modernizr.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
+		<!-- script -->
+		<script src="/js/modernizr.js"></script>
+		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
+		
 	</head>
 
 <body>
 
 <div id="header-wrap">
-	
 	<div class="top-content">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="right-element">
 						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="alarm.go" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
+						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
 
 						<div class="action-menu">
 							<div class="search-bar">
@@ -89,7 +44,6 @@
 									<i class="icon icon-search"></i>
 								</a>
 								<form role="search" method="get" class="search-box">
-						
 									<input class="search-field text search-input" placeholder="Search" type="search">
 								</form>
 							</div>
@@ -103,73 +57,104 @@
 	<header id="header">
 		<div class="container">
 			<div class="row">
-
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
 					</div>
-
 				</div>
-
 				<div class="col-md-10">
-					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item has-sub">
-									<a href="#business" class="nav-link" data-effect="Pages">독서모임</a>
-
-
-									<ul>
-								        <li class="clubList"><a href="index.move">독서모임 리스트</a></li>
-								        <li><a href="club">독서모임 등록</a></li>
-								        <li><a href="styles.move">독서모임 </a></li>
-								     </ul>
-
-								</li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
+								<li class="menu-item"><a href="#" >대여/교환</a></li>
+								<li class="menu-item"><a href="#" >감상문</a></li>
+								<li class="menu-item active"><a href="#" >독서모임</a></li>
+								<li class="menu-item"><a href="#" >공지사항</a></li>
+								<li class="menu-item"><a href="#" >이벤트</a></li>
+								<li class="menu-item"><a href="/libraryList.get" >마이페이지</a></li>							
 							</ul>
-
 							<div class="hamburger">
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				            </div>
-
 						</div>
 					</nav>
-
 				</div>
-
 			</div>
 		</div>
 	</header>
-		
-</div><!--header-wrap-->
+</div>
 
-<!-- 본문 -->
+<section class="hero-section jarallax">
+	
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-botton:0px;">Book Club</h2>
+			</div>
+		</div>
+	</div>
+</section>
 
- <h1>${clubDetail.CLUB_NAME}</h1>
-  
-  <div class="club-container">
-    <img id="club-thumbnail" src="/photo/${clubDetail.PHOTO_NEWNAME}">
-    <p id="club-content">모임 소개 </p>
-    ${clubDetail.CLUB_CONTENT}
-    <p id="club-meet-date">모임 일자</p>
-    ${clubDetail.CLUB_MEETDATE}
-    <p id="club-onoff">대면 여부</p>
-    ${clubDetail.CLUB_ONOFF}
-    <p id="club-num">모집 인원</p>
-    ${clubDetail.CLUB_NUM}
-  </div>
-  
-
-<!-- 본문 -->
-
+<section id="best-selling" class="leaf-pattern-overlay" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
+	<div class="corner-pattern-overlay"></div>
+	<div class="container">
+		<table>
+			<tr>
+				<th style="width: 40%; text-align:center;">
+					<img src="${club.cover}" style="text-align:center; width: 70%;" alt="book" class="single-image">
+				</th>
+				<th style="width: 5%;">
+					
+				</th>
+				<td style="width: 45%;">
+					<c:if test="${club.club_state eq 0}"> 
+	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
+					</c:if>
+					<c:if test="${club.club_state eq 1}"> 
+	    				<input type="button" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
+					</c:if>
+					<input type="button" style="padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="${club.meet_num}/${club.club_num}">
+					
+					<table>
+						<tr>
+							<th style="width: 100%;" colspan="3"><h4 class="item-title">${club.club_name}</h4></th>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임 주최</div></td>
+							<td colspan="2"><div class="author-name">${club.member_nickname}</div></td>
+						</tr>
+						<tr>
+							<td><div class="author-name">선정 도서</div></td>
+							<td colspan="2"><div class="author-name">${club.title}</div></td>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임 일시</div></td>
+							<td colspan="2"><div class="author-name">${club.club_meetdate}</div></td>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임 인원</div></td>
+							<td colspan="2"><div class="author-name">${club.club_num} 명</div></td>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임 장소</div></td>
+							<td colspan="2"><div class="author-name">${club.code_codename}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<h4 class="item-title">Book ClubInfo</h4>
+								${club.club_content}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	
+	</div>
+</section>
 
 <div id="footer-bottom">
 	<div class="container">
@@ -178,12 +163,10 @@
 
 				<div class="copyright">
 					<div class="row">
-
-						<div class="col-md-12">
+						<div class="col-md-12" style="text-align:center;">
+							<hr/>
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
-
-						
 
 					</div>
 				</div><!--grid-->
@@ -193,13 +176,8 @@
 	</div>
 </div>
 
-<script src="/js/jquery-1.11.0.min.js"></script>
-<script src="/js/plugins.js"></script>
-<script src="/js/script.js"></script>
-<script src="/js/alarm.js"></script>
-<script>
 
-</script>
 
 </body>
+
 </html>	

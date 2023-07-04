@@ -3,46 +3,51 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.book.club.dao.ClubDAO">
-
-	<insert id="fileWrite">
-		INSERT INTO photo(CODE_IDX,IDX,MEMBER_IDX,PHOTO_ORINAME,PHOTO_NEWNAME)
-		VALUES('34',#{IDX},'3', #{PHOTO_ORINAME}, #{PHOTO_NEWNAME})
-	</insert>
-
-	<insert id="clubApply">
-		INSERT INTO club(MEMBER_IDX,ISBN,CLUB_NAME,CLUB_CONTENT,CLUB_MEETDATE,CODE_IDX,CLUB_ONOFF,CLUB_NUM, CLUB_STATE)
-		VALUES(#{MEMBER_IDX},#{ISBN},#{CLUB_NAME},#{CLUB_CONTENT},#{CLUB_MEETDATE},'34',#{CLUB_ONOFF},#{CLUB_NUM},'모집중')
-	</insert>
 	
-	<select id="clubList" resultType="kr.co.book.club.dto.ClubDTO">
-	SELECT c.CLUB_IDX, m.MEMBER_EMAIL, c.CLUB_NAME, c.CLUB_DATE, c.CLUB_MEETDATE, c.CLUB_STATE, o.CODE_CODENAME as 지역, d.CODE_CODENAME as 대면유무 from club c 
-		LEFT JOIN code o ON c.CODE_IDX = o.CODE_CODE and o.CODE_UPCODE = 'region'
-		left join code d on c.CLUB_ONOFF = d.CODE_CODE and d.CODE_UPCODE = 'onoff'
-		LEFT JOIN member m ON m.MEMBER_IDX = c.MEMBER_IDX
-		order by CLUB_IDX DESC;
+	<select id="totalClubList" resultType="int">
+		SELECT COUNT(c.club_idx) FROM club c WHERE c.club_blind = 0
+		
 	</select>
 	
-	<select id="clubDetail" resultType="kr.co.book.club.dto.ClubDTO">
-SELECT c.CLUB_CONTENT, c.CLUB_NUM, c.CLUB_IDX, m.MEMBER_EMAIL, c.CLUB_NAME, c.CLUB_DATE, c.CLUB_MEETDATE, c.CLUB_STATE,
-    o.CODE_CODENAME AS 지역, d.CODE_CODENAME AS 대면유무	
-FROM club c
-    LEFT JOIN code o ON c.CODE_IDX = o.CODE_CODE AND o.CODE_UPCODE = 'region'
-    LEFT JOIN code d ON c.CLUB_ONOFF = d.CODE_CODE AND d.CODE_UPCODE = 'onoff'
-    LEFT JOIN member m ON m.MEMBER_IDX = c.MEMBER_IDX
-WHERE c.CLUB_IDX = #{CLUB_IDX}
-ORDER BY CLUB_IDX DESC
+	<select id="clubList" resultType="club">
+		SELECT c.club_idx ,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		FROM club c 
+		JOIN `member` m ON c.member_idx=m.member_idx 
+		JOIN code co ON c.code_idx = co.code_idx 
+		JOIN book b ON c.isbn =b.isbn 
+		JOIN club_apply ca ON c.club_idx = ca.club_idx AND ca.club_appstate =1
+		WHERE c.club_blind = 0
+		GROUP BY c.club_idx
+		ORDER BY c.club_idx DESC LIMIT 5 OFFSET #{param1}
 	</select>
 	
-		<select id="clubDetailPhoto" resultType="String">
-		SELECT p.PHOTO_NEWNAME FROM photo p 
-			INNER JOIN club c ON c.CLUB_IDX = p.IDX
-		AND p.CODE_IDX = '1' AND c.CLUB_IDX = #{clubIdx}
+	<select id="totalClubListSearch" resultType="int">
+		SELECT COUNT(c.club_idx) FROM club c JOIN book b ON c.isbn =b.isbn
+		WHERE c.club_blind = 0 AND ((c.club_name LIKE CONCAT('%' #{searchText} '%')) OR (b.title LIKE CONCAT('%' #{searchText} '%')))
+		
 	</select>
 	
-	<insert id="saveBook" parameterType="hashmap">
-		INSERT INTO book(isbn,title,cover,author,publisher,description,pubdate)
-			VALUES(#{library_isbn},#{library_title},#{library_cover},#{library_author},#{library_publisher},#{library_description},#{library_pubdate})
-	</insert>
+	<select id="clubListSearch" resultType="club">
+		SELECT c.club_idx ,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		FROM club c 
+		JOIN `member` m ON c.member_idx=m.member_idx 
+		JOIN code co ON c.code_idx = co.code_idx 
+		JOIN book b ON c.isbn =b.isbn 
+		JOIN club_apply ca ON c.club_idx = ca.club_idx AND ca.club_appstate =1
+		WHERE c.club_blind = 0 AND ((c.club_name LIKE CONCAT('%' #{searchText} '%')) OR (b.title LIKE CONCAT('%' #{searchText} '%')))
+		GROUP BY c.club_idx
+		ORDER BY c.club_idx DESC LIMIT 5 OFFSET #{param1}
+	</select>
+	
+	<select id="clubDetail" resultType="club">
+		SELECT c.club_idx ,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_content, c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		FROM club c 
+		JOIN `member` m ON c.member_idx=m.member_idx 
+		JOIN code co ON c.code_idx = co.code_idx 
+		JOIN book b ON c.isbn =b.isbn 
+		JOIN club_apply ca ON c.club_idx = ca.club_idx AND ca.club_appstate =1
+		WHERE c.club_blind = 0 AND c.club_idx = #{param1}
+	</select>
 	
 	
 </mapper>
