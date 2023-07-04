@@ -70,4 +70,16 @@ public class TransactionListService {
 		return dao.searchDetail(LIBRARY_IDX);
 	}
 
+
+	public Object rent(String lIBRARY_IDX) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Object change(String lIBRARY_IDX) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

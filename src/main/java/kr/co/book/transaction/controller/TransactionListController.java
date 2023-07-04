@@ -65,6 +65,22 @@ public class TransactionListController {
 		return "BookSearchResultDetail";
 		
 	}
+	
+	@GetMapping(value = "/TransactionRent.do")
+	public String TransactionRent(String LIBRARY_IDX, Model model) {
+		
+		model.addAttribute("book", service.rent(LIBRARY_IDX));
+		
+		return "TransactionRent";
+	}
+	
+	@GetMapping(value = "/TransactionChange.do")
+	public String TransactionChange(String LIBRARY_IDX, Model model) {
+		
+		model.addAttribute("book", service.change(LIBRARY_IDX));
+		
+		return "TransactionChange";
+	}
 
 
 }
