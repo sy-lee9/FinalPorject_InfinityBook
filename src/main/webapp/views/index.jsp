@@ -1051,25 +1051,7 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
 <script>
-function openLoginPopup() {
-	  var width = 550;  // 팝업 창의 너비
-	  var height = 400; // 팝업 창의 높이
-	  var left = (window.innerWidth - width) / 2;  // 화면 가운데에 위치하도록 좌표 계산
-	  var top = (window.innerHeight - height) / 2;
-	  var options = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
 
-	  // 팝업 창을 열기 위한 URL을 여기에 입력하세요.
-	  var loginUrl = 'login.go';
-
-	  var loginPopup = window.open(loginUrl, 'loginPopup', options);
-	  loginPopup.moveTo(left, top); // 팝업 창 위치 수정
-	  loginPopup.resizeTo(width, height);
-	  loginPopup.focus();
-	  
-	  var close = window.close();
-	  close();
-	  
-}
 
 
 </script>
