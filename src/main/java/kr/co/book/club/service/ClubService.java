@@ -50,6 +50,33 @@ public class ClubService {
 	public ClubDTO clubDetail(String club_idx) {
 		return clubDAO.clubDetail(club_idx);
 	}
+
+
+	public ArrayList<ClubDTO> clubMember(String club_idx) {
+		return clubDAO.clubMember(club_idx);
+	}
+
+
+	public void clubApply(String club_idx, String member_idx) {
+		clubDAO.clubApply(club_idx,member_idx);
+		
+	}
+
+
+	public ArrayList<ClubDTO> applyMember(String club_idx) {
+		return clubDAO.applyMember(club_idx);
+	}
+
+
+	public void applyAccept(String club_idx, String member_idx) {
+		clubDAO.applyAccept(club_idx,member_idx);
+		
+	}
+
+
+	public void applyReject(String club_idx, String member_idx) {
+		clubDAO.applyReject(club_idx,member_idx);
+	}
 	
 
 

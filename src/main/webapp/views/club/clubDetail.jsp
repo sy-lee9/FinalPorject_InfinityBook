@@ -103,43 +103,56 @@
 	<div class="container">
 		<table>
 			<tr>
-				<th style="width: 40%; text-align:center;">
-					<img src="${club.cover}" style="text-align:center; width: 70%;" alt="book" class="single-image">
+				<th style="width: 30%; text-align:center;">
+					<img src="${club.cover}" style="text-align:center; width: 90%;" alt="book" class="single-image">
 				</th>
 				<th style="width: 5%;">
 					
 				</th>
-				<td style="width: 45%;">
+				<td style="width: 55%;">
 					<c:if test="${club.club_state eq 0}"> 
-	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
-					</c:if>
-					<c:if test="${club.club_state eq 1}"> 
 	    				<input type="button" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
 					</c:if>
-					<input type="button" style="padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="${club.meet_num}/${club.club_num}">
+					<c:if test="${club.club_state eq 1}"> 
+	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
+					</c:if>
 					
 					<table>
 						<tr>
-							<th style="width: 100%;" colspan="3"><h4 class="item-title">${club.club_name}</h4></th>
+							<th style="width: 800px;" colspan="3"><h4 class="item-title">${club.club_name}</h4></th>
 						</tr>
 						<tr>
-							<td><div class="author-name">모임 주최</div></td>
+							<td style="width: 30%;"><div class="author-name">모임주최</div></td>
 							<td colspan="2"><div class="author-name">${club.member_nickname}</div></td>
 						</tr>
 						<tr>
-							<td><div class="author-name">선정 도서</div></td>
+							<td><div class="author-name">선정도서</div></td>
 							<td colspan="2"><div class="author-name">${club.title}</div></td>
 						</tr>
 						<tr>
-							<td><div class="author-name">모임 일시</div></td>
+							<td><div class="author-name">모임일시</div></td>
 							<td colspan="2"><div class="author-name">${club.club_meetdate}</div></td>
 						</tr>
 						<tr>
-							<td><div class="author-name">모임 인원</div></td>
-							<td colspan="2"><div class="author-name">${club.club_num} 명</div></td>
+							<td><div class="author-name">모임인원</div></td>
+							<td colspan="2">
+								<div class="author-name">
+								    ${club.meet_num}/${club.club_num} 명 
+								</div>
+							</td>
 						</tr>
 						<tr>
-							<td><div class="author-name">모임 장소</div></td>
+							<td><div class="author-name">참가자 </div></td>
+							<td colspan="2">
+								<div class="author-name">
+								    <c:forEach items="${member}" var="member">
+								    	${member.member_nickname} 
+								    </c:forEach>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임장소</div></td>
 							<td colspan="2"><div class="author-name">${club.code_codename}</div></td>
 						</tr>
 						<tr>
@@ -148,13 +161,30 @@
 								${club.club_content}
 							</td>
 						</tr>
+						<tr>
+							<td colspan="3" style="text-align:center;">
+								<input type="button" onclick="location.href='/clubApply.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">
+								<input type="button" style="padding:5 10 5 10;" onclick="location.href='/clubList.go'" class="btn btn-outline-accent btn-accent-arrow" value="목록 ">
+							</td>
+						</tr>
 					</table>
 				</td>
+				<th style="width: 10%; vertical-align: top; text-align:center;">
+					<input type="button" onclick="location.href='/clubApply.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10;"class="btn btn-outline-accent btn-accent-arrow" value="수정">
+					<input type="button" onclick="location.href='/clubList.go'" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
+					<h3>신청자</h3>
+					<c:forEach items="${apply}" var="apply">
+					${apply.member_nickname} 
+					<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
+					<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
+					</c:forEach>
+				</th>
 			</tr>
 		</table>
-	
 	</div>
 </section>
+
+
 
 <div id="footer-bottom">
 	<div class="container">
@@ -179,5 +209,7 @@
 
 
 </body>
-
+<script>
+ 
+</script>
 </html>	

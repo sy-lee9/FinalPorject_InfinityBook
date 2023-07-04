@@ -46,7 +46,7 @@
 
   <div class="container">
     <div style="text-align: center; margin-top:200px;">
-      <h4><span class="item">책 등록이 완료되었습니다.</span></h4>
+      <h4><span class="item"> 등록이 완료되었습니다.</span></h4>
       <input type="button" onclick="closeRe()" id="closeBtn" value="닫기" />
     </div>
   </div>

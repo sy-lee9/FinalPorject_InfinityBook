@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="clubList" resultType="club">
-		SELECT c.club_idx ,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		SELECT c.club_idx ,c.member_idx,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
 		FROM club c 
 		JOIN `member` m ON c.member_idx=m.member_idx 
 		JOIN code co ON c.code_idx = co.code_idx 
@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="clubListSearch" resultType="club">
-		SELECT c.club_idx ,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		SELECT c.club_idx ,c.member_idx,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
 		FROM club c 
 		JOIN `member` m ON c.member_idx=m.member_idx 
 		JOIN code co ON c.code_idx = co.code_idx 
@@ -40,7 +40,7 @@
 	</select>
 	
 	<select id="clubDetail" resultType="club">
-		SELECT c.club_idx ,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_content, c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		SELECT c.club_idx ,c.member_idx,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_content, c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
 		FROM club c 
 		JOIN `member` m ON c.member_idx=m.member_idx 
 		JOIN code co ON c.code_idx = co.code_idx 
@@ -49,5 +49,31 @@
 		WHERE c.club_blind = 0 AND c.club_idx = #{param1}
 	</select>
 	
+	<select id="clubMember" resultType="club">
+		SELECT m.member_nickname  
+		FROM club_apply ca 
+		JOIN `member` m ON m.member_idx = ca.member_idx 
+		WHERE ca.club_idx =#{param1} AND ca.club_appstate=1
+		ORDER BY ca.club_appdate ASC
+	</select>
 	
+	<select id="applyMember" resultType="club">
+		SELECT m.member_nickname , m.member_idx
+		FROM club_apply ca 
+		JOIN `member` m ON m.member_idx = ca.member_idx 
+		WHERE ca.club_idx =#{param1} AND ca.club_appstate=0
+		ORDER BY ca.club_appdate ASC
+	</select>
+	
+	<insert id="clubApply">
+		INSERT INTO club_apply(club_idx,member_idx,club_appstate) VALUES(#{param1},#{param2},'0')
+	</insert>
+	
+	<update id="applyAccept">
+		UPDATE club_apply SET club_appstate='1' WHERE club_idx=#{param1} AND member_idx=#{param2} 
+	</update>
+	
+	<delete id="applyReject">
+		DELETE FROM club_apply WHERE club_idx=#{param1} AND member_idx=#{param2}
+	</delete>
 </mapper>

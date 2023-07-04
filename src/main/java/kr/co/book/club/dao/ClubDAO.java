@@ -19,6 +19,16 @@ public interface ClubDAO {
 
 	ClubDTO clubDetail(String club_idx);
 
+	ArrayList<ClubDTO> clubMember(String club_idx);
+
+	void clubApply(String club_idx, String member_idx);
+
+	ArrayList<ClubDTO> applyMember(String club_idx);
+
+	void applyAccept(String club_idx, String member_idx);
+
+	void applyReject(String club_idx, String member_idx);
+
 
 
 }
