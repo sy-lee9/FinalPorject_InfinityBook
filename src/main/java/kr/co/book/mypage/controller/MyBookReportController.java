@@ -30,7 +30,7 @@ public class MyBookReportController {
 	@ResponseBody
 	public HashMap<String, Object> myBookrpoertListAjax(@RequestParam String page,@RequestParam String searchText,HttpSession session){
 		logger.info("searchText : "+searchText);
-		String member_idx = (String) session.getAttribute("loginIdx"); 
+		int member_idx = (int) session.getAttribute("loginIdx"); 
 		HashMap<String, Object> myBookreport = myBookReportService.myBookReportList(member_idx,page,searchText);
 		
 		return myBookreport;
@@ -45,7 +45,7 @@ public class MyBookReportController {
 	@ResponseBody
 	public HashMap<String, Object> myLikeListAjax(@RequestParam String page,@RequestParam String searchText,HttpSession session){
 		logger.info("searchText : "+searchText);
-		String member_idx = (String) session.getAttribute("loginIdx"); 
+		int member_idx = (int) session.getAttribute("loginIdx"); 
 		HashMap<String, Object> myLike = myBookReportService.myLikeList(member_idx,page,searchText);
 		
 		return myLike;

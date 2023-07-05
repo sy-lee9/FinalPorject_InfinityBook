@@ -18,7 +18,7 @@ public class MyBookReportService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired MyBookReportDAO myBookReportDAO;
 
-	public HashMap<String, Object> myBookReportList(String member_idx, String sPage, String searchText) {	
+	public HashMap<String, Object> myBookReportList(int member_idx, String sPage, String searchText) {	
 		HashMap<String, Object> myBookreport = new HashMap<String, Object>();	
 		ArrayList<MyBookReportDTO> list = null;
 		int page = Integer.parseInt(String.valueOf(sPage)); 
@@ -48,7 +48,7 @@ public class MyBookReportService {
 		return myBookreport;
 	}
 
-	public HashMap<String, Object> myLikeList(String member_idx, String sPage, String searchText) {
+	public HashMap<String, Object> myLikeList(int member_idx, String sPage, String searchText) {
 		HashMap<String, Object> myLike = new HashMap<String, Object>();	
 		ArrayList<MyBookReportDTO> list = null;
 		int page = Integer.parseInt(String.valueOf(sPage)); 

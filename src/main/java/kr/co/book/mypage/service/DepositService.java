@@ -20,7 +20,7 @@ public class DepositService {
 
 	@Autowired DepositDAO depositDAO;
 	
-	public HashMap<String, Object> depositUseList(String member_idx,String sPage) {
+	public HashMap<String, Object> depositUseList(int member_idx,String sPage) {
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		ArrayList<DepositDTO> list = null;
 		int page = Integer.parseInt(String.valueOf(sPage)); 
@@ -39,11 +39,11 @@ public class DepositService {
 		return map;         
 	}
 
-	public int depositNow(String member_idx) {
+	public int depositNow(int member_idx) {
 		return depositDAO.depositNow(member_idx);
 	}
 
-	public int depositPwChk(String member_idx, String member_pw) {
+	public int depositPwChk(int member_idx, String member_pw) {
 		return depositDAO.depositPwChk(member_idx, member_pw);
 	}
 

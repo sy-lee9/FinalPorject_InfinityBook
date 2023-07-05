@@ -41,8 +41,8 @@ public class LibraryController {
 
 	@RequestMapping("/library{type}List.get")
 	public String libraryPageList(HttpSession session,@PathVariable String type) {
-		session.setAttribute("loginIdx", "3");
-		session.setAttribute("loginNickname", "은영");
+		//session.setAttribute("loginIdx", "3");
+		//session.setAttribute("loginNickname", "은영");
 		return "/Library/library"+type+"List";
 	}
 	
@@ -52,7 +52,7 @@ public class LibraryController {
 	public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,@RequestParam String searchText,HttpSession session) {
 		logger.info("type : "+type);
 		logger.info("searchText : "+searchText);
-		String member_idx = (String) session.getAttribute("loginIdx"); 
+		int member_idx = (int)session.getAttribute("loginIdx"); 
 		HashMap<String, Object> books = libraryService.libraryList(member_idx,page,type,searchText);
 		return books; 
 	}
@@ -74,12 +74,12 @@ public class LibraryController {
 	
 
 	@RequestMapping("/libraryWrite.go")
-	public String libraryWriteGo(@RequestParam HashMap<String, String> bookInfo, Model model,HttpSession session) {
+	public String libraryWriteGo(@RequestParam HashMap<String, Object> bookInfo, Model model,HttpSession session) {
 		
-		String member_idx = (String) session.getAttribute("loginIdx");
+		int member_idx = (int) session.getAttribute("loginIdx");
 		bookInfo.put("member_idx", member_idx);
 		logger.info("선택 책 정보 : " + bookInfo);
-		int chk = libraryService.bookChk(bookInfo.get("library_isbn"),bookInfo.get("member_idx"));
+		int chk = libraryService.bookChk((String)bookInfo.get("library_isbn"),member_idx);
 		logger.info("chk : " + chk);
 		if (chk == 0) {
 			model.addAttribute("book", bookInfo);
@@ -92,16 +92,16 @@ public class LibraryController {
 	}
 	
 	@RequestMapping("/libraryWrite.do")
-	public String libraryWrite(@RequestParam HashMap<String, String> bookData,HttpSession session) {
+	public String libraryWrite(@RequestParam HashMap<String, Object> bookData,HttpSession session) {
 		logger.info("session loginIdx "+ session.getAttribute("loginIdx"));
-		String member_idx = (String) session.getAttribute("loginIdx");
+		int member_idx = (int) session.getAttribute("loginIdx");
 		bookData.put("member_idx", member_idx);
 		// 1. 책이 위시 리스트로 등록되어 있는지 체크
-		int wishChk = libraryService.wishChk(bookData.get("library_isbn"),bookData.get("member_idx"));
+		int wishChk = libraryService.wishChk((String)bookData.get("library_isbn"),member_idx);
 				
 		// 2-1. 위시리스트로 등록 되어 있다면 위시리스트에서 삭제
 		if(wishChk==1) {
-			libraryService.libraryWishDelete(bookData.get("library_isbn"),bookData.get("member_idx"));
+			libraryService.libraryWishDelete((String)bookData.get("library_isbn"),member_idx);
 		}
 		logger.info("작성 책 정보 : " + bookData);
 		// 3. 위시리스트에 없다면 등록된 책인지 확인 
@@ -133,18 +133,18 @@ public class LibraryController {
 	
 	@RequestMapping("wishRegist.ajax")
 	@ResponseBody
-	public HashMap<String, String> wishRegist(@RequestParam HashMap<String, String> bookInfo,HttpSession session) {
+	public HashMap<String, String> wishRegist(@RequestParam HashMap<String, Object> bookInfo,HttpSession session) {
 		logger.info("선택 책 정보 : " + bookInfo);
-		String member_idx = (String) session.getAttribute("loginIdx");
+		int member_idx = (int) session.getAttribute("loginIdx");
 		bookInfo.put("member_idx", member_idx);
 		
 		HashMap<String, String> data = new HashMap<String, String>();
-		int registChk = libraryService.bookChk(bookInfo.get("library_isbn"),bookInfo.get("member_idx"));
+		int registChk = libraryService.bookChk((String)bookInfo.get("library_isbn"),member_idx);
 		if(registChk == 1) {
 			data.put("msg", "이미 등록된 책 입니다.");
 			return data;
 		}else {
-			int chk = libraryService.wishChk(bookInfo.get("library_isbn"),bookInfo.get("member_idx"));
+			int chk = libraryService.wishChk((String)bookInfo.get("library_isbn"),member_idx);
 		
 			logger.info("chk : " + chk);
 			if (chk == 0) {
@@ -162,7 +162,7 @@ public class LibraryController {
 	@RequestMapping("/deleteLibrary.ajax")
 	@ResponseBody
 	public HashMap<String, Object> deleteLibrary(@RequestParam(value="delList[]") ArrayList<String> delList,HttpSession session){
-		String member_idx = (String) session.getAttribute("loginIdx");
+		int member_idx = (int) session.getAttribute("loginIdx");
 		HashMap<String, Object> map = libraryService.deleteLibrary(delList,member_idx);
 		return map; 
 	}

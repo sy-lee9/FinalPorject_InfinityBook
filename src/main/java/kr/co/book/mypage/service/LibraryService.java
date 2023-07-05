@@ -24,7 +24,7 @@ public class LibraryService {
 		 return libraryDAO.list(); 
 	}
 	
-	public HashMap<String, Object> libraryList(String member_idx,String sPage, String type, String searchText) {
+	public HashMap<String, Object> libraryList(int member_idx,String sPage, String type, String searchText) {
 		HashMap<String, Object> books = new HashMap<String, Object>();	
 		ArrayList<LibraryDTO> list = null;
 		int page = Integer.parseInt(String.valueOf(sPage)); 
@@ -55,21 +55,21 @@ public class LibraryService {
 		return books;
 	}
 	
-	public void write(HashMap<String, String> bookData) {
+	public void write(HashMap<String, Object> bookData) {
 		libraryDAO.write(bookData);		
 	}
 
 
-	public int bookChk(String library_isbn, String member_idx) {
+	public int bookChk(String library_isbn, int member_idx) {
 		
 		return libraryDAO.bookChk(library_isbn,member_idx);
 	}
 	
-	public int wishChk( String library_isbn, String member_idx) {
+	public int wishChk( String library_isbn, int member_idx) {
 		return libraryDAO.wishChk(library_isbn,member_idx);
 	}
 	
-	public void wishRegist(HashMap<String, String> bookInfo) {
+	public void wishRegist(HashMap<String, Object> bookInfo) {
 		libraryDAO.wishRegist(bookInfo);
 	}
 
@@ -85,12 +85,12 @@ public class LibraryService {
 		libraryDAO.libraryUpdate(updateData);
 	}
 
-	public void libraryWishDelete(String library_isbn, String member_idx) {
+	public void libraryWishDelete(String library_isbn, int member_idx) {
 		libraryDAO.libraryWishDelete(library_isbn,member_idx);
 		
 	}
 
-	public HashMap<String, Object> deleteLibrary(ArrayList<String> delList,String member_idx) {
+	public HashMap<String, Object> deleteLibrary(ArrayList<String> delList,int member_idx) {
 		HashMap<String, Object> map = new HashMap<String, Object>();		
 		int successCnt = 0;
 		for (String library_idx : delList) {

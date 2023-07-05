@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,7 @@ public class DepositController {
 	
 	@RequestMapping("/deposit")
 	public String deposit(HttpSession session,Model model) {
-		String member_idx = (String)session.getAttribute("loginIdx");
+		int member_idx = (int)session.getAttribute("loginIdx");
 		int deposit_now = depositService.depositNow(member_idx); 
 		model.addAttribute("deposit_now", deposit_now);
 		model.addAttribute("member_idx", member_idx);
@@ -39,7 +40,7 @@ public class DepositController {
 	 @RequestMapping("/depositUseList.ajax") 
 	 @ResponseBody
 	 public HashMap<String, Object> depositUseListAjax(@RequestParam String page,HttpSession session) {
-		 String member_idx = (String) session.getAttribute("loginIdx"); 
+		 int member_idx = (int) session.getAttribute("loginIdx"); 
 		 HashMap<String, Object> list = depositService.depositUseList(member_idx,page);
 		 return list; 
 	 }
@@ -66,12 +67,17 @@ public class DepositController {
 	 public String depositWithdrawChk(@RequestParam HashMap<String, String> withdrawData, Model model) {
 		 logger.info("Deposit 출금 정보 : " + withdrawData);
 		 
-		 String member_idx = withdrawData.get("member_idx");
+		 int member_idx = Integer.parseInt(withdrawData.get("member_idx"));
 		 String member_pw = withdrawData.get("member_pw");
 		 
 		 String page = "/Deposit/depositWithdraw";
 		 
 		 int pwChk = depositService.depositPwChk(member_idx,member_pw);
+		 
+		 //String encodePassWord = dto.getMember_pw();
+		 //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	     //boolean isMatched = encoder.matches(member_pw, encodePassWord);
+		 
 		 if(pwChk==1) {
 			 page = "/Deposit/depositWithdrawAccount";
 		 }else {
