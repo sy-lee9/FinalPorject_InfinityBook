@@ -16,7 +16,7 @@ body {
 }
 
 .container {
-  width: 400px;
+  width: 470px;
   padding: 40px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -41,13 +41,15 @@ form {
   align-items: center;
 }
 
-input[type="email"] {
+input[type="email"],
+input[type="text"] {
   width: 100%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #dddddd;
   border-radius: 4px;
   margin-bottom: 20px;
+  box-sizing: border-box; /* 입력 값에 패딩과 테두리를 포함하도록 설정 */
 }
 
 a {
@@ -72,7 +74,7 @@ a:hover {
 <body>
 <div class="container">
   <h4>비밀번호를 찾고자하는 이메일과 닉네임을 입력해주세요.</h4>
-  <h5>임시 비밀번호를 보내드립니다.</h5>
+  <h4>임시 비밀번호를 보내드립니다.</h4>
   <form action="pw_Search.do">
   	이메일
     <input type="email" id="member_email" placeholder="이메일을 입력해주세요.">

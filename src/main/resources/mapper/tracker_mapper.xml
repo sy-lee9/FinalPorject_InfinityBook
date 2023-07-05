@@ -33,6 +33,7 @@
 	
 	<select id="getTrackerList" resultType="hashMap">
 		SELECT
+		    (t.tracker_idx) AS trackerIdx,
 		    (t.isbn) AS isbn,
 		    (SELECT title FROM book b WHERE b.isbn = t.isbn) AS title,
 		    (SELECT author FROM book b WHERE b.isbn = t.isbn) AS author,
@@ -67,7 +68,7 @@
 		    tracker t
 		LEFT JOIN
 		    book b ON t.isbn = b.isbn
-		WHERE t.isbn = #{param2} AND t.member_idx = #{param1}
+		WHERE t.tracker_idx = #{param1}
 	</select>
 	
 	<update id="trackerUpdateBook">
@@ -91,8 +92,20 @@
 	<delete id="trackerDeleteBook">
 		DELETE FROM tracker WHERE isbn = #{param1} AND member_idx = #{param2}
 	</delete>
+	
+	<insert id="trackerAddMemo" parameterType="HashMap">
+		INSERT INTO memo(member_idx,tracker_idx,memo_content,reg_member_idx,reg_screen) 
+			VALUES(#{loginIdx},#{trackerIdx},#{content},#{loginIdx},#{jsp})
+	</insert>
 
-
+	<select id="getMemoList" resultType="HashMap">
+		SELECT 
+			(memo_content) AS content, 
+			DATE_FORMAT(memo_regdate, '%Y-%m-%d %H:%i') AS regDate
+		FROM memo
+			WHERE tracker_idx = #{param}
+			ORDER BY memo_regdate DESC
+	</select>
 
 
 

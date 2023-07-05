@@ -140,12 +140,12 @@
 							<article class="column" data-aos="fade-up">
 								
 								<figure style="text-align: center; height: 48%;">
-									<a href="/trackerDetail.go?isbn=${book.isbn}">
+									<a href="/trackerDetail.go?trackerIdx=${book.trackerIdx}">
 										<img src="${book.cover}" alt="post" class="post-image"  style="width: 170px; height: auto;">		
 									</a>										
 								</figure>
 								<div class="post-item">	
-									<h3 style="height: 20%;"><a href="/trackerDetail.go?isbn=${book.isbn}">${book.title}</a></h3>
+									<h3 style="height: 20%;"><a href="/trackerDetail.go?trackerIdx=${book.trackerIdx}">${book.title}</a></h3>
 									<div class="meta-date" style="margin-bottom: 10; height:12%;">${book.author}</div>	
 	
 								    <div class="links-element">
@@ -169,8 +169,6 @@
 	</div>
 </section>
 
-
-
 <div id="footer-bottom" style="margin-top:5%">
 	<div class="container">
 		<div class="row">
@@ -179,7 +177,7 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12">
+						<div class="col-md-12" style="margin-top: 5%;">
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
 
@@ -199,7 +197,6 @@
 
 </body>
 <script>
-	var trackerList = "${trackerList}";
-	console.log(trackerList);
+
 </script>
 </html>	

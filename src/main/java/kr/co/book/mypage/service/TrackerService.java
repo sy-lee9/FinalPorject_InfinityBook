@@ -44,7 +44,7 @@ public class TrackerService {
     	}else {    		
     		String MaxResults = "100";
     		String Start = "1";
-    		String Cover = "MidBig";
+    		String Cover = "Big";
     		String SearchTarget = "Book";
     		String output = "JS";
     		String Version = "20131101";
@@ -195,9 +195,9 @@ public class TrackerService {
 	}
 
 	//트래커 책 상세보기
-	public ModelAndView trackerDetail(int loginIdx, String isbn) {
+	public ModelAndView trackerDetail(String trackerIdx) {
 		ModelAndView mav = new ModelAndView("/tracker/trackerDetail");
-		HashMap<String, Object> map = TrackerDAO.trackerDetail(loginIdx,isbn);
+		HashMap<String, Object> map = TrackerDAO.trackerDetail(trackerIdx);
 		mav.addObject("book",map);
 		return mav;
 	}
@@ -227,6 +227,35 @@ public class TrackerService {
 	public int trackerDeleteBook(String isbn, int loginIdx) {
 		return TrackerDAO.trackerDeleteBook(isbn,loginIdx);
 	}
+
+	//메모 저장
+	public HashMap<String, Object> trackerAddMemo(HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row = TrackerDAO.trackerAddMemo(params);
+		if(row == 1) {
+			map.put("success",1);
+		}
+		return map;
+	}
+
+	public HashMap<String, Object> getMemoList(String trackerIdx) {
+		logger.info("memo trackerIdx : "+trackerIdx);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> list = TrackerDAO.getMemoList(trackerIdx);
+		map.put("list", list);
+		
+		return map;
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
     
 
 }
