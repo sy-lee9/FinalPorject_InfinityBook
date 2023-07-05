@@ -19,7 +19,10 @@
 	    justify-content: center;
 	    align-items: center;
 	    height: 100vh;
-	}	
+	}
+	input{
+		width: 268px;
+	}
 </style>
 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">
 </head>
@@ -31,10 +34,10 @@
 					<label for="email">이메일</label>
 				</th>
 				<td>
-                    <input type="email" id="member_email" placeholder="이메일">
+                    <input type="email" id="member_email" placeholder="이메일을 입력하세요.">
                     <span id="email_msg"></span>                    
                     &nbsp;
-                    <button onclick="member_email_check()">확인</button>
+                    <button onclick="member_email_check()">메일 전송</button>
                 </td>
 	        </tr>
 	        <tr>
@@ -76,8 +79,9 @@
 		    <tr>
 		        <th>주소(시/군/구)</th>	              
 				<td>
-				<input type="text" id="location" name="location"  readonly /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" id="address_kakao" value="주소 검색" style="width: 150px margin: 5px; font-size:15;" class="btn btn-outline-dark"/>
+				<input type="text" id="location" name="location"  readonly /> &nbsp;&nbsp;
+				<input type="button" id="address_kakao" value="주소 검색" style="width: 150px; margin: 5px; font-size: 15px;" class="btn btn-outline-dark"/>
+
 				</td>
 		    </tr>
 			<tr>
