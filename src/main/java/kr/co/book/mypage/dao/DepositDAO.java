@@ -10,13 +10,13 @@ import kr.co.book.mypage.dto.DepositDTO;
 @Mapper
 public interface DepositDAO {
 
-	int totalListCnt(String member_idx);
+	int totalListCnt(int member_idx);
 
-	ArrayList<DepositDTO>depositUseList(String member_idx, int offset);
+	ArrayList<DepositDTO>depositUseList(int member_idx, int offset);
 
-	int depositNow(String member_idx);
+	int depositNow(int member_idx);
 
-	int depositPwChk(String member_idx, String member_pw);
+	int depositPwChk(int member_idx, String member_pw);
 
 	ArrayList<HashMap<String, String>> bankList();
 

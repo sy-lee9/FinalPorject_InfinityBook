@@ -11,9 +11,9 @@ import kr.co.book.mypage.dto.MyBookReportDTO;
 @MapperScan(value = {"kr.co.book.mypage.dao"}) 
 public interface MyBookReportDAO {
 
-	int totalMyBookrport(String member_idx);
+	int totalMyBookrport(int member_idx);
 
-	ArrayList<MyBookReportDTO> myBookreport(String member_idx, int offset);
+	ArrayList<MyBookReportDTO> myBookreport(int member_idx, int offset);
 
 	int totalMyBookrportSearch(HashMap<String, Object> data);
 
@@ -21,9 +21,9 @@ public interface MyBookReportDAO {
 	
 	
 
-	int totalMyLike(String member_idx);
+	int totalMyLike(int member_idx);
 
-	ArrayList<MyBookReportDTO> myLike(String member_idx, int offset);
+	ArrayList<MyBookReportDTO> myLike(int member_idx, int offset);
 
 	int totalMyLikeSearch(HashMap<String, Object> data);
 

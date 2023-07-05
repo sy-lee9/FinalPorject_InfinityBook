@@ -18,31 +18,31 @@ public interface LibraryDAO {
 	
 	ArrayList<LibraryDTO> list();
 
-	void write(HashMap<String, String> bookData);
+	void write(HashMap<String, Object> bookData);
 
-	int bookChk(String library_isbn, String member_idx);
+	int bookChk(String library_isbn, int member_idx);
 	
-	int wishChk(String library_isbn, String member_idx);
+	int wishChk(String library_isbn, int member_idx);
 
 	LibraryDTO detail(String library_idx);
 
 	void libraryDelete(String library_idx);
 	
-	void libraryWishDelete(String library_isbn, String member_idx);
+	void libraryWishDelete(String library_isbn, int member_idx);
 	
 	void libraryUpdate(HashMap<String, String> updateData);
 
-	int totalLibraryList(String member_idx, String type);
+	int totalLibraryList(int member_idx, String type);
 	
-	ArrayList<LibraryDTO> libraryList(String member_idx,int offset, String type);
+	ArrayList<LibraryDTO> libraryList(int member_idx,int offset, String type);
 	
 	int totalLibrarySearchList(HashMap<String, Object> data);
 	
 	ArrayList<LibraryDTO> librarySearchList(HashMap<String, Object> data);
 		
-	void wishRegist(HashMap<String, String> bookInfo);
+	void wishRegist(HashMap<String, Object> bookInfo);
 
-	int deleteLibrary(String library_idx,String member_idx);
+	int deleteLibrary(String library_idx,int member_idx);
 
 	
 
