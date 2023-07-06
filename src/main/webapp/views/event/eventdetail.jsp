@@ -32,10 +32,10 @@
 	
 	<c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="loginAfterBox.jsp" />
+            <jsp:include page="/views/loginAfterBox.jsp" />
         </c:when>
         <c:otherwise>
-            <jsp:include page="loginBeforeBox.jsp" />            
+            <jsp:include page="/views/loginBeforeBox.jsp" />            
         </c:otherwise>
     </c:choose>
 	
@@ -58,15 +58,17 @@
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
+								<li class="menu-item has-sub">
+									<a href="clubList.go" class="nav-link" data-effect="Pages">독서모임</a>
+									<ul>
+								        <li class="active"><a href="index.move">독서모임 리스트</a></li>
+								        <li><a href="#">참여 독서모임</a></li>
+								     </ul>
+
+								</li>
 								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
-<<<<<<< HEAD
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
-=======
 								<li class="menu-item"><a href="./event_List.go" class="nav-link" data-effect="Articles">이벤트</a></li>
 								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
->>>>>>> 6a26b25 (자동로그인 기능 완성전(81.2% 정도))
 							</ul>
 
 							<div class="hamburger">
