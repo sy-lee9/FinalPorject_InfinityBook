@@ -23,11 +23,13 @@ public class ChangeController {
 
 	// 교환신청
 	@RequestMapping(value="/changeapply.do", method = RequestMethod.POST)
-	public String changeapply(HttpSession session,@RequestParam HashMap<String, String> params) {
+	public String changeapply(HttpSession session,@RequestParam HashMap<String, Object> params) {
 		
 		logger.info("{}",params);
-		String MEMBER_IDX = session.getAttribute("loginIdx").toString();
-		service.changeapply(MEMBER_IDX,params);				
+		String member_idx = session.getAttribute("loginIdx").toString();
+		params.put("member_idx", member_idx);
+		
+		service.changeapply(params);				
 		
 		return "/chat/message_list";
 	}

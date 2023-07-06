@@ -6,55 +6,49 @@
 	
 		<!-- 대화중인 대화 방 -->
 		<select id="message_list" parameterType="chat" resultType="chat">
-			SELECT DISTINCT CHAT_IDX, CODE_IDX, IDX, CHAT_SENDER, CHAT_RECIEVER,
-			CHAT_CHAT, CHAT_CHECK, CHAT_DATE FROM CHAT WHERE CODE_IDX IN (SELECT CODE_IDX FROM CHAT_ROOM
-			WHERE MEMBER_IDX = #{MEMBER_IDX} AND CHAT_ROOM_STATE = 0) AND IDX IN (SELECT IDX FROM CHAT_ROOM
-			WHERE MEMBER_IDX = #{MEMBER_IDX} AND CHAT_ROOM_STATE = 0) AND CHAT_IDX IN (SELECT MAX(CHAT_IDX) FROM CHAT GROUP BY IDX) 
-			ORDER BY CHAT_IDX DESC;
-		</select>
-		
-		<!-- 대화 방에 대한 안읽은 메세지의 갯수 -->
-		<select id="count_unread" parameterType="chat" resultType="Int">		  
-		    SELECT COUNT(CHAT_IDX) FROM CHAT
-		    WHERE CHAT_RECIEVER = #{MEMBER_IDX} AND CODE_IDX=#{CODE_IDX} AND IDX=#{IDX} AND CHAT_CHECK = 0 
-		</select>
+			SELECT c.chat_idx, c.code_idx, c.idx, GROUP_CONCAT(m.member_nickname SEPARATOR ', ') AS nicknames,
+			c.chat_sender, c.chat_chat, c.chat_date
+			FROM chat c
+			JOIN chat_room cr ON c.code_idx = cr.code_idx AND c.idx = cr.idx
+			JOIN member m ON cr.member_idx = m.member_idx
+			WHERE cr.member_idx != 5 AND cr.chat_room_state = 0
+			AND c.chat_idx IN (SELECT MAX(chat_idx) FROM chat GROUP BY idx)
+			GROUP BY c.chat_idx
+			ORDER BY c.chat_idx DESC;
+		</select>		
 		
 		<!-- 교환 신청한 책 IDX -->
 		<select id="chgbookidx" resultType="string">
-			SELECT LIBRARY_BOOK FROM `CHANGE`
-			WHERE CHANGE_IDX = #{param1}
+			SELECT library_book FROM `change`
+			WHERE change_idx = #{param1}
 		</select>
 		
 		<!-- 교환 신청한 유저 IDX -->
 		<select id="chgapplyuser" resultType="string">	
-			SELECT MEMBER_IDX FROM `CHANGE`
-			WHERE CHANGE_IDX = #{param1}
+			SELECT member_idx FROM `change`
+			WHERE change_idx = #{param1}
 		</select>
 		
 		<!-- 대여 신청한 책 IDX -->
 		<select id="rentbookidx" resultType="string">
-			SELECT LIBRARY_IDX FROM RENT
-			WHERE RENT_IDX = #{param1}
+			SELECT library_idx FROM rent
+			WHERE rent_idx = #{param1}
 		</select>
 		
 		<!-- 대여 신청한 유저 IDX -->
 		<select id="rentapplyuser" resultType="string">	
-			SELECT MEMBER_IDX FROM RENT
-			WHERE RENT_IDX = #{param1}
+			SELECT member_idx FROM rent
+			WHERE rent_idx = #{param1}
 		</select>
 		
 		<!-- 대화 내역 -->
-		<select id="room_content_list" parameterType="chat" resultType="chat">
-			select CHAT_IDX, CODE_IDX, IDX, CHAT_SENDER, CHAT_RECIEVER, CHAT_CHAT, CHAT_CHECK, CHAT_DATE from CHAT 
-			where CODE_IDX = #{CODE_IDX} and IDX = #{IDX} 
-			order by CHAT_DATE; 			
+		<select id="room_content_list" parameterType="chat" resultType="chat">					
+		    SELECT c.chat_idx, c.code_idx, c.idx, c.chat_sender, m.member_nickname, c.chat_chat, c.chat_date 
+		    FROM chat c JOIN member m ON c.chat_sender = m.member_idx
+		    WHERE c.code_idx = #{code_idx} AND c.idx = #{idx} 
+		    ORDER BY c.chat_idx;		
 		</select>
 		
-		<!-- 대화 방의 메세지 읽음 처리 -->		
-		<update id="message_read_chk" parameterType="chat">
-		    UPDATE CHAT SET CHAT_CHECK = 1, CHAT_CHECKDATE = now()
-		    WHERE CODE_IDX = #{CODE_IDX} AND IDX = #{IDX} AND CHAT_RECIEVER = #{MEMBER_IDX} AND CHAT_CHECK = 0	
-		</update>
 		
 		<!-- 대화방 참여자 IDX -->
 		<select id="chatuserIDX" resultType="hashmap">
@@ -64,56 +58,56 @@
 		
 		<!-- 전송 메세지 저장 -->
 		<insert id="messageSendInlist" >
-		    INSERT INTO CHAT(CODE_IDX,IDX,CHAT_SENDER,CHAT_RECIEVER,CHAT_CHAT,CHAT_CHECK,CHAT_DATE) 
-		    VALUES(#{param1},#{param2},#{param3},#{param4},#{param5},0,now())
+		    INSERT INTO chat(code_idx, idx, chat_sender, chat_chat,chat_date) 
+		    VALUES(#{param1},#{param2},#{param3},#{param4},now())
 		</insert>
 		
 		<!-- 전송 사진 저장 -->
 		<insert id="fileWrite">
-			INSERT INTO PHOTO(CODE_IDX, IDX, MEMBER_IDX, PHOTO_ORINAME, PHOTO_NEWNAME, PHOTO_BLIND)
+			INSERT INTO photo(code_idx, idx, member_idx, photo_oriname, photo_newname, photo_blind)
 			VALUES(#{param1},#{param2},#{param3},#{param4},#{param5},0);
 		</insert>
 		
 		<!-- 대화 방의 책 -->
 		<select id="message_librarydetail" resultType="hashmap">
-			SELECT LIBRARY_TITLE, LIBRARY_COVER, LIBRARY_INFO, LIBRARY_SHARESTATE FROM LIBRARY
-			WHERE LIBRARY_IDX = #{param1} AND LIBRARY_BLIND = 0
+			SELECT library_title, library_cover, library_info, library_sharestate FROM library
+			WHERE library_idx = #{param1} AND library_blind = 0
 		</select>
 		
 		<!-- 대화 방의 책 상태 -->
 		<select id="librarystate" resultType="object">
-			SELECT LIBRARY_SHARESTATE FROM LIBRARY
-			WHERE LIBRARY_IDX = #{param1} AND LIBRARY_BLIND = 0
+			SELECT library_sharestate FROM library
+			WHERE library_idx = #{param1} AND library_blind = 0
 		</select>
 		
 		<!-- 다른사람과 교환 상태 -->
 		<select id="otherchangeck" resultType="int">
-			SELECT COUNT(CHANGE_IDX) FROM `CHANGE`
-			WHERE CHANGE_IDX = #{param1} AND CHANGE_STATE IN (1,2)
+			SELECT COUNT(change_idx) FROM `change`
+			WHERE change_idx = #{param1} AND change_state IN (1,2)
 		</select>
 		
 		<!-- 나랑 교환 상태 -->
 		<select id="changestate" resultType="object">
-			SELECT CHANGE_STATE FROM `CHANGE`
-			WHERE CHANGE_IDX = #{param1} 
+			SELECT change_state FROM `change`
+			WHERE change_idx = #{param1} 
 		</select>
 		
 		<!-- 다른사람과 대여 상태 -->		
 		<select id="otherrentck" resultType="int">
-			SELECT COUNT(RENT_IDX) FROM RENT
-			WHERE RENT_IDX = #{param1} AND RENT_STATE IN (1,2,3)
+			SELECT COUNT(rent_idx) FROM rent
+			WHERE rent_idx = #{param1} AND rent_state IN (1,2,3)
 		</select>
 		
 		<!-- 나랑 대여 상태 -->
 		<select id="rentstate" resultType="object">
-			SELECT RENT_STATE FROM RENT
-			WHERE RENT_IDX = #{param1}
+			SELECT rent_state FROM rent
+			WHERE rent_idx = #{param1}
 		</select>
 		
 		<!-- 교환 예약 수락 -->
 		<update id="finalchangeok">
-			UPDATE `CHANGE` SET CHANGE_STATE = 2, MOD_MEMBER_IDX = #{param2}
-			WHERE CHANGE_IDX = #{param1}
+			UPDATE `change` SET change_state = 2, mod_member_idx = #{param2}
+			WHERE change_idx = #{param1}
 		</update>
 		
 		<!-- 들고있는 보증금 들고오기 -->
@@ -123,74 +117,74 @@
    		
 		<!-- 예약 걸린 보증금 들고오기 -->
    		<select id="rentdeposit" resultType="int">
-   			SELECT RENT_DEPOSIT FROM RENT
-   			WHERE RENT_IDX = #{param1}   		
+   			SELECT rent_deposit FROM rent
+   			WHERE rent_idx = #{param1}   		
    		</select>
    		
 		<!-- 대여 보증금 사용 -->
    		<insert id="usedeposit">
-   			INSERT INTO DEPOSIT(MEMBER_IDX, DEPOSIT_TYPE, DEPOSIT_METHOD, DEPOSIT_INFO, DEPOSIT_PRICE, DEPOSIT_STATE)
+   			INSERT INTO deposit(member_idx, deposit_type, deposit_method, deposit_info, deposit_price, deposit_state)
    			VALUES(#{param1}, '출금', '대여', '대여',#{param2},1)
    		</insert>
    		
    		<!-- 대여 예약 수락 -->
 		<update id="finalrentok">
-			UPDATE RENT SET RENT_STATE = 2, MOD_MEMBER_IDX = #{param2}
-			WHERE RENT_IDX = #{param1}
+			UPDATE rent SET rent_state = 2, mod_member_idx = #{param2}
+			WHERE rent_idx = #{param1}
 		</update>
 		
 		<!-- 대여 책 상태 변경 -->
 		<update id="finalbookok">
-			UPDATE LIBRARY SET LIBRARY_SHARESTATE = 1
-			WHERE LIBRARY_IDX = #{param1}
+			UPDATE library SET library_sharestate = 1
+			WHERE library_idx = #{param1}
 		</update>
 		
 		<!-- 교환 예약 취소 -->
    		<update id="changereservationno">
-			UPDATE `CHANGE` SET CHANGE_STATE = 0, MOD_MEMBER_IDX = #{param2}
-			WHERE CHANGE_IDX = #{param1}
+			UPDATE `change` SET change_state = 0, mod_member_idx = #{param2}
+			WHERE change_idx = #{param1}
 		</update>
 		
 		<!-- 대여 예약 취소 -->
 		<update id="rentreservationno">
-			UPDATE RENT SET RENT_STATE = 0, MOD_MEMBER_IDX = #{param2}
-			WHERE RENT_IDX = #{param1}
+			UPDATE rent SET rent_state = 0, mod_member_idx = #{param2}
+			WHERE rent_idx = #{param1}
 		</update>
 		
 		<!-- 책 상태 되돌리기 -->
 		<update id="finalbookno">
-			UPDATE LIBRARY SET LIBRARY_SHARESTATE = 0
-			WHERE LIBRARY_IDX = #{param1}
+			UPDATE library SET library_sharestate = 0
+			WHERE library_idx = #{param1}
 		</update>
 		
 		<!-- 현재 교환상태 확인 -->
 		<select id="chkchgroomstate" resultType="int">
-			SELECT CHANGE_STATE FROM `CHANGE`
-			WHERE CHANGE_IDX = #{param1} 
+			SELECT change_state FROM `change`
+			WHERE change_idx = #{param1} 
 		</select>
 		
 		<!-- 현재 대여상태 확인 -->
 		<select id="chkrentroomstate" resultType="int">
-			SELECT RENT_STATE FROM RENT
-			WHERE RENT_IDX = #{param1} 
+			SELECT rent_state FROM rent
+			WHERE rent_idx = #{param1} 
 		</select>
 		
 		<!-- 대화방 나가기 -->
 		<update id="chatout">
 			UPDATE CHAT_ROOM SET CHAT_ROOM_STATE = 1, MOD_MEMBER_IDX = #{param3}, MOD_DATE = now()
-			WHERE CODE_IDX = #{param1} AND MEMBER_IDX = #{param3} AND IDX = #{param2}	
+			WHERE CODE_IDX = #{param1} AND IDX = #{param2} AND MEMBER_IDX = #{param3} 	
 		</update> 
 		
 		<!-- 모임 생성시 모임 메세지방 생성 -->
 		<insert id="createchatroom">
-			INSERT INTO CHAT_ROOM(CODE_IDX,MEMBER_IDX,IDX,CHAT_ROOM_STATE)
+			INSERT INTO chat_room(code_idx,member_idx,idx,chat_room_state)
 			VALUES(4,#{param2},#{param1},0)
 		</insert>
 		
 		<!-- 모임 채팅방 생성 됐다는 메세지 -->
 		<insert id="createchat">
-			INSERT INTO CHAT(CODE_IDX,IDX,CHAT_SENDER,CHAT_CHAT,CHAT_CHECK)
-			VALUES(4,#{param1},#{param2},#{param3},0)
+			INSERT INTO chat(code_idx,idx,chat_sender,chat_chat)
+			VALUES(4,#{param1},#{param2},#{param3})
 		</insert>
 		
 		<!-- 모임 참여자 IDX -->
@@ -201,8 +195,8 @@
 		
 		<!-- 모임 참여자에게 메세지 전송 -->
 		<insert id="sendclubmembermessage">
-			INSERT INTO chat(code_idx, idx, chat_sender, chat_reciever, chat_chat, chat_check)
-			VALUES(4,#{param1},#{param2},#{param3},#{param4},0)
+			INSERT INTO chat(code_idx, idx, chat_sender, chat_chat)
+			VALUES(4,#{param1},#{param2},#{param3})
 		</insert>
 		
 		<!-- 모임 채팅 모두 나가기 -->

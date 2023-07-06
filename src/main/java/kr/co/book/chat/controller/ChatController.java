@@ -43,11 +43,11 @@ public class ChatController {
 		public String message_ajax_list(HttpServletRequest request, HttpSession session) {
 			
 			logger.info("컨트롤 시작");
-			String MEMBER_IDX = session.getAttribute("loginIdx").toString();
+			String member_idx = session.getAttribute("loginIdx").toString();
 					
 			logger.info("세션?");
 			ChatDTO dto = new ChatDTO();
-			dto.setMEMBER_IDX(MEMBER_IDX);
+			dto.setMember_idx(member_idx);
 			logger.info("컨트롤 서비스 전");
 			// 메세지 리스트
 			ArrayList<ChatDTO> list = service.messageList(dto);
@@ -57,16 +57,17 @@ public class ChatController {
 			return "/chat/message_ajax_list";
 		}
 		
+		// 메시지 내용
 		@RequestMapping(value = "/message_content_list.do")
 		public String message_content_list(HttpServletRequest request, HttpSession session) {
 
-			String CODE_IDX = request.getParameter("CODE_IDX");
-			String IDX = request.getParameter("room");
-			String MEMBER_IDX = session.getAttribute("loginIdx").toString();
+			String code_idx = request.getParameter("code_idx");
+			String idx = request.getParameter("room");
+			String member_idx = session.getAttribute("loginIdx").toString();
 			ChatDTO dto = new ChatDTO();
-			dto.setCODE_IDX(CODE_IDX);
-			dto.setIDX(IDX);
-			dto.setMEMBER_IDX(MEMBER_IDX);
+			dto.setCode_idx(code_idx);
+			dto.setIdx(idx);
+			dto.setMember_idx(member_idx);
 
 			// 메세지 내용을 가져온다.
 			ArrayList<ChatDTO> clist = service.roomContentList(dto);
@@ -79,12 +80,12 @@ public class ChatController {
 		// 메세지 보내기
 		@ResponseBody
 		@RequestMapping(value = "/message_send_inlist.do")
-		public void message_send_inlist(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String content, HttpSession session) {						
+		public void message_send_inlist(@RequestParam String code_idx, @RequestParam String room, @RequestParam String content, HttpSession session) {						
 
 			String sender = session.getAttribute("loginIdx").toString();
 			int chat_sender = Integer.parseInt(sender);
 
-			service.messageSendInlist(CODE_IDX,room,chat_sender,content);
+			service.messageSendInlist(code_idx,room,chat_sender,content);
 
 		}
 		
@@ -93,19 +94,7 @@ public class ChatController {
 		public String apply() {
 
 			return "/chat/apply";
-		}
-		
-		// 읽음처리
-		@RequestMapping(value="/read_chk.do")
-		@ResponseBody
-		public int read_chk(HttpSession session, HttpServletRequest request) {
-			
-			ChatDTO dto = new ChatDTO();
-			dto.setCODE_IDX(request.getParameter("CODE_IDX"));
-			dto.setIDX(request.getParameter("room"));
-			dto.setMEMBER_IDX(session.getAttribute("loginIdx").toString());
-			return service.read_chk(dto);
-		}
+		}		
 		
 		// 메세지에서 사진 보내기
 		@RequestMapping(value="/chatphoto.ajax")
@@ -121,11 +110,11 @@ public class ChatController {
 		
 		// 약속잡기
 		@RequestMapping(value = "/reservation.go", method = RequestMethod.GET)
-		public ModelAndView reservationok(@RequestParam String code_idx, @RequestParam String idx, @RequestParam String other_nick) {
+		public ModelAndView reservationok(@RequestParam String code_idx, @RequestParam String idx) {
 			
 			logger.info("컨트롤러는 옴");
 			
-			logger.info("code: "+code_idx+"idx: "+idx+"other_nick: "+ other_nick);
+			logger.info("code: "+code_idx+"idx: "+idx);
 			
 			ModelAndView mav = new ModelAndView("/chat/reservation");
 			
@@ -135,13 +124,11 @@ public class ChatController {
 			// 교환 처음신청 정보 가져오기
 			if(category == 2) {
 				map = chgservice.chgreservation(idx);
-				map.put("CODE_IDX", code_idx);
-				map.put("other_nick", other_nick);
+				map.put("code_idx", code_idx);
 			// 대여 처음신청 정보 가져오기
 			}else if (category == 3) {
 				map = rentservice.rentreservation(idx);
-				map.put("CODE_IDX", code_idx);
-				map.put("other_nick", other_nick);
+				map.put("code_idx", code_idx);
 			}
 			
 			mav.addObject("reservation", map);
@@ -163,23 +150,23 @@ public class ChatController {
 		// 책에 대한 모든 대화방 상태
 		@RequestMapping(value="/total_stateajax.do")
 		@ResponseBody
-		public HashMap<String, Object> total_stateajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String library, HttpSession session) {
+		public HashMap<String, Object> total_stateajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String library, HttpSession session) {
 			
-			logger.info("codeidx"+CODE_IDX+"room"+room+"library"+library);
+			logger.info("codeidx"+code_idx+"room"+room+"library"+library);
 						HashMap<String, Object> map = new HashMap<String, Object>();
 						
 			String member_idx = session.getAttribute("loginIdx").toString();
-			map = service.total_stateajax(CODE_IDX, room, member_idx,library);
+			map = service.total_stateajax(code_idx, room, member_idx,library);
 			return map;		
 		}
 		
 		// 약속 잡기 수락
 		@RequestMapping(value="/reservationok_ajax.do")
 		@ResponseBody
-		public int reservationok_ajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+		public int reservationok_ajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String library, HttpSession session) {
 			
 			String member_idx = session.getAttribute("loginIdx").toString();
-			int success = service.reservationok_ajax(CODE_IDX,room,other_nick,library,member_idx);
+			int success = service.reservationok_ajax(code_idx,room,library,member_idx);
 			
 			
 			return success;
@@ -188,10 +175,10 @@ public class ChatController {
 		// 약속 잡기 거절
 		@RequestMapping(value="/reservationno_ajax.do")
 		@ResponseBody
-		public int reservationno_ajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+		public int reservationno_ajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String library, HttpSession session) {
 			
 			String member_idx = session.getAttribute("loginIdx").toString();
-			int success = service.reservationno_ajax(CODE_IDX,room,other_nick,library,member_idx);
+			int success = service.reservationno_ajax(code_idx,room,library,member_idx);
 			
 			
 			return success;
@@ -200,11 +187,11 @@ public class ChatController {
 		// 채팅방 나가기
 		@RequestMapping(value="/chatout_ajax.do")
 		@ResponseBody
-		public int chatout_ajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+		public int chatout_ajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
 			
 			logger.info("컨트롤 들어옴");
 			String member_idx = session.getAttribute("loginIdx").toString();
-			int success = service.chatout_ajax(CODE_IDX,room,other_nick,library,member_idx);
+			int success = service.chatout_ajax(code_idx,room,other_nick,library,member_idx);
 			
 			
 			return success;

@@ -35,28 +35,22 @@ public class ChatService {
 	
 	// 대화중인 대화 방
 	public ArrayList<ChatDTO> messageList(ChatDTO dto) {
-		String MEMBER_IDX = dto.getMEMBER_IDX();
+		String member_idx = dto.getMember_idx();
 		logger.info("서비스 시작");
 		// 메세지 리스트에 나타낼 것들 가져오기 - 가장 최근 메세지, 보낸사람 profile 사진, 보낸사람 nick
 		ArrayList<ChatDTO> list = dao.message_list(dto);
 		
 		for (ChatDTO cto : list) {	
-			cto.setMEMBER_IDX(MEMBER_IDX);
-			
-			// 대화 방에 대한 안읽은 메세지의 갯수
-			int unread = dao.count_unread(cto);
-
-			// 안읽은 메세지 갯수를 mto에 set한다.
-			cto.setUnread(unread);
+			cto.setMember_idx(member_idx);
 			
 			// 현재 채팅방의 책idx를 가져온다.
-			String idx = cto.getIDX();
-			int codeidx = Integer.parseInt(cto.getCODE_IDX());
+			String idx = cto.getIdx();
+			int codeidx = Integer.parseInt(cto.getCode_idx());
 			
 			// 교환일 경우
 			if(codeidx == 2) {
 				// 교환 신청한 책 IDX
-				cto.setLIBRARY_IDX(dao.chgbookidx(idx));
+				cto.setLibrary_idx(dao.chgbookidx(idx));
 				
 				// 교환 신청한 유저 IDX
 				cto.setApplyuser(dao.chgapplyuser(idx));
@@ -64,17 +58,10 @@ public class ChatService {
 			// 대여일 경우
 			}else if (codeidx ==3) {
 				// 대여 신청한 책 IDX
-				cto.setLIBRARY_IDX(dao.rentbookidx(idx));
+				cto.setLibrary_idx(dao.rentbookidx(idx));
 				
 				// 대여 신청한 유저 IDX
 				cto.setApplyuser(dao.rentapplyuser(idx));
-			}
-
-			// 메세지 상대 nick을 세팅한다. other_nick
-			if (MEMBER_IDX.equals(cto.getCHAT_SENDER())) {
-				cto.setOther_nick(cto.getCHAT_RECIEVER());
-			} else {
-				cto.setOther_nick(cto.getCHAT_SENDER());
 			}
 		}
 		logger.info("서비스 종료");
@@ -87,32 +74,16 @@ public class ChatService {
 
 		// 대화 내역
 		ArrayList<ChatDTO> clist = dao.room_content_list(dto);
-		
-		// 대화 방의 메세지 읽음 처리
-		int success = dao.message_read_chk(dto);
-		
+				
 		return clist;
 	}
 	
 	// 전송 메세지 저장
 	@Transactional
-	public void messageSendInlist(String CODE_IDX, String room, int chat_sender, String content) {
+	public void messageSendInlist(String code_idx, String room, int chat_sender, String content) {
 		
-		// 채팅방 상대방 IDX 가져오기
-		ArrayList<HashMap<String, Integer>> list = dao.chatuserIDX(CODE_IDX,room);
-		for (HashMap<String, Integer> map : list) {
-			if(map.get("member_idx") != chat_sender) {
-				// 채팅방 상대방에게 전송
-				dao.messageSendInlist(CODE_IDX, room, chat_sender, map.get("member_idx"), content);
-			}
-		}
+		dao.messageSendInlist(code_idx, room, chat_sender, content);
 
-	}
-	
-	// 대화방 읽음 체크
-	public int read_chk(ChatDTO dto) {
-		
-		return dao.message_read_chk(dto);
 	}
 	
 	// 전송 사진 저장
@@ -129,14 +100,9 @@ public class ChatService {
 		String sender = session.getAttribute("loginIdx").toString();
 		int chat_sender = Integer.parseInt(sender);
 		
-		// 채팅방 상대방 IDX 가져오기
-		ArrayList<HashMap<String, Integer>> list = dao.chatuserIDX(params.get("CODE_IDX"), params.get("IDX"));
-		for (HashMap<String, Integer> map : list) {
-			if(map.get("member_idx") != chat_sender) {
-				// 채팅방 상대방에게 전송
-				dao.messageSendInlist(params.get("CODE_IDX"), params.get("IDX"), chat_sender, map.get("member_idx"), "/upload/"+serPhotoname);
-			}
-		}
+		// 사진 전송
+		dao.messageSendInlist(params.get("code_idx"), params.get("idx"), chat_sender,  "/upload/"+serPhotoname);
+
 						
 		// 사진 저장
 		try {
@@ -145,7 +111,7 @@ public class ChatService {
 			Files.write(path, bytes);
 			
 			logger.info(serPhotoname+" save OK");
-			dao.fileWrite(params.get("CODE_IDX"), params.get("IDX"),session.getAttribute("loginIdx").toString(),oriPhotoname, serPhotoname);
+			dao.fileWrite(params.get("code_idx"), params.get("idx"),session.getAttribute("loginIdx").toString(),oriPhotoname, serPhotoname);
 			logger.info("사진 저장 완료");
 			
 		} catch (IOException e) {
@@ -164,9 +130,9 @@ public class ChatService {
 	}
 	
 	// 대화 방의 책 상태
-	public HashMap<String, Object> total_stateajax(String CODE_IDX, String room, String member_idx, String library) {
+	public HashMap<String, Object> total_stateajax(String code_idx, String room, String member_idx, String library) {
 		
-		logger.info(CODE_IDX,room,member_idx,library);
+		logger.info(code_idx,room,member_idx,library);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -174,7 +140,7 @@ public class ChatService {
 		map.put("librarystate", dao.librarystate(library));
 		
 		// 교환신청 or 대여신청 상태여부
-		if(Integer.parseInt(CODE_IDX) == 2) {		
+		if(Integer.parseInt(code_idx) == 2) {		
 			
 			// 다른사람과 교환 상태
 			int chgck = dao.otherchangeck(room);
@@ -183,7 +149,7 @@ public class ChatService {
 			// 나랑 교환상태
 			map.put("changestate", dao.changestate(room));
 			
-		}else if(Integer.parseInt(CODE_IDX) == 3) {
+		}else if(Integer.parseInt(code_idx) == 3) {
 			
 			// 다른사람과 대여 상태
 			int rentck = dao.otherrentck(room);
@@ -200,18 +166,18 @@ public class ChatService {
 	
 	// 약속 수락
 	@Transactional
-	public int reservationok_ajax(String CODE_IDX, String room, String other_nick, String library, String member_idx) {
+	public int reservationok_ajax(String code_idx, String room, String library, String member_idx) {
 		
 		int success = 0;
 		// 수락이 교환인지 대여인지
 		// 교환일시				
-		if(Integer.parseInt(CODE_IDX) == 2) {
+		if(Integer.parseInt(code_idx) == 2) {
 			
 			// 교환 예약 수락
 			dao.finalchangeok(room,member_idx);
 			success = 2;
 						
-		}else if(Integer.parseInt(CODE_IDX) == 3) {
+		}else if(Integer.parseInt(code_idx) == 3) {
 						
 			// 들고있는 보증금 들고오기
 			int deposit = dao.userdeposit(member_idx);
@@ -219,6 +185,7 @@ public class ChatService {
 			// 예약 걸린 보증금 들고오기
 			int rentdeposit = dao.rentdeposit(room);			
 			success = 1;
+			
 			// 내가 들고있는 보증금이 걸린 보증금보다 크다면
 			if(deposit > rentdeposit) {
 				
@@ -240,17 +207,17 @@ public class ChatService {
 	}
 	
 	// 약속 거절
-	public int reservationno_ajax(String CODE_IDX, String room, String other_nick, String library, String member_idx) {
+	public int reservationno_ajax(String code_idx, String room, String library, String member_idx) {
 		
 		int success = 0;
 				
-		if(Integer.parseInt(CODE_IDX) == 2) {
+		if(Integer.parseInt(code_idx) == 2) {
 			// 교환 일시 들어옴
 			// 교환 예약 취소
 			success = dao.changereservationno(room,member_idx);
 			
 			
-		}else if(Integer.parseInt(CODE_IDX) == 3) {
+		}else if(Integer.parseInt(code_idx) == 3) {
 			// 대여 일시 들어옴
 			// 대여 예약 취소
 			success = dao.rentreservationno(room,member_idx);
@@ -264,17 +231,17 @@ public class ChatService {
 	}
 	
 	// 채팅 나가기
-	public int chatout_ajax(String CODE_IDX, String room, String other_nick, String library, String member_idx) {
+	public int chatout_ajax(String code_idx, String room, String other_nick, String library, String member_idx) {
 
 		int success = 0;
 		int state = 0;
 		
 		// 나가기전 해당 대화방에서 예약중인지 대여중인지를 확인		
-		if(Integer.parseInt(CODE_IDX) == 2) {
+		if(Integer.parseInt(code_idx) == 2) {
 			// 현재 대화방이 교환이면
 			// 현재 교환상태 확인
 			 state = dao.chkchgroomstate(room);			
-		}else if(Integer.parseInt(CODE_IDX) == 3) {
+		}else if(Integer.parseInt(code_idx) == 3) {
 			// 현재 대화방이 대여이면
 			// 현재 대여상태 확인
 			state = dao.chkrentroomstate(room);			
@@ -291,7 +258,7 @@ public class ChatService {
 				success = 3;
 			}else {
 				// 대화방 나가기
-				success = dao.chatout(CODE_IDX,room,member_idx);
+				success = dao.chatout(code_idx,room,member_idx);
 				success = 4;
 			}
 
@@ -314,17 +281,10 @@ public class ChatService {
 	public void clubchatjoin(String club_idx, int member_idx) {
 		
 		// 모임 메세지방 가입
-		dao.createchatroom(club_idx,member_idx);
-		// 모임 참여자 idx 들고오기
-		ArrayList<HashMap<String, Integer>> list = dao.findclubmember(club_idx);
-		
-		for (HashMap<String, Integer> map : list) {
-			if(map.get("member_idx") != member_idx) {
-				// 모임 참여자에게 메세지 전송
-				dao.sendclubmembermessage(club_idx,member_idx,map.get("member_idx"),"등장");
-			}
-			
-		}				
+		dao.createchatroom(club_idx,member_idx);	
+		// 모임 참여자에게 메세지 전송
+		dao.sendclubmembermessage(club_idx,member_idx,"등장");
+
 	}
 	
 	// 모임 채팅 모두 나가기

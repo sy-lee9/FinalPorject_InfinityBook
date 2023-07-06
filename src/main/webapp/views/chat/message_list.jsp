@@ -1,6 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fn"%>
 <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
 
 
@@ -58,12 +59,10 @@
 </style>
 </head>
 <script>		
-var CODE_IDX = '';
+var code_idx = '';
 var room = '';
-var other_nick = '';
-var library ='';
+var library = '';
 var apply_user = '';
-
 // 가장 처음 메세지 리스트를 가져온다.
 const FirstMessageList = function(){
 	$.ajax({
@@ -79,30 +78,26 @@ const FirstMessageList = function(){
 			
 			// 메세지 리스트중 하나를 클릭했을 때
 			$('.chat_list').on('click', function(){
-				CODE_IDX = $(this).attr('code');
+				code_idx = $(this).attr('code');
 				room = $(this).attr('room');
-				other_nick = $(this).attr('other-nick');
 				library = $(this).attr('library');					
-				apply_user =$(this).attr('apply-user');
+				apply_user = $(this).attr('apply-user');
 				
 				// 메세지 내용을 불러오는 함수 호출
-				MessageContentList(CODE_IDX,room);
+				MessageContentList(code_idx,room,library,apply_user);
 							
 				// 클릭한 방의 책 정보 호출
-				Messagebook();	
+				Messagebook(code_idx,room,library,apply_user);	
+
+				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
 				
-				
-				
-				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);					
-				
-				$('.unread'+CODE_IDX+'a'+room).empty();
-		
 				// 선택한 메세지빼고 나머지는 active 효과 해제하기
-				$('.chat_list_box').not('.chat_list_box'+CODE_IDX+'a'+room).removeClass('active_chat');
-				//$('.chat_list_box').not('.chat_list_box.chat_list_box'+CODE_IDX+room).removeClass('active_chat');
+				$('.chat_list_box').not('.chat_list_box'+code_idx+'-'+room).removeClass('active_chat');
 				
 				// 선택한 메세지만 active 효과 주기
-				$('.chat_list_box'+CODE_IDX+'a'+room).addClass('active_chat');
+				$('.chat_list_box'+code_idx+'-'+room).addClass('active_chat');
+			
+			
 				
 				let send_msg = "";
 				send_msg += "<div class='type_msg'>";
@@ -126,8 +121,11 @@ const FirstMessageList = function(){
 				// 메세지입력칸에서 엔터키 입력 시
 				$('.write_msg').on('keyup',function(ev){
 					if(ev.keyCode == 13){
-						console.log('전송');
-						SendMessage(CODE_IDX,room);
+
+						SendMessage(code_idx,room);
+						// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
+						// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
+						$('.chat_list_box:first').addClass('active_chat');
 					}
 				});
 
@@ -135,28 +133,32 @@ const FirstMessageList = function(){
 				$('.msg_send_btn').on('click',function(){
 
 					// 메세지 전송 함수 호출
-					SendMessage(CODE_IDX,room);
+					SendMessage(code_idx,room);
 					// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
 					// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
-					//$('.chat_list_box:first').addClass('active_chat');
+					$('.chat_list_box:first').addClass('active_chat');
 				});
 
 				// 사진 업로드 시  
 				$('#fileInput').on('change',function(event) {
 				 
-					SendPhoto(CODE_IDX,room, event.target.files[0]);
+					SendPhoto(code_idx,room, event.target.files[0]);
+					// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
+					// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
+					$('.chat_list_box:first').addClass('active_chat');
+					
 
 				});
 			});// 채팅방 클릭 끝
 		}// 처음리스트 들고오기 성공 끝
 	});// 리스트 ajax 끝
 }
-const Messagebook = function(){
+const Messagebook = function(code_idx,room,library,apply_user){
 	// 대화방의 상품정보를 넣는다.
-	if(CODE_IDX != 4){
-		
+	$('.mmgs').html('');
 	
-	
+	if(code_idx != 4){
+				
 	$.ajax({
 		url:"message_librarydetailajax.do",
 		method:"GET",
@@ -167,10 +169,10 @@ const Messagebook = function(){
 			console.log(data);
 										
 			let book = '<div style="display: flex;">';
-			book += '<img src="' + data.LIBRARY_COVER + '" style="width: 50px; margin-right: 10px;"/>';
+			book += '<img src="' + data.library_cover + '" style="width: 50px; margin-right: 10px;"/>';
 			book += '<div class="library">';
-			book += '<div>' + data.LIBRARY_TITLE + '</div>';
-			book += '<div style="font-size: 10px;">' + data.LIBRARY_INFO + '</div>';
+			book += '<div>' + data.library_title + '</div>';
+			book += '<div style="font-size: 10px;">' + data.library_info + '</div>';
 			book += '</div>';
 			book += '</div>';
 			
@@ -181,7 +183,7 @@ const Messagebook = function(){
 				url: "total_stateajax.do",
 				method:"GET",
 				data:{
-					CODE_IDX : CODE_IDX,
+					code_idx : code_idx,
 					room : room,
 					library : library
 				},
@@ -233,7 +235,7 @@ const Messagebook = function(){
 						    var left = (screenWidth - popupWidth) / 2;
 						    var top = (screenHeight - popupHeight) / 2;    
 
-						    window.open('reservation.go?code_idx='+CODE_IDX+'&idx='+room+'&other_nick='+other_nick, '약속 잡기',  'width=500, height=500, left=' + left + ', top=' + top);
+						    window.open('reservation.go?code_idx='+code_idx+'&idx='+room, '약속 잡기',  'width=500, height=500, left=' + left + ', top=' + top);
 						}
 
 					});
@@ -246,23 +248,17 @@ const Messagebook = function(){
 							url: "reservationok_ajax.do",
 							method:"GET",
 							data:{
-								CODE_IDX : CODE_IDX,
+								code_idx : code_idx,
 								room : room,
-								other_nick : other_nick,
 								library : library
 							},
 							datatype: 'json',
 							success:function(data){
 								console.log(data);
 								
-								// 메세지 리스트 리로드
-								FirstMessageList();
-								
-								// 메세지 내용  리로드
-								MessageContentList(CODE_IDX,room);
-																				
-								
-								
+								// 책 상태 다시 불러오기
+								Messagebook(code_idx,room,library,apply_user);
+																												
 								if(data == 1){													
 									alert('보증금이 부족합니다.');																										
 								}else if(data == 2){
@@ -283,9 +279,8 @@ const Messagebook = function(){
 							url: "reservationno_ajax.do",
 							method:"GET",
 							data:{
-								CODE_IDX : CODE_IDX,
+								code_idx : code_idx,
 								room : room,
-								other_nick : other_nick,
 								library : library
 							},
 							datatype: 'json',
@@ -293,11 +288,8 @@ const Messagebook = function(){
 								console.log(data);																									
 								
 								if(data > 0){
-									// 메세지 내용  리로드
-									MessageContentList(CODE_IDX,room);
-														
-									// 메세지 리스트 리로드
-									FirstMessageList();
+									// 책 상태 다시 불러오기
+									Messagebook(code_idx,room,library,apply_user);
 									
 									alert('약속 취소 했습니다.');
 								}							
@@ -315,9 +307,8 @@ const Messagebook = function(){
 							url: "chatout_ajax.do",
 							method:"GET",
 							data:{
-								CODE_IDX : CODE_IDX,
+								code_idx : code_idx,
 								room : room,
-								other_nick : other_nick,
 								library : library
 							},
 							datatype: 'json',
@@ -360,14 +351,13 @@ const Messagebook = function(){
 }
 	
 // 메세지 내용을 가져온다.
-// 읽지 않은 메세지들을 읽음으로 바꾼다.
-const MessageContentList = function(CODE_IDX, room) {
+const MessageContentList = function(code_idx,room,library,apply_user) {
 	
 	$.ajax({
 		url:"message_content_list.do",
 		method:"GET",
 		data:{
-			CODE_IDX : CODE_IDX,
+			code_idx : code_idx,
 			room : room
 		},
 		success:function(data){
@@ -387,7 +377,7 @@ const MessageContentList = function(CODE_IDX, room) {
 }
 	
 // 메세지 사진 전송	
-const SendPhoto = function(CODE_IDX,room, photo){
+const SendPhoto = function(code_idx,room, photo){
    
 	var extidx = photo.name.lastIndexOf(".");	  
 	var ext = photo.name.slice(extidx + 1).toLowerCase();
@@ -400,8 +390,8 @@ const SendPhoto = function(CODE_IDX,room, photo){
 		
 		var formData = new FormData(); // FormData 객체 생성
 	    formData.append('photo', photo); // 파일 추가
-	    formData.append('CODE_IDX', CODE_IDX); // 나머지 필드 추가
-	    formData.append('IDX', room); // 나머지 필드 추가other_nick
+	    formData.append('code_idx', code_idx); // 나머지 필드 추가
+	    formData.append('idx', room); // 나머지 필드 추가other_nick
 	    
 		$.ajax({
 		      type: 'post',
@@ -412,10 +402,10 @@ const SendPhoto = function(CODE_IDX,room, photo){
 		      success: function (data) {
 		    	  console.log(data);			    	  
 		    	// 웹소캣으로 실시간 전달
-				send(CODE_IDX,room,other_nick,data);
+				send(code_idx,room,data);
 		    	
 				// 메세지 내용  리로드
-				MessageContentList(CODE_IDX,room);
+				MessageContentList(code_idx,room,library,apply_user);
 									
 				// 메세지 리스트 리로드
 				FirstMessageList();
@@ -429,10 +419,9 @@ const SendPhoto = function(CODE_IDX,room, photo){
 };
 	
 // 메세지를 전송하는 함수
-const SendMessage = function(CODE_IDX,room){
+const SendMessage = function(code_idx,room){
 	
 	let content = $('.write_msg').val();
-	//alert("content: " + content);
 
 	content = content.trim();
 	
@@ -443,7 +432,7 @@ const SendMessage = function(CODE_IDX,room){
 			url:"message_send_inlist.do",
 			method:"GET",
 			data:{
-				CODE_IDX : CODE_IDX,
+				code_idx : code_idx,
 				room : room,
 				content: content
 			},
@@ -451,12 +440,12 @@ const SendMessage = function(CODE_IDX,room){
 				console.log("메세지 전송 성공");
 				
 				// 웹소캣으로 실시간 전달
-				send(CODE_IDX,room,content);		
+				send(code_idx,room,content);		
 				// 메세지 입력칸 비우기
 				$('.write_msg').val("");
 				
 				// 메세지 내용  리로드
-				MessageContentList(CODE_IDX,room);
+				MessageContentList(code_idx,room,library,apply_user);
 									
 				// 메세지 리스트 리로드
 				FirstMessageList();				
@@ -485,16 +474,10 @@ var msg = getName('write_msg');
 
 var ws = new WebSocket("ws://" + location.host + "/chat");	
 
-ws.onmessage = function(msg) {
-	
-		var talk = getId('talk');
-		let open = $('.active_chat');
-		console.log(open);
-		/*
-		var tCODE_IDX = $('.reservation').attr('code');
-		var troom = $('.reservation').attr('room');
-		*/
-		var ch = getId('ch');
+	ws.onmessage = function(msg) {
+		// 리스트 리로드
+		FirstMessageList();
+		
 		var receivedData = JSON.parse(msg.data);
 		
 		console.log(receivedData.content);
@@ -503,32 +486,21 @@ ws.onmessage = function(msg) {
 		
 	  // 받은 메세지가 
 	  // 사진을 받았을 시 ext != 'jpg' && ext !='png' && ext !='gif'
-	  // talk div 추가해야함(껍데기한번더 씌워야해)
-	  if (CODE_IDX == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('jpg') || receivedData.content.endsWith('png') || receivedData.content.endsWith('gif')) {
-	      let img = '<div class="incoming_msg"> <div class="received_withd_msg"> <image src="'+receivedData.content+'"width="80%" height="50%"/><span class="time_date">'+receivedData.date+'</span></div></div>';
+	  if (code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('jpg') || receivedData.content.endsWith('png') || receivedData.content.endsWith('gif')) {
+	      let img = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><image src="'+receivedData.content+'"width="auto" height="auto"/><span class="time_date">'+receivedData.date+'</span></div></div>';
 	      console.log('들어와?');
-	      //talk = getId('talk');
-	      //$(".msg_history").innerHTML += item;
-	      //$(".msg_history").html() += item;
-		  //talk.scrollTop = talk.scrollHeight; //스크롤바 하단으로 이동
-		  
 		  $('.msg_history').html($('.msg_history').html() + img);
 
 		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
 		  
 		  // 리스트 리로드
-		  FirstMessageList();
-		  
-		  
-	// 그냥 메세지일시 			  		    
-	  }else if(CODE_IDX == receivedData.code && room == receivedData.room){
-	      let chat = '<div class="incoming_msg"> <div class="received_withd_msg"> <p>'+receivedData.content+'</p><span class="time_date">'+receivedData.date+'</span></div></div>';
+		  //FirstMessageList();
+		  		  			  		    
+	  }else if(code_idx == receivedData.code && room == receivedData.room){
+		// 그냥 메세지일시 
+	      let chat = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><p>'+receivedData.content+'</p><span class="time_date">'+receivedData.date+'</span></div></div>';
 	      console.log('들어와?');
-	      //talk = getId('talk');
-	      //$(".msg_history").innerHTML += item;
-	      //$(".msg_history").html() += item;
-		  //talk.scrollTop = talk.scrollHeight; //스크롤바 하단으로 이동
-		  
+
 		  $('.msg_history').html($('.msg_history').html() + chat);
 
 		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);  		
@@ -538,40 +510,17 @@ ws.onmessage = function(msg) {
 	  }	 
 }
 		  
-function send(CODE_IDX,room,other_nick,content){			
-	data.	code =  CODE_IDX;
+function send(code_idx,room,content){			
+	data.	code =  code_idx;
 	data.	room =  room;
-	data.send_midx = ${sessionScope.loginIdx};
-	data.recv_midx= other_nick;
+	data.send_nickname = '${sessionScope.loginNickname}';
 	data.content = content;
 	data.date = new Date().toLocaleString();
 	var temp = JSON.stringify(data);
 	ws.send(temp);			
 }
 	
-	
-$(document).on('click',function(ev){
-
-	$.ajax({
-		url:"read_chk.do",
-		method:"GET",
-		data:{
-			CODE_IDX : CODE_IDX,
-			room : room
-		},
-		success:function(data){
-			$('.unread'+CODE_IDX+'a'+room).empty();		
-			
-		},
-		error : function() {
-			
-		}
-	});
-});
-	
 $(document).ready(function(){
-
-	console.log('aaa');
 	
 	FirstMessageList();
 	

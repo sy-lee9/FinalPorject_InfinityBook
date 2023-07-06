@@ -141,122 +141,6 @@
 </section>
 
 
-
-<footer id="footer">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-4">
-				
-				<div class="footer-item">
-					<div class="company-brand">
-						<img src="/images/main-logo.png" alt="logo" class="footer-logo">
-						<p>Infinity Book은 한권의 책으로 무한의 책을 읽을 수 있도록 해주는 중고 책 대여/교환 서비스 입니다. </p>
-					</div>
-				</div>
-				
-			</div>
-
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>About Us</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							이명아
-						</li>
-						<li class="menu-item">
-							이수연
-						</li>
-						<li class="menu-item">
-							최은영
-						</li>
-						<li class="menu-item">
-							엄상원
-						</li>
-						<li class="menu-item">
-							이창훈
-						</li>
-						<li class="menu-item">
-							박희준
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Discover</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Home</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Books</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Authors</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Subjects</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Advanced Search</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>My account</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Sign In</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">View Cart</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">My Wishtlist</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Track My Order</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Help</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Help center</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Report a problem</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Suggesting edits</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Contact us</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-
-		</div>
-		<!-- / row -->
-
-	</div>
-</footer>
-
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">
@@ -443,17 +327,28 @@ var showPage = 1;
 	    
 	    content += '<table style=" text-align:center; width:90%;">';
 	    content += '<tr>';
-	    content += '	<th style="width:30%;"> 사용일자 </th>';
-	    content += '	<th style="width:30%;"> 사용금액 </th>';
+	    content += '	<th style="width:30%; text-align:center;"> 사용일자 </th>';
+	    content += '	<th style="width:30%; text-align:center;"> 사용금액 </th>';
 	    content += '	<th style="width:40%;"> 사용내역 </th>';
 	    content += '</tr>';
 	    
 	   
 	    list.forEach(function(item) {
 	    	content += '<tr>';
-		    content += '	<td>'+item.deposit_use_date+'</td>';
-		    content += '	<td>'+item.deposit_use_price+'</td>';
-		    content += '	<td>'+item.deposit_use_state+' 했습니다.</td>';
+		    content += '	<td style=" text-align:center;">'+item.deposit_use_date.split("-")[0]+'년 '+item.deposit_use_date.split("-")[1]+'월 '+item.deposit_use_date.split("-")[2]+'일</td>';
+		    content += '	<td style=" text-align:center;">'+item.deposit_use_price+'원</td>';
+		    if(item.deposit_use_state == "충전"){ 
+		    	content += '	<td>'+item.deposit_use_state+' 했습니다.</td>';
+		    }else if(item.deposit_use_state == "출금"){
+		    	content += '	<td>'+item.deposit_use_state+' 했습니다.</td>';
+		    }else if(item.deposit_use_state == "사용"){
+		    	content += '	<td>도서 대여 보증금으로 '+item.deposit_use_state+' 했습니다.</td>';		    	
+		    }else if(item.deposit_use_state == "반환"){
+		    	content += '	<td>도서 대여 보증금을 '+item.deposit_use_state+' 받았습니다.</td>';		    	
+		    }else if(item.deposit_use_state == "배상금"){
+		    	content += '	<td>도서 대여 보증금으로 '+item.deposit_use_state+' 을 받았습니다.</td>';		    	
+		    }else{}
+		    
 		    content += '</tr>';
 	    });
 

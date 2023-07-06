@@ -14,9 +14,6 @@ public interface ChatDAO {
 	// 대화중인 대화 방 
 	ArrayList<ChatDTO> message_list(ChatDTO dto);
 
-	// 대화 방에 대한 안읽은 메세지의 갯수
-	int count_unread(ChatDTO cto);
-	
 	// 교환 신청한 책 IDX
 	String chgbookidx(String idx);
 	
@@ -32,14 +29,11 @@ public interface ChatDAO {
 	// 대화 내역
 	ArrayList<ChatDTO> room_content_list(ChatDTO dto);
 
-	// 대화 방의 메세지 읽음 처리
-	int message_read_chk(ChatDTO dto);
-
 	// 채팅방 상대방 IDX 가져오기
 	ArrayList<HashMap<String, Integer>> chatuserIDX(String cODE_IDX, String room);
 	
 	// 전송 메세지 저장
-	void messageSendInlist(String cODE_IDX, String room, int chat_sender, Integer integer, String content);
+	void messageSendInlist(String cODE_IDX, String room, int chat_sender, String content);
 
 	// 전송 사진 저장
 	void fileWrite(String string, String string2, String string3, String oriPhotoname, String serPhotoname);
@@ -103,12 +97,9 @@ public interface ChatDAO {
 
 	// 모임 채팅방 생성 됐다는 메세지
 	void createchat(String club_idx, int member_idx, String string);
-
-	// 모임 참여자 IDX
-	ArrayList<HashMap<String, Integer>> findclubmember(String club_idx);
 	
 	// 모임 참여자에게 메세지 전송
-	void sendclubmembermessage(String club_idx, int member_idx, int i, String string2);
+	void sendclubmembermessage(String club_idx, int member_idx, String string2);
 
 	// 모임 채팅 모두 나가기
 	void clubchatDelete(int i, String club_idx);

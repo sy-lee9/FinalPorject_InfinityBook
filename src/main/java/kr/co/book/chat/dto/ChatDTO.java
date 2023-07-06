@@ -6,51 +6,160 @@ import org.apache.ibatis.type.Alias;
 public class ChatDTO {
 	
 	// Library	
-	private String LIBRARY_IDX;
-	private String LIBRARY_ISBN;
-	private String LIBRARY_TITLE;
-	private String LIBRARY_COVER;
-	private String LIBRARY_AUTHOR;
-	private String LIBRARY_INFO;
+	private String library_idx;
+	private String library_isbn;
+	private String library_title;
+	private String library_cover;
+	private String library_author;
+	private String library_info;
 	
 	// Chat
-	private String CHAT_IDX;
-	private String CODE_IDX;
-	private String IDX;
-	private String CHAT_SENDER;
-	private String CHAT_RECIEVER;
-	private String CHAT_CHAT;
-	private String CHAT_CHECK;
-	private String CHAT_DATE;
+	private String chat_idx;
+	private String code_idx;
+	private String idx;
+	private String chat_sender;
+	private String chat_chat;
+	private String chat_check;
+	private String chat_date;
 	
 	// Member	
-	private String MEMBER_IDX;
+	private String member_idx;
+	private String member_nickname;
 	
-	// 현재 사용자의 메세지 상대 nick을 담는다.
-	private String other_nick;
-	
-	// 안읽은 메세지 갯수 
-	private int unread;
-	
+	private String nicknames;
+		
 	// 신청한 사람
 	private String applyuser;
 	
 	
+	
 
-	public String getOther_nick() {
-		return other_nick;
+	public String getNicknames() {
+		return nicknames;
 	}
 
-	public void setOther_nick(String other_nick) {
-		this.other_nick = other_nick;
+	public void setNicknames(String nicknames) {
+		this.nicknames = nicknames;
 	}
 
-	public int getUnread() {
-		return unread;
+	public String getMember_nickname() {
+		return member_nickname;
 	}
 
-	public void setUnread(int unread) {
-		this.unread = unread;
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
+
+	public String getLibrary_idx() {
+		return library_idx;
+	}
+
+	public void setLibrary_idx(String library_idx) {
+		this.library_idx = library_idx;
+	}
+
+	public String getLibrary_isbn() {
+		return library_isbn;
+	}
+
+	public void setLibrary_isbn(String library_isbn) {
+		this.library_isbn = library_isbn;
+	}
+
+	public String getLibrary_title() {
+		return library_title;
+	}
+
+	public void setLibrary_title(String library_title) {
+		this.library_title = library_title;
+	}
+
+	public String getLibrary_cover() {
+		return library_cover;
+	}
+
+	public void setLibrary_cover(String library_cover) {
+		this.library_cover = library_cover;
+	}
+
+	public String getLibrary_author() {
+		return library_author;
+	}
+
+	public void setLibrary_author(String library_author) {
+		this.library_author = library_author;
+	}
+
+	public String getLibrary_info() {
+		return library_info;
+	}
+
+	public void setLibrary_info(String library_info) {
+		this.library_info = library_info;
+	}
+
+	public String getChat_idx() {
+		return chat_idx;
+	}
+
+	public void setChat_idx(String chat_idx) {
+		this.chat_idx = chat_idx;
+	}
+
+	public String getCode_idx() {
+		return code_idx;
+	}
+
+	public void setCode_idx(String code_idx) {
+		this.code_idx = code_idx;
+	}
+
+	public String getIdx() {
+		return idx;
+	}
+
+	public void setIdx(String idx) {
+		this.idx = idx;
+	}
+
+	public String getChat_sender() {
+		return chat_sender;
+	}
+
+	public void setChat_sender(String chat_sender) {
+		this.chat_sender = chat_sender;
+	}
+
+	public String getChat_chat() {
+		return chat_chat;
+	}
+
+	public void setChat_chat(String chat_chat) {
+		this.chat_chat = chat_chat;
+	}
+
+	public String getChat_check() {
+		return chat_check;
+	}
+
+	public void setChat_check(String chat_check) {
+		this.chat_check = chat_check;
+	}
+
+	public String getChat_date() {
+		return chat_date;
+	}
+
+	public void setChat_date(String chat_date) {
+		this.chat_date = chat_date;
+	}
+
+	public String getMember_idx() {
+		return member_idx;
+	}
+
+	public void setMember_idx(String member_idx) {
+		this.member_idx = member_idx;
 	}
 
 	public String getApplyuser() {
@@ -60,126 +169,10 @@ public class ChatDTO {
 	public void setApplyuser(String applyuser) {
 		this.applyuser = applyuser;
 	}
+	
+	
 
-	public String getLIBRARY_IDX() {
-		return LIBRARY_IDX;
-	}
-
-	public void setLIBRARY_IDX(String lIBRARY_IDX) {
-		LIBRARY_IDX = lIBRARY_IDX;
-	}
-
-	public String getLIBRARY_ISBN() {
-		return LIBRARY_ISBN;
-	}
-
-	public void setLIBRARY_ISBN(String lIBRARY_ISBN) {
-		LIBRARY_ISBN = lIBRARY_ISBN;
-	}
-
-	public String getLIBRARY_TITLE() {
-		return LIBRARY_TITLE;
-	}
-
-	public void setLIBRARY_TITLE(String lIBRARY_TITLE) {
-		LIBRARY_TITLE = lIBRARY_TITLE;
-	}
-
-	public String getLIBRARY_COVER() {
-		return LIBRARY_COVER;
-	}
-
-	public void setLIBRARY_COVER(String lIBRARY_COVER) {
-		LIBRARY_COVER = lIBRARY_COVER;
-	}
-
-	public String getLIBRARY_AUTHOR() {
-		return LIBRARY_AUTHOR;
-	}
-
-	public void setLIBRARY_AUTHOR(String lIBRARY_AUTHOR) {
-		LIBRARY_AUTHOR = lIBRARY_AUTHOR;
-	}
-
-	public String getLIBRARY_INFO() {
-		return LIBRARY_INFO;
-	}
-
-	public void setLIBRARY_INFO(String lIBRARY_INFO) {
-		LIBRARY_INFO = lIBRARY_INFO;
-	}
-
-	public String getCHAT_IDX() {
-		return CHAT_IDX;
-	}
-
-	public void setCHAT_IDX(String cHAT_IDX) {
-		CHAT_IDX = cHAT_IDX;
-	}
-
-	public String getCODE_IDX() {
-		return CODE_IDX;
-	}
-
-	public void setCODE_IDX(String cODE_IDX) {
-		CODE_IDX = cODE_IDX;
-	}
-
-	public String getIDX() {
-		return IDX;
-	}
-
-	public void setIDX(String iDX) {
-		IDX = iDX;
-	}
-
-	public String getCHAT_SENDER() {
-		return CHAT_SENDER;
-	}
-
-	public void setCHAT_SENDER(String cHAT_SENDER) {
-		CHAT_SENDER = cHAT_SENDER;
-	}
-
-	public String getCHAT_RECIEVER() {
-		return CHAT_RECIEVER;
-	}
-
-	public void setCHAT_RECIEVER(String cHAT_RECIEVER) {
-		CHAT_RECIEVER = cHAT_RECIEVER;
-	}
-
-	public String getCHAT_CHAT() {
-		return CHAT_CHAT;
-	}
-
-	public void setCHAT_CHAT(String cHAT_CHAT) {
-		CHAT_CHAT = cHAT_CHAT;
-	}
-
-	public String getCHAT_CHECK() {
-		return CHAT_CHECK;
-	}
-
-	public void setCHAT_CHECK(String cHAT_CHECK) {
-		CHAT_CHECK = cHAT_CHECK;
-	}
-
-	public String getCHAT_DATE() {
-		return CHAT_DATE;
-	}
-
-	public void setCHAT_DATE(String cHAT_DATE) {
-		CHAT_DATE = cHAT_DATE;
-	}
-
-	public String getMEMBER_IDX() {
-		return MEMBER_IDX;
-	}
-
-	public void setMEMBER_IDX(String mEMBER_IDX) {
-		MEMBER_IDX = mEMBER_IDX;
-	}
+	
 	
 	
 }
