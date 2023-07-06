@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.chat.dto.ChatDTO;
 import kr.co.book.chat.service.ChatService;
-
+import kr.co.book.transaction.service.ChangeService;
+import kr.co.book.transaction.service.RentService;
 
 
 @Controller
@@ -27,134 +29,95 @@ public class ChatController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired ChatService service;
+	@Autowired ChangeService chgservice;
+	@Autowired RentService rentservice;
 	
-	/*
-	private final MessageService service;
-	
-	public MessageController(MessageService service) {
-		this.service = service;
-	}
-
-	
-	@RequestMapping(value="/")
-	public String home() {
-		
-		return "home";
-	}
-	
-	@RequestMapping(value="/login.do")
-	public String login(String id,String pw,HttpSession session) {
-		logger.info(id,pw);
-		HashMap<String, String> map = service.login(id,pw);
-		session.setAttribute("MEMBER_IDX", map.get("MEMBER_IDX"));
-		session.setAttribute("MEMBER_NICKNAME", map.get("MEMBER_NICKNAME"));
-		
-		return "home";
-	}
-	
-	*/
-	// 메세지 목록
 	@RequestMapping(value = "/message_list.go")
 	public String message_list(HttpServletRequest request, HttpSession session) {
-		/*
-		// System.out.println("현대 사용자 nick : " + session.getAttribute("nick"));
 
-		String nick = (String) session.getAttribute("nick");
-
-		MessageDTO to = new MessageDTO();
-		to.setNick(nick);
-
-		// 메세지 리스트
-		ArrayList<MessageDTO> list = service.messageList(to);
-
-		request.setAttribute("list", list);
-		*/
-		return "message_list";
-	}
-
-	// 메세지 목록
-	@RequestMapping(value = "/message_ajax_list.do")
-	public String message_ajax_list(HttpServletRequest request, HttpSession session) {
-		// System.out.println("현대 사용자 nick : " + session.getAttribute("nick"));
-		logger.info("컨트롤 시작");
-		String MEMBER_IDX = session.getAttribute("MEMBER_IDX").toString();
-				
-		logger.info("세션?");
-		ChatDTO dto = new ChatDTO();
-		dto.setMEMBER_IDX(MEMBER_IDX);
-		logger.info("컨트롤 서비스 전");
-		// 메세지 리스트
-		ArrayList<ChatDTO> list = service.messageList(dto);
-
-		request.setAttribute("list", list);
-		logger.info("컨트롤 끝");
-		return "message_ajax_list";
+		return "/chat/message_list";
 	}
 	
-	@RequestMapping(value = "/message_content_list.do")
-	public String message_content_list(HttpServletRequest request, HttpSession session) {
+	// 대화중인 대화 방
+		@RequestMapping(value = "/message_ajax_list.do")
+		public String message_ajax_list(HttpServletRequest request, HttpSession session) {
+			
+			logger.info("컨트롤 시작");
+			String MEMBER_IDX = session.getAttribute("MEMBER_IDX").toString();
+					
+			logger.info("세션?");
+			ChatDTO dto = new ChatDTO();
+			dto.setMEMBER_IDX(MEMBER_IDX);
+			logger.info("컨트롤 서비스 전");
+			// 메세지 리스트
+			ArrayList<ChatDTO> list = service.messageList(dto);
 
-		String CODE_IDX = request.getParameter("CODE_IDX");
-		String IDX = request.getParameter("room");
-		String MEMBER_IDX = session.getAttribute("MEMBER_IDX").toString();
-		ChatDTO to = new ChatDTO();
-		to.setCODE_IDX(CODE_IDX);
-		to.setIDX(IDX);
-		to.setMEMBER_IDX(MEMBER_IDX);
-//		to.setRoom(IDX);
-//		to.setNick((String) session.getAttribute("nick"));
-
-		// 메세지 내용을 가져온다.
-		ArrayList<ChatDTO> clist = service.roomContentList(to);
-
-		request.setAttribute("clist", clist);
-
-		return "message_content_list";
-	}
-
-	// 메세지 보내기
-	@ResponseBody
-	@RequestMapping(value = "/message_send_inlist.do")
-	public int message_send_inlist(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick,
-			@RequestParam String content, HttpSession session) {
+			request.setAttribute("list", list);
+			logger.info("컨트롤 끝");
+			return "message_ajax_list";
+		}
 		
-		String MEMBER_IDX = session.getAttribute("MEMBER_IDX").toString();
-		ChatDTO to = new ChatDTO();
-		to.setCODE_IDX(CODE_IDX);
-		to.setIDX(room);
-		to.setCHAT_SENDER(MEMBER_IDX);
-		to.setCHAT_RECIEVER(other_nick);
-		to.setCHAT_CHAT(content);
+		@RequestMapping(value = "/message_content_list.do")
+		public String message_content_list(HttpServletRequest request, HttpSession session) {
 
-		int flag = service.messageSendInlist(to);
+			String CODE_IDX = request.getParameter("CODE_IDX");
+			String IDX = request.getParameter("room");
+			String MEMBER_IDX = session.getAttribute("MEMBER_IDX").toString();
+			ChatDTO dto = new ChatDTO();
+			dto.setCODE_IDX(CODE_IDX);
+			dto.setIDX(IDX);
+			dto.setMEMBER_IDX(MEMBER_IDX);
 
-		return flag;
-	}
-	/*
-	// 신청페이지 이동
-	@RequestMapping(value="/apply.go")
-	public String apply() {
+			// 메세지 내용을 가져온다.
+			ArrayList<ChatDTO> clist = service.roomContentList(dto);
 
-		return "apply";
-	}
-	*/
+			request.setAttribute("clist", clist);
 
-	// 읽음처리
-	@RequestMapping(value="/read_chk.do")
-	@ResponseBody
-	public int read_chk(HttpSession session, HttpServletRequest request) {
+			return "/chat/message_content_list";
+		}
 		
-		ChatDTO dto = new ChatDTO();
-		dto.setCODE_IDX(request.getParameter("CODE_IDX"));
-		dto.setIDX(request.getParameter("IDX"));
-		dto.setMEMBER_IDX(session.getAttribute("MEMBER_IDX").toString());
-		return service.read_chk(dto);
-	}
-	
-	// 메세지에서 사진 보내기
-	@RequestMapping(value="/chatphoto.ajax")
-	@ResponseBody
-	   public String chatphoto(MultipartFile photo, @RequestParam HashMap<String, String> params,  HttpSession session){
+		// 메세지 보내기
+		@ResponseBody
+		@RequestMapping(value = "/message_send_inlist.do")
+		public int message_send_inlist(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick,
+				@RequestParam String content, HttpSession session) {
+			
+			String MEMBER_IDX = session.getAttribute("MEMBER_IDX").toString();
+			ChatDTO dto = new ChatDTO();
+			dto.setCODE_IDX(CODE_IDX);
+			dto.setIDX(room);
+			dto.setCHAT_SENDER(MEMBER_IDX);
+			dto.setCHAT_RECIEVER(other_nick);
+			dto.setCHAT_CHAT(content);
+
+			int flag = service.messageSendInlist(dto);
+
+			return flag;
+		}
+		
+		// 신청페이지 이동
+		@RequestMapping(value="/apply.go")
+		public String apply() {
+
+			return "/chat/apply";
+		}
+		
+		// 읽음처리
+		@RequestMapping(value="/read_chk.do")
+		@ResponseBody
+		public int read_chk(HttpSession session, HttpServletRequest request) {
+			
+			ChatDTO dto = new ChatDTO();
+			dto.setCODE_IDX(request.getParameter("CODE_IDX"));
+			dto.setIDX(request.getParameter("room"));
+			dto.setMEMBER_IDX(session.getAttribute("MEMBER_IDX").toString());
+			return service.read_chk(dto);
+		}
+		
+		// 메세지에서 사진 보내기
+		@RequestMapping(value="/chatphoto.ajax")
+		@ResponseBody
+		public String chatphoto(MultipartFile photo, @RequestParam HashMap<String, String> params,  HttpSession session){
 		
 		   logger.info("{}",params);
 		   logger.info("{}",photo);
@@ -162,6 +125,97 @@ public class ChatController {
 		   
 		   return photoroot;
 	   }
-	
-	
+		
+		// 약속잡기
+		@RequestMapping(value = "/reservation.go", method = RequestMethod.GET)
+		public ModelAndView reservationok(@RequestParam String code_idx, @RequestParam String idx, @RequestParam String other_nick) {
+			
+			logger.info("컨트롤러는 옴");
+			
+			logger.info("code: "+code_idx+"idx: "+idx+"other_nick: "+ other_nick);
+			
+			ModelAndView mav = new ModelAndView("/chat/reservation");
+			
+			int category = Integer.parseInt(code_idx);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			// 교환 처음신청 정보 가져오기
+			if(category == 2) {
+				map = chgservice.chgreservation(idx);
+				map.put("CODE_IDX", code_idx);
+				map.put("other_nick", other_nick);
+			// 대여 처음신청 정보 가져오기
+			}else if (category == 3) {
+				map = rentservice.rentreservation(idx);
+				map.put("CODE_IDX", code_idx);
+				map.put("other_nick", other_nick);
+			}
+			
+			mav.addObject("reservation", map);
+			
+			return mav;
+		}
+		
+		// 대화방에 대한 책 정보
+		@RequestMapping(value="/message_librarydetailajax.do")
+		@ResponseBody
+		public HashMap<String, Object> message_librarydetail(@RequestParam String library) {
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map = service.message_librarydetail(library);
+			
+			return map;		
+		}
+		
+		// 책에 대한 모든 대화방 상태
+		@RequestMapping(value="/total_stateajax.do")
+		@ResponseBody
+		public HashMap<String, Object> total_stateajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+			
+			logger.info("codeidx"+CODE_IDX+"room"+room+"library"+library);
+			HashMap<String, Object> map = new HashMap<String, Object>();		
+			String member_idx = session.getAttribute("MEMBER_IDX").toString();
+			map = service.total_stateajax(CODE_IDX, room, other_nick,member_idx,library);
+			return map;		
+		}
+		
+		// 약속 잡기 수락
+		@RequestMapping(value="/reservationok_ajax.do")
+		@ResponseBody
+		public int reservationok_ajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+			
+			String member_idx = session.getAttribute("MEMBER_IDX").toString();
+			int success = service.reservationok_ajax(CODE_IDX,room,other_nick,library,member_idx);
+			
+			
+			return success;
+		}
+		
+		// 약속 잡기 거절
+		@RequestMapping(value="/reservationno_ajax.do")
+		@ResponseBody
+		public int reservationno_ajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+			
+			String member_idx = session.getAttribute("MEMBER_IDX").toString();
+			int success = service.reservationno_ajax(CODE_IDX,room,other_nick,library,member_idx);
+			
+			
+			return success;
+		}
+		
+		// 채팅방 나가기
+		@RequestMapping(value="/chatout_ajax.do")
+		@ResponseBody
+		public int chatout_ajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+			
+			logger.info("컨트롤 들어옴");
+			String member_idx = session.getAttribute("MEMBER_IDX").toString();
+			int success = service.chatout_ajax(CODE_IDX,room,other_nick,library,member_idx);
+			
+			
+			return success;
+		}
+		
+		
+		
 }
