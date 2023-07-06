@@ -92,6 +92,13 @@
 	<insert id="clubJoin">
 		INSERT INTO club_apply(club_idx, member_idx, club_appdate, club_appstate) VALUES(#{param1}, #{param2}, current_timestamp(),1);
 	</insert>
-		
+	
+	<update id="clubDelete">
+		UPDATE club SET club_blind='1' WHERE club_idx=#{param1}
+	</update>
+	
+	<update id="clubUpdate">
+		UPDATE club SET club_state='1' WHERE club_idx=#{param1}
+	</update>		
 	
 </mapper>

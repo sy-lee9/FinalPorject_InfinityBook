@@ -33,36 +33,21 @@
 <body>
 
 <div id="header-wrap">
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
-
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
-
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="../loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
+    
 	<header id="header">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
@@ -71,16 +56,16 @@
 						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
 								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link">내 정보</a>
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원 정보</a></li>
-								        <li><a href="about.move">활동 내역</a></li>
-								        <li><a href="styles.move">문의 내역</a></li>
+								        <li class="active"><a href="#">회원 정보</a></li>
+								        <li><a href="#">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
 								</li>								
 							</ul>
@@ -241,13 +226,21 @@
 			$('#list').append(content);
 	        return;
 	    }
-
+	   
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
-	        content += '  </a>';
+	        if(item.library_use == "위시"){
+	        	content += '  <a href=" bookDetail.go?library_idx=' + item.library_idx + '">';
+		        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
+		        content += '  </a>';
+	        	
+	        }else{
+	        	content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+		        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
+		        content += '  </a>';
+	        }
+	        
 	        content += '  <figcaption>';
 	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';

@@ -36,6 +36,10 @@ public interface ClubDAO {
 
 	void clubJoin(String club_idx, int member_idx);
 
+	void clubDelete(String club_idx);
+
+	void clubUpdate(String club_idx);
+
 
 
 }

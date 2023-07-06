@@ -30,6 +30,11 @@ public class ClubController {
 		return "/club/clubList";
 	}
 	
+	@RequestMapping("/myClubList.go")
+	public String myClubListGo() {
+		return "/club/myClubList";
+	}
+	
 	@RequestMapping("/clubList.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> clubListAjax(@RequestParam String page,@RequestParam String searchText) {
@@ -38,7 +43,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping("/clubDetail.go")
-	public String clubDetail(@RequestParam String club_idx, Model model) {
+	public String clubDetail(@RequestParam String club_idx, Model model, HttpSession session) {
 		
 		ClubDTO club = clubService.clubDetail(club_idx);
 		ArrayList<ClubDTO> member = clubService.clubMember(club_idx);
@@ -46,9 +51,11 @@ public class ClubController {
 		model.addAttribute("club", club);
 		model.addAttribute("member", member);
 		model.addAttribute("apply", apply);
+		model.addAttribute("loginIdx", session.getAttribute("loginIdx"));
 		return "/club/clubDetail";
 	}
 	
+	// 신청
 	@RequestMapping("/clubApply.do")
 	public String clubApply(@RequestParam String club_idx, HttpSession session){
 		
@@ -58,14 +65,17 @@ public class ClubController {
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
 	
+	// 수락 -> 업데이트
 	@RequestMapping("/applyAccept.do")
 	public String applyAccept(@RequestParam String club_idx, @RequestParam String member_idx){
 		
 		clubService.applyAccept(club_idx, member_idx);
+		// 채팅방 입장 
 		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
 	
+	// 거절 -> 딜리트
 	@RequestMapping("/applyReject.do")
 	public String applyReject(@RequestParam String club_idx, @RequestParam String member_idx){
 		
@@ -110,13 +120,49 @@ public class ClubController {
 		dto.setClub_num((String)params.get("club_num"));
 		
 		
-		
+		// 글쓰기
 		clubService.clubWrite(dto);
 		
 		String club_idx = dto.getClub_idx();
+		
+		// 글쓴이 참가 리스트 넣기
 		clubService.clubJoin(club_idx,member_idx);
+		
+		// 채팅방 생성
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
 	
+	@RequestMapping("/clubDelete.do")
+	public String clubDelete(@RequestParam String club_idx) {
+		
+		ArrayList<ClubDTO> applyMember = clubService.applyMember(club_idx);
+		
+		// 신청자삭제 
+		for (ClubDTO clubDTO : applyMember) {
+			clubService.applyReject(club_idx, clubDTO.getMember_idx());			
+		}
+		
+		// 글 지우기
+		clubService.clubDelete(club_idx);
+				
+		return "/club/clubList";
+	}
 	
+	
+	// 모집 종료 
+	@RequestMapping("clubUpdate.do")
+	public String clubUpdate(@RequestParam String club_idx) {
+		ArrayList<ClubDTO> applyMember = clubService.applyMember(club_idx);
+		
+		for (ClubDTO clubDTO : applyMember) {
+			clubService.applyReject(club_idx, clubDTO.getMember_idx());			
+		}
+		
+		clubService.clubUpdate(club_idx);
+		
+		return "redirect:/clubDetail.go?club_idx="+club_idx;
+	}
+	
+	// 채팅방을 나가면
+	// 신청테이블에서 삭제 clubService.applyReject(club_idx, clubDTO.getMember_idx());			
 }
