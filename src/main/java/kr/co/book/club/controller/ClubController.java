@@ -61,7 +61,8 @@ public class ClubController {
 	@RequestMapping("/clubApply.do")
 	public String clubApply(@RequestParam String club_idx, HttpSession session){
 		
-		String member_idx = session.getAttribute("loginIdx").toString(); 
+		String member_idx = String.valueOf(session.getAttribute("loginIdx")); 
+
 		clubService.clubApply(club_idx, member_idx);
 		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
@@ -151,7 +152,10 @@ public class ClubController {
 		
 		// 글 지우기
 		clubService.clubDelete(club_idx);
-				
+		
+		// 모임 채팅 모두 나가기
+		chatservice.clubchatDelete(club_idx);
+		
 		return "/club/clubList";
 	}
 	

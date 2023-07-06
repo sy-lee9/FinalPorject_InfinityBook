@@ -187,6 +187,33 @@
 			VALUES(4,#{param1},#{param2},#{param3},0)
 		</insert>
 		
+		<!-- 모임 참여자 IDX -->
+		<select id="findclubmember" resultType="hashmap">
+			SELECT member_idx FROM club_apply	
+			WHERE club_idx = #{param1} AND club_appstate = 1
+		</select>
+		
+		<!-- 모임 참여자에게 메세지 전송 -->
+		<insert id="sendclubmembermessage">
+			INSERT INTO chat(code_idx, idx, chat_sender, chat_reciever, chat_chat, chat_check)
+			VALUES(4,#{param1},#{param2},#{param3},#{param4},0)
+		</insert>
+		
+		<update id="clubchatDelete">
+			UPDATE chat_room SET chat_room_state = 1
+			WHERE code_idx = #{param1} AND idx = #{param2}
+		</update>
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
    		
    		
