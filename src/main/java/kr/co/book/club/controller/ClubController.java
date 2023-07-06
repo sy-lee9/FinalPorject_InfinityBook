@@ -61,7 +61,7 @@ public class ClubController {
 	@RequestMapping("/clubApply.do")
 	public String clubApply(@RequestParam String club_idx, HttpSession session){
 		
-		String member_idx = (String) session.getAttribute("loginIdx"); 
+		String member_idx = session.getAttribute("loginIdx").toString(); 
 		clubService.clubApply(club_idx, member_idx);
 		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
@@ -72,7 +72,9 @@ public class ClubController {
 	public String applyAccept(@RequestParam String club_idx, @RequestParam String member_idx){
 		
 		clubService.applyAccept(club_idx, member_idx);
-		// 채팅방 입장 
+		
+		// 채팅방 입장후 채팅생성
+		chatservice.clubchatjoin(club_idx, Integer.parseInt(member_idx));
 		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}

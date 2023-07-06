@@ -288,7 +288,17 @@ public class ChatService {
 	public void createchatroom(String club_idx, int member_idx) {
 		
 		// 모임 메세지방 생성
-		dao.createchatroom(club_idx,member_idx);
+		dao.createchatroom(club_idx,member_idx,"모임 채팅방 생성!");
+		// 모임 채팅방 생성 됐다는 메세지
+		dao.createchat(club_idx,member_idx);
+		
+	}
+
+	// 모임 참여시 메세지방 생성
+	public void clubchatjoin(String club_idx, int member_idx) {
+		
+		// 모임 메세지방 생성
+		dao.createchatroom(club_idx,member_idx,"안녕하세요~");
 		// 모임 채팅방 생성 됐다는 메세지
 		dao.createchat(club_idx,member_idx);
 		

@@ -184,7 +184,7 @@
 		<!-- 모임 채팅방 생성 됐다는 메세지 -->
 		<insert id="createchat">
 			INSERT INTO CHAT(CODE_IDX,IDX,CHAT_SENDER,CHAT_CHAT,CHAT_CHECK)
-			VALUES(4,#{param2},#{param1},'모임 채팅방 생성!',0)
+			VALUES(4,#{param1},#{param2},#{param3},0)
 		</insert>
 		
 		
