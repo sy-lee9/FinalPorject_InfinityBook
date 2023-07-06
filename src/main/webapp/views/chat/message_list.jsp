@@ -87,9 +87,11 @@ const FirstMessageList = function(){
 				
 				// 메세지 내용을 불러오는 함수 호출
 				MessageContentList(CODE_IDX,room);
-				
+							
 				// 클릭한 방의 책 정보 호출
-				Messagebook();
+				Messagebook();	
+				
+				
 				
 				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);					
 				
