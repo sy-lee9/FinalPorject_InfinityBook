@@ -32,63 +32,58 @@
 
 <body>
 
-<div id="header-wrap">
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
-
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
-
+<div id="header-wrap" class="show">
+	
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="../loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
+	
 	<header id="header">
 		<div class="container">
 			<div class="row">
+
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
+					
+						<a href="index.move"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
 					</div>
+
 				</div>
+
 				<div class="col-md-10">
+					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
-						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item"><a href="#" >대여/교환</a></li>
-								<li class="menu-item"><a href="#" >감상문</a></li>
-								<li class="menu-item active"><a href="#" >독서모임</a></li>
-								<li class="menu-item"><a href="#" >공지사항</a></li>
-								<li class="menu-item"><a href="#" >이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" >마이페이지</a></li>							
+								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
+								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
+								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
 							</ul>
+
 							<div class="hamburger">
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				            </div>
+
 						</div>
 					</nav>
+
 				</div>
+
 			</div>
 		</div>
 	</header>
-</div>
+		
+</div><!--header-wrap-->
 
 <section class="hero-section jarallax">
 	
@@ -104,8 +99,8 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">참여 모임</a></li>
+			  <li data-tab-target="#all-genre" class="active tab"><a href="/clubList.go">전체</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/myClubList.go">참여 모임</a></li>
 		</ul>
 		<ul class="tab">
 			<li class="search-box" style="text-align:center;list-style-type: none;">
