@@ -1,6 +1,7 @@
 package kr.co.book.club.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -28,6 +29,12 @@ public interface ClubDAO {
 	void applyAccept(String club_idx, String member_idx);
 
 	void applyReject(String club_idx, String member_idx);
+
+	ArrayList<ClubDTO> locationCode();
+
+	void clubWrite(ClubDTO dto);
+
+	void clubJoin(String club_idx, int member_idx);
 
 
 

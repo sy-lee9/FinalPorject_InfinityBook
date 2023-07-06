@@ -66,6 +66,44 @@ public class TrackerService {
     		}    		
 		return mav;
 	}
+    
+  //트래커에 저장할 책 검색 
+    public ModelAndView clubBookSearch(String searchType, String searchValue) {
+    	
+    	String uri = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
+    	
+    	ModelAndView mav = new ModelAndView("/club/clubBookPop");
+    	String replaceValue = searchValue.replaceAll("\\s", "");
+    	logger.info("replaceValue : "+replaceValue);
+    	logger.info("searchType : {} / searchValue : {}",searchType,replaceValue);
+    	
+    	if(replaceValue == "") {
+    		mav.addObject("search",false);
+    	}else {    		
+    		String MaxResults = "100";
+    		String Start = "1";
+    		String Cover = "Big";
+    		String SearchTarget = "Book";
+    		String output = "JS";
+    		String Version = "20131101";
+    		
+    		DefaultUriBuilderFactory fac = new DefaultUriBuilderFactory(uri);
+    		fac.setEncodingMode(EncodingMode.VALUES_ONLY);
+    		
+    		WebClient client = WebClient.builder().uriBuilderFactory(fac).baseUrl(uri).build();
+    		
+    		Mono<HashMap> mono = client.get()
+    				.uri("?ttbkey="+KEY+"&Start="+Start+"&MaxResults="+MaxResults+"&QueryType="+searchType+"&Query="+replaceValue+
+    						"&Cover="+Cover+"&SearchTarget="+SearchTarget+"&output="+output+"&Version="+Version)
+    				.retrieve().bodyToMono(HashMap.class);
+    		
+    		Map<String, Object> resp = mono.flux().toStream().findFirst().get();
+    		logger.info("resp : "+resp.size());
+    		
+    		mav.addObject("list", resp);
+    		}    		
+		return mav;
+	}
 
     //트래커에 책 추가
 	public boolean trackerAddBook(HashMap<String, Object> params) {

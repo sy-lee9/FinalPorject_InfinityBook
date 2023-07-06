@@ -166,10 +166,11 @@ function listCall(page,text){
 		    processData: false,
 		    contentType: false,
 		    success: function(data) {
-		    	alert(data.msg);
 		       console.log(data);
 		    }
 		  });
+		  
+		  window.opener.location.reload();
 		}
 
 
