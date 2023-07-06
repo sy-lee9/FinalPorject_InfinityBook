@@ -65,7 +65,7 @@
 					<input type="text" name="readPage" id="readPage" placeholder="읽은 페이지 수" value="0" style="width:60px; margin-top: 20px;">
 				</c:if>
 				<c:if test="${jsp == 'trackerDetail.jsp'}">
-					<input type="text" name="readPage" id="readPage" value="${readPage}" style="width:60px; margin-top: 20px;">
+					<input type="number" name="readPage" id="readPage" value="${readPage}" style="width:60px; margin-top: 20px;">
 				</c:if>
 				<input type="text" name="totalPage" id="totalPage"  placeholder="총 페이지 수" style="width:60px; margin-top: 20px;" readonly>
 			</td>
@@ -82,6 +82,14 @@
 </body>
 <script>
 
+	$('#readPage').on('input', function() {
+		console.log("ehl");
+		if (isNaN($(this).val())) {
+			  $(this).val(0);
+			  alert("숫자만 입력 가능합니다.");
+			}
+	});
+	
 	var isbn = "${isbn}";
 	var cover = "${cover}";
 	var jsp = "${jsp}";

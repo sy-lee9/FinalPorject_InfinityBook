@@ -106,8 +106,16 @@
 <section id="best-selling" class="leaf-pattern-overlay">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
-		<h3></h3>
-	
+		<img src="${book.library_cover}" alt="book" class="single-image">
+		<h3 class="item-title">${book.library_title}</h3>
+		
+		<c:if test="${mybook.size() == 0}">
+			<h3>교환할 책이 없습니다.</h3>
+		</c:if>
+		<c:forEach var="mybook" items="${mybook}" varStatus="status">
+			<img src="${mybook.library_cover}" alt="book" class="single-image">
+			<h3 class="item-title">${mybook.library_title}</h3>
+		</c:forEach>
 	</div>
 </section>
 

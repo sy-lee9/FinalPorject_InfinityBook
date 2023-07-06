@@ -96,11 +96,11 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="#business" class="nav-link" data-effect="Shop">트래커</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
+								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
+								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
 								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
 								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
 									<ul>
 								        <li><a href="index.move">회원정보</a></li>
@@ -330,7 +330,7 @@
 	    var height = 400;
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
-	    var popupWindow = window.open('trackerMemoUpdate.go?trackerIdx=' + trackerIdx + '&memoIdx=' + memoIdx + '&jsp=' + jsp + ', 'updateMemo', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    window.open('trackerMemoUpdate.go?trackerIdx=' + trackerIdx + '&memoIdx=' + memoIdx + '&jsp=' + jsp + '\'', 'updateMemo', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 		
 	}
 	

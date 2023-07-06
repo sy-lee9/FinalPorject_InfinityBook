@@ -42,11 +42,10 @@
 	    <option value="open">공개</option>
 	    <option value="hide">비공개</option>
   	</select>
-	<input type="text"  name="reportTitle" value="제목을 입력해주세요."/>
+	<input type="text" value="제목을 입력해주세요."/>
 	<h3>텍스트 에디터 들어갈 자리</h3>
 	<div id="div_editor"></div>
 	<input type="button" onclick="save()" value="등록"/>
-	<input type="hidden" name="content"/>
 	</form>
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
@@ -79,7 +78,7 @@ console.log(content);
 if(content.length>(4*1024*1024)){
 	alert('컨텐츠의 크기가 너무 큽니다. 이미지의 크기나 갯수를 줄여주세요');
 }else{
-	$('input[name="content"]').val(content);
+	$('input[name="club_content"]').val(content);
 	$('form').submit();
 }
 }

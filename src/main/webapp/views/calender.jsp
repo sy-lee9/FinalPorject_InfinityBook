@@ -22,7 +22,8 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-
+		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+	</head>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
 		h3{
@@ -30,16 +31,10 @@
 			font-weight: 600;
 			margin: 10 0 0 0;
 		}
-		.popup{
-		  position: fixed;
-		  top: 50%;
-		  left: 50%;
-		  transform: translate(-50%, -50%);
+		.post-item{
+			font-family: 'IBM Plex Sans KR', serif;	
 		}
 	</style>
-
-	</head>
-
 <body>
 
 <div id="header-wrap">
@@ -87,12 +82,12 @@
 								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
 								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
+								<li class="menu-item"><a href="/calender.go" class="nav-link" data-effect="Shop">캘린더</a></li>
 								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
 								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원정보</a></li>
-								        <li><a href="about.move">활동내역</a></li>
+								        <li><a href="index.move">회원정보</a></li>
+								        <li><a href="about.move">교환/대여 내역</a></li>
 								     </ul>
 								</li>
 							</ul>
@@ -113,56 +108,22 @@
 	</header>
 		
 </div><!--header-wrap-->
-<section class="padding-large">
+
+<section id="padding-large">
 	<div class="container">
 		<div class="row">
-		
-			<div class="section-header align-center">
-				<h2 class="section-title">Tracker</h2>
-			</div>
-				<div class="search-bar" style="width: 300px; display: inline;">
-					<form action="trackerSearch.do" role="search" method="get" class="search-box">
-						<select name="searchType">
-							<option value="Title" >제목</option>
-							<option value="Author">저자</option>
-							<option value="Title">ISBN</option>
-						</select>
-						<input class="search-field text search-input" placeholder="검색어를 입력하세요." type="search" name="searchValue" style="width: 300px;">
-						<input type="submit" value="검색"/>
-					</form>
-				</div>			
-				<br>
-				<br>
-				<div class="products-grid grid">
-					<c:if test="${search eq false}">
-						<h3>검색 결과가 존재하지 않습니다. </h3>
-					</c:if>
-					<c:forEach var="item" items="${list}" varStatus="status">
-						<c:if test="${status.index==2}"> 						
-								<c:forEach var="book" items="${item.value}" varStatus="status">
-									<figure class="product-style" style="margin-bottom: 40px;">
-										<input type="hidden" name=isbn value="${book.isbn13}">
-										<input type="hidden" name="cover" value="${book.cover}">
-										<input type="hidden" name="jsp" value="trackerSearch.jsp">
-											<img id="cover" src="${book.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
-											<button onclick="addReadBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
-											<button onclick="addReadingBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
-											<figcaption>
-												<p style="font-weight: 600;">ISBN : ${book.isbn13}</p>
-												<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${book.title}</h3>
-												<p id="author" style="height: 11%; font-size: 15;">${book.author}</p>
-											</figcaption>
-										</figure>												
-								</c:forEach>							
-						</c:if>	
-					</c:forEach>
-		    	</div>
+			<div class="col-md-12" style="margin-top:5%;">
 
+				<div class="section-header align-center">
+					<h2 class="section-title">Calendar</h2>
+				</div>					
+				<div id='calendar' style="height: 95%;"></div>
+			</div>	
 		</div>
 	</div>
 </section>
 
-<div id="footer-bottom">
+<div id="footer-bottom" style="margin-top:5%">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -170,7 +131,7 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12">
+						<div class="col-md-12" style="margin-top: 5%;">
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
 
@@ -191,26 +152,13 @@
 </body>
 <script>
 
-	var jsp = 'trackerSearch.jsp';
+	document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('calendar');
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	      initialView: 'dayGridMonth'
+	    });
+	    calendar.render();
+	  });
 
-	function addReadBook(isbn, cover) {
-	    console.log(isbn);
-		var width = 473;
-	    var height = 400;
-	    var left = window.innerWidth / 2 - width / 2;
-	    var top = window.innerHeight / 2 - height / 2;
-	    var popupWindow = window.open('tracker/add/Read/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
-	};
-	
-	function addReadingBook(isbn, cover) {
-	    console.log(isbn);
-		var width = 473;
-	    var height = 400;
-	    var left = window.innerWidth / 2 - width / 2;
-	    var top = window.innerHeight / 2 - height / 2;
-	    
-	    var popupWindow = window.open('tracker/add/Reading/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'reading', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
-	};
-	
 </script>
 </html>	

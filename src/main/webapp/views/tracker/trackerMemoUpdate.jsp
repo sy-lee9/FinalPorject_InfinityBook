@@ -61,7 +61,7 @@
 
 	function MemoUpdate(trackerIdx,memoIdx) {
 		var jsp = "${jsp}";
-		var content = $('#content').text();
+		var content = $('#content').val();
 		console.log(trackerIdx);
 		console.log(memoIdx);
 		console.log(jsp);
@@ -81,13 +81,14 @@
 				console.log(data);
 				if(data.success){
 					console.log("수정 완료");
-					if (data != null) {
+					if (data.success == 1) {
 						  window.alert("수정 되었습니다.");
 						  window.close(); 
 						  if (window.opener) {
 							  window.opener.location.reload();
 						   }
 					}
+				}
 	        },
 			error:function(e){
 				console.log(e);

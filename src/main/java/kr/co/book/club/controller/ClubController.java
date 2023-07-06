@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.book.chat.service.ChatService;
 import kr.co.book.club.dto.ClubDTO;
 import kr.co.book.club.service.ClubService;
 import kr.co.book.mypage.service.TrackerService;
@@ -24,6 +25,7 @@ public class ClubController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired ClubService clubService;
 	@Autowired TrackerService TrackerService;
+	@Autowired ChatService chatservice;
 	
 	@RequestMapping("/clubList.go")
 	public String clubListGo() {
@@ -128,7 +130,10 @@ public class ClubController {
 		// 글쓴이 참가 리스트 넣기
 		clubService.clubJoin(club_idx,member_idx);
 		
-		// 채팅방 생성
+		// 채팅방 생성 후 채팅생성
+		chatservice.createchatroom(club_idx,member_idx);
+		
+		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
 	

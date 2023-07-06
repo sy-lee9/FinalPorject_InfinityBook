@@ -6,7 +6,7 @@
 
 <c:forEach var="tmp" items="${clist}">
     <div id='talk' code="${tmp.CODE_IDX}" room="${tmp.IDX}">
-        <c:if test="${sessionScope.MEMBER_IDX ne tmp.CHAT_SENDER}">
+        <c:if test="${sessionScope.loginIdx ne tmp.CHAT_SENDER}">
             <!-- 받은 메세지 -->
             <div class="incoming_msg">
                 <div class="received_withd_msg">
@@ -25,7 +25,7 @@
             </div>
         </c:if>
 
-        <c:if test="${sessionScope.MEMBER_IDX eq tmp.CHAT_SENDER}">
+        <c:if test="${sessionScope.loginIdx eq tmp.CHAT_SENDER}">
             <!-- 보낸 메세지 -->
             <div class="outgoing_msg">
                 <div class="sent_msg">
