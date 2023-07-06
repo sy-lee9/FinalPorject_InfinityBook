@@ -5,7 +5,6 @@
 	<meta charset="UTF-8">
 	<head>
 		<title>Infinite B∞k</title>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,232 +13,151 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-
+	    
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-
-		<!-- script
-		================================================== -->
-		<script src="/js/modernizr.js"></script>
-		 <link rel="icon" href="/images/KakaoTalk_20230630_091136316.png" class="images">		
+	    
+		<!-- script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+		<script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+		
 	</head>
 
-<body>
+<body style="width:100%">
 
-<div id="header-wrap" class="show">
-	
-	<c:choose>
-        <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="/views/loginAfterBox.jsp" />
-        </c:when>
-        <c:otherwise>
-            <jsp:include page="/views/loginBeforeBox.jsp" />            
-        </c:otherwise>
-    </c:choose>
-	
+<div id="header-wrap">
+	<div class="top-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="right-element">
+						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
+						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
+
+						<div class="action-menu">
+							<div class="search-bar">
+								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+									<i class="icon icon-search"></i>
+								</a>
+								<form role="search" method="get" class="search-box">
+									<input class="search-field text search-input" placeholder="Search" type="search">
+								</form>
+							</div>
+						</div>
+					</div><!--top-right-->
+				</div>				
+			</div>
+		</div>
+	</div><!--top-content-->
+
 	<header id="header">
 		<div class="container">
 			<div class="row">
-
 				<div class="col-md-2">
 					<div class="main-logo">
-					
-						<a href="./"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
+						<a href="/"><img src="/images/malogo.png" alt="logo"></a>
 					</div>
-
 				</div>
-
 				<div class="col-md-10">
-					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="clubList.go" class="nav-link" data-effect="Pages">독서모임</a>
+									<a href="#pages" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">독서모임 리스트</a></li>
-								        <li><a href="#">참여 독서모임</a></li>
+								        <li class="active"><a href="index.move">회원 정보</a></li>
+								        <li><a href="about.move">활동 내역</a></li>
+								        <li><a href="styles.move">문의 내역</a></li>
 								     </ul>
-
-								</li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
-								<li class="menu-item"><a href="./event_List.go" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
+								</li>								
 							</ul>
-
 							<div class="hamburger">
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				            </div>
-
 						</div>
 					</nav>
-
 				</div>
-
 			</div>
 		</div>
 	</header>
-		
-</div><!--header-wrap-->
+</div>
 
-<br>
-		<br>
-		<br>
-		<br>
-      <h2 align="center" style="color: red;">공지사항</h2>
-                       
-      <button onclick="location.href='noticeWrite.go'" id="write_btn">공지사항 작성</button>
-      <br>
-      <br>         
-      <table>
-         <thead>
-            <tr>
-               <th>번호</th>
-               <th>작성자</th>
-               <th>제목</th>
-               <th id="sortDate">작성일</th>
-               <!-- <i class="fas fa-sort"></i> -->
-               <th>조회수</th>                      
-               <th id="sortChk">공개여부</th>                      
-            </tr>            
-         </thead>
-         <tbody id="list">             
-         </tbody>
-            <tr>
-			    <th colspan="6" id="paging" style="text-align: center;">
-			        <!-- 플러그인 사용 (twbsPagination) -->
-			        <div class="container" style="justify-content: center; display: flex;">
-			            <nav aria-label="Page navigation">
-			                <ul class="pagination" id="pagination"></ul>
-			            </nav>
-			        </div>
-			    </th>
-			</tr>                   
-      </table>
-      <br/>
-		   <input type ="text" id="noticeboardSearchInput" placeholder="제목을 입력해 주세요.">
-		   <button id ="noticeboardSearchButton">검색</button>
-		
-		 <br/>
-		 
-<footer id="footer">
+<section class="hero-section jarallax">
+	
 	<div class="container">
 		<div class="row">
-
-			<div class="col-md-4">
-				
-				<div class="footer-item">
-					<div class="company-brand">
-						<img src="/images/main-logo.png" alt="logo" class="footer-logo">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis sed ptibus liberolectus nonet psryroin. Amet sed lorem posuere sit iaculis amet, ac urna. Adipiscing fames semper erat ac in suspendisse iaculis.</p>
-					</div>
-				</div>
-				
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-botton:25px;">EVENT</h2>
 			</div>
-
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>About Us</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">vision</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">articles </a>
-						</li>
-						<li class="menu-item">
-							<a href="#">careers</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">service terms</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">donate</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Discover</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Home</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Books</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Authors</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Subjects</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Advanced Search</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>My account</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Sign In</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">View Cart</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">My Wishtlist</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Track My Order</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Help</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Help center</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Report a problem</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Suggesting edits</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Contact us</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-
 		</div>
-		<!-- / row -->
-
 	</div>
-</footer>
+</section>
 
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;width:800;display:flex;left:175px;position:relative;">
+  
+  	<button class="prev slick-arrow">
+      <i class="icon icon-arrow-left"></i>
+    </button>
+  <div class="container">
+    <div class="event-slider" style="display: flex; justify-content: center; align-items: center;">
+    	
+      <div class="slide-item">
+        <img src="/images/이벤트 배너.png" alt="Event 1" style="width: 550px; margin: 0 auto;">
+      </div>
+      <div class="slide-item">
+        <img src="/images/이벤트 배너.png" alt="Event 2" style="width: 550px; margin: 0 auto;">
+      </div>
+      <div class="slide-item">
+        <img src="/images/이벤트 배너.png" alt="Event 3" style="width: 550px; margin: 0 auto;">
+      </div>
+    </div>
+  </div>
+  <button class="next slick-arrow">
+      <i class="icon icon-arrow-right"></i>
+    </button>
+    <ul class="tab">
+			<li class="search-box" style="text-align:center;list-style-type: none;">
+				<i class="icon icon-search"></i> 
+				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
+				<input type="button" id="searchButton" value="검색">	
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div id="all-genre" data-tab-content class="active">
+				<div class="row" id="list">
+					
+			    </div>
+			    
+			     <div  id="paging" >
+			      <div class="container" style="text-align:center; width: 600px;">
+			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+			          <ul class="pagination justify-content-center" id="pagination"></ul>
+			        </nav>
+			      </div>
+			    </div>
+		    </div>
+    
+    
+    
+    
+</section>
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">
@@ -248,9 +166,13 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12">
+						<div class="col-md-12" style="text-align:center;">
+							<hr/>
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
+
+						
+
 					</div>
 				</div><!--grid-->
 
@@ -259,107 +181,115 @@
 	</div>
 </div>
 
-<script src="/js/jquery-1.11.0.min.js"></script>
-<script src="/js/plugins.js"></script>
-<script src="/js/script.js"></script>
+
+
+</body>
+
 <script>
+//console.log(width : window.innerWidth || document.body.clientWidth);
 
-var searchText = 'default';
-var showPage = 1;
+$(document).ready(function() {
+    $('.event-slider').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      dots: false,
+      arrows: true,
+      prevArrow: $('.prev'),
+      nextArrow: $('.next')
+    });
+  });
 
-listCall(showPage);
 
- $('#pagePerNum').change(function() {
-   listCall(showPage);
-   // 페이지 처리 부분이 이미 만들어져 버려서 pagePerNum 이 변경되면 수정이 안된다.
-   // 그래서 pagePerNum이 변경되면 부수고 다시 만들어야 한다.
-   $('#pagination').twbsPagination('destroy');
-}); 
- 
- $('#eventSearchButton').click(function(){
-	   searchText = $('#eventSearchInput').val();
-	   listCall(showPage);
-	   $('#pagination').twbsPagination('destroy');
+	
+	var showPage = 1;
+	var searchText = '';
+	listCall(showPage);
+		
+	$('#searchButton').click(function(){
+		searchText = $('#serchText').val();
+		listCall(showPage);
+		searchText = 'default';
+		$('#pagination').twbsPagination('destroy');
 	});
+	
+	
+	function listCall(page){
+		   $.ajax({
+		      type:'post',
+		      url:'eventList.ajax',
+		      data:{
+		    	  'page':page,
+		    	  'searchText':searchText
+		      },
+		      dataType:'json',           
+		      success:function(data){
+		         console.log(data);
+		         listPrint(data.list);
+		         
+		        
+		         
+		         $('#pagination').twbsPagination({
+						startPage:1, // 시작 페이지
+						totalPages:data.pages,// 총 페이지 수 
+						visiblePages:5,// 보여줄 페이지
+						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+							console.log(page,showPage);
+							if(page != showPage){
+								showPage=page;
+								listCall(page);
+								
+							}
+						}
+			         });
+		         
+		         
+		         
+		      }
+		   });
+		}
 
+	function listPrint(list) {
+	    var content = '';
 
-function listCall(page){
-   $.ajax({
-      type:'post',
-      url:'eventList.ajax',
-      data:{
-          'page':page,
-            'search':searchText
-      },
-      dataType:'json',
-      success:function(data){
-         console.log(data);
-         listPrint(data.nolist);
+	    content += '<div id="products-grid" class="products-grid grid">';
+	    content += '  <figure class="product-style">';
+	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
+	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
+	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
+	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
+	    content += '    </a>';
+	    content += '  </figure>';
 
-         
-         // 총 페이지 수
-         // 현재 페이지 
-         
-         //paging plugin
-         $('#pagination').twbsPagination({
-            startPage:data.currPage,    // 시작 페이지
-            totalPages:data.pages,    // 총 페이지 수
-            visiblePages:5,  // 보여줄 페이지[1][2][3][4][5]
-            onPageClick:function(event, page){// 페이지 클릭시 동작되는 함수(콜백)
-               console.log(event,page);      
-            
-               if (page != showPage) {
-                  showPage = page;               
-                  listCall(page);
-               }
-                  
-            }
-         });
-      },
-      error:function(e){
-         console.log(e);
-      }
-   });
-}
+	    if (list.length === 0) {
+	        content += '</div>';
+	        $('#list').empty();
+			$('#list').append(content);
+	        return;
+	    }
 
+	    list.forEach(function(item) {
+	        content += '<figure class="product-style" style="text-align:center;">';
+	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
+	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
+	        content += '  </a>';
+	        content += '  <figcaption>';
+	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
+	        content += '    </br><h>' + item.library_author + '</h>';
+	        content += '    </a>';
+	        content += '  </figcaption>';
+	        content += '</figure>';
+	    });
 
-function listPrint(list) {
-	   var content = '';
-	   list.forEach(function(item, idx) {
-		   content += '<tr style="color: red;">';
-	      content += '<td>' + item.notice_idx + '</td>';
-	      content += '<td>' + item.id + '</td>';
-	      content += '<td><a href="noticeDetail.go?notice_idx=' + item.notice_idx + '">' + item.notice_title + '</a></td>';
-	      var date = new Date(item.notice_date);
-	      content += '<td>' + date.toLocaleDateString('ko-KR') + '</td>';
-	      content += '<td>' + item.notice_bHit + '</td>';
-	      
-	      content += '<td id="secret">' + (item.notice_chk ? '공개' : '비공개') + '</td>';
-	      content += '</tr>';
-	   });
-	   $('#list').empty();
-	   $('#list').append(content);
-	   
-	   
-	   var adminChk = '${sessionScope.adminChk}';
-	   if (adminChk === 1 || adminChk === '1' || adminChk === "true") {
-	      
-	   }else{
-		   var tds = document.getElementsByTagName("td");
-		   for (var i = 0; i < tds.length; i++) {
-		     var td = tds[i];
-		     if (td.innerHTML === "비공개") {
-		       var tr = td.parentElement;
-		       tr.style.display = "none";
-		     }
-		   }
-		   $('#list td#secret, #list th#secret').hide();
-		   
-	   }
-	   
+	    content += '</div>';
+
+	    $('#list').empty();
+		$('#list').append(content);
 	}
 
 </script>
 
-</body>
 </html>	
