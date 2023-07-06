@@ -32,7 +32,8 @@
 
 <body>
 
-<div id="header-wrap">
+<div id="header-wrap" class="show">
+	
 	<c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
             <jsp:include page="../loginAfterBox.jsp" />
@@ -41,53 +42,55 @@
             <jsp:include page="../loginBeforeBox.jsp" />            
         </c:otherwise>
     </c:choose>
-    
+	
 	<header id="header">
 		<div class="container">
 			<div class="row">
+
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
+					
+						<a href="index.move"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
 					</div>
+
 				</div>
+
 				<div class="col-md-10">
+					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
-						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
-								<li class="menu-item has-sub">
-									<a href="#" class="nav-link">내 정보</a>
-									<ul>
-								        <li class="active"><a href="#">회원 정보</a></li>
-								        <li><a href="#">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
-								     </ul>
-								</li>								
+								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
+								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
+								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
 							</ul>
+
 							<div class="hamburger">
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				                <span class="bar"></span>
 				            </div>
+
 						</div>
 					</nav>
+
 				</div>
+
 			</div>
 		</div>
 	</header>
-</div>
+		
+</div><!--header-wrap-->
 
 <section class="hero-section jarallax">
 	
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:25px;">Library</h2>
+				<h2 class="section-title" style="margin-botton:0px;">Book Club</h2>
 			</div>
 		</div>
 	</div>
@@ -96,16 +99,11 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#" class="tab"><a href="/myBookreportList.get">내 감상문</a></li>
-			  <li data-tab-target="#" class="active tab"><a href="/myLikeList.get">❤️</a></li>
+			  <li data-tab-target="#all-genre" class="tab"><a href="/clubList.go">전체</a></li>
+			  <li data-tab-target="#business" class="active  tab"><a href="/myClubList.go">참여 모임</a></li>
 		</ul>
-		<ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<i class="icon icon-search"></i> 
-				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
-				<input type="button" id="searchButton" value="검색">	
-			</li>
-		</ul>
+		
+		
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
 				<div class="row" id="list">
@@ -120,11 +118,10 @@
 			      </div>
 			    </div>
 		    </div>
-		    
-
 	    </div>	    
 	</div>
 </section>
+
 
 
 <div id="footer-bottom">
@@ -139,6 +136,9 @@
 							<hr/>
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
+
+						
+
 					</div>
 				</div><!--grid-->
 
@@ -167,7 +167,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'/myLikeList.ajax',
+		      url:'clubList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -192,49 +192,53 @@
 							}
 						}
 			         });
-		         
-		         
-		         
 		      }
 		   });
 		}
 
+
+
 	function listPrint(list) {
 	    var content = '';
-
-	    content += '<div id="products-grid" class="products-grid grid">';
-	    content += '  <figure class="product-style">';
-	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>감상문 작성하기</h> </figcaption>';
-	    content += '    </a>';
-	    content += '  </figure>';
-
-	    if (list.length === 0) {
-	        content += '</div>';
-	        $('#list').empty();
-			$('#list').append(content);
-	        return;
-	    }
 	    
-	   
-	  list.forEach(function(item) {
-	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="#">';
-	        content += '    <img src="' + item.cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
-	        content += '  </a>';
-	        content += '  <figcaption>';
-	        content += '    <a href="#">';
-	        content += '      	<h>' + item.book_report_title + '</h>';
-	        content += '		<br/><h> ❤️ </h>';
-	        content += '		<br/><h>' + item.book_report_date + '</h>';
-	        content += '    </a>';
-	        content += '  </figcaption>';
-	        content += '</figure>';
-	    }); 
-
-	    content += '</div>';
+	    content += '<table style="width:100%; text-align:center;">';
+	    content += '<tr>';
+	    content += '	<th width="3%" style="text-align:center;"></th>';
+	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
+	    content += '	<th width="8%" style="text-align:center;"> 장소 </th>';
+	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
+	    content += '	<th width="20%" style="text-align:center;"></th>';
+	    //content += '	<th width="20%" style="text-align:left;"> 선정 도서 </th>';
+	    
+	    content += '	<th width="50%"> 모임정보 </th>';
+	    
+	    content += '	<th width="3%" style="text-align:center;"></th>';
+		content += '<tr>';
+	
+	    list.forEach(function(item) {
+	        
+	    	content += '<tr>';
+	    	content += '	<td></td>';
+	    	if (item.club_state=="0") {
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
+			}else{
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
+			}	    	   
+	        content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="'+item.code_codename+'"></td>';
+		    content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';
+		    content += '	<td><img src="' + item.cover + '" alt="Books" style="width:100px; height:100px;" class="product-item"></td>';
+		    //content += '	<td>'+item.title+'</td>';
+		    
+		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h3>'+item.club_name+'</h3></a>';
+		    content += '	<br/>'+item.member_nickname;
+		    content += '	<br/>'+item.club_meetdate;
+		    
+		    content += '	</td>';
+		    content += '	<td></td>';
+	        content += '</tr>';
+	    });
+    
+	    content += '</table>'; 
 
 	    $('#list').empty();
 		$('#list').append(content);
