@@ -103,7 +103,7 @@
 				<td style="width: 55%;">
 					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.library_use}">
 					
-					<table>
+					<table style="width: 100%;">
 						<tr>
 							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
 						</tr>
@@ -118,11 +118,21 @@
 						<tr>
 							<td colspan="3">
 								<h4 class="item-title">Review</h4>
-								후기 1<br/>
-								후기 2<br/>
-								후기 3<br/>
-								후기 4<br/>
-								후기 5<br/>
+								<table style="width:100%; text-align:center;">
+									<tr>
+										<th style="width:20%; text-align:center;">대여 회원</th>
+										<th style="width:50%; text-align:left;">리뷰</th>
+										<th style="width:30%; text-align:left;">리뷰 일자</th>
+									</tr>
+									<c:forEach items="${review}" var="review">
+										<tr>
+											<td style="width:20%; text-align:center;">${review.member_nickname}</td>
+											<td style="width:50%; text-align:left;">${review.review_content}</td>
+											<td style="width:30%; text-align:left;">${review.review_date}</td>
+										</tr>
+									</c:forEach>
+								</table>
+								
 							</td>
 						</tr>
 						<tr>
