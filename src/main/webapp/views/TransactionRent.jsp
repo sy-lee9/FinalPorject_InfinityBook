@@ -106,10 +106,17 @@
 <section id="best-selling" class="leaf-pattern-overlay">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
-		<input type="button" onclick="location.href='libraryList.get'" value="교환신청"> 
-		<input type="button" onclick="location.href='libraryUpdate.go?library_idx='+${book.library_idx}" value="대여신청"> 
-		<input type="button" onclick="(function() {window.history.back(); })()" value="리스트">
-							
+		<img src="${book.library_cover}" alt="book" class="single-image">
+		<h3 class="item-title">${book.library_title}</h3>
+		
+		<form action="rentapply.do"  method="post">
+			<input type="hidden" name="library_idx" value="${book.library_idx}">
+			<div>현재 보증금 : ${rent_deposit}</div>
+			<input type="text" name="rent_deposit" placeholder="희망 보증금액">
+			<input type="date" name="rent_startdate" placeholder="희망 대여일자">
+			<input type="date" name="rent_enddate" placeholder="희망 반납일자">
+			<button type="submit">신청</button>
+		</form>
 	</div>
 </section>
 

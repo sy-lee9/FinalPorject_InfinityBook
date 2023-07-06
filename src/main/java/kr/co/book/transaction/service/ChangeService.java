@@ -26,10 +26,10 @@ public class ChangeService {
 	public void changeapply(String MEMBER_IDX,HashMap<String, String> params) {
 			
 		// 교환신청
-		dao.changeapply(MEMBER_IDX,params.get("LIBRARY_IDX"),params.get("LIBRARY_IDX2"),params.get("CHANGE_DATE"));
+		dao.changeapply(MEMBER_IDX,params.get("library_idx"),params.get("library_idx2"),params.get("change_date"));
 		
 		// 교환 IDX
-		String idx = dao.findchange_idx(MEMBER_IDX,params.get("LIBRARY_IDX"),params.get("LIBRARY_IDX2"),params.get("CHANGE_DATE"));
+		String idx = dao.findchange_idx(MEMBER_IDX,params.get("library_idx"),params.get("library_idx2"),params.get("change_date"));
 		logger.info(idx);
 		
 		// 대화방(신청자) 만들기

@@ -71,15 +71,18 @@ public class TransactionListService {
 	}
 
 
-	public Object rent(String library_idx) {
-		
-		return null;
-	}
-
 
 	public  ArrayList<TransactionListDTO> change(String member_idx) {
 		 ArrayList<TransactionListDTO> list =  dao.changeMyBook(member_idx);
 		return list;
+	}
+
+
+	public String deposit(String member_idx) {
+		
+		String deposit = dao.deposit(member_idx);
+		
+		return deposit;
 	}
 
 }
