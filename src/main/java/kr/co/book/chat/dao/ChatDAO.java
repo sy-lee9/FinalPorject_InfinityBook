@@ -95,6 +95,12 @@ public interface ChatDAO {
 	// 대화방 나가기
 	int chatout(String cODE_IDX, String room, String member_idx);
 
+	// 모임 생성시 모임 메세지방 생성
+	void createchatroom(String club_idx, int member_idx);
+
+	// 모임 채팅방 생성 됐다는 메세지
+	void createchat(String club_idx, int member_idx);
+
 
 	
 

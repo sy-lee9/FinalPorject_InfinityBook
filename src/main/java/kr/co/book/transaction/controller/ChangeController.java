@@ -26,19 +26,20 @@ public class ChangeController {
 	public String changeapply(HttpSession session,@RequestParam HashMap<String, String> params) {
 		
 		logger.info("{}",params);
-		String MEMBER_IDX = session.getAttribute("MEMBER_IDX").toString();
+		String MEMBER_IDX = session.getAttribute("loginIdx").toString();
 		service.changeapply(MEMBER_IDX,params);				
 		
-		return "home";
+		return "/chat/message_list";
 	}
 	
 	// 교환 약속 시
 	@RequestMapping(value="/changereservation.do")
-	public void changereservation(@RequestParam HashMap<String, Object> params, HttpSession session) {
+	public String changereservation(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		
-		params.put("MOD_MEMBER_IDX", (session.getAttribute("MEMBER_IDX").toString()));
+		params.put("MOD_MEMBER_IDX", (session.getAttribute("loginIdx").toString()));
 		
-		service.changereservation(params);		
+		service.changereservation(params);
+		return "/Library/libraryDone";		
 	}
 	
 }
