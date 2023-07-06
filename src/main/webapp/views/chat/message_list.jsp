@@ -87,9 +87,11 @@ const FirstMessageList = function(){
 				
 				// 메세지 내용을 불러오는 함수 호출
 				MessageContentList(CODE_IDX,room);
-				
+							
 				// 클릭한 방의 책 정보 호출
-				Messagebook();
+				Messagebook();	
+				
+				
 				
 				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);					
 				
@@ -195,14 +197,14 @@ const Messagebook = function(){
 					}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
 						chkbutton +='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
 						chkbutton +='<button class="chatout">나가기</button>';
-					}else if(!data.librarystate && data.rentck == 0 && data.rentstate == 0 && ${sessionScope.MEMBER_IDX} != apply_user  || data.chgck == 0 && data.changestate == 0 && ${sessionScope.MEMBER_IDX} != apply_user){									
+					}else if(!data.librarystate && data.rentck == 0 && data.rentstate == 0 && ${sessionScope.loginIdx} != apply_user  || data.chgck == 0 && data.changestate == 0 && ${sessionScope.loginIdx} != apply_user){									
 						chkbutton +='<button class="reservation">약속 잡기</button>';
 						chkbutton +='<button class="chatout">나가기</button>';
-					}else if(data.rentstate == 1 && ${sessionScope.MEMBER_IDX} == apply_user || data.changestate == 1 && ${sessionScope.MEMBER_IDX} == apply_user){
+					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} == apply_user || data.changestate == 1 && ${sessionScope.loginIdx} == apply_user){
 						chkbutton +='<button class="reservationok">약속 승인</button>';
 						chkbutton +='<button class="reservationno">약속 취소</button>';
 						chkbutton +='<button class="chatout">나가기</button>';
-					}else if(data.rentstate == 1 && ${sessionScope.MEMBER_IDX} != apply_user || data.changestate == 1 && ${sessionScope.MEMBER_IDX} != apply_user){
+					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user || data.changestate == 1 && ${sessionScope.loginIdx} != apply_user){
 						chkbutton +='<button class="reservationno">약속 취소</button>';
 						chkbutton +='<button class="chatout">나가기</button>';
 					}else if(data.rentstate == 2 || data.changestate == 2){
@@ -540,7 +542,7 @@ ws.onmessage = function(msg) {
 function send(CODE_IDX,room,other_nick,content){			
 	data.	code =  CODE_IDX;
 	data.	room =  room;
-	data.send_midx = ${sessionScope.MEMBER_IDX};
+	data.send_midx = ${sessionScope.loginIdx};
 	data.recv_midx= other_nick;
 	data.content = content;
 	data.date = new Date().toLocaleString();

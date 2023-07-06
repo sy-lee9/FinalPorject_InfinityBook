@@ -175,6 +175,18 @@
 			WHERE CODE_IDX = #{param1} AND MEMBER_IDX = #{param3} AND IDX = #{param2}	
 		</update> 
 		
+		<!-- 모임 생성시 모임 메세지방 생성 -->
+		<insert id="createchatroom">
+			INSERT INTO CHAT_ROOM(CODE_IDX,MEMBER_IDX,IDX,CHAT_ROOM_STATE)
+			VALUES(4,#{param2},#{param1},0)
+		</insert>
+		
+		<!-- 모임 채팅방 생성 됐다는 메세지 -->
+		<insert id="createchat">
+			INSERT INTO CHAT(CODE_IDX,IDX,CHAT_SENDER,CHAT_CHAT,CHAT_CHECK)
+			VALUES(4,#{param2},#{param1},'모임 채팅방 생성!',0)
+		</insert>
+		
 		
    		
    		
