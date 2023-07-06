@@ -118,7 +118,7 @@ public class ChatService {
 		ChatDTO dto = new ChatDTO();
 		dto.setCODE_IDX(params.get("CODE_IDX"));
 		dto.setIDX(params.get("IDX"));
-		dto.setCHAT_SENDER(session.getAttribute("MEMBER_IDX").toString());
+		dto.setCHAT_SENDER(session.getAttribute("loginIdx").toString());
 		dto.setCHAT_RECIEVER(params.get("CHAT_RECIEVER"));
 		dto.setCHAT_CHAT("/upload/"+serPhotoname);
 		
@@ -130,7 +130,7 @@ public class ChatService {
 			Files.write(path, bytes);
 			
 			logger.info(serPhotoname+" save OK");
-			dao.fileWrite(params.get("CODE_IDX"), params.get("IDX"),session.getAttribute("MEMBER_IDX").toString(),oriPhotoname, serPhotoname);
+			dao.fileWrite(params.get("CODE_IDX"), params.get("IDX"),session.getAttribute("loginIdx").toString(),oriPhotoname, serPhotoname);
 			logger.info("사진 저장 완료");
 			
 		} catch (IOException e) {
