@@ -99,26 +99,40 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="tab"><a href="/clubList.go">전체</a></li>
-			  <li data-tab-target="#business" class="active  tab"><a href="/myClubList.go">참여 모임</a></li>
+			  <li class="tab"><a href="/clubList.go">전체</a></li>
+			  <li class="active  tab"><a href="/myClubList.go">참여 모임</a></li>
 		</ul>
 		
-		
-		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list">
-					
-			    </div>
-			    
-			     <div  id="paging" >
-			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-			          <ul class="pagination justify-content-center" id="pagination"></ul>
-			        </nav>
-			      </div>
-			    </div>
-		    </div>
-	    </div>	    
+		<h4 class="menu-item">신청 내역</h4>
+			<div style="text-align:center;">
+				<hr/>	
+				<div class="row" id="apply_list">
+				</div>
+					    
+				<div  id="paging" >
+					<div class="container" style="text-align:center; width: 600px;">
+						<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+					          <ul class="pagination justify-content-center" id="pagination"></ul>
+					    </nav>
+					</div>
+				</div>
+			</div>
+			
+		<h4 class="menu-item">참여 모임</h4>
+			<div style="text-align:center;">
+				<hr/>	
+				<div class="row" id="club_list">
+				</div>
+					    
+				<div  id="paging" >
+					<div class="container" style="text-align:center; width: 600px;">
+						<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+					          <ul class="pagination justify-content-center" id="pagination"></ul>
+					    </nav>
+					</div>
+				</div>
+			</div>
+	    	    
 	</div>
 </section>
 
@@ -154,16 +168,8 @@
 <script>
 	var showPage = 1;
 	var searchText = '';
-	listCall(showPage);
+	//listCall(showPage);
 		
-	$('#searchButton').click(function(){
-		searchText = $('#serchText').val();
-		listCall(showPage);
-		searchText = 'default';
-		$('#pagination').twbsPagination('destroy');
-	});
-	
-	
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
@@ -201,44 +207,13 @@
 	function listPrint(list) {
 	    var content = '';
 	    
-	    content += '<table style="width:100%; text-align:center;">';
-	    content += '<tr>';
-	    content += '	<th width="3%" style="text-align:center;"></th>';
-	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
-	    content += '	<th width="8%" style="text-align:center;"> 장소 </th>';
-	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
-	    content += '	<th width="20%" style="text-align:center;"></th>';
-	    //content += '	<th width="20%" style="text-align:left;"> 선정 도서 </th>';
-	    
-	    content += '	<th width="50%"> 모임정보 </th>';
-	    
-	    content += '	<th width="3%" style="text-align:center;"></th>';
-		content += '<tr>';
+	   
 	
 	    list.forEach(function(item) {
 	        
-	    	content += '<tr>';
-	    	content += '	<td></td>';
-	    	if (item.club_state=="0") {
-	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
-			}else{
-	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
-			}	    	   
-	        content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="'+item.code_codename+'"></td>';
-		    content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';
-		    content += '	<td><img src="' + item.cover + '" alt="Books" style="width:100px; height:100px;" class="product-item"></td>';
-		    //content += '	<td>'+item.title+'</td>';
-		    
-		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h3>'+item.club_name+'</h3></a>';
-		    content += '	<br/>'+item.member_nickname;
-		    content += '	<br/>'+item.club_meetdate;
-		    
-		    content += '	</td>';
-		    content += '	<td></td>';
-	        content += '</tr>';
+	    	
 	    });
     
-	    content += '</table>'; 
 
 	    $('#list').empty();
 		$('#list').append(content);

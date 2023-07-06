@@ -44,6 +44,8 @@ public interface LibraryDAO {
 
 	int deleteLibrary(String library_idx,int member_idx);
 
+	ArrayList<HashMap<String, String>> reviewList(String library_idx);
+
 	
 
 	

@@ -214,16 +214,13 @@
 	    
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
-	    content += '	<th width="3%" style="text-align:center;"></th>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
 	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
-	    content += '	<th width="8%" style="text-align:center;"> 장소 </th>';
 	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
-	    content += '	<th width="20%" style="text-align:center;"> 모임명 </th>';
-	    content += '	<th width="10%" style="text-align:center;">	글쓴이 </th>';
-	    content += '	<th width="10%" style="text-align:center;"> 모임 일시 </th>';
-	    content += '	<th width="10%" style="text-align:center;"></th>';
-	    content += '	<th width="20%" style="text-align:left;"> 선정 도서 </th>';
-	    content += '	<th width="3%" style="text-align:center;"></th>';
+	    content += '	<th width="20%" style="text-align:center;">도서</th>';
+	    content += '	<th width="40%"> 모임정보 </th>';
+	    content += '	<th width="20%" style="text-align:left;"> 모임장소 및 일시 </th>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
@@ -234,14 +231,16 @@
 	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
 			}else{
 	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
-			}	    	   
-	        content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="'+item.code_codename+'"></td>';
-		    content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';
-		    content += '	<td style="text-align:center;"><a href="/clubDetail.go?club_idx='+item.club_idx+'">'+item.club_name+'</a></td>';
-		    content += '	<td style="text-align:center;">'+item.member_nickname+'</td>';
-		    content += '	<td style="text-align:center;">'+item.club_meetdate+'</td>';
-		    content += '	<td><img src="' + item.cover + '" alt="Books" style="width:100px; height:100px;" class="product-item"></td>';
-		    content += '	<td>'+item.title+'</td>';
+			}
+	    	content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
+	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
+		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
+		    content += item.member_nickname+'<br/>	';
+		    content += item.title.split("-")[0]+'	</td>';
+		    content += '	<td>';
+		    content += item.code_codename+'<br/>	';
+		    content += item.club_meetdate.split(" ")[0]+'<br/>'+item.club_meetdate.split(" ")[1]+'</td>';
+		    
 		    content += '	<td></td>';
 	        content += '</tr>';
 	    });

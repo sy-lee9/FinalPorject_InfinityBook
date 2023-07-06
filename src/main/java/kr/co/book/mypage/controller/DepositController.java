@@ -71,14 +71,12 @@ public class DepositController {
 		 String member_pw = withdrawData.get("member_pw");
 		 
 		 String page = "/Deposit/depositWithdraw";
+		 		 
+		 String encodePassWord = depositService.getPw(member_idx);
+		 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	     boolean pwChk = encoder.matches(member_pw, encodePassWord);
 		 
-		 int pwChk = depositService.depositPwChk(member_idx,member_pw);
-		 
-		 //String encodePassWord = dto.getMember_pw();
-		 //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	     //boolean isMatched = encoder.matches(member_pw, encodePassWord);
-		 
-		 if(pwChk==1) {
+		 if(pwChk==true) {
 			 page = "/Deposit/depositWithdrawAccount";
 		 }else {
 			  model.addAttribute("msg", "비밀번호를 다시 입력해 주세요");
