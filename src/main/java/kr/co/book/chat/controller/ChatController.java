@@ -79,20 +79,13 @@ public class ChatController {
 		// 메세지 보내기
 		@ResponseBody
 		@RequestMapping(value = "/message_send_inlist.do")
-		public int message_send_inlist(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick,
-				@RequestParam String content, HttpSession session) {
-			
-			String MEMBER_IDX = session.getAttribute("loginIdx").toString();
-			ChatDTO dto = new ChatDTO();
-			dto.setCODE_IDX(CODE_IDX);
-			dto.setIDX(room);
-			dto.setCHAT_SENDER(MEMBER_IDX);
-			dto.setCHAT_RECIEVER(other_nick);
-			dto.setCHAT_CHAT(content);
+		public void message_send_inlist(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String content, HttpSession session) {						
 
-			int flag = service.messageSendInlist(dto);
+			String sender = session.getAttribute("loginIdx").toString();
+			int chat_sender = Integer.parseInt(sender);
 
-			return flag;
+			service.messageSendInlist(CODE_IDX,room,chat_sender,content);
+
 		}
 		
 		// 신청페이지 이동
@@ -170,12 +163,13 @@ public class ChatController {
 		// 책에 대한 모든 대화방 상태
 		@RequestMapping(value="/total_stateajax.do")
 		@ResponseBody
-		public HashMap<String, Object> total_stateajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+		public HashMap<String, Object> total_stateajax(@RequestParam String CODE_IDX, @RequestParam String room, @RequestParam String library, HttpSession session) {
 			
 			logger.info("codeidx"+CODE_IDX+"room"+room+"library"+library);
-			HashMap<String, Object> map = new HashMap<String, Object>();		
+						HashMap<String, Object> map = new HashMap<String, Object>();
+						
 			String member_idx = session.getAttribute("loginIdx").toString();
-			map = service.total_stateajax(CODE_IDX, room, other_nick,member_idx,library);
+			map = service.total_stateajax(CODE_IDX, room, member_idx,library);
 			return map;		
 		}
 		

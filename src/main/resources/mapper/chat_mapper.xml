@@ -56,10 +56,16 @@
 		    WHERE CODE_IDX = #{CODE_IDX} AND IDX = #{IDX} AND CHAT_RECIEVER = #{MEMBER_IDX} AND CHAT_CHECK = 0	
 		</update>
 		
+		<!-- 대화방 참여자 IDX -->
+		<select id="chatuserIDX" resultType="hashmap">
+			SELECT member_idx FROM chat_room
+			WHERE code_idx = #{param1} AND idx = #{param2} AND chat_room_state = 0
+		</select>
+		
 		<!-- 전송 메세지 저장 -->
-		<insert id="messageSendInlist" parameterType="chat">
+		<insert id="messageSendInlist" >
 		    INSERT INTO CHAT(CODE_IDX,IDX,CHAT_SENDER,CHAT_RECIEVER,CHAT_CHAT,CHAT_CHECK,CHAT_DATE) 
-		    VALUES(#{CODE_IDX},#{IDX},#{CHAT_SENDER},#{CHAT_RECIEVER},#{CHAT_CHAT},0,now())
+		    VALUES(#{param1},#{param2},#{param3},#{param4},#{param5},0,now())
 		</insert>
 		
 		<!-- 전송 사진 저장 -->
@@ -199,6 +205,7 @@
 			VALUES(4,#{param1},#{param2},#{param3},#{param4},0)
 		</insert>
 		
+		<!-- 모임 채팅 모두 나가기 -->
 		<update id="clubchatDelete">
 			UPDATE chat_room SET chat_room_state = 1
 			WHERE code_idx = #{param1} AND idx = #{param2}

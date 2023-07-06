@@ -95,10 +95,18 @@ public class ChatService {
 	}
 	
 	// 전송 메세지 저장
-	public int messageSendInlist(ChatDTO dto) {
-	
-		int flag = dao.messageSendInlist(dto);
-		return flag;
+	@Transactional
+	public void messageSendInlist(String CODE_IDX, String room, int chat_sender, String content) {
+		
+		// 채팅방 상대방 IDX 가져오기
+		ArrayList<HashMap<String, Integer>> list = dao.chatuserIDX(CODE_IDX,room);
+		for (HashMap<String, Integer> map : list) {
+			if(map.get("member_idx") != chat_sender) {
+				// 채팅방 상대방에게 전송
+				dao.messageSendInlist(CODE_IDX, room, chat_sender, map.get("member_idx"), content);
+			}
+		}
+
 	}
 	
 	// 대화방 읽음 체크
@@ -111,19 +119,26 @@ public class ChatService {
 	@Transactional
 	public String chatphoto(HashMap<String, String> params, MultipartFile photo, HttpSession session) {
 		
+		// 사진 정보 
 		String oriPhotoname = photo.getOriginalFilename();
 		String ext = oriPhotoname.substring(oriPhotoname.lastIndexOf("."));
 		String serPhotoname = System.currentTimeMillis()+ext;
 		logger.info(oriPhotoname+"->"+serPhotoname);
-		ChatDTO dto = new ChatDTO();
-		dto.setCODE_IDX(params.get("CODE_IDX"));
-		dto.setIDX(params.get("IDX"));
-		dto.setCHAT_SENDER(session.getAttribute("loginIdx").toString());
-		dto.setCHAT_RECIEVER(params.get("CHAT_RECIEVER"));
-		dto.setCHAT_CHAT("/upload/"+serPhotoname);
+
+		// 전송자 IDX
+		String sender = session.getAttribute("loginIdx").toString();
+		int chat_sender = Integer.parseInt(sender);
 		
-		dao.messageSendInlist(dto);
-				
+		// 채팅방 상대방 IDX 가져오기
+		ArrayList<HashMap<String, Integer>> list = dao.chatuserIDX(params.get("CODE_IDX"), params.get("IDX"));
+		for (HashMap<String, Integer> map : list) {
+			if(map.get("member_idx") != chat_sender) {
+				// 채팅방 상대방에게 전송
+				dao.messageSendInlist(params.get("CODE_IDX"), params.get("IDX"), chat_sender, map.get("member_idx"), "/upload/"+serPhotoname);
+			}
+		}
+						
+		// 사진 저장
 		try {
 			byte[] bytes = photo.getBytes();
 			Path path = Paths.get(root+"/"+serPhotoname);
@@ -149,9 +164,9 @@ public class ChatService {
 	}
 	
 	// 대화 방의 책 상태
-	public HashMap<String, Object> total_stateajax(String CODE_IDX, String room, String other_nick, String member_idx, String library) {
+	public HashMap<String, Object> total_stateajax(String CODE_IDX, String room, String member_idx, String library) {
 		
-		logger.info(room,other_nick,member_idx);
+		logger.info(CODE_IDX,room,member_idx,library);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -166,7 +181,7 @@ public class ChatService {
 			map.put("chgck", chgck);
 			
 			// 나랑 교환상태
-			map.put("changestate", dao.changestate(room, other_nick, member_idx));
+			map.put("changestate", dao.changestate(room));
 			
 		}else if(Integer.parseInt(CODE_IDX) == 3) {
 			
@@ -175,7 +190,7 @@ public class ChatService {
 			map.put("rentck", rentck);
 			
 			// 나랑 대여상태
-			map.put("rentstate", dao.rentstate(room, other_nick, member_idx));
+			map.put("rentstate", dao.rentstate(room));
 			
 		}
 		
@@ -311,15 +326,17 @@ public class ChatService {
 			
 		}				
 	}
-
+	
+	// 모임 채팅 모두 나가기
 	public void clubchatDelete(String club_idx) {
 		
 		// 모임 채팅 모두 나가기
 		dao.clubchatDelete(4,club_idx);
-		
-		
+				
 	}
+
+
 	
 	
-	}
+}
 	

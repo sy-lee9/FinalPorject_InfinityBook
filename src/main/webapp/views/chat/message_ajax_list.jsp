@@ -4,7 +4,7 @@
 
 <c:forEach var="tmp" items="${list }">
 	<div class="chat_list_box${tmp.CODE_IDX }a${tmp.IDX } chat_list_box">
-		<div type="button" class="chat_list" code="${tmp.CODE_IDX }" room="${tmp.IDX }" other-nick="${tmp.other_nick}" library="${tmp.LIBRARY_IDX}" apply-user="${tmp.applyuser}">
+		<div type="button" class="chat_list" code="${tmp.CODE_IDX }" room="${tmp.IDX }" library="${tmp.LIBRARY_IDX}" apply-user="${tmp.applyuser}">
 			<!-- active-chat -->
 			<div class="chat_people">
 				<!-- 

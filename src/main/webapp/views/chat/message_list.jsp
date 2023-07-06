@@ -127,7 +127,7 @@ const FirstMessageList = function(){
 				$('.write_msg').on('keyup',function(ev){
 					if(ev.keyCode == 13){
 						console.log('전송');
-						SendMessage(CODE_IDX,room, other_nick);
+						SendMessage(CODE_IDX,room);
 					}
 				});
 
@@ -135,7 +135,7 @@ const FirstMessageList = function(){
 				$('.msg_send_btn').on('click',function(){
 
 					// 메세지 전송 함수 호출
-					SendMessage(CODE_IDX,room, other_nick);
+					SendMessage(CODE_IDX,room);
 					// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
 					// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
 					//$('.chat_list_box:first').addClass('active_chat');
@@ -144,7 +144,7 @@ const FirstMessageList = function(){
 				// 사진 업로드 시  
 				$('#fileInput').on('change',function(event) {
 				 
-					SendPhoto(CODE_IDX,room, other_nick,event.target.files[0]);
+					SendPhoto(CODE_IDX,room, event.target.files[0]);
 
 				});
 			});// 채팅방 클릭 끝
@@ -153,6 +153,10 @@ const FirstMessageList = function(){
 }
 const Messagebook = function(){
 	// 대화방의 상품정보를 넣는다.
+	if(CODE_IDX != 4){
+		
+	
+	
 	$.ajax({
 		url:"message_librarydetailajax.do",
 		method:"GET",
@@ -179,7 +183,6 @@ const Messagebook = function(){
 				data:{
 					CODE_IDX : CODE_IDX,
 					room : room,
-					other_nick : other_nick,
 					library : library
 				},
 				datatype: 'json',
@@ -352,7 +355,8 @@ const Messagebook = function(){
 		},error : function(){// 상태 불러오기 성공 후
 			alert('서버 에러');
 		}		
-	});// 상품들고오기 ajax 끝		
+	});// 상품들고오기 ajax 끝
+	}
 }
 	
 // 메세지 내용을 가져온다.
@@ -382,12 +386,8 @@ const MessageContentList = function(CODE_IDX, room) {
 
 }
 	
-const SendPhoto = function(CODE_IDX,room, other_nick,photo){
-	console.log(CODE_IDX);
-	console.log(room);
-	console.log(other_nick);
-	console.log(photo);
-	console.log(photo.name);
+// 메세지 사진 전송	
+const SendPhoto = function(CODE_IDX,room, photo){
    
 	var extidx = photo.name.lastIndexOf(".");	  
 	var ext = photo.name.slice(extidx + 1).toLowerCase();
@@ -402,7 +402,7 @@ const SendPhoto = function(CODE_IDX,room, other_nick,photo){
 	    formData.append('photo', photo); // 파일 추가
 	    formData.append('CODE_IDX', CODE_IDX); // 나머지 필드 추가
 	    formData.append('IDX', room); // 나머지 필드 추가other_nick
-	    formData.append('CHAT_RECIEVER', other_nick);
+	    
 		$.ajax({
 		      type: 'post',
 		      url: 'chatphoto.ajax',
@@ -429,7 +429,7 @@ const SendPhoto = function(CODE_IDX,room, other_nick,photo){
 };
 	
 // 메세지를 전송하는 함수
-const SendMessage = function(CODE_IDX,room, other_nick){
+const SendMessage = function(CODE_IDX,room){
 	
 	let content = $('.write_msg').val();
 	//alert("content: " + content);
@@ -445,14 +445,13 @@ const SendMessage = function(CODE_IDX,room, other_nick){
 			data:{
 				CODE_IDX : CODE_IDX,
 				room : room,
-				other_nick: other_nick,
 				content: content
 			},
 			success:function(data){
 				console.log("메세지 전송 성공");
 				
 				// 웹소캣으로 실시간 전달
-				send(CODE_IDX,room,other_nick,content);		
+				send(CODE_IDX,room,content);		
 				// 메세지 입력칸 비우기
 				$('.write_msg').val("");
 				
