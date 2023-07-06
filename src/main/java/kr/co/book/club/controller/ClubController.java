@@ -38,7 +38,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping("/clubDetail.go")
-	public String clubDetail(@RequestParam String club_idx, Model model) {
+	public String clubDetail(@RequestParam String club_idx, Model model, HttpSession session) {
 		
 		ClubDTO club = clubService.clubDetail(club_idx);
 		ArrayList<ClubDTO> member = clubService.clubMember(club_idx);
@@ -46,6 +46,7 @@ public class ClubController {
 		model.addAttribute("club", club);
 		model.addAttribute("member", member);
 		model.addAttribute("apply", apply);
+		model.addAttribute("loginIdx", session.getAttribute("loginIdx"));
 		return "/club/clubDetail";
 	}
 	
@@ -118,5 +119,30 @@ public class ClubController {
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
 	
+	@RequestMapping("/clubDelete.do")
+	public String clubDelete(@RequestParam String club_idx) {
+		
+		ArrayList<ClubDTO> applyMember = clubService.applyMember(club_idx);
+		
+		for (ClubDTO clubDTO : applyMember) {
+			clubService.applyReject(club_idx, clubDTO.getMember_idx());			
+		}
+		
+		clubService.clubDelete(club_idx);
+				
+		return "/club/clubList";
+	}
 	
+	@RequestMapping("clubUpdate.do")
+	public String clubUpdate(@RequestParam String club_idx) {
+		ArrayList<ClubDTO> applyMember = clubService.applyMember(club_idx);
+		
+		for (ClubDTO clubDTO : applyMember) {
+			clubService.applyReject(club_idx, clubDTO.getMember_idx());			
+		}
+		
+		clubService.clubUpdate(club_idx);
+		
+		return "redirect:/clubDetail.go?club_idx="+club_idx;
+	}
 }

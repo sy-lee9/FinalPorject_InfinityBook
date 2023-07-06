@@ -92,6 +92,16 @@ public class ClubService {
 	public void clubJoin(String club_idx, int member_idx) {
 		clubDAO.clubJoin(club_idx,member_idx);
 	}
+
+
+	public void clubDelete(String club_idx) {
+		clubDAO.clubDelete(club_idx);		
+	}
+
+
+	public void clubUpdate(String club_idx) {
+		clubDAO.clubUpdate(club_idx);
+	}
 	
 
 

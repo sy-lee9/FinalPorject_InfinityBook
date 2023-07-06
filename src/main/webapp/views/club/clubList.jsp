@@ -219,6 +219,7 @@
 	    
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
+	    content += '	<th width="3%" style="text-align:center;"></th>';
 	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
 	    content += '	<th width="8%" style="text-align:center;"> 장소 </th>';
 	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
@@ -227,12 +228,13 @@
 	    content += '	<th width="10%" style="text-align:center;"> 모임 일시 </th>';
 	    content += '	<th width="10%" style="text-align:center;"></th>';
 	    content += '	<th width="20%" style="text-align:left;"> 선정 도서 </th>';
-	    content += '	<th width="6%" style="text-align:center;"></th>';
+	    content += '	<th width="3%" style="text-align:center;"></th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
 	        
 	    	content += '<tr>';
+	    	content += '	<td></td>';
 	    	if (item.club_state=="0") {
 	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
 			}else{
