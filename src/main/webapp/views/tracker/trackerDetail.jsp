@@ -41,7 +41,7 @@
 		progress::-webkit-progress-value {
 		   background-color: #c5a992e3;
 		}
-		#memo-div{
+		.memo-div{
 			position: relative; 
 			width: 100%; 
 			height:auto; 
@@ -217,9 +217,7 @@
 
 						<div class="col-md-12">
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
-						</div>
-
-						
+						</div>				
 
 					</div>
 				</div><!--grid-->
@@ -228,7 +226,7 @@
 		</div>
 	</div>
 </div>
-
+	
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
@@ -286,8 +284,9 @@
 		var content = '';
 		
 		list.forEach(function(list){			
-			content +='<div id="memo-div">';
-			content +='<p style="width: 95%; padding:0.5% 1% 0.5% 1%; margin-bottom: 0px; display: inline;">'+list.content.replace(/\n/g, "<br>")+'</p><p style="width: 5%; float: right;">•••</p>';	
+			content +='<div class="memo-div">';
+			content +='<p style="width: 90%; height: 4%; padding:0.5% 1% 0.5% 1%; margin-bottom: 0px; display: inline;">'+list.content.replace(/\n/g, "<br>")+
+						'<input type="button" onclick="memoDelete(\''+list.tracker_idx+"\',\'"+list.memo_idx+'\')" id="delete" value="삭제" style="margin: 0.5%; float: right; padding: 0.5%; width: auto; height: auto; font-size: 11px; float: right;"><input type="button" class="update" onclick="memoUpdate(\''+list.tracker_idx+"\',\'"+list.memo_idx+'\')" id="update" value="수정" style="margin: 0.5%; float: right; padding: 0.5%; width: auto; height: auto; font-size: 11px; float: right;">';	
 			content +='</div>';
 			content +='<p style="position: absolute; right: 0; margin-top: 0%; font-size: 13px;">'+list.regDate+'</p>';
 		}); 
@@ -296,9 +295,44 @@
 
 	}
 	
+	function memoDelete(trackerIdx,memoIdx){
+		console.log(trackerIdx);
+		console.log(memoIdx);
+		
+		$.ajax({
+			type:'post',
+			url:'memoDelete.ajax',
+			data:{
+	        	'trackerIdx':trackerIdx,
+	        	'memoIdx':memoIdx
+			},
+			dataType:'json',
+			success:function(data){
+				console.log(data.success);
+				if(data.success == 1){
+					alert("삭제되었습니다.");
+					listCall();	
+				}				
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+		
+	}
 	
-	
-	
+	function memoUpdate(trackerIdx,memoIdx){
+		console.log(trackerIdx);
+		console.log(memoIdx);
+		
+		var jsp = "trackerDetail.jsp";
+		var width = 473;
+	    var height = 400;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    var popupWindow = window.open('trackerMemoUpdate.go?trackerIdx=' + trackerIdx + '&memoIdx=' + memoIdx + '&jsp=' + jsp + ', 'updateMemo', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+		
+	}
 	
 	
 	

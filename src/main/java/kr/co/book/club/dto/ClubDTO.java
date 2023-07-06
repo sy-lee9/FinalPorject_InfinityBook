@@ -7,7 +7,7 @@ public class ClubDTO {
 
 
     private String club_idx;
-    private String member_idx;
+	private String member_idx;
     private String isbn;
     private String title;
     private String cover;
@@ -16,6 +16,7 @@ public class ClubDTO {
     private String club_date;
     private String club_meetdate;
     private String code_idx;
+    
     private String club_onoff;
     private String meet_num;
     private String club_num;

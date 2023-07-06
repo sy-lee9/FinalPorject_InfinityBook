@@ -120,64 +120,77 @@
 	});
 
 	function trackerAddReadingBook() {
-	    
-	    $.ajax({
-	        url: '/tracker/add/reading/book.ajax',
-	        type: 'get',
-	        data: {
-	            'isbn': isbn,
-	            'startDate':document.getElementById("startDate").value,
-	            'readPage':document.getElementById("readPage").value,
-	            'jsp':jsp
-	        },
-			dataType:'json',
-			success: function(data) {
-				console.log(data);
-				if(data.success){
-					console.log("추가 완료");
-					if (window.opener && !window.opener.closed) {
-						  window.alert("트래커에 추가 되었습니다.");
-						  window.close(); 
-						  if (window.opener) {
-						      window.opener.location.href = '/trackerList.go';
-						   }
+			
+			if($('#startDate').val() != ''){
+		    	    
+			    $.ajax({
+			        url: '/tracker/add/reading/book.ajax',
+			        type: 'get',
+			        data: {
+			            'isbn': isbn,
+			            'startDate':document.querySelector("#startDate").value,
+			            'readPage':document.querySelector("#readPage").value,
+			            'jsp':jsp
+			        },
+					dataType:'json',
+					success: function(data) {
+						console.log(data);
+						if(data.success){
+							console.log("추가 완료");
+							if (window.opener && !window.opener.closed) {
+								  window.alert("트래커에 추가 되었습니다.");
+								  window.close(); 
+								  if (window.opener) {
+								      window.opener.location.href = '/trackerList.go';
+								   }
+							}
+						}else{
+							console.log("추가 실패");
+						}
+			
+			        },
+					error:function(e){
+						console.log(e);
 					}
-				}else{
-					console.log("추가 실패");
-				}
-	
-	        },
-			error:function(e){
-				console.log(e);
+			    });
+
+			}else{
+				alert("시작일을 입력해주세요!");
 			}
-	    });
-	}
-	
+
+		}
+
 	function trackerUpdateReadingBook() {
+		
+		if($('#startDate').val() != ''){
 	    
-	    $.ajax({
-	        url: '/trackerUpdateBook.ajax',
-	        type: 'get',
-	        data: {
-	            'isbn': isbn,
-	            'startDate':document.getElementById("startDate").value,
-	            'readPage':document.getElementById("readPage").value,
-	            'jsp':jsp
-	        },
-			dataType:'json',
-			success: function(data) {
-				console.log(data);
+		    $.ajax({
+		        url: '/trackerUpdateBook.ajax',
+		        type: 'get',
+		        data: {
+		            'isbn': isbn,
+		            'startDate':document.querySelector("#startDate").value,
+		            'readPage':document.querySelector("#readPage").value,
+		            'jsp':jsp
+		        },
+				dataType:'json',
+				success: function(data) {
 					console.log(data);
-					if (window.opener && !window.opener.closed) {
-						  window.alert("수정되었습니다.");
-						  window.close(); 
-						  window.opener.location.reload();
-					}
-	        },
-			error:function(e){
-				console.log(e);
-			}
-	    });
+						console.log(data);
+						if (window.opener && !window.opener.closed) {
+							  window.alert("수정되었습니다.");
+							  window.close(); 
+							  window.opener.location.reload();
+						}
+		        },
+				error:function(e){
+					console.log(e);
+				}
+		    });
+		    
+		}else{
+			alert("시작일을 입력해주세요!");
+		}
 	}
 
 	$.datepicker.setDefaults({

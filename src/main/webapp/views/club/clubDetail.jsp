@@ -111,10 +111,10 @@
 				</th>
 				<td style="width: 55%;">
 					<c:if test="${club.club_state eq 0}"> 
-	    				<input type="button" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
+	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
 					</c:if>
 					<c:if test="${club.club_state eq 1}"> 
-	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
+	    				<input type="button" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 종료 ">
 					</c:if>
 					
 					<table>
@@ -163,21 +163,28 @@
 						</tr>
 						<tr>
 							<td colspan="3" style="text-align:center;">
-								<input type="button" onclick="location.href='/clubApply.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">
+							<c:if test="${loginIdx == club.member_idx}">
+								<input type="button" onclick="location.href='/clubUpdate.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집종료">	
+							</c:if>
+							<c:if test="${loginIdx != club.member_idx}">
+								<input type="button" onclick="location.href='/clubApply.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+							</c:if>
+							
 								<input type="button" style="padding:5 10 5 10;" onclick="location.href='/clubList.go'" class="btn btn-outline-accent btn-accent-arrow" value="목록 ">
 							</td>
 						</tr>
 					</table>
 				</td>
 				<th style="width: 10%; vertical-align: top; text-align:center;">
-					<input type="button" onclick="location.href='/clubApply.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10;"class="btn btn-outline-accent btn-accent-arrow" value="수정">
-					<input type="button" onclick="location.href='/clubList.go'" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
-					<h3>신청자</h3>
-					<c:forEach items="${apply}" var="apply">
-					${apply.member_nickname} 
-					<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
-					<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
-					</c:forEach>
+					<c:if test="${loginIdx == club.member_idx}">
+						<input type="button" onclick="location.href='/clubDelete.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
+						<h3>신청자</h3>
+						<c:forEach items="${apply}" var="apply">
+						${apply.member_nickname} 
+						<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
+						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
+						</c:forEach>
+					</c:if>  
 				</th>
 			</tr>
 		</table>

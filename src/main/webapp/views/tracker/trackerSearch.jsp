@@ -193,14 +193,23 @@
 
 	var jsp = 'trackerSearch.jsp';
 
-	function addReadBook(isbn,cover) {
-		console.log(isbn);
-		window.open('tracker/add/Read/book.go?isbn='+isbn+'&cover='+cover+'&jsp='+jsp+'','완독!','width=473px,height=400px');
-	}; 
+	function addReadBook(isbn, cover) {
+	    console.log(isbn);
+		var width = 473;
+	    var height = 400;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    var popupWindow = window.open('tracker/add/Read/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	};
 	
-	function addReadingBook(isbn,cover) {
-		console.log(isbn);
-		window.open('tracker/add/Reading/book.go?isbn='+isbn+'&cover='+cover+'&jsp='+jsp+'','읽는 중','width=473px,height=400px');
+	function addReadingBook(isbn, cover) {
+	    console.log(isbn);
+		var width = 473;
+	    var height = 400;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    
+	    var popupWindow = window.open('tracker/add/Reading/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'reading', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 	
 </script>

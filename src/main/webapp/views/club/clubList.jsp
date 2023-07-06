@@ -109,7 +109,7 @@
 		</ul>
 		<ul class="tab">
 			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<input type="button" value="모임 등록" onclick="location.href='#'" style="float: right;">
+				<input type="button" value="모임 등록" onclick="location.href='/clubWrite.go'" style="float: right;">
 				<i class="icon icon-search"></i> 
 				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="제목 을 입력해주세요" type="search">
 				<input type="button" id="searchButton" value="검색">	
@@ -219,18 +219,22 @@
 	    
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
-	    content += '	<th width="10%" style="text-align:center;"> 모집 상태 </th>';
-	    content += '	<th width="10%" style="text-align:center;"> 장소 </th>';
-	    content += '	<th width="10%" style="text-align:center;"> 인원 </th>';
+	    content += '	<th width="3%" style="text-align:center;"></th>';
+	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
+	    content += '	<th width="8%" style="text-align:center;"> 장소 </th>';
+	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
 	    content += '	<th width="20%" style="text-align:center;"> 모임명 </th>';
 	    content += '	<th width="10%" style="text-align:center;">	글쓴이 </th>';
 	    content += '	<th width="10%" style="text-align:center;"> 모임 일시 </th>';
-	    content += '	<th width="30%" style="text-align:center;"> 선정 도서 </th>';
+	    content += '	<th width="10%" style="text-align:center;"></th>';
+	    content += '	<th width="20%" style="text-align:left;"> 선정 도서 </th>';
+	    content += '	<th width="3%" style="text-align:center;"></th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
 	        
 	    	content += '<tr>';
+	    	content += '	<td></td>';
 	    	if (item.club_state=="0") {
 	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
 			}else{
@@ -241,7 +245,9 @@
 		    content += '	<td style="text-align:center;"><a href="/clubDetail.go?club_idx='+item.club_idx+'">'+item.club_name+'</a></td>';
 		    content += '	<td style="text-align:center;">'+item.member_nickname+'</td>';
 		    content += '	<td style="text-align:center;">'+item.club_meetdate+'</td>';
-		    content += '	<td><img src="' + item.cover + '" alt="Books" style="width:100px; height:100px;" class="product-item">'+item.title+'</td>';
+		    content += '	<td><img src="' + item.cover + '" alt="Books" style="width:100px; height:100px;" class="product-item"></td>';
+		    content += '	<td>'+item.title+'</td>';
+		    content += '	<td></td>';
 	        content += '</tr>';
 	    });
     

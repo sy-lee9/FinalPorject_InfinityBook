@@ -32,4 +32,10 @@ public interface TrackerDAO {
 
 	List<HashMap<String, Object>> getMemoList(String trackerIdx);
 
+	int memoDelete(HashMap<String, Object> params);
+
+	String getContent(HashMap<String, Object> params);
+
+	int memoUpdate(HashMap<String, Object> params);
+
 }
