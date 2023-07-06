@@ -16,8 +16,6 @@ public interface DepositDAO {
 
 	int depositNow(int member_idx);
 
-	int depositPwChk(int member_idx, String member_pw);
-
 	ArrayList<HashMap<String, String>> bankList();
 
 	void depositWithdrawReq(HashMap<String, String> data);
@@ -25,5 +23,7 @@ public interface DepositDAO {
 	void depositUse(HashMap<String, String> data);
 
 	void depositChargedrawReq(HashMap<String, String> data);
+
+	String getPw(int member_idx);
 
 }

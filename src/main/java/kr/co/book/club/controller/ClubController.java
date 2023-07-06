@@ -61,7 +61,7 @@ public class ClubController {
 	@RequestMapping("/clubApply.do")
 	public String clubApply(@RequestParam String club_idx, HttpSession session){
 		
-		String member_idx = (String) session.getAttribute("loginIdx"); 
+		String member_idx = String.valueOf(session.getAttribute("loginIdx")); 
 		clubService.clubApply(club_idx, member_idx);
 		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;

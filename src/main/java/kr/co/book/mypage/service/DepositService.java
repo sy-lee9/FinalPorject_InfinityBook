@@ -43,8 +43,8 @@ public class DepositService {
 		return depositDAO.depositNow(member_idx);
 	}
 
-	public int depositPwChk(int member_idx, String member_pw) {
-		return depositDAO.depositPwChk(member_idx, member_pw);
+	public String getPw(int member_idx) {
+		return depositDAO.getPw(member_idx);
 	}
 
 	public ArrayList<HashMap<String, String>> bankList() {
@@ -79,4 +79,6 @@ public class DepositService {
 		
 		depositDAO.depositUse(data);
 	}
+
+	
 }
