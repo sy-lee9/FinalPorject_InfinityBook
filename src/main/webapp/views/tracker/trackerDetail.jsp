@@ -33,7 +33,7 @@
 			width: 100%;
 		    height: 3%;
 		    color: #c5a992;
-		    border-radius: 50px;
+		    border-radius: 50px;		    
 		}
 		progress::-webkit-progress-bar {
 		   background-color: azure;
@@ -287,7 +287,7 @@
 		
 		list.forEach(function(list){			
 			content +='<div id="memo-div">';
-			content +='<p style="width: 90%; padding:0.5% 1% 0.5% 1%; margin-bottom: 0px;">'+list.content.replace(/\n/g, "<br>")+'</p><p style="width: 90%;">•••</p>;	
+			content +='<p style="width: 95%; padding:0.5% 1% 0.5% 1%; margin-bottom: 0px; display: inline;">'+list.content.replace(/\n/g, "<br>")+'</p><p style="width: 5%; float: right;">•••</p>';	
 			content +='</div>';
 			content +='<p style="position: absolute; right: 0; margin-top: 0%; font-size: 13px;">'+list.regDate+'</p>';
 		}); 

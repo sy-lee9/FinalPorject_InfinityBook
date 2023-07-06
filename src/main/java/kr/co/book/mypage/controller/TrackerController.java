@@ -65,7 +65,7 @@ public class TrackerController {
 		logger.info("state : {} / params : {}",state,params);
 		
 		HashMap<String, Object> map =  new HashMap<String, Object>();
-		session.setAttribute("loginIdx", 3);
+		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		logger.info("loginIdx : "+loginIdx);
 		params.put("loginIdx", loginIdx);
@@ -85,7 +85,7 @@ public class TrackerController {
 		
 		HashMap<String, Object> map =  new HashMap<String, Object>();
 		
-		session.setAttribute("loginIdx", 3);
+		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		params.put("loginIdx", loginIdx);
 		logger.info("loginIdx : "+loginIdx);
@@ -100,7 +100,7 @@ public class TrackerController {
 	//트래커 리스트로 이동
 	@GetMapping(value = "/trackerList.go")
 	public ModelAndView trackerListGo(HttpSession session) {
-		session.setAttribute("loginIdx", 3);
+		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		logger.info("loginIdx : "+loginIdx);		
 		return TrackerService.trackerList(loginIdx);
@@ -127,7 +127,7 @@ public class TrackerController {
 	@GetMapping(value = "/trackerUpdateBook.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerUpdateBook(HttpSession session, @RequestParam HashMap<String, Object> params) {
-		session.setAttribute("loginIdx", 3);
+		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		logger.info("loginIdx : "+loginIdx);		
 		params.put("loginIdx", loginIdx);			
@@ -138,7 +138,7 @@ public class TrackerController {
 	@GetMapping(value = "/trackerDeleteBook.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerDeleteBook(HttpSession session, String isbn) {
-		session.setAttribute("loginIdx", 3);
+		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		logger.info("loginIdx : "+loginIdx);		
 		
@@ -156,7 +156,7 @@ public class TrackerController {
 	public HashMap<String, Object> trackerAddMemo(HttpSession session, @RequestParam HashMap<String, Object> params) {
 		logger.info("memo params: "+params);
 		
-		session.setAttribute("loginIdx", 3);
+		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		logger.info("loginIdx : "+loginIdx);	
 		
