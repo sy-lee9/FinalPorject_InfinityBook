@@ -72,7 +72,7 @@ public class TransactionListController {
 	
 	@GetMapping(value = "/TransactionChange.do")
 	public String TransactionChange(HttpSession session, String library_idx, Model model) {
-		String member_idx = session.getAttribute("MEMBER_IDX").toString();
+		String member_idx = session.getAttribute("loginIdx").toString();
 		model.addAttribute("mybook", service.change(member_idx));
 		model.addAttribute("book", service.searchDetail(library_idx));
 		return "TransactionChange";
