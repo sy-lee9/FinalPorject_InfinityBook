@@ -100,16 +100,32 @@
 
 	<select id="getMemoList" resultType="HashMap">
 		SELECT 
+			memo_idx,
+			tracker_idx,
 			(memo_content) AS content, 
 			DATE_FORMAT(memo_regdate, '%Y-%m-%d %H:%i') AS regDate
 		FROM memo
 			WHERE tracker_idx = #{param}
 			ORDER BY memo_regdate DESC
 	</select>
+	
+	<delete id="memoDelete" parameterType="hashMap">
+			DELETE FROM memo WHERE tracker_idx = #{trackerIdx} AND memo_idx = ${memoIdx}
+	</delete>
 
+	<select id="getContent" resultType="string">
+		SELECT memo_content FROM memo WHERE tracker_idx = #{trackerIdx} AND memo_idx = ${memoIdx}
+	</select>
 
-
-
+	<update id="memoUpdate" parameterType="hashMap">
+		UPDATE memo SET 
+			memo_content = #{content},	
+			mod_date = NOW(),	
+			mod_screen  = #{jsp},
+			mod_member_idx = #{loginIdx}
+		WHERE tracker_idx = #{trackerIdx}
+			AND memo_idx = #{memoIdx}	
+	</update>
 
 
 

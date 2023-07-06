@@ -286,6 +286,29 @@ public class TrackerService {
 		return map;
 	}
 
+	public HashMap<String, Object> memoDelete(HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row = TrackerDAO.memoDelete(params);
+		if(row == 1) {
+			map.put("success", 1);
+		}
+		return map;
+	}
+
+	//메모 내용 가져오기
+	public String getContent(HashMap<String, Object> params) {
+		return TrackerDAO.getContent(params);
+	}
+
+	public HashMap<String, Object> memoUpdate(HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row = TrackerDAO.memoUpdate(params);
+		if(row == 1) {
+			map.put("success", 1);
+		}
+		return map;
+	}
+
 
 	
 	

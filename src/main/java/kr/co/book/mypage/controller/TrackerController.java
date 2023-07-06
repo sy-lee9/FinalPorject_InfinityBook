@@ -165,6 +165,7 @@ public class TrackerController {
 		return TrackerService.trackerAddMemo(params);
 	}
 	
+	//메모 리스트 출력
 	@PostMapping(value = "/getMemoList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> getMemoList(String trackerIdx){
@@ -172,10 +173,33 @@ public class TrackerController {
 		return TrackerService.getMemoList(trackerIdx);
 	}
 	
+	//메모 삭제
+	@PostMapping(value = "/memoDelete.ajax")
+	@ResponseBody
+	public HashMap<String, Object> memoDelete(@RequestParam HashMap<String, Object> params){
+		logger.info("memo delete : "+params);
+		return TrackerService.memoDelete(params);
+	}
 	
+	//메모 수정 페이지 이동
+	@GetMapping(value = "/trackerMemoUpdate.go")
+	public String trackerMemoUpdateGo(@RequestParam HashMap<String, Object> params, Model model) {	
+		logger.info("params : ",params);
+		String content = TrackerService.getContent(params);
+		model.addAttribute("content",content);
+		model.addAttribute("trackerIdx",params.get("trackerIdx"));
+		model.addAttribute("memoIdx",params.get("memoIdx"));
+		model.addAttribute("jsp",params.get("jsp"));
+		return "/tracker/trackerMemoUpdate";
+	}
 	
-	
-	
+	//메모 수정
+	@PostMapping(value = "/trackerMemoUpdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> trackerMemoUpdate(@RequestParam HashMap<String, Object> params){
+		logger.info("memo update : "+params);
+		return TrackerService.memoUpdate(params);
+	}
 	
 	
 	

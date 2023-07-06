@@ -62,42 +62,79 @@
 </body>
 <script>
 
+
+
 	function trackerAddReadBook(isbn,cover) {
 		console.log(isbn);
 		console.log(cover);
 		
-	    $.ajax({
-	        url: '/tracker/add/read/book.ajax',
+		if($('#startDate').val() != ''){
+			
+			if($('#endDate').val() != ''){
+		
+			    $.ajax({
+			        url: '/tracker/add/read/book.ajax',
+			        type: 'get',
+			        data: {
+			            'isbn': isbn,
+			            'cover': cover,
+			            'startDate':document.getElementById("startDate").value,
+			            'endDate':document.getElementById("endDate").value,
+			            'jsp':"trackerAddReadBook.jsp"
+			        },
+					dataType:'json',
+					success: function(data) {
+						console.log(data);
+						if(data.success){
+							console.log("추가 완료");
+							if (data != null) {
+								  window.alert("트래커에 추가 되었습니다.");
+								  window.close(); 
+								  if (window.opener) {
+								      window.opener.location.href = '/trackerList.go';
+								   }
+							}
+						}else{
+							console.log("추가 실패");
+						}
+		
+			        },
+					error:function(e){
+						console.log(e);
+					}
+			    });
+			}else{
+				alert("종료일을 입력해주세요!");
+			}
+		}else{
+			alert("시작일을 입력해주세요!");
+		}
+	}	
+	
+	function trackerChk(){
+		
+		$.ajax({
+	        url: '/trackerChk.ajax',
 	        type: 'get',
 	        data: {
-	            'isbn': isbn,
-	            'cover': cover,
-	            'startDate':document.getElementById("startDate").value,
-	            'endDate':document.getElementById("endDate").value,
-	            'jsp':"trackerAddReadBook.jsp"
+	            'isbn': isbn
 	        },
 			dataType:'json',
 			success: function(data) {
 				console.log(data);
-				if(data.success){
-					console.log("추가 완료");
-					if (data != null) {
-						  window.alert("트래커에 추가 되었습니다.");
-						  window.close(); 
-						  if (window.opener) {
-						      window.opener.location.href = '/trackerList.go';
-						   }
+					if(data.check == 0){
+						
+					}else{
+						alert("트래커에 존재하는 책입니다.");
 					}
-				}else{
-					console.log("추가 실패");
-				}
-
+					
 	        },
 			error:function(e){
 				console.log(e);
 			}
 	    });
-	}	
+		
+	}
 
 	$.datepicker.setDefaults({
 	    dateFormat: 'yy-mm-dd',
