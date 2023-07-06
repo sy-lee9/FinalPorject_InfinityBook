@@ -99,7 +99,15 @@ public interface ChatDAO {
 	void createchatroom(String club_idx, int member_idx);
 
 	// 모임 채팅방 생성 됐다는 메세지
-	void createchat(String club_idx, int member_idx);
+	void createchat(String club_idx, int member_idx, String string);
+
+	// 모임 참여자 IDX
+	ArrayList<HashMap<String, Integer>> findclubmember(String club_idx);
+	
+	// 모임 참여자에게 메세지 전송
+	void sendclubmembermessage(String club_idx, int member_idx, int i, String string2);
+
+	void clubchatDelete(int i, String club_idx);
 
 
 	

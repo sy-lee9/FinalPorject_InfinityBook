@@ -102,6 +102,10 @@ public class LibraryService {
 		
 	}
 
+	public ArrayList<HashMap<String, String>> reviewList(String library_idx) {
+		return libraryDAO.reviewList(library_idx);
+	}
+
 	
 
 

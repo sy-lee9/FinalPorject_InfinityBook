@@ -33,20 +33,20 @@ public class RentService {
 		dao.rentapply(params);
 		
 		// 대여 IDX
-		String IDX = dao.findrent_idx(params);
+		String idx = dao.findrent_idx(params);
 		
 		// 대화방 만들기
 		int code = 3;		
-		dao.createchatroom(code,params.get("MEMBER_IDX"),IDX);
+		dao.createchatroom(code,params.get("member_idx"),idx);
 		
 		// 대여신청한 책에 대한 정보(회원 idx, 책 이름) 들고오기
 		RentDTO dto = dao.findchbmidx(params);
 		
 		// 대화방 만들기
-		dao.createchatroom(code, dto.getMEMBER_IDX(),IDX);
+		dao.createchatroom(code, dto.getMEMBER_IDX(),idx);
 		
 		// 신청내역 대화방에 뿌려주기
-		dao.applychatcontent(code, IDX, params.get("MEMBER_IDX"), dto.getMEMBER_IDX(), dto.getLIBRARY_TITLE());
+		dao.applychatcontent(code, idx, params.get("member_idx"), dto.getMEMBER_IDX(), dto.getLIBRARY_TITLE());
 		
 	}
 	

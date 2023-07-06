@@ -145,12 +145,6 @@
 		UPDATE library SET library_blind=1 WHERE  library_idx = #{param1} AND member_idx=#{param2}
 	</update>
 	
-	<!-- ArrayList<HashMap<String, String>> reviewList(String library_idx); -->
-	<select id="reviewList" resultType="hashmap">
-		SELECT r.sender_idx,m.member_nickname , r.review_content, r.review_date 
-		FROM review r 
-		JOIN `member` m ON r.sender_idx = m.member_idx 
-		WHERE r.review_type ="도서" AND r.reciever_idx =#{param1}
-		ORDER BY review_date DESC LIMIT 5
-	</select>
+	
+	
 </mapper>

@@ -27,8 +27,8 @@ public class RentController {
 	public String rentapply(HttpSession session, @RequestParam HashMap<String, String>params) {
 		
 		logger.info("{}",params);
-		String MEMBER_IDX = session.getAttribute("loginIdx").toString();
-		params.put("MEMBER_IDX", MEMBER_IDX);
+		String member_idx = session.getAttribute("loginIdx").toString();
+		params.put("member_idx", member_idx);
 		service.rentapply(params);
 		
 		return "/chat/message_list";

@@ -23,7 +23,7 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-		 <link rel="icon" href="/images/KakaoTalk_20230630_091136316.png" class="images">		
+		 <link rel="icon" href="/images/mainLogo.png" class="images">		
 	</head>
 
 <body>
@@ -46,7 +46,7 @@
 				<div class="col-md-2">
 					<div class="main-logo">
 					
-						<a href="index.move"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
+						<a href="index.move"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -60,8 +60,13 @@
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
 								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
+<<<<<<< HEAD
 								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
 								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
+=======
+								<li class="menu-item"><a href="./event_List.go" class="nav-link" data-effect="Articles">이벤트</a></li>
+								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
+>>>>>>> 6a26b25 (자동로그인 기능 완성전(81.2% 정도))
 							</ul>
 
 							<div class="hamburger">
@@ -119,13 +124,9 @@
 
 					<div class="slider-item">
 						<div class="banner-content">
-							<h2 class="banner-title">Birds gonna be Happy</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis urna, a eu.</p>
-							<div class="btn-wrap">
-								<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i class="icon icon-ns-arrow-right"></i></a>
-							</div>
+							
+							
 						</div><!--banner-content--> 
-						<img src="/images/main-banner2.jpg" alt="banner" class="banner-image">
 					</div><!--slider-item-->
 
 				</div><!--slider-->

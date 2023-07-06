@@ -16,5 +16,9 @@
 			<select id="changeMyBook" resultType="TransactionListDTO">
 		SELECT * FROM library WHERE member_idx =#{member_idx}
 	</select>
+	
+	<select id="deposit" resultType="String">
+		SELECT COALESCE(SUM(deposit_use_price), 0) FROM deposit_use WHERE member_idx=#{param1}
+	</select>
 
 </mapper>
