@@ -10,20 +10,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.club.dto.ClubDTO;
 import kr.co.book.club.service.ClubService;
+import kr.co.book.mypage.service.TrackerService;
 
 @Controller
 public class ClubController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired ClubService clubService;
+	@Autowired TrackerService TrackerService;
 	
 	@RequestMapping("/clubList.go")
 	public String clubListGo() {
@@ -73,6 +73,50 @@ public class ClubController {
 		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
-
-
+	
+	@RequestMapping("/clubWrite.go")
+	public String clubWriteGo(Model model) {
+		
+		ArrayList<ClubDTO> locList = clubService.locationCode();
+		model.addAttribute("location", locList);
+		
+		return "/club/clubWrite";
+	}
+	
+	@RequestMapping("/clubBookPop.go")
+	public String clubBookPop() {
+		return "/club/clubBookPop";
+	}
+	
+	@RequestMapping("/clubWrite.do")
+	public String clubWrite(@RequestParam HashMap<String, Object> params, HttpSession session) {
+		logger.info("글쓰기 정보" + params);
+		int member_idx = (int)session.getAttribute("loginIdx"); 
+		params.put("loginIdx", member_idx);
+		int totalPage = TrackerService.getTotalPage(params);
+		params.put("totalPage",totalPage);
+		params.put("member_idx", String.valueOf(member_idx));
+		logger.info("글쓰기 정보" + params);
+		
+		ClubDTO dto = new ClubDTO();
+		
+		dto.setMember_idx((String)params.get("member_idx"));
+		dto.setIsbn((String)params.get("isbn"));
+		dto.setClub_name((String)params.get("club_name"));
+		dto.setClub_content((String)params.get("club_content"));
+		dto.setClub_meetdate((String)params.get("club_meetdate"));
+		dto.setCode_idx((String)params.get("code_idx"));
+		dto.setClub_onoff((String)params.get("club_onoff"));
+		dto.setClub_num((String)params.get("club_num"));
+		
+		
+		
+		clubService.clubWrite(dto);
+		
+		String club_idx = dto.getClub_idx();
+		clubService.clubJoin(club_idx,member_idx);
+		return "redirect:/clubDetail.go?club_idx="+club_idx;
+	}
+	
+	
 }

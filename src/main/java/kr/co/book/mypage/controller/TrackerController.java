@@ -32,6 +32,11 @@ public class TrackerController {
 		return "/tracker/trackerSearch";
 	}
 	
+	@GetMapping(value = "/clubBookSearch.do")
+	public ModelAndView clubBookSearch(String searchValue) {
+		return TrackerService.clubBookSearch("title",searchValue);
+	}
+	
 	//트래커에 추가할 책 검색
 	@GetMapping(value = "/trackerSearch.do")
 	public ModelAndView trackerBookSearch(String searchType, String searchValue) {	

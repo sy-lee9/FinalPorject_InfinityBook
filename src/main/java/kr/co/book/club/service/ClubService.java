@@ -77,6 +77,21 @@ public class ClubService {
 	public void applyReject(String club_idx, String member_idx) {
 		clubDAO.applyReject(club_idx,member_idx);
 	}
+
+
+	public ArrayList<ClubDTO> locationCode() {
+		return clubDAO.locationCode();
+	}
+
+
+	public void clubWrite(ClubDTO dto) {
+		clubDAO.clubWrite(dto);
+	}
+
+
+	public void clubJoin(String club_idx, int member_idx) {
+		clubDAO.clubJoin(club_idx,member_idx);
+	}
 	
 
 

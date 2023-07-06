@@ -76,4 +76,22 @@
 	<delete id="applyReject">
 		DELETE FROM club_apply WHERE club_idx=#{param1} AND member_idx=#{param2}
 	</delete>
+	
+	<select id="locationCode" resultType="club">
+		SELECT code_idx,code_codename FROM code WHERE code_upcode='region' AND (code_codename != '비대면')
+	</select>
+	
+	<insert useGeneratedKeys="true"
+		keyColumn="club_idx"
+		keyProperty="club_idx"
+		id="clubWrite" parameterType="club">
+		INSERT INTO club(member_idx, isbn, club_name, club_content,club_meetdate, code_idx, club_onoff, club_num, club_blind, club_state)
+		VALUES(#{member_idx}, #{isbn}, #{club_name}, #{club_content}, #{club_meetdate}, #{code_idx}, #{club_onoff}, #{club_num}, 0, 0)
+	</insert>	
+	
+	<insert id="clubJoin">
+		INSERT INTO club_apply(club_idx, member_idx, club_appdate, club_appstate) VALUES(#{param1}, #{param2}, current_timestamp(),1);
+	</insert>
+		
+	
 </mapper>
