@@ -33,6 +33,41 @@
 <body>
 	<form action="BookReview.do" method="post">
 		<h3>도서 리뷰 작성</h3>
+		<table>
+			<tr>
+				<th rowspan="3" style="width: 40%;">
+					<img src="${book.library_cover}" alt="book" class="single-image">
+				</th>
+				<th rowspan="3" style="width: 5%;">
+					
+				</th>
+				<td style="width: 55%;">
+					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.library_use}">
+					
+					<table>
+						<tr>
+							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
+						</tr>
+						<tr>
+							<td><div class="author-name">By. ${book.library_author}</div></td>
+							<td><div class="author-name">${book.library_publisher}</div></td>
+							<td><div class="author-name">${book.library_pubdate}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3"><h4 class="item-title">Book Info </h4><div class="author-name">${book.library_info}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<h4 class="item-title">책 소개</h4>
+							${book.library_description}<br/>
+							</td>
+						</tr>
+						<tr>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
 		<input type="text" value="리뷰 내용을 입력해주세요."/>
 		<input type="submit" value="등록"/>
 		<input type="button" value="취소"/>
