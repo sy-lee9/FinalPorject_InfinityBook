@@ -9,30 +9,28 @@
 </head>
 <body>
 
-	<c:if test="${reservation.RENT_IDX == null}">
+	<c:if test="${reservation.rent_idx == null}">
 	<form action="changereservation.do">
-		<input type="hidden" name="CODE_IDX" value="${reservation.CODE_IDX}"/>
-		<input type="hidden" name="CHANGE_IDX" value="${reservation.CHANGE_IDX}"/>
-		<input type="hidden" name="other_nick" value="${reservation.other_nick}"/>					
+		<input type="hidden" name="library_book" value="${reservation.library_idx}"/>
+		<input type="hidden" name="change_idx" value="${reservation.change_idx}"/>			
 		<div>교환할 책</div>
-		<input type="text" name="LIBRARY_BOOK2" value="${reservation.LIBRARY_BOOK2}">
+		<input type="text" name="library_book2" value="${reservation.library_book2}">
 		<div>교환 일</div>
-		<input type="text" name="CHANGE_DATE" value="${reservation.CHANGE_DATE}">
+		<input type="text" name="change_date" value="${reservation.change_date}">
 		<button type="submit">확인</button>	
 	</form>	
 	</c:if>
 	
-	<c:if test="${reservation.CHANGE_IDX == null}">	
+	<c:if test="${reservation.change_idx == null}">	
 	<form action="rentreservation.do">
-		<input type="hidden" name="CODE_IDX" value="${reservation.CODE_IDX}"/>
-		<input type="hidden" name="RENT_IDX" value="${reservation.RENT_IDX}"/>
-		<input type="hidden" name="other_nick" value="${reservation.other_nick}"/>						
+		<input type="hidden" name="library_idx" value="${reservation.library_idx}"/>
+		<input type="hidden" name="rent_idx" value="${reservation.rent_idx}"/>			
 		<div>보증금</div>
-		<input type="text" name ="RENT_DEPOSIT" value="${reservation.RENT_DEPOSIT}">
+		<input type="text" name ="rent_deposit" value="${reservation.rent_deposit}">
 		<div>대여 일</div>
-		<input type="text" name ="RENT_STARTDATE" value="${reservation.RENT_STARTDATE}">
+		<input type="text" name ="rent_startdate" value="${reservation.rent_startdate}">
 		<div>반납 일</div>
-		<input type="text" name ="RENT_ENDDATE" value="${reservation.RENT_ENDDATE}">
+		<input type="text" name ="rent_enddate" value="${reservation.rent_enddate}">
 		<button type="submit">확인</button>							
 	</form>
 	</c:if>

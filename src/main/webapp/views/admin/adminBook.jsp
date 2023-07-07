@@ -28,6 +28,17 @@
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
 		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+	
+		</style>	
 	</head>
 
 <body>
@@ -231,21 +242,26 @@
 	    
 	    console.log(checkArr);
 	    
-	   $.ajax({
-	      type:'get',
-	      url:'resetBookInfo.ajax',
-	      data:{'resetList':checkArr},
-	      dataType:'json',
-	      success:function(data){
-	         console.log(data);
-	         if(data.success){	            
-	            listCall(showPage);
-	         }
-	      },
-	      error:function(e){
-	         console.log(e);
-	      }
-	   });
+
+		if(confirm('초기화 이후 복구가 불가능 합니다. \n 정말 초기화 하시겠습니까?')){
+			$.ajax({
+			      type:'get',
+			      url:'resetBookInfo.ajax',
+			      data:{'resetList':checkArr},
+			      dataType:'json',
+			      success:function(data){
+			         console.log(data);
+			         if(data.success){	            
+			            listCall(showPage);
+			         }
+			      },
+			      error:function(e){
+			         console.log(e);
+			      }
+			   });
+		}
+	    
+	   
 	   
 	}
 

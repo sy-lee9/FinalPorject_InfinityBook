@@ -81,7 +81,7 @@
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='#'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">팀관리</button>
+								<button type="button" onclick="location.href='/adminClub'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">팀관리</button>
 							</figcaption>
 						</figure>
 					
@@ -114,44 +114,7 @@
 		
 	</div>
 </section>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 
 
 

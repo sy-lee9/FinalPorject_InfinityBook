@@ -23,11 +23,10 @@ public class RentService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired RentDAO dao;
-	@Autowired ChangeDAO cdao;
 	
 	// 대여 신청
 	@Transactional
-	public void rentapply(HashMap<String, String> params) {
+	public void rentapply(HashMap<String, Object> params) {
 		
 		// 대여 신청
 		dao.rentapply(params);
@@ -35,18 +34,24 @@ public class RentService {
 		// 대여 IDX
 		String idx = dao.findrent_idx(params);
 		
-		// 대화방 만들기
-		int code = 3;		
-		dao.createchatroom(code,params.get("member_idx"),idx);
-		
 		// 대여신청한 책에 대한 정보(회원 idx, 책 이름) 들고오기
 		RentDTO dto = dao.findchbmidx(params);
 		
 		// 대화방 만들기
-		dao.createchatroom(code, dto.getMEMBER_IDX(),idx);
-		
+		int code = 3;		
+		params.put("code_idx", code);
+		params.put("idx", idx);		
+		dao.createchatroom(params);
+		// 신청한 책 정보 넣기
+		params.put("library", dto);
 		// 신청내역 대화방에 뿌려주기
-		dao.applychatcontent(code, idx, params.get("member_idx"), dto.getMEMBER_IDX(), dto.getLIBRARY_TITLE());
+		dao.applychatcontent(params);
+		
+		// member_idx 상대방 값으로 변경후
+		params.put("member_idx",dto.getMember_idx());						
+		// 상대방 대화방 만들기
+		dao.createchatroom(params);		
+
 		
 	}
 	
@@ -62,9 +67,16 @@ public class RentService {
 	public void rentreservation(@RequestParam HashMap<String, Object> params) {
 		
 		// 대여 약속 잡기
-		dao.updaterent(params);
+		dao.updaterent(params);		
+		// 대여 책 들고오기
+		RentDTO dto = dao.findchbmidx(params);
+		// 책 정보 넣기
+		params.put("library", dto);
+		// 코드 넣기
+		int code = 3;		
+		params.put("code_idx", code);
 		// 대여 약속 정보 채팅으로 뿌려주기
-		dao.chatrentreservation(params);
+		dao.chatrentreservation(params);		
 		
 	}
 

@@ -28,6 +28,17 @@
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
 		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+	
+		</style>	
 	</head>
 
 <body>
