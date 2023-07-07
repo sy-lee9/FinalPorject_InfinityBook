@@ -144,7 +144,7 @@
 					</td>
 					<td>모임명</td>
 					<td colspan="2">
-						<input type="text" id="club_name" name="club_name" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임명">
+						<input type="text" id="club_name" autocomplete='off' name="club_name" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임명">
 					</td>
 					<td></td>
 				</tr>
@@ -153,7 +153,7 @@
 					<td></td>
 					<td>모임일시</td>
 					<td colspan="2">
-						<input type="text" name="club_meetdate" id="club_meetdate" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임일시">
+						<input type="text" autocomplete='off' name="club_meetdate" id="club_meetdate" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임일시">
 					</td>
 					<td></td>
 				</tr>
@@ -162,7 +162,7 @@
 					<td></td>
 					<td>모임인원</td>
 					<td colspan="2">
-						<input type="number" name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="0"> 명
+						<input type="number" autocomplete='off' name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="0"> 명
 					</td>
 					<td></td>
 				</tr>
@@ -171,11 +171,11 @@
 					<td></td>
 					<td>모임방식</td>
 					<td colspan="2">
-						<select name="club_onoff" id="club_onoff" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
+						<select name="club_onoff" autocomplete='off' id="club_onoff" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
 							<option value="0">대면</option>
 							<option value="1">비대면</option>
 						</select>
-						<select name="code_idx" id="code_idx" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
+						<select name="code_idx" autocomplete='off'  id="code_idx" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
 							<option value="26">대면지역</option>
 							<c:forEach items="${location}" var="location">
 								<option value="${location.code_idx}">${location.code_codename}</option>
