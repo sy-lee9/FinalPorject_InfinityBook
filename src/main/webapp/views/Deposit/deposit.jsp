@@ -225,7 +225,7 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
           name : 'InfinityBook',
           amount : amount,
           buyer_email : 'Iamport@chai.finance',
-          buyer_name : ${sessionScope.loginNickname},
+          buyer_name : '${sessionScope.loginNickname}',
           buyer_tel : '010-1234-5678',
           buyer_addr : '서울특별시 강남구 삼성동',
           buyer_postcode : '123-456'

@@ -265,7 +265,12 @@ config.file_upload_handler = function(file,callback){
 	console.log(callback);
 }
 
-var editor = new RichTextEditor("#div_editor",{ skin: "gray", toolbar: "basic" });
+
+
+config.toolbar = "mytoolbar";
+config.toolbar_mytoolbar = "{bold,italic}|{fontname,fontsize}|{forecolor,backcolor}|removeformat|undo,redo,fullscreenenter,fullscreenexit,togglemore}";
+
+var editor = new RichTextEditor("#div_editor",config);
 
 
 function save(){
