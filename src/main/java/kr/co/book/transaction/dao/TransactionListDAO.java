@@ -15,4 +15,6 @@ public interface TransactionListDAO {
 
 	ArrayList<TransactionListDTO> changeMyBook(String member_idx);
 
+	String deposit(String member_idx);
+
 }

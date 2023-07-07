@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div id="login"></div>
-
-
 <script>
     var content = "<div class='top-content'>";
     content += "<div class='container'>";
@@ -18,6 +16,10 @@
     $(document).ready(function() {
       $("#login").html(content);
     });
+<<<<<<< HEAD
 
     
 </script>
+=======
+    </script>
+>>>>>>> origin/master
