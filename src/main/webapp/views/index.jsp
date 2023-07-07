@@ -60,14 +60,13 @@
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
 								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
-<<<<<<< HEAD
+
 								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
 								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
-=======
+
 								<li class="menu-item"><a href="./event_List.go" class="nav-link" data-effect="Articles">이벤트</a></li>
 								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
->>>>>>> 6a26b25 (자동로그인 기능 완성전(81.2% 정도))
-							</ul>
+</ul>
 
 							<div class="hamburger">
 				                <span class="bar"></span>
