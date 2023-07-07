@@ -26,7 +26,7 @@
 	<select id="changeEvents" resultType="CalenderDTO">
 		SELECT DISTINCT
 			(c.change_date) AS start,
-			(c.library_book2) AS bookTitle
+			(select l.library_title from library l where l.library_idx = c.library_book2) AS bookTitle
 		FROM `change` c 
 		INNER JOIN library l
 			ON (c.member_idx = #{param} OR c.library_book in (SELECT l.library_idx FROM library WHERE member_idx = #{param}))
