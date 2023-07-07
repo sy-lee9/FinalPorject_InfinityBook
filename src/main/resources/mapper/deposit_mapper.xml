@@ -18,9 +18,8 @@
 		SELECT COALESCE(SUM(deposit_use_price), 0) FROM deposit_use WHERE member_idx=#{param1}
 	</select>
 	
-	<!-- int depositPwChk(String member_idx, String member_pw); -->
-	<select id="depositPwChk" resultType="int">
-		SELECT COUNT(member_idx) FROM member WHERE member_idx=#{param1} AND member_pw=#{param2}
+	<select id="getPw">
+		SELECT member_pw FROM member WHERE member_idx=#{param1}
 	</select>
 	
 	<select id="bankList" resultType="hashmap">

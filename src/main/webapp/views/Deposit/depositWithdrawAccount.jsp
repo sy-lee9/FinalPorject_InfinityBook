@@ -74,6 +74,7 @@ $(document).ready(function() {
            
         });
         alert('출금 요청이 완료되었습니다.');
+        window.opener.location.reload();
         window.open('', '_self').close(); // 현재 창을 닫기
     });
 });

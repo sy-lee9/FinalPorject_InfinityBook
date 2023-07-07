@@ -61,6 +61,10 @@ public class LibraryController {
 	@RequestMapping("/{type}Detail.go")
 	public String libraryDetail(@PathVariable String type,@RequestParam String library_idx, Model model) {
 		LibraryDTO book = libraryService.detail(library_idx);
+		if(type.equals("library")) {
+			ArrayList<HashMap<String, String>> review = libraryService.reviewList(library_idx);
+			model.addAttribute("review", review);
+		}
 		model.addAttribute("book", book);
 		return "/Library/"+type+"Detail";
 	}

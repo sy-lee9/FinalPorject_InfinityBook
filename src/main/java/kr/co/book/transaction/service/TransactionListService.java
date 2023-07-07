@@ -65,21 +65,24 @@ public class TransactionListService {
 	}
 
 
-	public TransactionListDTO searchDetail(String LIBRARY_IDX) {
+	public TransactionListDTO searchDetail(String library_idx) {
 		
-		return dao.searchDetail(LIBRARY_IDX);
+		return dao.searchDetail(library_idx);
 	}
 
 
-	public Object rent(String lIBRARY_IDX) {
-		// TODO Auto-generated method stub
-		return null;
+
+	public  ArrayList<TransactionListDTO> change(String member_idx) {
+		 ArrayList<TransactionListDTO> list =  dao.changeMyBook(member_idx);
+		return list;
 	}
 
 
-	public Object change(String lIBRARY_IDX) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deposit(String member_idx) {
+		
+		String deposit = dao.deposit(member_idx);
+		
+		return deposit;
 	}
 
 }

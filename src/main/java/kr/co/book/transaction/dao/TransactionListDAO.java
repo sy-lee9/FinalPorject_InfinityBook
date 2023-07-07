@@ -11,6 +11,10 @@ public interface TransactionListDAO {
 
 	ArrayList<TransactionListDTO> searchUser(String isbn);
 
-	TransactionListDTO searchDetail(String LIBRARY_IDX);
+	TransactionListDTO searchDetail(String library_idx);
+
+	ArrayList<TransactionListDTO> changeMyBook(String member_idx);
+
+	String deposit(String member_idx);
 
 }

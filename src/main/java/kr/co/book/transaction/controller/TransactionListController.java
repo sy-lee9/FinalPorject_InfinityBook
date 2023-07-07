@@ -1,5 +1,6 @@
 package kr.co.book.transaction.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.book.transaction.service.TransactionListService;
@@ -55,11 +55,11 @@ public class TransactionListController {
 	
 	@GetMapping(value = "/searchDetail.do")
 	public String searchDetail(
-			String LIBRARY_IDX, Model model) {
+			String library_idx, Model model) {
 		
-		logger.info("LIBRARY_IDX = "+LIBRARY_IDX);
+		logger.info("LIBRARY_IDX = "+library_idx);
 		
-		model.addAttribute("book", service.searchDetail(LIBRARY_IDX));
+		model.addAttribute("book", service.searchDetail(library_idx));
 		
 		
 		return "BookSearchResultDetail";
@@ -67,20 +67,22 @@ public class TransactionListController {
 	}
 	
 	@GetMapping(value = "/TransactionRent.do")
-	public String TransactionRent(String LIBRARY_IDX, Model model) {
-		
-		model.addAttribute("book", service.rent(LIBRARY_IDX));
+	public String TransactionRent(HttpSession session, String library_idx, Model model) {
+		String member_idx = session.getAttribute("loginIdx").toString();
+		model.addAttribute("book", service.searchDetail(library_idx));
+		model.addAttribute("rent_deposit", service.deposit(member_idx));
 		
 		return "TransactionRent";
 	}
 	
 	@GetMapping(value = "/TransactionChange.do")
-	public String TransactionChange(String LIBRARY_IDX, Model model) {
-		
-		model.addAttribute("book", service.change(LIBRARY_IDX));
-		
+	public String TransactionChange(HttpSession session, String library_idx, Model model) {
+		String member_idx = session.getAttribute("loginIdx").toString();
+		model.addAttribute("mybook", service.change(member_idx));
+		model.addAttribute("book", service.searchDetail(library_idx));
 		return "TransactionChange";
 	}
-
+	
+	
 
 }

@@ -5,12 +5,20 @@
 <mapper namespace="kr.co.book.transaction.dao.TransactionListDAO">
 
 	<select id="searchUser" parameterType="TransactionListDTO">
-		select m.MEMBER_NICKNAME,c.CODE_CODENAME,l.LIBRARY_IDX from library l inner join member m on l.MEMBER_IDX = m.MEMBER_IDX inner join code c on m.CODE_IDX = c.CODE_IDX
-		where l.LIBRARY_ISBN = #{isbn} and l.LIBRARY_USE = '교환';
+		select m.member_nickname,c.code_codename,l.library_idx from library l inner join member m on l.member_idx = m.member_idx inner join code c on m.code_idx = c.code_idx
+		where l.library_isbn = #{isbn} and l.library_use = '교환';
 	</select>
 
 		<select id="searchDetail" resultType="TransactionListDTO">
-		SELECT * FROM library WHERE LIBRARY_IDX=#{LIBRARY_IDX}
+		SELECT * FROM library WHERE library_idx=#{library_idx}
+	</select>
+	
+			<select id="changeMyBook" resultType="TransactionListDTO">
+		SELECT * FROM library WHERE member_idx =#{member_idx}
+	</select>
+	
+	<select id="deposit" resultType="String">
+		SELECT COALESCE(SUM(deposit_use_price), 0) FROM deposit_use WHERE member_idx=#{param1}
 	</select>
 
 </mapper>

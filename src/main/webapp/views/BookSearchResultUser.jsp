@@ -13,7 +13,7 @@
 			<h3>${user.member_nickname}</h3>
 			<h3>${user.code_codename}</h3>
 			<button type="button" onclick="(function() {
-				  var url = '/searchDetail.do?LIBRARY_IDX=' + '${user.library_idx}';
+				  var url = '/searchDetail.do?library_idx=' + '${user.library_idx}';
 				  window.opener.location.href = url;
 				  self.close();
 				})()">이동</button>
