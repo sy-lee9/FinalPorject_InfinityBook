@@ -137,8 +137,12 @@
 						</tr>
 						<tr>
 							<th colspan="3" style="text-align: rigtht;">
-								<input type="button" onclick="location.href='TransactionChange.do?library_idx='+${book.library_idx}" value="교환신청"> 
+							<c:if test="${book.library_use == '대여'}">
 								<input type="button" onclick="location.href='TransactionRent.do?library_idx='+${book.library_idx}" value="대여신청"> 
+							</c:if>
+							<c:if test="${book.library_use == '교환'} ">
+								<input type="button" onclick="location.href='TransactionChange.do?library_idx='+${book.library_idx}" value="교환신청"> 
+							</c:if>
 								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="리스트">
 							</th>
 						</tr>
