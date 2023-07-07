@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.book.transaction.service.TransactionListService;
@@ -82,6 +83,11 @@ public class TransactionListController {
 		model.addAttribute("mybook", service.change(member_idx));
 		model.addAttribute("book", service.searchDetail(library_idx));
 		return "TransactionChange";
+	}
+	
+	@RequestMapping("/reportBookPop.go")
+	public String reportBookPop() {
+		return "reportBookPop";
 	}
 	
 	

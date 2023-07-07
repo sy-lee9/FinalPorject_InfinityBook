@@ -44,7 +44,7 @@
   	</select>
 	<input type="text"  name="reportTitle" value="제목을 입력해주세요."/>
 	<div class="form-group" style="text-align:center;">
-			<a href="#" id="clubBookPop">
+			<a href="#" id="reportBookPop">
 		 		<img src="/images/book.png" id="cover2" style="width:120px; height:150px;" alt="Books" ><br/>책 선택
 			</a>
 			<br/><br/>
@@ -71,27 +71,29 @@ var config = {};
 
 var win;
 
-var link = document.getElementById('clubBookPop');
+var link = document.getElementById('reportBookPop');
 
 link.addEventListener('click',function(){
-    win = window.open('/clubBookPop.go','Infinity_Book','width=800px,height=600px');
+    win = window.open('/reportBookPop.go','Infinity_Book','width=800px,height=600px');
 })
 
-
-//editor 크기 조절 불가
+// editor 크기 조절 불가
 config.editorResizeMode = "none"; 
+config.toolbar = "mytoolbar";
+config.toolbar_mytoolbar = "{bold,italic}|{fontname,fontsize}|{forecolor,backcolor}|removeformat|undo,redo,fullscreenenter,fullscreenexit,togglemore}";
 
-//파일 업로드 관련 설정
+// 파일 업로드 관련 설정
 config.file_upload_handler = function(file,callback){
-console.log(file);
-// file정보 : 크기, 이름, 종류 등을 알 수 있다.
-if(file.size>(1*1024*1024)){
-	alert('1MB 이하 파일만 업로드 가능합니다.');
-	callback('/images/noimage.png');
+	console.log(file);
+	// file정보 : 크기, 이름, 종류 등을 알 수 있다.
+	if(file.size>(1*1024*1024)){
+		alert('1MB 이하 파일만 업로드 가능합니다.');
+		callback('/images/noimage.png');
+	}
+	console.log(callback);
 }
-console.log(callback);
-}
-var editor = new RichTextEditor("#div_editor",{ skin: "gray", toolbar: "basic" });
+
+var editor = new RichTextEditor("#div_editor", config);
 
 function save(){
 console.log('저장');

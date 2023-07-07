@@ -35,18 +35,7 @@
 	</style>
 </head>
 <body>
-	<form action="BookReportWrite.do" method="post">
-	<h3>감상문 등록</h3>
-	<select name="reportOpen" id="reportOpen">
-	    <option value="select">공개여부</option>
-	    <option value="open">공개</option>
-	    <option value="hide">비공개</option>
-  	</select>
-	<input type="text" value="제목을 입력해주세요."/>
-	<h3>텍스트 에디터 들어갈 자리</h3>
-	<div id="div_editor"></div>
-	<input type="button" onclick="save()" value="등록"/>
-	</form>
+	<a href="/bookReportWrite.go"></a>
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
