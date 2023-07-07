@@ -63,10 +63,7 @@
 
 								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
 								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
-
-								<li class="menu-item"><a href="./event_List.go" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
-</ul>
+							</ul>
 
 							<div class="hamburger">
 				                <span class="bar"></span>
@@ -91,23 +88,21 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+			
 					<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<button class="icon icon-search" form="search"></button>
-								</a>
-								<form role="search" method="get" class="search-box" action="/search.do" id ="search">
-									<input class="search-field text search-input" placeholder="Search" type="search" name="Query">
-									<input type="radio" value="Keyword" name="QueryType" checked="checked">제목+저자
-									<input type="radio" value="Title" name="QueryType">제목
-									<input type="radio" value="Author" name="QueryType">저자
-									<input type="radio" value="Publisher" name="QueryType">출판사
-								</form>
-							</div>
-						</div>
-				<button class="prev slick-arrow">
-					<i class="icon icon-arrow-left"></i>
-				</button>
+							<form role="search" method="get" class="search-box" action="/search.do" id ="search" style="text-align:center;"> 
+								<select name="QueryType">
+									<option value="Keyword">제목+저자</option>
+									<option value="Title">제목</option>
+									<option value="Author">저자</option>
+									<option value="Publisher">출판사</option>
+								</select>
+								<input class="search-field text search-input" placeholder="Search"  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
+								<input type="submit" value="검색">	
+							</form>
+						
+					</div>
+				
 
 				<div class="main-slider pattern-overlay">
 					<div class="slider-item">

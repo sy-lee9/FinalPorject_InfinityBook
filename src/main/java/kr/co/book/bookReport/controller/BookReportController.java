@@ -23,6 +23,7 @@ public class BookReportController {
 	@Autowired BookReportService service;
 	
 	
+<<<<<<< HEAD
 	@PostMapping(value="/BookReportWrite.do")
 	public String BookReportWrite(HttpSession session,@RequestParam HashMap<String, String> params,
 			Model model) {
@@ -39,5 +40,15 @@ public class BookReportController {
 		
 		return "BookReportWrite";
 	}
+=======
+//	@PostMapping(value="/BookReportWrite.do")
+//	public String BookReportWrite(@RequestParam HashMap<String, String> params,
+//			Model model) {
+//		
+//		service.write();
+//		
+//		return "";
+//	}
+>>>>>>> origin/master
 
 }
