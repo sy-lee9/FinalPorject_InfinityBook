@@ -30,7 +30,8 @@ input[type="submit"] {
   <input type="password" id="member_pw" name="member_pw" placeholder="비밀번호를 입력하세요.">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="button" onclick="login()" value="로그인" style="display: inline-block; margin-top: -45px;">
   <br>
-  	 <input type="checkbox" id="rememberMe">&nbsp;&nbsp;&nbsp;<label for="rememberMe" style="display: inline-block; vertical-align: middle;">로그인 유지</label>
+  	  <input type="checkbox" id="rememberMe">&nbsp;&nbsp;&nbsp;<label for="rememberMe" style="display: inline-block; vertical-align: middle;">아이디 저장 여부 체크</label>
+  <br>
 
   <br>	
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="join.go" onclick="closePopup1()">회원가입</a>
@@ -38,92 +39,106 @@ input[type="submit"] {
 </div>
 <script>
 
-setRememberMeCookie()
-
-// 로그인 처리
-function login() {
-
-
-  if ($('#member_email').val() == "") {
-    alert("아이디를 입력해 주세요.");
-  } else if ($('#member_pw').val() == "") {
-    alert("비밀번호를 입력해 주세요.");
-  } else {
-    $.ajax({
-      type: 'post',
-      url: 'login.ajax',
-      data: {
-    	  member_email: $('#member_email').val(),
-    	  member_pw: $('#member_pw').val()
-      },
-      dataType: "json",
-      success: function(data) {
-        console.log(data);
-        if (data.success == 1) {
-          alert("로그인에 성공했습니다.");
-          location.href = "./";
-        } else {
-          alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");
-        }
-      },
-      error: function(e) {
-        console.log(e);
-        alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");
-      }
-    });
-  }
-}
-
-function setRememberMeCookie() {
-	  var rememberMe = document.getElementById("rememberMe").checked;
-	  if (rememberMe) {
-	    var email = document.getElementById("member_email").value;
-	    var password = document.getElementById("member_pw").value;
-
-	    // 쿠키 만료일을 7일로 설정
-	    var expires = new Date();
-	    expires.setDate(expires.getDate() + 7);
-
-	    // 쿠키에 이메일과 비밀번호를 저장
-	    document.cookie = "email=" + encodeURIComponent(email) + "; expires=" + expires.toUTCString() + "; path=/";
-	    document.cookie = "password=" + encodeURIComponent(password) + "; expires=" + expires.toUTCString() + "; path=/";
-	  } else {
-	    // 로그인 유지 체크가 해제되면 쿠키를 삭제
-	    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-	    document.cookie = "password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-	  }
-	}
-
-	function checkRememberMe() {
+$(document).ready(function() {
 	  var email = getCookie("email");
-	  var password = getCookie("password");
+	  var rememberMe = getCookie("rememberMe");
 
-	  if (email && password) {
-	    // 이메일과 비밀번호 필드에 쿠키 값 채우기
-	    document.getElementById("member_email").value = decodeURIComponent(email);
-	    document.getElementById("member_pw").value = decodeURIComponent(password);
-	    document.getElementById("rememberMe").checked = true;
+	  if (rememberMe === "true" && email) {
+	    $('#member_email').val(email);
+	    $('#rememberMe').prop('checked', true);
+	    login();
+	  }
+	});
+
+	// 로그인
+	function login() {
+	  var email = $('#member_email').val();
+	  var password = $('#member_pw').val();
+	  var rememberMe = $('#rememberMe').is(':checked');
+
+	  if (email === "") {
+	    alert("아이디를 입력해 주세요.");
+	  } else if (password === "") {
+	    alert("비밀번호를 입력해 주세요.");
+	  } else {
+	    $.ajax({
+	      type: 'post',
+	      url: 'login.ajax',
+	      data: {
+	        member_email: email,
+	        member_pw: password
+	      },
+	      dataType: "json",
+	      success: function(data) {
+	        console.log(data);
+	        if (data.success === 1) {
+	          alert("로그인에 성공했습니다.");
+	          setCookie("email", email, 30);
+	          if (rememberMe) {
+	            setCookie("rememberMe", "true", 30);
+	          } else {
+	            deleteCookie("rememberMe");
+	          }
+	          location.href = "./";
+	        } else {
+	          alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");
+	        }
+	      },
+	      error: function(e) {
+	        console.log(e);
+	        alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");
+	      }
+	    });
 	  }
 	}
 
-	function getCookie(name) {
-	  var cookieArr = document.cookie.split(";");
-
-	  for (var i = 0; i < cookieArr.length; i++) {
-	    var cookiePair = cookieArr[i].split("=");
-
-	    if (name === cookiePair[0].trim()) {
-	      return decodeURIComponent(cookiePair[1]);
-	    }
+	function setCookie(name, value, days) {
+	  var expires = "";
+	  if (days) {
+	    var date = new Date();
+	    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+	    expires = "; expires=" + date.toUTCString();
 	  }
+	  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+	}
 
+	// 쿠키 삭제
+	function deleteCookie(name) {
+	  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	}
+
+	// 쿠키 가져오기
+	function getCookie(name) {
+	  var nameEQ = name + "=";
+	  var ca = document.cookie.split(';');
+	  for (var i = 0; i < ca.length; i++) {
+	    var c = ca[i];
+	    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+	    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+	  }
 	  return null;
 	}
 
-	// 페이지 로드 시 자동으로 로그인 유지 체크 여부 확인
-	checkRememberMe();
+	// 페이지 나갈 때 쿠키 저장
+	$(window).on("beforeunload", function() {
+	  var rememberMe = $('#rememberMe').is(':checked');
+
+	  if (rememberMe) {
+	    var email = $('#member_email').val();
+	    setCookie("rememberMe", "true", 30);
+	    setCookie("email", email, 30);
+	  } else {
+	    deleteCookie("rememberMe");
+	    deleteCookie("email");
+	  }
+	});
+
 	
-	
+	  $(document).ready(function() {
+	    var content = $("#login").html();
+	    $("#login").html(content);
+	  });
+
 
 
 </script>
