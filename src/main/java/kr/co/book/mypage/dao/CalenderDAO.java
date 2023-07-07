@@ -10,4 +10,6 @@ public interface CalenderDAO {
 
 	ArrayList<CalenderDTO> borrowEvents(int loginIdx);
 
+	ArrayList<CalenderDTO> changeEvents(int loginIdx);
+
 }

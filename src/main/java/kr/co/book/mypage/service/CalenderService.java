@@ -22,8 +22,8 @@ public class CalenderService {
 
 	public HashMap<String, Object> calendarGetEvents(int loginIdx) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<CalenderDTO> totalList = new ArrayList<CalenderDTO>();
 		CalenderDTO CalenderDTO = new CalenderDTO();
-		ArrayList<ArrayList<CalenderDTO>> totalList = null;
 		
 		//대여 일정 리스트
 		ArrayList<CalenderDTO> rentList = CalenderDAO.rentEvents(loginIdx);
@@ -36,7 +36,7 @@ public class CalenderService {
 		}
 		
 		logger.info("rentList : "+rentList.size());
-		
+		totalList.addAll(rentList);
 		
 		//대출 일정 리스트
 		ArrayList<CalenderDTO> borrowList = CalenderDAO.borrowEvents(loginIdx);
@@ -51,11 +51,25 @@ public class CalenderService {
 		}
 		
 		logger.info("list : "+borrowList.size());
-		rentList.addAll(borrowList);
+		totalList.addAll(borrowList);
 		
+		//교환 일정 리스트
+		ArrayList<CalenderDTO> changeList = CalenderDAO.changeEvents(loginIdx);
 		
+		for (int i = 0; i < changeList.size(); i++) {
+			String bookTitle = changeList.get(i).getBookTitle();
+			logger.info("bookTitle : "+bookTitle);
+			String title = "대출("+bookTitle+")";
+			logger.info("title : "+title);
+			changeList.get(i).setTitle(title);
+			changeList.get(i).setBackgroundColor("#B3C890");
+		}
 		
-		map.put("events", rentList);
+		logger.info("list : "+changeList.size());
+		totalList.addAll(changeList);
+				
+		logger.info("totalList : "+totalList.size());
+		map.put("events", totalList);
 
 		return map;
 	}
