@@ -9,7 +9,9 @@ import kr.co.book.transaction.dto.TransactionListDTO;
 @Mapper
 public interface TransactionListDAO {
 
-	ArrayList<TransactionListDTO> searchUser(String isbn);
+	ArrayList<TransactionListDTO> searchUserChange(String isbn);
+	
+	ArrayList<TransactionListDTO> searchUserRent(String isbn);
 
 	TransactionListDTO searchDetail(String library_idx);
 
@@ -17,4 +19,5 @@ public interface TransactionListDAO {
 
 	String deposit(String member_idx);
 
+	
 }

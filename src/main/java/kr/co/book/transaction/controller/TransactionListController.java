@@ -46,7 +46,8 @@ public class TransactionListController {
 		
 		logger.info("Isbn = "+Isbn);
 		
-		model.addAttribute("list", service.searchUser(Isbn));
+		model.addAttribute("RentList", service.searchUserRent(Isbn));
+		model.addAttribute("ChangeList", service.searchUserChange(Isbn));
 		
 		
 		return "BookSearchResultUser";

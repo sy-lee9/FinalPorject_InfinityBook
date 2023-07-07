@@ -43,6 +43,20 @@
 	    <option value="hide">비공개</option>
   	</select>
 	<input type="text"  name="reportTitle" value="제목을 입력해주세요."/>
+	<div class="form-group" style="text-align:center;">
+			<a href="#" id="clubBookPop">
+		 		<img src="/images/book.png" id="cover2" style="width:120px; height:150px;" alt="Books" ><br/>책 선택
+			</a>
+			<br/><br/>
+			<br/><br/>
+			   	<input type="text" readonly id="title" name="title" style=" width:90%; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder=" 도서 제목"><br/>
+				<input type="text" readonly id="author" name="author" style="width:90%; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="저자">					
+				<input type="hidden" id="isbn" name="isbn"/>
+				<input type="hidden" id="publisher" name="publisher"/>
+				<input type="hidden" id="description" name="description"/>
+				<input type="hidden" id="pubdate" name="pubdate"/>
+				<input type="hidden" id="cover" name="cover"/>
+    </div>
 	<h3>텍스트 에디터 들어갈 자리</h3>
 	<div id="div_editor"></div>
 	<input type="button" onclick="save()" value="등록"/>
@@ -54,6 +68,14 @@
 <script src="/js/script.js"></script>
 <script>
 var config = {};
+
+var win;
+
+var link = document.getElementById('clubBookPop');
+
+link.addEventListener('click',function(){
+    win = window.open('/clubBookPop.go','Infinity_Book','width=800px,height=600px');
+})
 
 
 //editor 크기 조절 불가

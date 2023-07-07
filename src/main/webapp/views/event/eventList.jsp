@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -153,7 +153,7 @@
 			      </div>
 			    </div>
 		    </div>
-    
+    	</div>
     
     
     
@@ -257,8 +257,8 @@ $(document).ready(function() {
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
 	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
+	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="event" class="product-item">';
+	    content += '      <figcaption> <h>이벤트 등록하기</h> </figcaption>';
 	    content += '    </a>';
 	    content += '  </figure>';
 
@@ -271,14 +271,14 @@ $(document).ready(function() {
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
-	        content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
+	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.event_no + '">';
+	        content += '  <a href="eventDetail.go?event_idx=' + item.event_idx + '">';
+	        content += '    <img src="' + item.library_cover + '" alt="evnet" style="width:230px; height:300px;" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
-	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
-	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
-	        content += '    </br><h>' + item.library_author + '</h>';
+	        content += '    <a href="eventDetail.go?event_idx=' + item.event_idx + '">';
+	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.event_idx+'"><h>' + item.event_title + '</h>';
+	        content += '    </br><h>' + item.event_author + '</h>';
 	        content += '    </a>';
 	        content += '  </figcaption>';
 	        content += '</figure>';
@@ -292,4 +292,4 @@ $(document).ready(function() {
 
 </script>
 
-</html>	
+</html>	 --%>

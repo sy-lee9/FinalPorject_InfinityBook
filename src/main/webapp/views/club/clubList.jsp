@@ -62,7 +62,7 @@
 				<div class="col-md-2">
 					<div class="main-logo">
 					
-						<a href="index.move"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
+						<a href="/"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
 					</div>
 
 				</div>
