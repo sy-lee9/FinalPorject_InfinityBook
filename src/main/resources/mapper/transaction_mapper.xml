@@ -6,12 +6,12 @@
 
 	<select id="searchUserChange" parameterType="TransactionListDTO">
 		select m.member_nickname,c.code_codename,l.library_idx from library l inner join member m on l.member_idx = m.member_idx inner join code c on m.code_idx = c.code_idx
-		where l.library_isbn = #{isbn} and l.library_use = '교환';
+		where l.library_isbn = #{isbn} and (l.library_use = '교환' or l.library_use = '교환대여');
 	</select>
 	
 	<select id="searchUserRent" parameterType="TransactionListDTO">
 		select m.member_nickname,c.code_codename,l.library_idx from library l inner join member m on l.member_idx = m.member_idx inner join code c on m.code_idx = c.code_idx
-		where l.library_isbn = #{isbn} and l.library_use = '대여';
+		where l.library_isbn = #{isbn} and (l.library_use = '대여' or l.library_use = '교환대여');
 	</select>
 
 		<select id="searchDetail" resultType="TransactionListDTO">
