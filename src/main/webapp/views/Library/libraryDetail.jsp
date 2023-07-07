@@ -24,6 +24,18 @@
 		<script src="/js/jquery-1.11.0.min.js"></script>
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
+		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+	
+	</style>	
 	</head>
 
 <body>
@@ -139,7 +151,7 @@
 							<th colspan="3" style="text-align: rigtht;">
 								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
 								<input type="button" onclick="location.href='libraryUpdate.go?library_idx='+${book.library_idx}" value="수정"> 
-								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="삭제">
+								<input type="button" onclick="deleteLibrary(${book.library_idx})" value="삭제">
 							</th>
 						</tr>
 					</table>
@@ -175,5 +187,16 @@
 
 
 </body>
+<script>
 
+	function deleteLibrary(idx){
+		if(confirm("삭제 후 복구가 불가능 합니다. \n 정말 삭제하시겠습니까?")){
+			location.href='library.delete?library_idx='+idx;
+		}else{
+			return false;
+		}
+	}
+	
+	
+</script>
 </html>	

@@ -23,6 +23,9 @@
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
 		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
 	</head>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
@@ -38,30 +41,15 @@
 <body>
 
 <div id="header-wrap">
-	
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
 
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 
 	<header id="header">
 		<div class="container">
@@ -69,7 +57,7 @@
 
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="./"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -145,20 +133,71 @@
 	</div>
 </div>
 
-<script src="/js/jquery-1.11.0.min.js"></script>
-<script src="/js/plugins.js"></script>
-<script src="/js/script.js"></script>
 
 </body>
 <script>
 
-	document.addEventListener('DOMContentLoaded', function() {
+	$(document).ready(function(){
+		
+		$.ajax({
+	        url: '/calendarGetEvents.ajax',
+	        type: 'get',
+			dataType:'json',
+			success: function(data) {
+				console.log(data);
+				if(data.events != ''){
+					calendar(data.events);
+				}
+	        },
+			error:function(e){
+				console.log(e);
+			}
+	    });
+		
+	});
+
+	function calendar(events){
+		
 	    var calendarEl = document.getElementById('calendar');
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
-	      initialView: 'dayGridMonth'
+	    	height: '100%',
+	    	locale: 'ko',
+	    	dayCellContent:function(e){
+	    		var number = document.createElement("a");
+	    		number.classList.add("fc-daygrid-day-number");
+	    		number.innerHTML = e.dayNumberText.replace("일","").replace("日","");
+	    		if(e.view.type == "dayGridMonth"){
+	    			return {
+	    				html: number.outerHTML
+	    			};
+	    		}
+	    		return{
+	    			domNodes:[]
+	    		};
+	    	},
+	    	headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,dayGridWeek,dayGridDay'
+               	
+            },
+			
+            events:events,
+            eventTextColor: 'black',
+            eventColor: '#c5a992',
+            selectable: true,
+            selectMirror: true,
+
+            navLinks: true, 
+            editable: false,
+            eventDidMount: function(info) {
+                var eventElement = info.el;
+                var titleElement = eventElement.querySelector('.fc-event-title');
+                titleElement.style.fontWeight = 'bold';
+              }
 	    });
 	    calendar.render();
-	  });
+	  };
 
 </script>
 </html>	

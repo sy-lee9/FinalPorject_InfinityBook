@@ -34,7 +34,19 @@
 		<script src="/js/script.js"></script>
 		<script src="/richtexteditor/rte.js"></script>
 		<script src="/richtexteditor/plugins/all_plugins.js"></script>
-
+		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+		
+		</style>	
+	
 	</head>
 
 <body>
@@ -132,7 +144,7 @@
 					</td>
 					<td>모임명</td>
 					<td colspan="2">
-						<input type="text" name="club_name" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임명">
+						<input type="text" id="club_name" name="club_name" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임명">
 					</td>
 					<td></td>
 				</tr>
@@ -141,7 +153,7 @@
 					<td></td>
 					<td>모임일시</td>
 					<td colspan="2">
-						<input type="text" name="club_meetdate" id="date" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임일시">
+						<input type="text" name="club_meetdate" id="club_meetdate" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임일시">
 					</td>
 					<td></td>
 				</tr>
@@ -150,7 +162,7 @@
 					<td></td>
 					<td>모임인원</td>
 					<td colspan="2">
-						<input type="number" name="club_num" id="club_num" min="0" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="0"> 명
+						<input type="number" name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="0"> 명
 					</td>
 					<td></td>
 				</tr>
@@ -160,11 +172,11 @@
 					<td>모임방식</td>
 					<td colspan="2">
 						<select name="club_onoff" id="club_onoff" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
-							<option value="1">비대면</option>
 							<option value="0">대면</option>
+							<option value="1">비대면</option>
 						</select>
 						<select name="code_idx" id="code_idx" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
-							<option value="26">-</option>
+							<option value="26">대면지역</option>
 							<c:forEach items="${location}" var="location">
 								<option value="${location.code_idx}">${location.code_codename}</option>
 							</c:forEach>
@@ -236,7 +248,7 @@ var config = {};
     var link = document.getElementById('clubBookPop');
 
     link.addEventListener('click',function(){
-        win = window.open('/clubBookPop.go','Infinity_Book','width=800px,height=600px');
+        win = window.open('/clubBookPop.go','Infinity_Book','width=800px,height=800px');
     })
 
 // editor 크기 조절 불가
@@ -252,46 +264,76 @@ config.file_upload_handler = function(file,callback){
 	}
 	console.log(callback);
 }
+
 var editor = new RichTextEditor("#div_editor",{ skin: "gray", toolbar: "basic" });
 
+
 function save(){
-	console.log('저장');
+	
 	var content = editor.getHTMLCode();
-	console.log(content.length);
-	console.log(content);
+	
 	if(content.length>(4*1024*1024)){
 		alert('컨텐츠의 크기가 너무 큽니다. 이미지의 크기나 갯수를 줄여주세요');
+	}else if($('#title').val()==''){
+		alert('도서 선택은 모임 등록시 필수입니다.');
+		return false;
+	}else if($('#club_name').val()==''){
+		alert('모임명을 작성해 주세요');
+		return false;
+	}else if($('#club_meetdate').val()==''){
+		alert('모임일시를 선택해 주세요');
+		return false;
+	}else if($('#club_num').val()==''){
+		alert('모임인원을 설정해 주세요. \n 최소 2인 이상 10인 이하로 선택 가능합니다. ');
+		return false;
+	}else if($('#club_num').val()==''){
+		alert('모임인원을 설정해 주세요. \n 최소 2인 이상 10인 이하로 선택 가능합니다. ');
+		return false;
+	}else if($('#club_onoff').val()=='0'){
+		if($('#code_idx').val()=='26'){
+			alert('모임이 대면인 경우 지역구를 선택해야만 모임 등록이 가능합니다. ');
+			return false;
+		}
+	}else if($('#club_onoff').val()=='1'){
+		if(!confirm('비대면 방식으로 선택시, 선택한 지역구는 저장되지 않습니다. \n 비대면으로 진행하시겠습니까?')){
+			return false;
+		}else{
+			$('#code_idx').val('26');
+			if(!confirm('등록된 모임은 수정이 불가능 합니다. \n 등록 전 입력 정보를 한번더 확인해 주세요. \n 이대로 등록 하시겠습니까?')){
+				return false;
+			}
+					
+			 
+			$('form').submit();
+		}	
 	}else{
+		if(!confirm('등록된 모임은 수정이 불가능 합니다. \n 등록 전 입력 정보를 한번더 확인해 주세요. \n 이대로 등록 하시겠습니까?')){
+			return false;
+		}
 		$('input[name="club_content"]').val(content);
 		$('form').submit();
 	}
+	
 }
 
 $(function() {
-    $('#date').datetimepicker({
+    $('#club_meetdate').datetimepicker({
       format: 'Y-m-d H:i',  // 입력값의 형식을 지정
       lang: 'ko',  // 언어 설정
-      step: 30,  // 분 단위로 선택 가능한 간격을 지정
+      step: 60,  // 분 단위로 선택 가능한 간격을 지정
       dayOfWeekStart: 1,  // 주의 시작일을 월요일로 설정
       minDate: 0,  // 오늘 이후의 날짜만 선택 가능하도록 설정
       allowTimes: [
         '09:00', '10:00', '11:00', '12:00', '13:00',
         '14:00', '15:00', '16:00', '17:00', '18:00',
-        '19:00', '20:00', '21:00', '22:00', '23:00'
+        '19:00', '20:00', '21:00'
       ]  // 선택 가능한 시간을 지정
     });
   });
 
-/* function checkClubOnOff() {
-    var clubOnOffSelect = document.getElementById("club_onoff");
-    var codeIdxSelect = document.getElementById("code_idx");
 
-    if (clubOnOffSelect.value == "1") {
-        codeIdxSelect.disabled = true;  // 두 번째 셀렉터를 비활성화
-    } else {
-        codeIdxSelect.disabled = false; // 두 번째 셀렉터를 활성화
-    }
-} */
+
+
 </script>
 
 </html>	

@@ -10,19 +10,19 @@ import kr.co.book.transaction.dto.RentDTO;
 public interface RentDAO {
 	
 	// 대여 신청
-	void rentapply(HashMap<String, String> params);
+	void rentapply(HashMap<String, Object> params);
 
 	// 대여 IDX
-	String findrent_idx(HashMap<String, String> params);
+	String findrent_idx(HashMap<String, Object> params);
 
 	// 대화방 만들기
-	void createchatroom(int code, String string, String iDX);
+	void createchatroom(HashMap<String, Object> params);
 	
 	// 신청내역 대화방에 뿌려주기
-	void applychatcontent(int code, String iDX, String string, String member_IDX, String library_TITLE);
+	void applychatcontent(HashMap<String, Object> params);
 
 	// 대여신청 책에 대한 정보(회원 idx, 책이름) 들고오기
-	RentDTO findchbmidx(HashMap<String, String> params);
+	RentDTO findchbmidx(HashMap<String, Object> params);
 
 	// 처음 대여 신청정보
 	HashMap<String, Object> rentreservation(String idx);
