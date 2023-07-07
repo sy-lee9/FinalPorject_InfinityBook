@@ -28,6 +28,17 @@
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
 		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+		
+		</style>	
 	</head>
 
 <body style="margin:30px;">
@@ -70,10 +81,6 @@
 </body>
 
 <script>
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
 
 var showPage = 1;
 var text = '';
@@ -167,6 +174,7 @@ function listCall(page,text){
 		    contentType: false,
 		    success: function(data) {
 		       console.log(data);
+		       alert(data.msg);
 		    }
 		  });
 		  

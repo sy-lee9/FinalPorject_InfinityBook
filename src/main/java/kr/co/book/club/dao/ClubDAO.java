@@ -21,7 +21,9 @@ public interface ClubDAO {
 	ClubDTO clubDetail(String club_idx);
 
 	ArrayList<ClubDTO> clubMember(String club_idx);
-
+	
+	int clubApplyChk(String club_idx, String member_idx);
+	
 	void clubApply(String club_idx, String member_idx);
 
 	ArrayList<ClubDTO> applyMember(String club_idx);
@@ -39,6 +41,16 @@ public interface ClubDAO {
 	void clubDelete(String club_idx);
 
 	void clubUpdate(String club_idx);
+
+	int totalMyApplyList(String member_idx);
+
+	ArrayList<ClubDTO> myApplyList(String member_idx, int offset);
+
+	int totalMyClubList(String member_idx);
+
+	ArrayList<ClubDTO> myClubList(String member_idx, int offset);
+
+	
 
 
 

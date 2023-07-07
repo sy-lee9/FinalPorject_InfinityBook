@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.chat.service.ChatService;
 import kr.co.book.club.dto.ClubDTO;
@@ -59,13 +60,27 @@ public class ClubController {
 	
 	// 신청
 	@RequestMapping("/clubApply.do")
-	public String clubApply(@RequestParam String club_idx, HttpSession session){
+	public String clubApply(@RequestParam String club_idx, Model model, HttpSession session){
 		
 		String member_idx = String.valueOf(session.getAttribute("loginIdx")); 
-
-		clubService.clubApply(club_idx, member_idx);
 		
-		return "redirect:/clubDetail.go?club_idx="+club_idx;
+		int chk = clubService.clubApplyChk(club_idx, member_idx);
+		
+		if(chk==0) {
+			clubService.clubApply(club_idx, member_idx);
+			model.addAttribute("msg", "신청에 성공했습니다. ");
+		}else {
+			model.addAttribute("msg", "이미 신청한 모임입니다." );
+		}
+		
+		ClubDTO club = clubService.clubDetail(club_idx);
+		ArrayList<ClubDTO> member = clubService.clubMember(club_idx);
+		ArrayList<ClubDTO> apply = clubService.applyMember(club_idx);
+		model.addAttribute("club", club);
+		model.addAttribute("member", member);
+		model.addAttribute("apply", apply);
+		model.addAttribute("loginIdx", session.getAttribute("loginIdx"));
+		return "/club/clubDetail";
 	}
 	
 	// 수락 -> 업데이트
@@ -175,5 +190,23 @@ public class ClubController {
 	}
 	
 	// 채팅방을 나가면
-	// 신청테이블에서 삭제 clubService.applyReject(club_idx, clubDTO.getMember_idx());			
+	// 신청테이블에서 삭제 clubService.applyReject(club_idx, clubDTO.getMember_idx());
+	
+	
+	
+	@RequestMapping("/myApplyList.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> myApplyList(@RequestParam String page, HttpSession session) {
+		String member_idx = String.valueOf(session.getAttribute("loginIdx"));
+		HashMap<String, Object> apply = clubService.myApplyList(page,member_idx);
+		return apply; 
+	}
+	
+	@RequestMapping("/myClubList.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> myClubList(@RequestParam String page, HttpSession session) {
+		String member_idx = String.valueOf(session.getAttribute("loginIdx"));
+		HashMap<String, Object> club = clubService.myClubList(page,member_idx);
+		return club; 
+	}
 }

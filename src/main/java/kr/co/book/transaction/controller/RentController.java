@@ -24,7 +24,7 @@ public class RentController {
 	
 	// 대여 신청
 	@RequestMapping(value="/rentapply.do")
-	public String rentapply(HttpSession session, @RequestParam HashMap<String, String>params) {
+	public String rentapply(HttpSession session, @RequestParam HashMap<String, Object>params) {
 		
 		logger.info("{}",params);
 		String member_idx = session.getAttribute("loginIdx").toString();
@@ -38,7 +38,7 @@ public class RentController {
 	@RequestMapping(value="/rentreservation.do")
 	public String rentreservation(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		
-		params.put("MOD_MEMBER_IDX", (session.getAttribute("loginIdx").toString()));
+		params.put("member_idx", (session.getAttribute("loginIdx").toString()));
 
 		service.rentreservation(params);
 		

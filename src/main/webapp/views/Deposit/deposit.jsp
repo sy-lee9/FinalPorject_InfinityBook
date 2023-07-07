@@ -32,6 +32,17 @@
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
 		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+		
+		</style>	
 	</head>
 
 <body>
@@ -172,7 +183,7 @@
 
 var amount = document.getElementById("deposit_price").value;
 var member_idx = document.getElementById("member_idx").value;
-
+ 
 document.getElementById("deposit_price").addEventListener("input", function() {
    amount = document.getElementById("deposit_price").value;
     console.log(amount);
@@ -204,6 +215,7 @@ var today = new Date();
 var merchant_uid = member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+today.getTime();
 console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+today.getTime());
 
+//var buyer_name = ${sessionScope.loginIdx};
  function requestPay() {
      
       IMP.request_pay({ // param
@@ -213,7 +225,7 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
           name : 'InfinityBook',
           amount : amount,
           buyer_email : 'Iamport@chai.finance',
-          buyer_name : 'InfinityBook',
+          buyer_name : ${sessionScope.loginNickname},
           buyer_tel : '010-1234-5678',
           buyer_addr : '서울특별시 강남구 삼성동',
           buyer_postcode : '123-456'
@@ -230,7 +242,6 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
              var xhr = new XMLHttpRequest();
              xhr.open('post', '/depositCharge.ajax', true);
              xhr.send(formData);
-             alert(rsp.apply_num);
              
           } else {
         	  alert("보증금 충전이 중 문제가 발생했습니다. 다시 시도해 주세요.");

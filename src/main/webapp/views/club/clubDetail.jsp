@@ -25,6 +25,17 @@
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
 		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+	
+	</style>	
 	</head>
 
 <body>
@@ -155,10 +166,15 @@
 						<tr>
 							<td colspan="3" style="text-align:center;">
 							<c:if test="${loginIdx == club.member_idx}">
-								<input type="button" onclick="location.href='/clubUpdate.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집종료">	
+								<c:if test="${club.club_state eq 0}">
+									<input type="button" onclick="clubUpdate(${club.club_idx})" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집종료">	
+								</c:if>
+								
 							</c:if>
 							<c:if test="${loginIdx != club.member_idx}">
-								<input type="button" onclick="location.href='/clubApply.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+								<c:if test="${club.club_state eq 0}">
+									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+								</c:if>
 							</c:if>
 							
 								<input type="button" style="padding:5 10 5 10;" onclick="location.href='/clubList.go'" class="btn btn-outline-accent btn-accent-arrow" value="목록 ">
@@ -168,7 +184,7 @@
 				</td>
 				<th style="width: 10%; vertical-align: top; text-align:center;">
 					<c:if test="${loginIdx == club.member_idx}">
-						<input type="button" onclick="location.href='/clubDelete.do?club_idx='+${club.club_idx}" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
+						<input type="button" onclick="clubDelete(${club.club_idx})" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
 						<h3>신청자</h3>
 						<c:forEach items="${apply}" var="apply">
 						${apply.member_nickname} 
@@ -180,6 +196,7 @@
 			</tr>
 		</table>
 	</div>
+	
 </section>
 
 
@@ -208,6 +225,43 @@
 
 </body>
 <script>
- 
+
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+
+function clubUpdate(club_idx){  
+
+	if(confirm('모집 종료시 신청은 자동으로 모두 거절 됩니다. \n 모집 종료하시겠습니까?')){
+		location.href='/clubUpdate.do?club_idx='+club_idx;
+	}else{
+		return false;
+	}
+}
+
+//onclick="location.href='/clubDelete.do?club_idx='+${club.club_idx}"
+		
+function clubDelete(club_idx){  
+
+	if(confirm('모임 삭제시 모임 채팅방도 삭제되며 복구가 불가능 합니다.  \n 정말 삭제하시겠습니까?')){
+		location.href='/clubDelete.do?club_idx='+club_idx;
+	}else{
+		return false;
+	}
+}
+
+function clubApply(club_idx){  
+	if(${sessionScope.loginIdx != null}){
+		if(confirm('모임 신청시 취소가 불가능합니다. \n 정말 신청하시겠습니까?')){
+				location.href='/clubApply.do?club_idx='+club_idx;
+		}
+		
+	}else{
+		alert('모임 신청은 로그인 후 가능합니다. ');
+		location.href='/login.go';
+	}
+	
+}
 </script>
 </html>	

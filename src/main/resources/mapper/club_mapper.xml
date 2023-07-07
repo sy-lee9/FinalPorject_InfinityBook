@@ -65,6 +65,10 @@
 		ORDER BY ca.club_appdate ASC
 	</select>
 	
+	<select id="clubApplyChk" resultType="int">
+		SELECT COUNT(member_idx) FROM club_apply WHERE club_idx=#{param1} AND member_idx=#{param2}
+	</select>
+	
 	<insert id="clubApply">
 		INSERT INTO club_apply(club_idx,member_idx,club_appstate) VALUES(#{param1},#{param2},'0')
 	</insert>
@@ -101,4 +105,42 @@
 		UPDATE club SET club_state='1' WHERE club_idx=#{param1}
 	</update>		
 	
+	 <select id="totalMyApplyList" resultType="int">
+	 	SELECT COUNT(club_idx)  FROM club_apply WHERE member_idx = #{param1}
+	 </select>
+	 
+	 <select id="myApplyList" resultType="club">
+	 	SELECT c.club_idx ,c.member_idx,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		FROM club c
+		JOIN `member` m ON c.member_idx=m.member_idx 
+		JOIN code co ON c.code_idx = co.code_idx 
+		JOIN book b ON c.isbn =b.isbn  
+		JOIN club_apply ca ON c.club_idx = ca.club_idx 
+		ORDER BY ca.club_appdate DESC LIMIT 5 OFFSET #{param2}
+	 </select>
+	
+	
+	 <select id="totalMyClubList" resultType="int">
+	 	SELECT COUNT(c.club_idx) 
+		FROM club c 
+		JOIN club_apply ca ON c.club_idx = ca.club_idx 
+		WHERE ca. member_idx = #{param1} AND ca.club_appstate = 1 AND club_blind = 0
+	 </select>
+	 
+	 <select id="myClubList" resultType="club">
+	 	SELECT c.club_idx ,c.member_idx,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+		FROM club c
+		JOIN `member` m ON c.member_idx=m.member_idx 
+		JOIN code co ON c.code_idx = co.code_idx 
+		JOIN book b ON c.isbn =b.isbn  
+		JOIN club_apply ca ON c.club_idx = ca.club_idx 
+		WHERE ca. member_idx = #{param1} AND ca.club_appstate = 1 AND club_blind = 0
+		ORDER BY ca.club_appdate DESC LIMIT 5 OFFSET #{param2}
+	 </select>
+
+	 
+	 
+	 
+	 
+	 
 </mapper>
