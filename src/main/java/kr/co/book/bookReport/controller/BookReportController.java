@@ -20,13 +20,13 @@ public class BookReportController {
 	@Autowired BookReportService service;
 	
 	
-	@PostMapping(value="/BookReportWrite.do")
-	public String BookReportWrite(@RequestParam HashMap<String, String> params,
-			Model model) {
-		
-		service.write();
-		
-		return "";
-	}
+//	@PostMapping(value="/BookReportWrite.do")
+//	public String BookReportWrite(@RequestParam HashMap<String, String> params,
+//			Model model) {
+//		
+//		service.write();
+//		
+//		return "";
+//	}
 
 }

@@ -12,7 +12,7 @@ public class BookReportService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@Autowired BookReportDAO dao;
+	//@Autowired BookReportDAO dao;
 
 	public void write(String reportOpen, String reportTitle, String content) {
 		

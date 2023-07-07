@@ -293,6 +293,12 @@ function save(){
 		if($('#code_idx').val()=='26'){
 			alert('모임이 대면인 경우 지역구를 선택해야만 모임 등록이 가능합니다. ');
 			return false;
+		}else{
+			if(!confirm('등록된 모임은 수정이 불가능 합니다. \n 등록 전 입력 정보를 한번더 확인해 주세요. \n 이대로 등록 하시겠습니까?')){
+				return false;
+			}
+			$('input[name="club_content"]').val(content);
+			$('form').submit();
 		}
 	}else if($('#club_onoff').val()=='1'){
 		if(!confirm('비대면 방식으로 선택시, 선택한 지역구는 저장되지 않습니다. \n 비대면으로 진행하시겠습니까?')){
@@ -302,8 +308,7 @@ function save(){
 			if(!confirm('등록된 모임은 수정이 불가능 합니다. \n 등록 전 입력 정보를 한번더 확인해 주세요. \n 이대로 등록 하시겠습니까?')){
 				return false;
 			}
-					
-			 
+			$('input[name="club_content"]').val(content);
 			$('form').submit();
 		}	
 	}else{
