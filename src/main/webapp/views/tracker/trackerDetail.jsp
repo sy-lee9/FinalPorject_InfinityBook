@@ -55,6 +55,15 @@
 <body>
 
 <div id="header-wrap">
+
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="../loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	
 	<div class="top-content">
 		<div class="container">
