@@ -122,7 +122,7 @@
 						<tr>
 							<th colspan="3" style="text-align: right;">
 								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
-								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="삭제">
+								<input type="button" onclick="deleteBook(${book.library_idx})" value="삭제">
 							</th>
 						</tr>
 					</table>
@@ -156,5 +156,16 @@
 
 
 </body>
+<script>
 
+	function deleteBook(idx){
+		if(confirm("삭제 후 복구가 불가능 합니다. \n 정말 삭제하시겠습니까?")){
+			location.href='library.delete?library_idx='+idx;
+		}else{
+			return false;
+		}
+	}
+	
+	
+</script>
 </html>	

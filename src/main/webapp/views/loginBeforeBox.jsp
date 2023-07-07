@@ -19,5 +19,5 @@
       $("#login").html(content);
     });
 
-    f
+    
 </script>

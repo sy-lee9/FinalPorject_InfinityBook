@@ -28,6 +28,18 @@
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
 		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+	
+	</style>	
+	
 	</head>
 
 <body>
@@ -60,7 +72,7 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
+								<li class="menu-item active"><a href="#home" data-effect="Home"><b>대여/교환</b></a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
 								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
@@ -104,7 +116,7 @@
 		</ul>
 		<ul class="tab">
 			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<input type="button" value="모임 등록" onclick="location.href='/clubWrite.go'" style="float: right;">
+				<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right;">
 				<i class="icon icon-search"></i> 
 				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="제목 을 입력해주세요" type="search">
 				<input type="button" id="searchButton" value="검색">	
@@ -218,7 +230,7 @@
 	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
 	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
 	    content += '	<th width="20%" style="text-align:center;">도서</th>';
-	    content += '	<th width="40%"> 모임정보 </th>';
+	    content += '	<th width="40%" style="text-align:center;"> 모임정보 </th>';
 	    content += '	<th width="20%" style="text-align:left;"> 모임장소 및 일시 </th>';
 	    content += '	<th width="2%" style="text-align:center;"></th>';
 		content += '<tr>';
@@ -252,6 +264,16 @@
 	}
 
 	
+	function clubWriteGo(){  
+
+		if(${sessionScope.loginIdx != null}){
+			location.href="/clubWrite.go";
+		}else{
+			alert('모임 등록은 로그인이 필요합니다. ');
+			location.href="/login.go";
+		}
+	   
+	}
 </script>
 
 </html>	

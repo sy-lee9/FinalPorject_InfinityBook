@@ -56,7 +56,10 @@ public class ClubService {
 		return clubDAO.clubMember(club_idx);
 	}
 
-
+	public int clubApplyChk(String club_idx, String member_idx) {
+		return clubDAO.clubApplyChk(club_idx,member_idx);
+	}
+	
 	public void clubApply(String club_idx, String member_idx) {
 		clubDAO.clubApply(club_idx,member_idx);
 		
@@ -102,6 +105,59 @@ public class ClubService {
 	public void clubUpdate(String club_idx) {
 		clubDAO.clubUpdate(club_idx);
 	}
+
+
+	public HashMap<String, Object> myApplyList(String sPage, String member_idx) {
+		
+		HashMap<String, Object> apply = new HashMap<String, Object>();	
+		ArrayList<ClubDTO> list = null;
+		int page = Integer.parseInt(String.valueOf(sPage)); 
+		int offset = 5*(page-1);
+		int total = 0;
+		
+		
+		total = clubDAO.totalMyApplyList(member_idx);
+		list = clubDAO.myApplyList(member_idx,offset);
+		
+		
+		
+		int range = total%5  == 0 ? total/5 : total/5+1;
+		page = page>range ? range:page;
+		apply.put("offset", offset);
+		apply.put("list", list);
+		apply.put("currPage", page);
+		apply.put("pages", range);
+		
+		return apply;
+	}
+
+
+	public HashMap<String, Object> myClubList(String sPage, String member_idx) {
+		
+		HashMap<String, Object> club = new HashMap<String, Object>();	
+		ArrayList<ClubDTO> list = null;
+		int page = Integer.parseInt(String.valueOf(sPage)); 
+		int offset = 5*(page-1);
+		int total = 0;
+		
+		
+		total = clubDAO.totalMyClubList(member_idx);
+		list = clubDAO.myClubList(member_idx,offset);
+		
+		
+		
+		int range = total%5  == 0 ? total/5 : total/5+1;
+		page = page>range ? range:page;
+		club.put("offset", offset);
+		club.put("list", list);
+		club.put("currPage", page);
+		club.put("pages", range);
+		
+		return club;
+	}
+
+
+	
 	
 
 

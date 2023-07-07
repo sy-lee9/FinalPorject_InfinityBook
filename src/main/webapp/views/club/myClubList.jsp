@@ -27,8 +27,20 @@
 		<script src="/js/modernizr.js"></script>		
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
-		
+	
+	<style>
+		.pagination .page-link {
+  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+		}
+
+		.pagination .page-item.active .page-link {
+	 		background-color: #C5A992;
+	 		border:none;
+		}
+	
+	</style>	
 	</head>
+	
 
 <body>
 
@@ -107,12 +119,13 @@
 			<div style="text-align:center;">
 				<hr/>	
 				<div class="row" id="apply_list">
+				
 				</div>
 					    
-				<div  id="paging" >
+				<div  id="apply_paging" >
 					<div class="container" style="text-align:center; width: 600px;">
 						<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-					          <ul class="pagination justify-content-center" id="pagination"></ul>
+					          <ul class="pagination justify-content-center" id="apply_pagination"></ul>
 					    </nav>
 					</div>
 				</div>
@@ -124,10 +137,10 @@
 				<div class="row" id="club_list">
 				</div>
 					    
-				<div  id="paging" >
+				<div  id="club_paging" >
 					<div class="container" style="text-align:center; width: 600px;">
 						<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-					          <ul class="pagination justify-content-center" id="pagination"></ul>
+					          <ul class="pagination justify-content-center" id="club_pagination"></ul>
 					    </nav>
 					</div>
 				</div>
@@ -167,25 +180,21 @@
 
 <script>
 	var showPage = 1;
-	var searchText = '';
-	//listCall(showPage);
+	listCall(showPage);
 		
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'clubList.ajax',
+		      url:'myApplyList.ajax',
 		      data:{
-		    	  'page':page,
-		    	  'searchText':searchText
+		    	  'page':page
 		      },
 		      dataType:'json',           
 		      success:function(data){
 		         console.log(data);
 		         listPrint(data.list);
 		         
-		        
-		         
-		         $('#pagination').twbsPagination({
+		         $('#apply_pagination').twbsPagination({
 						startPage:1, // 시작 페이지
 						totalPages:data.pages,// 총 페이지 수 
 						visiblePages:5,// 보여줄 페이지
@@ -206,19 +215,135 @@
 
 	function listPrint(list) {
 	    var content = '';
+	    // ca.club_idx ,c.club_name , ca.member_idx ,ca.club_appstate ,c.club_state , ca.club_appdate 
+	    content += '<table style="width:100%; text-align:center;">';
+	    content += '<tr>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
+	    content += '	<th width="8%" style="text-align:center;"> 모집상태 </th>';	    
+	    content += '	<th width="8%" style="text-align:center;"> 신청상태</th>';
+	    content += '	<th width="20%" style="text-align:center;">도서</th>';
+	    content += '	<th width="40%" style="text-align:center;"> 모임정보 </th>';
+	    content += '	<th width="20%" style="text-align:left;"> 모임장소 및 일시 </th>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
+		content += '<tr>';
+		
+			
+	    list.forEach(function(item) {
+	        content += '<tr>';
+	        content += '	<td></td>';
+	        if (item.club_state=="0") {
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
+			}else{
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
+			}
+	        
+	        if (item.club_appstate=="0") {
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:gray;" class="btn btn-outline-accent btn-accent-arrow" value="신청 대기"></td>';
+			}else{
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:black;" class="btn btn-outline-accent btn-accent-arrow" value="확정"></td>';
+			}
+	        
+	        content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
+		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
+		    content += item.member_nickname+'<br/>	';
+		    content += item.title+'	</td>';
+		    content += '	<td>';
+		    content += item.code_codename+'<br/>	';
+		    content += item.club_meetdate.split(" ")[0]+'<br/>'+item.club_meetdate.split(" ")[1]+'</td>';
+		    
+		    content += '	<td></td>';
+	        content += '</tr>';
+	    });
+
+	    content += '</table>';
+
+	    $('#apply_list').empty();
+		$('#apply_list').append(content);
+	}
+	
+	
+	
+	
+	var showPage2 = 1;
+	listCall2(showPage2);
+	
+	function listCall2(page){
+		   $.ajax({
+		      type:'post',
+		      url:'myClubList.ajax',
+		      data:{
+		    	  'page':page
+		      },
+		      dataType:'json',           
+		      success:function(data){
+		         console.log(data);
+		         listPrint2(data.list);
+		         
+		        
+		         
+		         $('#club_pagination').twbsPagination({
+						startPage:1, // 시작 페이지
+						totalPages:data.pages,// 총 페이지 수 
+						visiblePages:5,// 보여줄 페이지
+						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+							console.log(page,showPage);
+							if(page != showPage){
+								showPage=page;
+								listCall(page);
+								
+							}
+						}
+			         });
+		         
+		         
+		         
+		      }
+		   });
+		}
+
+
+
+	function listPrint2(list) {
+	    var content = '';
 	    
-	   
+	    content += '<table style="width:100%; text-align:center;">';
+	    content += '<tr>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
+	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
+	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
+	    content += '	<th width="20%" style="text-align:center;">도서</th>';
+	    content += '	<th width="40%" style="text-align:center;"> 모임정보 </th>';
+	    content += '	<th width="20%" style="text-align:left;"> 모임장소 및 일시 </th>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
+		content += '<tr>';
 	
 	    list.forEach(function(item) {
 	        
-	    	
+	    	content += '<tr>';
+	    	content += '	<td></td>';
+	    	if (item.club_state=="0") {
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
+			}else{
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
+			}
+	    	content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
+	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
+		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
+		    content += item.member_nickname+'<br/>	';
+		    content += item.title+'	</td>';
+		    content += '	<td>';
+		    content += item.code_codename+'<br/>	';
+		    content += item.club_meetdate.split(" ")[0]+'<br/>'+item.club_meetdate.split(" ")[1]+'</td>';
+		    
+		    content += '	<td></td>';
+	        content += '</tr>';
 	    });
-    
+ 
+	    content += '</table>'; 
 
-	    $('#list').empty();
-		$('#list').append(content);
+	    $('#club_list').empty();
+		$('#club_list').append(content);
 	}
-
 	
 </script>
 

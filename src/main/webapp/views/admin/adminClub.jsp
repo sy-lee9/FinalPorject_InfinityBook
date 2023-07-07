@@ -37,9 +37,8 @@
 		 		background-color: #C5A992;
 		 		border:none;
 			}
-		
-		</style>	
 	
+		</style>	
 	</head>
 
 <body>
@@ -52,7 +51,7 @@
 		<div class="row">
 		<a href="/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-bottom:25px;">Admin-Deposit</h2>
+				<h2 class="section-title" style="margin-bottom:25px;">Admin-Book</h2>
 			</div>
 		</div>
 	</div>
@@ -61,14 +60,15 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 
-		<div class="tab-content" >
-			<div id="all-genre" data-tab-content class="active">
-				<div style="font-size:20;">
-					<input type="radio" name="deposit_type" value="default" checked="checked"> 전체 &nbsp; 
-					<input type="radio" name="deposit_type" value="출금"> 출금 &nbsp;
-					<input type="radio" name="deposit_type" value="충전"> 충전 &nbsp;
-					<br/><br/>
-				</div>
+		<div class="tab-content" style="text-align:center;">
+			<div id="all-genre" style="text-align:center;" data-tab-content class="active">
+				<ul class="tab">
+					<li class="search-box" style="text-align:center;list-style-type: none;">
+						<i class="icon icon-search"></i> 
+						<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
+						<input type="button" id="searchButton" value="검색">
+					</li>
+				</ul>
 				<div class="row" style="text-align:center;" id="list">
 					
 			    </div>
@@ -118,26 +118,24 @@
 
 <script>
 	var showPage = 1;
-	var deposit_type = 'default';
+	var searchText = '';
 	listCall(showPage);
 		
-	$('input[type="radio"]').click(function(){
-		deposit_type = $(this).val();
-		console.log(deposit_type);
+	$('#searchButton').click(function(){
+		searchText = $('#serchText').val();
 		listCall(showPage);
-		deposit_type = 'default';
+		searchText = 'default';
 		$('#pagination').twbsPagination('destroy');
 	});
-	
 	
 	
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'adminDepositList.ajax',
+		      url:'adminClubList.ajax',
 		      data:{
 		    	  'page':page,
-		    	  'deposit_type':deposit_type
+		    	  'searchText':searchText
 		      },
 		      dataType:'json',           
 		      success:function(data){
@@ -171,30 +169,40 @@
 	    
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
-	    content += '	<th width="10%" style="text-align:center;">결제 IDX</th>';
-	    content += '	<th width="10%" style="text-align:center;">회원 IDX</th>';
-	    content += '	<th width="20%" style="text-align:center;">결제</th>';
-	    content += '	<th width="20%" style="text-align:center;">결제 정보 </th>';
-		content += '	<th width="10%" style="text-align:center;">결제 금액</th>';
-		content += '	<th width="10%" style="text-align:center;">상태</th>';
-		content += '	<th width="20%" style="text-align:center;">결제 일시</th>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
+	    content += '	<th width="8%" style="text-align:center;"> 모임 IDX</th>';
+	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';	 
+	    content += '	<th width="20%" style="text-align:center;">도서</th>';
+	    content += '	<th width="35%" style="text-align:center;"> 모임정보 </th>';
+	    content += '	<th width="20%" style="text-align:left;"> 모임장소 및 일시 </th>';	   
+		content += '	<th width="15%" style="text-align:center;">블라인드</th>';
+		 content += '	<th width="2%" style="text-align:center;"></th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
+	    	
 	    	content += '<tr>';
-	 	    content += '	<th style="text-align:center;">'+item.deposit_idx+'</th>';
-	 	    content += '	<th style="text-align:center;">'+item.member_idx+'</th>';
-	 	    content += '	<th style="text-align:center;">'+item.deposit_type+'</th>';
-	 	    content += '	<th style="text-align:center;">'+item.deposit_info+'</th>';
-	 		content += '	<th style="text-align:center;">'+item.deposit_price+'</th>';
-	 		if (item.deposit_type=="충전") {
-	 			content += '	<th style="text-align:center;"><a href="#">결제 취소</a></th>';
+	    	content += '	<td></td>';
+	    	if (item.club_state=="0") {
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
 			}else{
-				content += '	<th style="text-align:center;"><a href="#">출금 거절</a></th>';
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
 			}
-	 		
-	 		content += '	<th style="text-align:center;">'+item.deposit_date+'</th>';
-	 		content += '<tr>';
+	    	content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
+	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
+		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
+		    content += item.member_nickname+'<br/>	';
+		    content += item.title.split("-")[0]+'	</td>';
+		    content += '	<td>';
+		    content += item.code_codename+'<br/>	';
+		    content += item.club_meetdate.split(" ")[0]+'<br/>'+item.club_meetdate.split(" ")[1]+'</td>';
+		    if(item.club_blind == "1"){
+		    	content += '<td style="text-align:center;"><input type="button" style="margin-right:20px; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="bookBlind(0,'+item.club_idx+')" value="숨김 해제"/></td>';
+		    }else{
+		        content += '<td style="text-align:center;"><input type="button" style="margin-right:20px; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="bookBlind(1,'+item.club_idx+')" value="숨김"/></td>';
+		    }
+		    content += '	<td></td>';
+	        content += '</tr>';
 	    });
 
 	    content += '</table>'; 
@@ -204,6 +212,25 @@
 	}
 	
 	
+	function bookBlind(blind,club_idx){
+		$.ajax({
+		      type:'get',
+		      url:'clubBlind.ajax',
+		      data:{
+		    	  'blind':blind,
+		    	  'club_idx':club_idx
+		    	  },
+		      dataType:'json',
+		      success:function(data){
+		         listCall(showPage);
+		      },
+		      error:function(e){
+		         console.log(e);
+		      }
+		   });
+		
+	}
+ 	
 
 </script>
 
