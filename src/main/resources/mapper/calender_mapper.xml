@@ -10,7 +10,7 @@
 			(rent_startdate) AS start, 
 			DATE_ADD(rent_enddate, INTERVAL 1 DAY) AS end
 		FROM rent r
-			WHERE member_idx = 1 AND rent_state IN (2,3,4)
+			WHERE member_idx = #{param} AND rent_state IN (2,3,4)
 	</select>
 	
 	<select id="borrowEvents" resultType="CalenderDTO">
@@ -19,8 +19,18 @@
 			(rent_startdate) AS start,  
 			DATE_ADD(rent_enddate, INTERVAL 1 DAY) AS end
 		FROM rent r 
-		INNER JOIN library l ON r.library_idx IN (SELECT l.library_idx FROM library WHERE library_blind = 0 AND l.member_idx = 1)
-			WHERE rent_state in (2,3,4);
+		INNER JOIN library l ON r.library_idx IN (SELECT l.library_idx FROM library WHERE library_blind = 0 AND l.member_idx = #{param})
+			WHERE rent_state IN (2,3,4);
+	</select>
+	
+	<select id="changeEvents" resultType="CalenderDTO">
+		SELECT DISTINCT
+			(c.change_date) AS start,
+			(select l.library_title from library l where l.library_idx = c.library_book2) AS bookTitle
+		FROM `change` c 
+		INNER JOIN library l
+			ON (c.member_idx = #{param} OR c.library_book in (SELECT l.library_idx FROM library WHERE member_idx = #{param}))
+			WHERE c.change_state IN (2,4)
 	</select>
 
 

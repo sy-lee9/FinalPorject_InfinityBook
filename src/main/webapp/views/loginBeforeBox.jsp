@@ -16,10 +16,4 @@
     $(document).ready(function() {
       $("#login").html(content);
     });
-<<<<<<< HEAD
-
-    
 </script>
-=======
-    </script>
->>>>>>> origin/master
