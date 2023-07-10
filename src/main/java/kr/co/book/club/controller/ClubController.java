@@ -209,4 +209,124 @@ public class ClubController {
 		HashMap<String, Object> club = clubService.myClubList(page,member_idx);
 		return club; 
 	}
+	
+	@RequestMapping("/addMember.go")
+	public String addMemberGo(@RequestParam String club_idx, Model model) {
+		
+		model.addAttribute("idx", club_idx);
+		
+		return "/club/addMemberPop";
+	}
+	
+	@RequestMapping("/addMemberList.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> addMemberList(@RequestParam String page,HttpSession session) {
+		String member_idx = String.valueOf(session.getAttribute("loginIdx"));
+		HashMap<String, Object> clubs = clubService.addMemberList(page,member_idx);
+		
+		return clubs; 
+	}
+	
+	@RequestMapping("/addMember.do")
+	@ResponseBody
+	public HashMap<String, Object> addMemberDo(@RequestParam String sel_club_idx,@RequestParam String club_idx) {
+		logger.info("club_idx:"+sel_club_idx);
+		
+		// 해당 idx의 참여 확정자 명단 불러오기
+		ArrayList<ClubDTO> member = clubService.clubMember(sel_club_idx);
+		for (ClubDTO member1 : member) {
+			String member_idx = member1.getMember_idx();
+			int chk = clubService.clubApplyChk(club_idx, member_idx);
+			
+			if(chk==0) {
+				clubService.clubApply(club_idx, member_idx);
+				clubService.applyAccept(club_idx, member_idx);				
+				// 채팅방 입장후 채팅생성
+				chatservice.clubchatjoin(club_idx, Integer.parseInt(member_idx));
+			}			
+		}
+			
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("sucess", true);
+		return result;
+	}
+	
+	@RequestMapping("/checkNum.ajax")
+	@ResponseBody
+	public HashMap<String, Object> checkNum(@RequestParam String sel_club_idx,@RequestParam String club_idx) {
+		
+		//sel_club_idx 를 이용해서 확정 인원 구해오기
+		int sel_club_num = clubService.meetNum(sel_club_idx);
+		
+		// club_idx를 이용해서 추가 가능한 인원 구해오기 
+		// 1. club_idx의 모집 입원 
+		int club_num = clubService.clubNum(club_idx);
+		// 1. club_idx 의 확정인원
+		int meet_num = clubService.meetNum(club_idx);
+		
+		int need_num = club_num - meet_num;
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		logger.info("need_num : " + need_num);
+		logger.info("sel_club_num : " + sel_club_num);
+		
+		if(need_num<sel_club_num) {
+			result.put("success", false);
+			result.put("msg", "모집 가능 인원보다 많습니다. ");
+			
+		}else {
+			result.put("success", true);
+		}
+		
+		
+		return result;
+	}
+	
+	
+	
+	@RequestMapping("/clubReplyList.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> clubReplyList(@RequestParam String page,@RequestParam String club_idx) {
+		HashMap<String, Object> reply = clubService.replyList(page,club_idx);
+		return reply; 
+	}
+	
+	@RequestMapping("/clubReplyWrite.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> clubReplyWrite(@RequestParam String club_idx,@RequestParam String reply_content,HttpSession session) {
+		String member_idx = String.valueOf(session.getAttribute("loginIdx")); 
+		clubService.clubReplyWrite(member_idx,reply_content,club_idx);
+		HashMap<String, Object> reply = new HashMap<String, Object>();
+		reply.put("success", true);
+		return reply; 
+	}
+	
+	@RequestMapping("/clubReplyDelete.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> clubReplyDelete(@RequestParam String reply_idx) {
+		
+		clubService.clubReplyDelete(reply_idx);
+		HashMap<String, Object> reply = new HashMap<String, Object>();
+		reply.put("success", true);
+		return reply; 
+	}
+	
+	
+	@RequestMapping("/clubReplyUpdate.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> clubReplyUpdate(@RequestParam String reply_idx,@RequestParam String reply_content) {
+		
+		clubService.clubReplyUpdate(reply_idx,reply_content);
+		HashMap<String, Object> reply = new HashMap<String, Object>();
+		reply.put("success", true);
+		return reply; 
+	}
+	
+	
+	
+	
+	
+	
 }
