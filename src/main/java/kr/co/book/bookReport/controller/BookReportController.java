@@ -22,7 +22,6 @@ public class BookReportController {
 	
 	@Autowired BookReportService service;
 	
-
 	@PostMapping(value="/BookReportWrite.do")
 	public String BookReportWrite(HttpSession session,@RequestParam HashMap<String, String> params,
 			Model model) {

@@ -59,7 +59,7 @@ public class CalenderService {
 		for (int i = 0; i < changeList.size(); i++) {
 			String bookTitle = changeList.get(i).getBookTitle();
 			logger.info("bookTitle : "+bookTitle);
-			String title = "대출("+bookTitle+")";
+			String title = "교환("+bookTitle+")";
 			logger.info("title : "+title);
 			changeList.get(i).setTitle(title);
 			changeList.get(i).setBackgroundColor("#B3C890");
