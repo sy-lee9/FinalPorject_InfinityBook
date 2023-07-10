@@ -14,14 +14,17 @@
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
 
+	   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-
+	    
 		<!-- script -->
-		<script src="/js/modernizr.js"></script>
-		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
 		
@@ -34,6 +37,7 @@
 		 		background-color: #C5A992;
 		 		border:none;
 			}
+			
 	
 	</style>	
 	</head>
@@ -113,10 +117,10 @@
 				</th>
 				<td style="width: 55%;">
 					<c:if test="${club.club_state eq 0}"> 
-	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
+	    				<input type="button" style="cursor:default; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
 					</c:if>
 					<c:if test="${club.club_state eq 1}"> 
-	    				<input type="button" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 종료 ">
+	    				<input type="button" style="cursor:default; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 종료 ">
 					</c:if>
 					
 					<table>
@@ -139,7 +143,12 @@
 							<td><div class="author-name">모임인원</div></td>
 							<td colspan="2">
 								<div class="author-name">
-								    ${club.meet_num}/${club.club_num} 명 
+									${club.meet_num}/${club.club_num} 명 &nbsp;
+									<c:if test="${loginIdx == club.member_idx}">
+										<c:if test="${club.club_state eq 0}">
+											<input type="button" onclick="addMember(${club.club_idx})" style=" margin: 0px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="참가자 불러오기">	
+										</c:if>
+									</c:if>
 								</div>
 							</td>
 						</tr>
@@ -194,8 +203,30 @@
 					</c:if>  
 				</th>
 			</tr>
+			
 		</table>
-	</div>
+		<div class="subscribe-content" style="align-items: center;">
+			<div style="display: flex; width: 100%;align-items: center;">
+				<div style="width: 10%;"></div>
+				<textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				<button onclick="clubReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
+					<span>작성</span> 
+					<i class="icon icon-send"></i>
+				</button>
+			</div> 
+			<hr>
+			<div id="list" style="position: relative; text-align:center;">
+				
+			</div>
+			<div  id="paging" >
+				<div class="container" style="text-align:center; width: 600px;">
+			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+			          <ul class="pagination justify-content-center" id="pagination"></ul>
+			        </nav>
+				</div>
+			</div>							
+		</div>
+</div>
 	
 </section>
 
@@ -225,10 +256,173 @@
 
 </body>
 <script>
+var showPage = 1;
 
+$(document).ready(function() {	
+	listCall(showPage);
+});
+
+var club_idx = ${club.club_idx};
+function clubReplyWrite() {
+    
+    $.ajax({
+        url: '/clubReplyWrite.ajax',
+        type: 'post',
+        data: {
+        	'reply_content':document.getElementById("reply_content").value,
+        	'club_idx':club_idx
+        },
+		dataType:'json',
+		success: function(data) {
+			console.log(data.success);
+			if(data.success == 1){
+				document.getElementById("reply_content").value = "";
+				listCall(showPage);	
+			}
+        },
+		error:function(e){
+			console.log(e);
+		}
+    });
+}
+
+function clubReplyDelete(reply_idx) {
+	
+	if(confirm('정말 삭제하시겠습니까?')){
+		$.ajax({
+	        url: '/clubReplyDelete.ajax',
+	        type: 'post',
+	        data: {
+	        	'reply_idx':reply_idx
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data.success);
+				if(data.success == 1){
+					listCall(showPage);	
+				}
+	        }
+	    });
+	}
+    
+    
+}
+
+
+
+function listCall(page){
+	$.ajax({
+		type:'post',
+		url:'clubReplyList.ajax',
+		data:{
+			'page':page,
+			'club_idx':club_idx
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			listPrint(data.list);
+			
+			$('#pagination').twbsPagination({
+				startPage:1, // 시작 페이지
+				totalPages:data.pages,// 총 페이지 수 
+				visiblePages:5,// 보여줄 페이지
+				onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+					console.log(page,showPage);
+					if(page != showPage){
+						showPage=page;
+						listCall(page);
+						
+					}
+				}
+	         });
+		}
+	});
+}
+
+
+function listPrint(list){
+	var content = '';
+	
+	content += '<table style="width:100%;">';
+	
+	//r.reply_idx, c.code_code, m.member_nickname, r.reply_content, r.idx , r.reg_date 
+	list.forEach(function(list){
+	    content += '<tr>';
+	    content += '<th style="width:10%;"></th>';
+	    content += '<th style="width:10%;">'+list.member_nickname+'</th>';
+	    content += '<th style="width:55%;">'+list.reply_content+'</th>';
+	    content += '<th style="width:15%;">'+list.reg_date+'</th>';
+	    content += '<th style="width:10%;">';
+	    if (${sessionScope.loginIdx} == list.member_idx) {
+	        content += '<a onclick="showEditForm(' + list.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + list.reply_idx + ')"> 삭제</a>';
+	    }
+	    content += '</th>';
+
+	    content += '</tr>';
+	
+	    content += '<tr id="editForm'+list.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
+	    content += '<th style="width:10%;"></th>';
+	    content += '<th style="width:10%;"></th>';
+	    content += '<th colspan="2">';
+	    content += '<input style="width:100%;" type="text" value="' + list.reply_content + '">';
+	    content += '</th>';
+	    content += '<th style="width:15%;">'
+	    content += '<button onclick="clubReplyUpdate('+list.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
+	    content += '<span>수정</span> ';
+	    content += '<i class="icon icon-send"></i>';
+	    content += '</button>';
+	    content += '</th>';
+	    content += '</tr>';
+	});
+	
+	
+
+	
+	content += '</table>';
+	$('#list').empty();
+	$('#list').append(content);
+
+}
+function showEditForm(replyIdx) {
+    var editForm = document.getElementById('editForm' + replyIdx);
+    editForm.style.display = 'table-row';
+}
+
+
+function clubReplyUpdate(reply_idx){
+	var editForm = document.getElementById('editForm' + reply_idx);
+	var inputField = editForm.querySelector('input');
+	var newContent = inputField.value;
+	
+	$.ajax({
+        url: '/clubReplyUpdate.ajax',
+        type: 'post',
+        data: {
+        	'reply_idx':reply_idx,
+        	'reply_content':newContent
+        },
+		dataType:'json',
+		success: function(data) {
+			console.log(data.success);
+			if(data.success == 1){
+				listCall(showPage);	
+			}
+        }
+    });
+	
+}
+	
+	
 var msg = "${msg}";
 if(msg != ""){
 	alert(msg);
+}
+
+function addMember(club_idx){
+	
+	window.open('/addMember.go?club_idx='+club_idx,'Infinity_Book','width=800px,height=600px');
+	
 }
 
 function clubUpdate(club_idx){  
@@ -264,4 +458,4 @@ function clubApply(club_idx){
 	
 }
 </script>
-</html>	
+</html>

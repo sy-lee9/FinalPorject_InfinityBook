@@ -157,6 +157,77 @@ public class ClubService {
 	}
 
 
+	public HashMap<String, Object> addMemberList(String sPage,String member_idx) {
+		HashMap<String, Object> clubs = new HashMap<String, Object>();	
+		ArrayList<ClubDTO> list = null;
+		int page = Integer.parseInt(String.valueOf(sPage)); 
+		int offset = 5*(page-1);
+		int total = 0;
+		
+		total = clubDAO.totalAddMemberList(member_idx);
+		list = clubDAO.addMemberList(member_idx,offset);		
+		int range = total%5  == 0 ? total/5 : total/5+1;
+		page = page>range ? range:page;
+		clubs.put("offset", offset);
+		clubs.put("list", list);
+		clubs.put("currPage", page);
+		clubs.put("pages", range);
+		
+		return clubs;
+	}
+
+
+	public int clubNum(String club_idx) {
+		return clubDAO.clubNum(club_idx);
+	}
+
+
+	public int meetNum(String club_idx) {
+		return clubDAO.meetNum(club_idx);
+		
+	}
+
+
+	public HashMap<String, Object> replyList(String sPage, String club_idx) {
+		HashMap<String, Object> reply = new HashMap<String, Object>();	
+		ArrayList<ClubDTO> list = null;
+		int page = Integer.parseInt(String.valueOf(sPage)); 
+		int offset = 10*(page-1);
+		int total = 0;
+		
+		
+		total = clubDAO.totalReplyList(club_idx);
+		logger.info("total list : "+total);
+		list = clubDAO.clubReplyList(club_idx,offset);
+		logger.info(" list : "+list);
+		
+		int range = total%10  == 0 ? total/10 : total/10+1;
+		page = page>range ? range:page;
+		reply.put("offset", offset);
+		reply.put("list", list);
+		reply.put("currPage", page);
+		reply.put("pages", range);
+		
+		return reply;
+	}
+
+
+	public void clubReplyWrite(String member_idx, String reply_content, String club_idx) {
+		clubDAO.clubReplyWrite(member_idx,reply_content,club_idx);
+		
+	}
+
+
+	public void clubReplyDelete(String reply_idx) {
+		clubDAO.clubReplyDelete(reply_idx);
+	}
+
+
+	public void clubReplyUpdate(String reply_idx, String reply_content) {
+		clubDAO.clubReplyUpdate(reply_idx,reply_content);		
+	}
+
+
 	
 	
 
