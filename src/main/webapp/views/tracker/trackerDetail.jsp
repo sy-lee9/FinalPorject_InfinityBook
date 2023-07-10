@@ -173,7 +173,7 @@
 
 					<div class="col-md-6" style="width: 94%; margin-left: 4%;">
 
-						<div class="subscribe-content" data-aos="fade-up">
+						<div class="subscribe-content">
 							<div style="display: flex; align-items: center;">
 								<textarea id="content" placeholder="메모할 내용을 입력하세요." style="width: 90%; resize: none;"></textarea>
 								<button onclick="trackerAddMemo()" class="btn-subscribe" style="width: 11%; margin-bottom: 2%;">
