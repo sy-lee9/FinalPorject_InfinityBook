@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -132,31 +132,31 @@
   <button class="next slick-arrow">
       <i class="icon icon-arrow-right"></i>
     </button>
-    <ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<i class="icon icon-search"></i> 
-				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
-				<input type="button" id="searchButton" value="검색">	
-			</li>
-		</ul>
-		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list">
-					
-			    </div>
-			    
-			     <div  id="paging" >
-			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-			          <ul class="pagination justify-content-center" id="pagination"></ul>
-			        </nav>
-			      </div>
-			    </div>
+	<ul class="tab">
+		<li class="search-box" style="text-align:center;list-style-type: none;">
+			<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right;">
+			<i class="icon icon-search"></i> 
+			<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="제목 을 입력해주세요" type="search">
+			<input type="button" id="searchButton" value="검색">	
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div id="all-genre" data-tab-content class="active">
+			<div class="row" id="list">
+				
 		    </div>
-    	</div>
-    
-    
-    
+		    
+		     <div  id="paging" >
+		      <div class="container" style="text-align:center; width: 600px;">
+		        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+		          <ul class="pagination justify-content-center" id="pagination"></ul>
+		        </nav>
+		      </div>
+		    </div>
+	    </div>
+	    
+	
+	   </div>  
 </section>
 <div id="footer-bottom">
 	<div class="container">
@@ -203,93 +203,85 @@ $(document).ready(function() {
 
 
 	
-	var showPage = 1;
-	var searchText = '';
+var showPage = 1;
+var searchText = '';
+listCall(showPage);
+	
+$('#searchButton').click(function(){
+	searchText = $('#serchText').val();
 	listCall(showPage);
-		
-	$('#searchButton').click(function(){
-		searchText = $('#serchText').val();
-		listCall(showPage);
-		searchText = 'default';
-		$('#pagination').twbsPagination('destroy');
-	});
-	
-	
-	function listCall(page){
-		   $.ajax({
-		      type:'post',
-		      url:'eventList.ajax',
-		      data:{
-		    	  'page':page,
-		    	  'searchText':searchText
-		      },
-		      dataType:'json',           
-		      success:function(data){
-		         console.log(data);
-		         listPrint(data.list);
-		         
-		        
-		         
-		         $('#pagination').twbsPagination({
-						startPage:1, // 시작 페이지
-						totalPages:data.pages,// 총 페이지 수 
-						visiblePages:5,// 보여줄 페이지
-						onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
-							console.log(page,showPage);
-							if(page != showPage){
-								showPage=page;
-								listCall(page);
-								
-							}
+	searchText = 'default';
+	$('#pagination').twbsPagination('destroy');
+});
+
+
+function listCall(page){
+	   $.ajax({
+	      type:'post',
+	      url:'eventList.ajax',
+	      data:{
+	    	  'page':page,
+	    	  'searchText':searchText
+	      },
+	      dataType:'json',           
+	      success:function(data){
+	         console.log(data);
+	         listPrint(data.list);
+	         
+	        
+	         
+	         $('#pagination').twbsPagination({
+					startPage:1, // 시작 페이지
+					totalPages:data.pages,// 총 페이지 수 
+					visiblePages:5,// 보여줄 페이지
+					onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+						console.log(page,showPage);
+						if(page != showPage){
+							showPage=page;
+							listCall(page);
+							
 						}
-			         });
-		         
-		         
-		         
-		      }
-		   });
-		}
-
-	function listPrint(list) {
-	    var content = '';
-
-	    content += '<div id="products-grid" class="products-grid grid">';
-	    content += '  <figure class="product-style">';
-	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="event" class="product-item">';
-	    content += '      <figcaption> <h>이벤트 등록하기</h> </figcaption>';
-	    content += '    </a>';
-	    content += '  </figure>';
-
-	    if (list.length === 0) {
-	        content += '</div>';
-	        $('#list').empty();
-			$('#list').append(content);
-	        return;
-	    }
-
-	    list.forEach(function(item) {
-	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.event_no + '">';
-	        content += '  <a href="eventDetail.go?event_idx=' + item.event_idx + '">';
-	        content += '    <img src="' + item.library_cover + '" alt="evnet" style="width:230px; height:300px;" class="product-item">';
-	        content += '  </a>';
-	        content += '  <figcaption>';
-	        content += '    <a href="eventDetail.go?event_idx=' + item.event_idx + '">';
-	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.event_idx+'"><h>' + item.event_title + '</h>';
-	        content += '    </br><h>' + item.event_author + '</h>';
-	        content += '    </a>';
-	        content += '  </figcaption>';
-	        content += '</figure>';
-	    });
-
-	    content += '</div>';
-
-	    $('#list').empty();
-		$('#list').append(content);
+					}
+		         });
+	         
+	         
+	         
+	      }
+	   });
 	}
+
+
+
+function listPrint(list) {
+    var content = '';
+    list.forEach(function(item) {
+        
+    	content += '<tr>';
+    	content += '	<td></td>';
+    	if (item.club_state=="0") {
+    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
+		}else{
+    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
+		}
+    	content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
+    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
+	    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
+	    content += item.member_nickname+'<br/>	';
+	    content += item.title.split("-")[0]+'	</td>';
+	    content += '	<td>';
+	    content += item.code_codename+'<br/>	';
+	    content += item.club_meetdate.split(" ")[0]+'<br/>'+item.club_meetdate.split(" ")[1]+'</td>';
+	    
+	    content += '	<td></td>';
+        content += '</tr>';
+    });
+
+    content += '</table>'; 
+
+    $('#list').empty();
+	$('#list').append(content);
+}
 
 </script>
 
-</html>	 --%>
+</html>	

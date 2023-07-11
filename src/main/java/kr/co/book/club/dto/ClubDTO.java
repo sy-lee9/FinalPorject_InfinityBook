@@ -28,6 +28,7 @@ public class ClubDTO {
     
     
     private String code_codename;
+    private String code_code;
     private String code_upcode;
     
     
@@ -39,7 +40,51 @@ public class ClubDTO {
     private String member_grade;
     private String member_level;
     
+    private String parent_idx;
+    private String reply_idx;
+    private String idx;
+    private String reply_content;
+    private String reg_date;
     
+    
+    public String getIdx() {
+		return idx;
+	}
+	public void setIdx(String idx) {
+		this.idx = idx;
+	}
+	public String getReply_content() {
+		return reply_content;
+	}
+	public void setReply_content(String reply_content) {
+		this.reply_content = reply_content;
+	}
+	public String getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+	private String reply_blind;
+    
+	public String getParent_idx() {
+		return parent_idx;
+	}
+	public void setParent_idx(String parent_idx) {
+		this.parent_idx = parent_idx;
+	}
+	public String getReply_idx() {
+		return reply_idx;
+	}
+	public void setReply_idx(String reply_idx) {
+		this.reply_idx = reply_idx;
+	}
+	public String getReply_blind() {
+		return reply_blind;
+	}
+	public void setReply_blind(String reply_blind) {
+		this.reply_blind = reply_blind;
+	}
 	public String getClub_idx() {
 		return club_idx;
 	}
@@ -189,6 +234,12 @@ public class ClubDTO {
 	}
 	public void setMeet_num(String meet_num) {
 		this.meet_num = meet_num;
+	}
+	public String getCode_code() {
+		return code_code;
+	}
+	public void setCode_code(String code_code) {
+		this.code_code = code_code;
 	}
    
         
