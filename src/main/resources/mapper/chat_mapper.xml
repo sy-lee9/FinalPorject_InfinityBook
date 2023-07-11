@@ -12,8 +12,7 @@
 			JOIN chat_room cr ON c.code_idx = cr.code_idx AND c.idx = cr.idx
 			JOIN member m ON cr.member_idx = m.member_idx
 			WHERE cr.member_idx = #{member_idx} AND cr.chat_room_state = 0
-			AND c.chat_idx IN (SELECT MAX(chat_idx) FROM chat GROUP BY idx)
-			GROUP BY c.chat_idx
+			AND c.chat_idx IN (SELECT MAX(chat_idx) FROM chat WHERE chat_sender = #{member_idx})
 			ORDER BY c.chat_idx DESC
 		</select>		
 		
