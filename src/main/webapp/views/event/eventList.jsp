@@ -129,15 +129,15 @@
 
 				<div class="slide-item">
 					<img src="/images/이벤트 배너.png" alt="Event 1"
-						style="width: 550px; margin: 0 auto;">
+						style="width: 550px; margin: 0 auto;" onclick="location.href='eventDetail.go'">
 				</div>
 				<div class="slide-item">
 					<img src="/images/이벤트 배너.png" alt="Event 2"
-						style="width: 550px; margin: 0 auto;">
+						style="width: 550px; margin: 0 auto;" onclick="location.href='eventDetail.go'">
 				</div>
 				<div class="slide-item">
 					<img src="/images/이벤트 배너.png" alt="Event 3"
-						style="width: 550px; margin: 0 auto;">
+						style="width: 550px; margin: 0 auto;" onclick="location.href='eventDetail.go'">
 				</div>
 			</div>
 		</div>
@@ -258,15 +258,11 @@
 	 showPage=page;
 	 listCall(page);
 	
+		 }
 	 }
-	 }
-	 });
+	});
 	
 	
-	
-	 }
-	 });
-	 }
 
 	function listPrint(list) {
 		var content = '';
