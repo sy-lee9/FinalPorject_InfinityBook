@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.book.bookReport.dto.BookReportDTO;
 import kr.co.book.bookReport.service.BookReportService;
 
 @Controller
@@ -24,20 +25,33 @@ public class BookReportController {
 	
 	
 	@PostMapping(value="/BookReportWrite.do")
-	public String BookReportWrite(HttpSession session,@RequestParam HashMap<String, String> params,
+	public String BookReportWrite(HttpSession session,@RequestParam HashMap<String, Object> params,
 			Model model) {
 		
 		String member_idx = session.getAttribute("loginIdx").toString();
 		params.put("member_idx", member_idx);
-		service.write(params);
 		
-		return "";
+		
+		return service.report(params);
 	}
 	
 	@GetMapping(value="/BookReportWrite.go")
 	public String WriteBookReport() {
 		
 		return "BookReportWrite";
+	}
+	
+	@GetMapping(value="/BookReportDetail")
+	public String BookReportDetail(String book_report_idx, Model model) {
+		
+		BookReportDTO dto = service.bookReportDetail(book_report_idx);
+		HashMap<String,Object> bookinfo = service.getBookInfo(dto.getIsbn());
+		
+		
+		
+		model.addAttribute("report", dto);
+		
+		return "BookReportDetail";
 	}
 
 
