@@ -4,63 +4,55 @@
 <head>
 <meta charset="UTF-8">
 <title>Basic Editor</title>
-
-<link rel="stylesheet" href="/richtexteditor/rte_theme_default.css">
-<link rel="stylesheet" href="/richtexteditor/res/style.css">
-
-<script src="/richtexteditor/rte.js"></script>
-<script src="/richtexteditor/plugins/all_plugins.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="author" content="">
+	    <meta name="keywords" content="">
+	    <meta name="description" content="">
+	    
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
+	    <link rel="stylesheet" type="text/css" href="/style.css">
+	    
+		<!-- script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>  
+		<script src="/js/modernizr.js"></script>		
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
 <style>
-	input[type="text"]{
-		width: 100%;
-		border: 1px solid lightgray;
-	}
-	table{
-		margin-left: 45px;
-	}
-	table, th, td{
-		border: 1px solid lightgray;
-		border-collapse: collapse;
-	}
-	
-	#content{
-		display: none;		
-	}
-	
+
 </style>
 </head>
 <body>
-		<table>
+		<table style="width:100%; text-align:center;">
 			<tr>
-				<td>${inquiry.inquiry_idx}</td>
+				<td colspan="2" style="text-align:center;">${inquiry.inquiry_title}</td>
 			</tr>
 			<tr>
-				<td>${inquiry.code_idx}</td>
+				<td colspan="2" style="text-align:center;">${inquiry.member_nickname}</td>
 			</tr>
 			<tr>
-				<td>${inquiry.title}</td>
-			</tr>
-			<tr>
-				<td>${inquiry.user_name}</td>
+				<td colspan="2" style="text-align:center;">${inquiry.inquiry_regdate}</td>
 			</tr>			
 			<tr>
-				<td>
-					<div id="div_editor"></div>
-					
+				<td colspan="2" style="text-align:center;">				
+					${inquiry.inquiry_content}													
 				</td>
 			</tr>	
 			<tr>
-				<td>
-					<button onclick="location.href=/inquiryrelplywrite.go?inquiry_idx=${inquiry.inquiry_idx}&code_idx=${inquiry.code_idx}">답변 하기</button>
-				</td>
-				<td>
-					<button onclick="location.href=/inquirylist.go">리스트</button>
+				<td style="text-align:center;">
+					<button onclick="location.href='/inquiryreplywrite.go?inquiry_idx=${inquiry.inquiry_idx}&code_idx=${inquiry.code_idx}'">답변 하기</button>
+				</td>		
+				<td style="text-align:center;">
+					<button onclick="location.href='/myinquirylist.go'">리스트</button>
 				</td>
 			</tr>	
 		</table>	
-		<div id="content">${inquiry.inquiry_content}</div>		
 </body>
 <script>
 /*
@@ -70,9 +62,7 @@
 	config.toolbar="simple";
 	config.toolbar_simple="{save, print, html2pdf, code}"
 */	
-	var editor = $('#div_deitor');
-	editor.setHTMLCode($("#content").html()); // editor 에 내용 넣기	
-	editor.setReadOnly();
+
 	
 
 </script>

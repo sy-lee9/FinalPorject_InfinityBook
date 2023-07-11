@@ -37,14 +37,14 @@
 </style>
 </head>
 <body>
-	<h3 id="title" style="text-align: center;">내 문의 내역</h3>
+	<h3 id="title" style="text-align: center;">문의 내역</h3>
 	<!-- 문의 종류 필터링  -->
 	<select id="categoryCode">
 		<option value="default">문의 종류</option>
-		<option value="61">이벤트 문의</option>
-		<option value="62">계정 문의</option>						
-		<option value="63">결제 문의</option>
-		<option value="64">기타 문의</option>
+		<option value="64">이벤트 문의</option>
+		<option value="65">계정 문의</option>						
+		<option value="66">결제 문의</option>
+		<option value="67">기타 문의</option>
 	</select>
 	
 	<!-- 처리 여부 필터링  -->
@@ -54,20 +54,24 @@
 		<option value="true">처리완료</option>
 	</select>
 	
-	<div style="text-align: right;">			
-		<button onclick="location.href='inquirywrite.go'">문의 하기</button>				
-	</div>
+		<ul class="tab">
+			<li class="search-box" style="text-align:center;list-style-type: none;">				
+				<i class="icon icon-search"></i> 
+				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="닉네임 을 입력해주세요" type="search">
+				<input type="button" id="searchButton" value="검색">	
+			</li>
+		</ul>
 	
 	<hr/>
 	
 		<table style="width:100%; text-align:center;">
 			<thead>
 				<tr id="thead">
-					<th width="20%" style="text-align:center"> 문의 종류 </th>
-					<th width="20%" style="text-align:center"> 문의 제목 </th>				
+					<th width="20%" style="text-align:center"> 종류 </th>
+					<th width="20%" style="text-align:center"> 제목 </th>				
 					<th width="20%" style="text-align:center"> 작성자 </th>
-					<th width="20%" style="text-align:center"> 문의 일자 </th>
-					<th width="20%" style="text-align:center"> 문의 상태 </th>
+					<th width="20%" style="text-align:center"> 작성 일자 </th>
+					<th width="20%" style="text-align:center">  상태 </th>
 				</tr>
 			</thead>  
 			<tbody id="inquiry_list">
@@ -89,7 +93,8 @@
 var showPage = 1;
 var selectedcategoryCode = 'default';
 var selectedprocess = 'default';
-var content = '';
+var searchText = 'default';
+
 
 listCall(showPage);
 
@@ -111,6 +116,26 @@ $('#inqProcess').change(function(){
    $('#inquiry_pagination').twbsPagination('destroy');
 });
 
+// 검색 
+$('#searchButton').click(function(){
+	searchText = $('#serchText').val();
+	listCall(showPage);
+	searchText = 'default';
+	$('#inquiry_pagination').twbsPagination('destroy');
+	$('#serchText').val('');
+});
+
+// 엔터키 입력시
+$('#serchText').on('keyup',function(ev){
+	if(ev.keyCode == 13){
+		searchText = $('#serchText').val();
+		listCall(showPage);
+		searchText = 'default';
+		$('#inquiry_pagination').twbsPagination('destroy');
+		$('#serchText').val('');
+	}	
+	
+});
 
 function listCall(page){
 	   $.ajax({
@@ -119,7 +144,8 @@ function listCall(page){
 	      data:{
 	    	  'page':page,
 	    	  'categoryCode' : selectedcategoryCode,
-	    	  'inqProcess' : selectedprocess
+	    	  'inqProcess' : selectedprocess,
+	    	  'searchText': searchText
 	      },
 	      dataType:'json',           
 	      success:function(data){
@@ -146,20 +172,20 @@ function listCall(page){
 }	
 
 function listPrint(list) {
-			
+	var content = '';
     if (list.length > 0 ){
     	list.forEach(function(item) {
-            content = '<tr>';
-            content += '	<td width="20%" style="text-align:center;">'+'<a href="/inquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';
-            if(item.code_idx == 61){
+            content += '<tr>';
+            if(item.code_idx == 64){
             	content += '	<td width="20%" style="text-align:center;">이벤트 문의</td>';            	      	
-            }else if(item.code_idx == 62){
+            }else if(item.code_idx == 65){
             	content += '	<td width="20%" style="text-align:center;">계정 문의</td>';	  
-            }else if(item.code_idx == 63){
+            }else if(item.code_idx == 66){
             	content += '	<td width="20%" style="text-align:center;">결제 문의</td>';
-            }else if(item.code_idx == 64){
+            }else if(item.code_idx == 67){
             	content += '	<td width="20%" style="text-align:center;">기타 문의</td>';
-            }      
+            }
+            content += '	<td width="20%" style="text-align:center;">'+'<a href="/inquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';      
             content += '	<td width="20%" style="text-align:center;">'+item.member_nickname+'</td>';
             content += '	<td width="20%" style="text-align:center;">'+item.inquiry_regdate+'</td>';
             if (item.inquiry_state == 1) {
@@ -167,7 +193,15 @@ function listPrint(list) {
     		}else if(item.inquiry_state == 0){
     			content += '	<td width="20%" style="text-align:center;">미처리</td>';
     		}            
-    		content += '</tr>'
+   			content += '</tr>'    		
+	    	content += '<tr id="reReplyContentInner' + item.inquiry_idx + '">'; // 답글을 출력할 내부 요소
+    	    content += '</tr>';
+    		
+       	    reReplyCall(item.inquiry_idx, function(replyContent) {
+   				$('#reReplyContentInner' + item.inquiry_idx).html(replyContent); // 수정된 부분: 리댓 내용을 출력할 내부 요소에 추가
+   	    	});
+    		
+    		
     	});	
     }else {
     	content = '<tr><td colspan="5" style="text-align:center;">문의 내역이 없습니다.</td></tr>';    	
@@ -178,7 +212,35 @@ function listPrint(list) {
 }
 
 
+function reReplyCall(inquiry_idx, callback) {
+	  console.log(inquiry_idx);
+	  $.ajax({
+	    type: 'post',
+	    url: 'inquiryreplylist.ajax',
+	    data: {
+	      'inquiry_idx': inquiry_idx
+	    },
+	    dataType: 'json',
+	    success: function(data) {
+	      console.log(data);
+	      var replyContent = reReplyPrint(data.list);
+	      callback(replyContent);
+	    }
+});
+}
 
+function reReplyPrint(replyList) {
+	  var content = '';
+	  replyList.forEach(function(reply) {
+		content += '<th style="width:20%; text-align:center;">'+'[답변]'+'</th>';		
+		content += '<td style="width:20%; text-align:center;">'+'<a href="/inquirydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
+	    content += '<td style="width:20%; text-align:center;">' + reply.member_nickname + '</td>';
+	    content += '<td style="width:20%; text-align:center;">' + reply.inquiry_regdate+'</td>';
+	    content += '<th style="width:20%; text-align:center;"></th>';
+	    
+	  });
+	  return content;
+}
 
 </script>
 </html>

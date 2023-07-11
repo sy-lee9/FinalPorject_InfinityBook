@@ -41,10 +41,10 @@
 	<!-- 문의 종류 필터링  -->
 	<select id="categoryCode">
 		<option value="default">문의 종류</option>
-		<option value="61">이벤트 문의</option>
-		<option value="62">계정 문의</option>						
-		<option value="63">결제 문의</option>
-		<option value="64">기타 문의</option>
+		<option value="64">이벤트 문의</option>
+		<option value="65">계정 문의</option>						
+		<option value="66">결제 문의</option>
+		<option value="67">기타 문의</option>
 	</select>
 	
 	<!-- 처리 여부 필터링  -->
@@ -63,11 +63,11 @@
 		<table style="width:100%; text-align:center;">
 			<thead>
 				<tr id="thead">
-					<th width="20%" style="text-align:center"> 문의 종류 </th>
-					<th width="20%" style="text-align:center"> 문의 제목 </th>				
+					<th width="20%" style="text-align:center"> 종류 </th>
+					<th width="20%" style="text-align:center"> 제목 </th>				
 					<th width="20%" style="text-align:center"> 작성자 </th>
-					<th width="20%" style="text-align:center"> 문의 일자 </th>
-					<th width="20%" style="text-align:center"> 문의 상태 </th>
+					<th width="20%" style="text-align:center"> 작성 일자 </th>
+					<th width="20%" style="text-align:center"> 상태 </th>
 				</tr>
 			</thead>  
 			<tbody id="myinquiry_list">
@@ -149,17 +149,17 @@ function listPrint(list) {
 			
     if (list.length > 0 ){
     	list.forEach(function(item) {
-            content = '<tr>';
-            content += '	<td width="20%" style="text-align:center;">'+'<a href="/myinquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';
-            if(item.code_idx == 61){
-            	content += '	<td width="20%" style="text-align:center;">이벤트 문의</td>';            	      	
-            }else if(item.code_idx == 62){
-            	content += '	<td width="20%" style="text-align:center;">계정 문의</td>';	  
-            }else if(item.code_idx == 63){
-            	content += '	<td width="20%" style="text-align:center;">결제 문의</td>';
-            }else if(item.code_idx == 64){
-            	content += '	<td width="20%" style="text-align:center;">기타 문의</td>';
-            }      
+    		content = '<tr>';
+    		 if(item.code_idx == 64){
+             	content += '	<td width="20%" style="text-align:center;">이벤트 문의</td>';            	      	
+             }else if(item.code_idx == 65){
+             	content += '	<td width="20%" style="text-align:center;">계정 문의</td>';	  
+             }else if(item.code_idx == 66){
+             	content += '	<td width="20%" style="text-align:center;">결제 문의</td>';
+             }else if(item.code_idx == 67){
+             	content += '	<td width="20%" style="text-align:center;">기타 문의</td>';
+             } 
+            content += '	<td width="20%" style="text-align:center;">'+'<a href="/myinquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';                
             content += '	<td width="20%" style="text-align:center;">'+item.member_nickname+'</td>';
             content += '	<td width="20%" style="text-align:center;">'+item.inquiry_regdate+'</td>';
             if (item.inquiry_state == 1) {
@@ -167,7 +167,14 @@ function listPrint(list) {
     		}else if(item.inquiry_state == 0){
     			content += '	<td width="20%" style="text-align:center;">미처리</td>';
     		}            
-    		content += '</tr>'
+    		content += '</tr>'    		
+    		content += '<tr id="reReplyContentInner' + item.inquiry_idx + '">'; // 답글을 출력할 내부 요소
+    	    content += '</tr>';
+    	    
+    	    reReplyCall(item.inquiry_idx, function(replyContent) {
+				$('#reReplyContentInner' + item.inquiry_idx).html(replyContent); // 수정된 부분: 리댓 내용을 출력할 내부 요소에 추가
+	    	});
+    		
     	});	
     }else {
     	content = '<tr><td colspan="5" style="text-align:center;">문의 내역이 없습니다.</td></tr>';    	
@@ -175,6 +182,36 @@ function listPrint(list) {
     
     $('#myinquiry_list').empty();
 	$('#myinquiry_list').append(content);
+}
+
+function reReplyCall(inquiry_idx, callback) {
+	  console.log(inquiry_idx);
+	  $.ajax({
+	    type: 'post',
+	    url: 'inquiryreplylist.ajax',
+	    data: {
+	      'inquiry_idx': inquiry_idx
+	    },
+	    dataType: 'json',
+	    success: function(data) {
+	      console.log(data);
+	      var replyContent = reReplyPrint(data.list);
+	      callback(replyContent);
+	    }
+  });
+}
+
+function reReplyPrint(replyList) {
+	  var content = '';
+	  replyList.forEach(function(reply) {
+		content += '<th style="width:20%; text-align:center;">'+'[답변]'+'</th>';		
+		content += '<td style="width:20%; text-align:center;">'+'<a href="/inquirydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
+	    content += '<td style="width:20%; text-align:center;">' + reply.member_nickname + '</td>';
+	    content += '<td style="width:20%; text-align:center;">' + reply.inquiry_regdate+'</td>';
+	    content += '<th style="width:20%; text-align:center;"></th>';
+	    
+	  });
+	  return content;
 }
 
 

@@ -37,10 +37,11 @@ public class AdminInquiryController {
 		
 		return mav;
 	}
+	
 	// 문의 답변 이동
 	@RequestMapping(value = "/inquiryreplywrite.go")
 	public String inquiryreplywriteForm(@RequestParam String inquiry_idx,@RequestParam String code_idx,Model model) {
-		
+		logger.info(inquiry_idx+"/"+code_idx);
 		model.addAttribute("inquiry_idx", inquiry_idx);
 		model.addAttribute("code_idx", code_idx);
 		return "/inquiry/inquiryreplywrite";
@@ -54,8 +55,15 @@ public class AdminInquiryController {
 		params.put("member_idx", loginIdx);
 		service.inquiryreplywrite(params);
 		
-		return "";
+		return "/inquiry/inquirylist";
 	}	
+	
+	// 문의 리스트
+	@RequestMapping(value = "/inquirylist.go")
+	public String myinquirylistForm() {		
+		
+		return "/inquiry/inquirylist";
+	}
 	
 	// 문의 리스트 불러오기
 	@RequestMapping(value = "/inquirylist.ajax")

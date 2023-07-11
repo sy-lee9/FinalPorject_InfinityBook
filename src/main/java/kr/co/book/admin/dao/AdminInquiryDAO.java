@@ -34,4 +34,20 @@ public interface AdminInquiryDAO {
 
 	ArrayList<MyInquriyDTO> inquiryListAll(int offset, Object inqstate, String categoryCode);
 
+	int totalinqSearchCount(String searchText);
+
+	ArrayList<MyInquriyDTO> inquirySearchList(int offset, String searchText);
+
+	int totalinqokSearchCount(Object inqstate, String searchText);
+
+	ArrayList<MyInquriyDTO> inquiryOkSearchList(int offset, Object inqstate, String searchText);
+
+	int totalinqSearchCountfilter(String categoryCode, String searchText);
+
+	ArrayList<MyInquriyDTO> inquirySearchListFilter(int offset, String categoryCode, String searchText);
+
+	int totalinqSearchCountAll(Object inqstate, String categoryCode, String searchText);
+
+	ArrayList<MyInquriyDTO> inquirySearchListAll(int offset, Object inqstate, String categoryCode, String searchText);
+
 }

@@ -97,6 +97,17 @@ public class MyInquiryService {
 		return dao.myinquirydetail(inquiry_idx);
 	}
 
+	// 내 문의 답변 리스트
+	public HashMap<String, Object> myinquiryreplylist(String reply_idx) {
+		HashMap<String, Object> reply = new HashMap<String, Object>();
+		ArrayList<MyInquriyDTO> list = null;
+		
+		list = dao.myinquiryreplylist(reply_idx);
+		reply.put("list", list);
+		
+		return reply;
+	}
+
 
 
 }

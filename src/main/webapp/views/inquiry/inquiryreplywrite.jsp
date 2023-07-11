@@ -25,7 +25,7 @@
 </head>
 <body>
 	<form id="inquiry" action="/inquiryreplywrite.do" method="post">
-	<input type="hidden" name="inpquiry_idx" value="${inquiry_idx}"/>
+	<input type="hidden" name="inquiry_idx" value="${inquiry_idx}"/>
 	<input type="hidden" name="code_idx" value="${code_idx}"/>
 		<table>			
 			<tr>

@@ -30,10 +30,10 @@
 				<td>
 					<select name="code_idx" id="code_idx">
 					<option value="default">문의 종류</option>
-						<option value="61">이벤트 문의</option>
-						<option value="62">계정 문의</option>						
-						<option value="63">결제 문의</option>
-						<option value="64">기타 문의</option>
+						<option value="64">이벤트 문의</option>
+						<option value="65">계정 문의</option>						
+						<option value="66">결제 문의</option>
+						<option value="67">기타 문의</option>
 					</select>						
 				</td>
 			</tr>

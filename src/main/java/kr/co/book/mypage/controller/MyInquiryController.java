@@ -76,5 +76,15 @@ public class MyInquiryController {
 	}
 	
 	
+	// 내문의 답변 불러오기
+	@RequestMapping(value = "/inquiryreplylist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> myinquiryreplylist(@RequestParam String inquiry_idx) {
+		logger.info(inquiry_idx);
+		HashMap<String, Object> reReply = service.myinquiryreplylist(inquiry_idx);
+		
+		return reReply;
+	}
+	
 
 }

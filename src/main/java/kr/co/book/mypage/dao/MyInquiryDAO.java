@@ -31,6 +31,8 @@ public interface MyInquiryDAO {
 
 	ArrayList<MyInquriyDTO> myinquiryListAll(int offset, String string, Object inqstate, String categoryCode);
 
+	ArrayList<MyInquriyDTO> myinquiryreplylist(String reply_idx);
+
 	
 	
 

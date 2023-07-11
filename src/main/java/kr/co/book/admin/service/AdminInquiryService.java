@@ -49,6 +49,7 @@ public class AdminInquiryService {
 		int page = Integer.parseInt(String.valueOf(params.get("page")));		
 		String categoryCode = String.valueOf(params.get("categoryCode"));
 		String inqProcess = String.valueOf(params.get("inqProcess"));
+		String searchText = String.valueOf(params.get("searchText"));
 		Object inqstate;
 		
 		if (inqProcess.equals("default")) {
@@ -63,39 +64,55 @@ public class AdminInquiryService {
 		int total = 0;
 		int range = 0;
 		offset = 10*(page - 1);
+		if(!searchText.equals("default")) {
+			if (categoryCode.equals("default")) {
+		        if (inqProcess.equals("default")) {
+		        	// 필터, 처리여부 선택 이 없을 경우
+		            total =dao.totalinqSearchCount(searchText);           
+		    		list = dao.inquirySearchList(offset,searchText);	    		
+		        }else {	        	
+		        	// 처리여부만 선택 했을 경우
+		            total = dao.totalinqokSearchCount(inqstate,searchText);           
+		    		list = dao.inquiryOkSearchList(offset,inqstate,searchText);
+		        }
+		    }else {
+		        if (inqProcess.equals("default")) {
+		        	// 필터 선택은 했지만 처리여부를 선택 하지 않은 경우
+		            total = dao.totalinqSearchCountfilter(categoryCode,searchText);         	    		
+		    		list = dao.inquirySearchListFilter(offset,categoryCode,searchText);
+		        } else {
+		        	// 필터 선택, 처리여부를 선택 한경우
+		            total = dao.totalinqSearchCountAll(inqstate, categoryCode,searchText);       	    		
+		    		list = dao.inquirySearchListAll(offset,inqstate,categoryCode,searchText);
+		        }
+		    }
+		}else {
+			if (categoryCode.equals("default")) {
+		        if (inqProcess.equals("default")) {
+		        	// 필터, 처리여부 선택 이 없을 경우
+		            total =dao.totalinqCount();         
+		    		list = dao.inquiryList(offset);	    		
+		        }else {	        	
+		        	// 처리여부만 선택 했을 경우
+		            total = dao.totalinqokCount(inqstate);   
+		    		list = dao.inquiryOkList(offset,inqstate);
+		        }
+		    }else {
+		        if (inqProcess.equals("default")) {
+		        	// 필터 선택은 했지만 처리여부를 선택 하지 않은 경우
+		            total = dao.totalinqCountfilter(categoryCode);           	    		
+		    		list = dao.inquiryListFilter(offset,categoryCode);
+		        } else {
+		        	// 필터 선택, 처리여부를 선택 한경우
+		            total = dao.totalinqCountAll(inqstate, categoryCode);          	    		
+		    		list = dao.inquiryListAll(offset,inqstate,categoryCode);
+		        }
+		    }
+		}
 		
-		if (categoryCode.equals("default")) {
-	        if (inqProcess.equals("default")) {
-	        	// 필터 선택 이 없을 경우
-	            total =dao.totalinqCount();
-	            range = total%10  == 0 ? total/10 : (total/10)+1;	
-	            page = page>range ? range:page;
-	            
-	    		list = dao.inquiryList(offset);	    		
-	        } else {
-	        	// 처리여부를 선택 했을 경우
-	            total = dao.totalinqokCount(inqstate);
-	            range = total%10  == 0 ? total/10 : (total/10)+1;	           
-	            page = page>range ? range:page;
-	            
-	    		list = dao.inquiryOkList(offset,inqstate);
-	        }
-	    }else {
-	        if (inqProcess.equals("default")) {
-	        	// 필터 선택은 했지만 처리여부를 선택 하지 않은 경우
-	            total = dao.totalinqCountfilter(categoryCode);
-	            range = total%10  == 0 ? total/10 : (total/10)+1;	
-	            page = page>range ? range:page;
-	            	    		
-	    		list = dao.inquiryListFilter(offset,categoryCode);
-	        } else {
-	        	// 필터 선택, 처리여부를 선택 한경우
-	            total = dao.totalinqCountAll(inqstate, categoryCode);
-	            range = total%10  == 0 ? total/10 : (total/10)+1;	
-	            page = page>range ? range:page;	            	    		
-	    		list = dao.inquiryListAll(offset,inqstate,categoryCode);
-	        }
-	    }
+        range = total%10  == 0 ? total/10 : (total/10)+1;	
+        page = page>range ? range:page;	 
+		
 		map.put("offset", offset);
 		map.put("list", list);
 		// 현재 페이지

@@ -32,26 +32,25 @@ public class ChatController {
 	@Autowired ChangeService chgservice;
 	@Autowired RentService rentservice;
 	
-	@RequestMapping(value = "/message_list.go")
-	public String message_list(HttpServletRequest request, HttpSession session) {
-
-		return "/chat/message_list";
-	}
+		@RequestMapping(value = "/message_list.go")
+		public String message_list(HttpServletRequest request, HttpSession session) {
 	
-	// 대화중인 대화 방
+			return "/chat/message_list";
+		}
+	
+		// 대화중인 대화 방
 		@RequestMapping(value = "/message_ajax_list.do")
 		public String message_ajax_list(HttpServletRequest request, HttpSession session) {
 			
-			logger.info("컨트롤 시작");
+
 			String member_idx = session.getAttribute("loginIdx").toString();
 					
-			logger.info("세션?");
 			ChatDTO dto = new ChatDTO();
 			dto.setMember_idx(member_idx);
 			logger.info("컨트롤 서비스 전");
 			// 메세지 리스트
 			ArrayList<ChatDTO> list = service.messageList(dto);
-
+	
 			request.setAttribute("list", list);
 			logger.info("컨트롤 끝");
 			return "/chat/message_ajax_list";
