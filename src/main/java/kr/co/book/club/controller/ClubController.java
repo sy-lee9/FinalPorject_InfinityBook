@@ -336,7 +336,6 @@ public class ClubController {
 		return reply; 
 	}
 	
-	
 	@RequestMapping("/reReplyList.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> reReplyList(@RequestParam String reply_idx) {
@@ -344,4 +343,17 @@ public class ClubController {
 		return reReply; 
 	}
 	
+	@RequestMapping("/nicknameList.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> nicknameList(@RequestParam String club_idx) {
+		ArrayList<ClubDTO> nicknameList = clubService.nicknameList(club_idx);
+		String nickname = "";
+		for (ClubDTO clubDTO : nicknameList) {
+			nickname += clubDTO.getMember_nickname()+" ";
+		}
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("nickname", nickname);
+		return data; 
+	}
 }
