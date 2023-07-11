@@ -214,4 +214,11 @@
 		JOIN code c ON c.code_idx = r.code_idx 
 		WHERE idx =#{param1} AND reply_blind = 0 AND r.code_idx =62
 	</select>
+	
+	<select id="nicknameList" resultType="club">
+		SELECT ca.member_idx, m.member_nickname 
+		FROM club_apply ca
+		JOIN `member` m ON m.member_idx = ca.member_idx 
+		WHERE ca.club_idx = #{param1}
+	</select>
 </mapper>

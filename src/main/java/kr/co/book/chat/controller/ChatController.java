@@ -40,14 +40,11 @@ public class ChatController {
 	
 		// 대화중인 대화 방
 		@RequestMapping(value = "/message_ajax_list.do")
-		public String message_ajax_list(HttpServletRequest request, HttpSession session) {
+		public String message_ajax_list(HttpServletRequest request, HttpSession session) {		
 			
-
-			String member_idx = session.getAttribute("loginIdx").toString();
-					
+			String member_idx = session.getAttribute("loginIdx").toString();					
 			ChatDTO dto = new ChatDTO();
 			dto.setMember_idx(member_idx);
-			logger.info("컨트롤 서비스 전");
 			// 메세지 리스트
 			ArrayList<ChatDTO> list = service.messageList(dto);
 	

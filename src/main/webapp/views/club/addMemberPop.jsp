@@ -153,40 +153,47 @@ function listPrint(list) {
 
 function submit(sel_club_idx){
 	
+	
 	$.ajax({
 	      type:'post',
-	      url:'checkNum.ajax',
+	      url:'nicknameList.ajax',
 	      data:{
-	    	  'sel_club_idx':sel_club_idx,
-	    	  'club_idx':club_idx
+	    	  'club_idx':sel_club_idx
 	      },
 	      dataType:'json',           
 	      success:function(data){
-	    	  if(data.success==true){
-	    		  $.ajax({
-	    		      type:'post',
-	    		      url:'addMember.do',
-	    		      data:{
-	    		    	  'sel_club_idx':sel_club_idx,
-	    		    	  'club_idx':club_idx
-	    		      },
-	    		      dataType:'json',           
-	    		      success:function(data){
-	    		    	  window.opener.location.reload();
-	    		    	  window.close();
-	    		      }
-	    		   });
-	    	  }else{
-	    		  alert(data.msg);
-	    	  }
-	    	  
-	    	  
+	      	if(confirm(data.nickname+'를 불러오시겠습니까?')){
+	      		$.ajax({
+	      	      type:'post',
+	      	      url:'checkNum.ajax',
+	      	      data:{
+	      	    	  'sel_club_idx':sel_club_idx,
+	      	    	  'club_idx':club_idx
+	      	      },
+	      	      dataType:'json',           
+	      	      success:function(data){
+	      	    	  if(data.success==true){
+	      	    		  $.ajax({
+	      	    		      type:'post',
+	      	    		      url:'addMember.do',
+	      	    		      data:{
+	      	    		    	  'sel_club_idx':sel_club_idx,
+	      	    		    	  'club_idx':club_idx
+	      	    		      },
+	      	    		      dataType:'json',           
+	      	    		      success:function(data){
+	      	    		    	  window.opener.location.reload();
+	      	    		    	  window.close();
+	      	    		      }
+	      	    		   });
+	      	    	  }else{
+	      	    		  alert(data.msg);
+	      	    	  }
+	      	    	}
+	      	   });
+	      	}
 	      }
 	   });
-	
-	
-	  
-	         
 	
 }
 

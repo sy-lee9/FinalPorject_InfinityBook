@@ -245,6 +245,12 @@ public class ClubService {
 	}
 
 
+	public ArrayList<ClubDTO> nicknameList(String club_idx) {
+		// TODO Auto-generated method stub
+		return clubDAO.nicknameList(club_idx);
+	}
+
+
 	
 	
 

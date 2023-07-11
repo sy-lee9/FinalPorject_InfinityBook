@@ -416,9 +416,11 @@ function reReplyCall(reply_idx, callback) {
 	    },
 	    dataType: 'json',
 	    success: function(data) {
-	      console.log(data);
-	      var replyContent = reReplyPrint(data.list);
-	      callback(replyContent);
+	      
+	     
+	    	console.log(data);
+	     	var replyContent = reReplyPrint(data.list);
+	    	callback(replyContent);
 	    }
 	  });
 	}
@@ -437,7 +439,7 @@ function reReplyPrint(replyList) {
 	    }
 	    content += '</th>';
 	    content += '</tr>';
-	    content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; // 입력 필드를 감싸는 행
+	    content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; 
 	    content += '<th style="width:15%;"></th>';
 	    content += '<th style="width:10%;"></th>';
 	    content += '<th colspan="2">';
@@ -517,6 +519,7 @@ var msg = "${msg}";
 if(msg != ""){
 	alert(msg);
 }
+
 
 function addMember(club_idx){
 	
