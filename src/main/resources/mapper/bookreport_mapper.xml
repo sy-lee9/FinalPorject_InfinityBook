@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.book.bookReport.dao.BookReportDAO">
+
+	<select id="bookInfoChk" resultType="int">
+		SELECT COUNT(isbn) FROM book WHERE isbn = #{param1}
+	</select>
+	
+	<insert id="saveBook" parameterType="BookReportDTO">
+		INSERT INTO book(isbn,title,cover,author,publisher,description,pubdate,totalPage,reg_member_idx,reg_screen)
+			VALUES(#{isbn},#{title},#{cover},#{author},#{publisher},#{description},#{pubdate},#{totalPage},#{loginIdx},#{jsp})
+	</insert>
+
+	<insert
+		useGeneratedKeys="true"
+		keyColumn="book_report_idx"
+		keyProperty="book_report_idx"
+		id="bookReportWrite" parameterType="HashMap">
+					INSERT INTO book_report (member_idx, ISBN, BOOK_REPORT_TITLE, BOOK_REPORT_CONTENT, BOOK_REPORT_DATE, BOOK_REPORT_HIT, BOOK_REPORT_BLIND, BOOK_REPORT_OPEN) 
+			VALUES(#{member_idx},#{isbn}, #{reportTitle}, #{content}, current_timestamp(), 0, 0,#{reportOpen})
+	</insert>
+	
+	<select id="reportDetail" resultType="BookReportDTO">
+		select * from book_report where book_report_idx = #{book_report_idx}
+	</select>
+	
+	<select id="getBookInfo" resultType="HashMap">
+		select * from book where isbn = #{isbn}
+	</select>
+
+
+
+
+
+
+</mapper>

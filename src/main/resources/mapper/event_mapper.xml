@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.book.event.dao.EventDAO">
+      
+   <!-- <insert 
+      useGeneratedKeys="true"
+      keyColumn="event_idx"
+      keyProperty="event_idx"
+   
+   
+      id="eventWrite" parameterType="kr.co.book.event.dto.EventDAO">
+      INSERT INTO notice(id, notice_title, notice_content)
+         VALUES(#{id},#{notice_title},#{notice_content})
+   </insert> -->
+	
+   <select id="evlist" resultType="event">
+		SELECT *
+			FROM event ORDER BY event_idx DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
+		
+	<select id="totalCount" resultType="int">
+		SELECT COUNT(event_idx) FROM event 
+	</select>
+	
+   <select id="eventSearch" resultType="event">
+      SELECT
+         *
+      FROM event WHERE event_title LIKE CONCAT('%' #{search} '%')
+   </select>         
+      
+   <select id="etotalCountSearch" resultType="int">
+      SELECT COUNT(event_idx) FROM event
+         WHERE event_title LIKE CONCAT('%' #{param1} '%')
+   </select>	
+</mapper>

@@ -39,8 +39,8 @@
 	<h3>감상문 등록</h3>
 	<select name="reportOpen" id="reportOpen">
 	    <option value="select">공개여부</option>
-	    <option value="open">공개</option>
-	    <option value="hide">비공개</option>
+	    <option value="1">공개</option>
+	    <option value="0">비공개</option>
   	</select>
 	<input type="text"  name="reportTitle" value="제목을 입력해주세요."/>
 	<div class="form-group" style="text-align:center;">
