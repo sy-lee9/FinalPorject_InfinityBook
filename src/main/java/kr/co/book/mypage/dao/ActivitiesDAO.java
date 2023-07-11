@@ -1,5 +1,8 @@
 package kr.co.book.mypage.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public interface ActivitiesDAO {
 
 
