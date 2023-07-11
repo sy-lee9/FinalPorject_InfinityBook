@@ -4,8 +4,5 @@
 .settings/
 target/
 src/test/
-<<<<<<< HEAD
 bin/
-=======
-bin/
->>>>>>> origin/master
+

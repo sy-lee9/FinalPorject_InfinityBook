@@ -23,7 +23,7 @@ public class ActivitiesController {
 	
 	@RequestMapping(value = "/activitiesChange.go")
 	public String activitiesChange() {
-		return "activitiesChange";
+		return "/activities/activitiesChange";
 	}
 	
 	@RequestMapping("/activitiesChangeList.ajax") 
@@ -34,5 +34,19 @@ public class ActivitiesController {
 		params.put("loginIdx", loginIdx);
 		return ActivitiesService.getChangeList(params); 
 	}
-
+	
+	@RequestMapping(value = "/activitiesRent.go")
+	public String activitiesRent() {
+		return "/activities/activitiesRent";
+	}
+/*	
+	@RequestMapping("/activitiesChangeList.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> activitiesRentList(@RequestParam HashMap<String, Object> params, HttpSession session) {
+		int loginIdx = (int) session.getAttribute("loginIdx");
+		logger.info("loginIdx : "+loginIdx);
+		params.put("loginIdx", loginIdx);
+		return ActivitiesService.getActivitiesRentList(params); 
+	}
+*/
 }

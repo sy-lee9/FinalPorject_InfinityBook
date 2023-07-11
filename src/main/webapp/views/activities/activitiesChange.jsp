@@ -41,6 +41,13 @@
 			table{
 				font-family: 'IBM Plex Sans KR';	
 			}
+			th{
+				color: black;
+				font-size: 18;
+			}
+			th,td{
+				padding: 2%;
+			}
 		</style>	
 	
 	</head>
@@ -51,10 +58,10 @@
 	
 	<c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="loginAfterBox.jsp" />
+            <jsp:include page="../loginAfterBox.jsp" />
         </c:when>
         <c:otherwise>
-            <jsp:include page="loginBeforeBox.jsp" />            
+            <jsp:include page="../loginBeforeBox.jsp" />            
         </c:otherwise>
     </c:choose>
 	
@@ -132,7 +139,7 @@
 			    
 			     <div  id="paging" >
 			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px; margin-top: 5%;">
 			          <ul class="pagination justify-content-center" id="pagination"></ul>
 			        </nav>
 			      </div>
@@ -154,8 +161,8 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12" style="text-align:center; margin: 3%;">
-							<p style="width: 92%;">Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
+						<div class="col-md-12" style="text-align:center; margin: 10% 0% 3% 0%;">
+							<p style="width: 97%;">Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
 
 						
@@ -179,6 +186,7 @@
 		
 	$('#searchButton').click(function(){
 		searchText = $('#serchText').val();
+		console.log(searchText);
 		listCall(showPage);
 		searchText = 'default';
 		$('#pagination').twbsPagination('destroy');
@@ -235,6 +243,7 @@
 	    	content += '<tr>';
 	    	
 	    	var state = parseInt(item.change_state);
+	    	var reviewChk = parseInt(item.reviewChk);
 	    	
 	    	if (state === 0 || state === 1) {
 	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:blue; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="대기중"></td>';  
@@ -247,7 +256,7 @@
 	    	content += '<td style="text-align:center;"><img src="' + item.myBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.myBook+'</h4></td>';
 	    	content += '<td style="text-align:center;"><img src="' + item.changeBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.changeBook+'</h4></td>';
 	    	
-	    	if (state == 4) {
+	    	if (state == 4 && reviewChk == 0) {
 		    	content += '<td style="text-align:center;">' + item.changer + ' <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
 	    	}else {
 		    	content += '<td style="text-align:center;">' + item.changer + '</td>';
