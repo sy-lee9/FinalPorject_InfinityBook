@@ -197,5 +197,17 @@ public class MemberController {
 		return  map;
 	   }	 
 	   
+	   @RequestMapping(value = "/memberInfoUpdate.go")
+	   public String memberInfoUpdateGo() {
+		   return "/member/memberInfoUpdate";
+	   }
+	   
+	   @RequestMapping(value = "/memberInfo.go")
+	   public ModelAndView memberInfoGo(HttpSession session) {
+		   int loginIdx = (int) session.getAttribute("loginIdx");
+		   logger.info("loginIdx : "+loginIdx);
+		   return service.getMemberInfo(loginIdx);
+	   }
+	   
 	   
 }

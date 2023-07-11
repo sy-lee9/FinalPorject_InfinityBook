@@ -71,7 +71,7 @@
 
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -86,11 +86,15 @@
 								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
 								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
 								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
+								<li class="menu-item has-sub">
+									<a href="#pages" class="nav-link" data-effect="Pages">내정보</a>
 									<ul>
-								        <li><a href="index.move">회원정보</a></li>
-								        <li><a href="about.move">활동내역</a></li>
+								        <li class="active"><a href="index.move">회원정보</a></li>
+								        <li><a href="/activitiesChange.go">활동내역</a></li>
 								     </ul>
+								     <a class="dd-toggle" href="#">
+								     	<span class="icon-plus"></span>
+								     </a>
 								</li>
 							</ul>
 
@@ -180,7 +184,6 @@
 		</div>
 	</div>
 </div>
-
 
 </body>
 <script>

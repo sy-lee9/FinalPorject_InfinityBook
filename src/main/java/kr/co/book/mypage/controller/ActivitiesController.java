@@ -39,8 +39,8 @@ public class ActivitiesController {
 	public String activitiesRent() {
 		return "/activities/activitiesRent";
 	}
-/*	
-	@RequestMapping("/activitiesChangeList.ajax") 
+	
+	@RequestMapping("/activitiesRentList.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> activitiesRentList(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		int loginIdx = (int) session.getAttribute("loginIdx");
@@ -48,6 +48,6 @@ public class ActivitiesController {
 		params.put("loginIdx", loginIdx);
 		return ActivitiesService.getActivitiesRentList(params); 
 	}
-*/
+
 
 }

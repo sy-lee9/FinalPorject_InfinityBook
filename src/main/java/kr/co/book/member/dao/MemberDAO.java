@@ -20,4 +20,6 @@ public interface MemberDAO {
 
 	void RandomPassword(String member_email, String member_nickname, String encodedPassword);
 
+	HashMap<String, Object> getMemberInfo(int loginIdx);
+
 }
