@@ -1,4 +1,4 @@
-package kr.co.book.admin.service;
+package kr.co.book.mypage.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,43 +8,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.book.admin.dao.AdminInquiryDAO;
 import kr.co.book.admin.dto.AdminInquiryDTO;
+import kr.co.book.mypage.dao.MyInquiryDAO;
 import kr.co.book.mypage.dto.MyInquriyDTO;
 
 @Service
-@MapperScan(value={"kr.co.book.admin.dao"})
-public class AdminInquiryService {
+@MapperScan(value={"kr.co.book.mypage.dao"})
+public class MyInquiryService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@Autowired AdminInquiryDAO dao;
+	@Autowired MyInquiryDAO dao;
 
-	// 문의 상세보기
-	public AdminInquiryDTO inquirydetail(String inquiry_idx) {
-
-		return dao.inquirydetail(inquiry_idx);
-	}
-
-	// 문의 답변달기
-	@Transactional
-	public void inquiryreplywrite(HashMap<String, Object> params) {
+	// 내 문의 리스트
+	public HashMap<String, Object> myinquiryList(HashMap<String, Object> params) {
 		
-		// 답변 달고
-		dao.inquiryreplywrite(params);
-		
-		// 상태 변경
-		dao.inquirystateupdate(params);
-		
-		
-	}
-	
-	// 문의 리스트
-	public HashMap<String, Object> inquiryList(HashMap<String, Object> params) {
-
-ArrayList<MyInquriyDTO> list = null;
+		ArrayList<MyInquriyDTO> list = null;
 		
 		int page = Integer.parseInt(String.valueOf(params.get("page")));		
 		String categoryCode = String.valueOf(params.get("categoryCode"));
@@ -67,33 +47,33 @@ ArrayList<MyInquriyDTO> list = null;
 		if (categoryCode.equals("default")) {
 	        if (inqProcess.equals("default")) {
 	        	// 필터 선택 이 없을 경우
-	            total =dao.totalinqCount();
+	            total =dao.totalmyinqCount(params.get("member_idx").toString());
 	            range = total%10  == 0 ? total/10 : (total/10)+1;	
 	            page = page>range ? range:page;
 	            
-	    		list = dao.inquiryList(offset);	    		
+	    		list = dao.myinquiryList(offset,params.get("member_idx").toString());	    		
 	        } else {
 	        	// 처리여부를 선택 했을 경우
-	            total = dao.totalinqokCount(params.get("member_idx").toString(), inqstate);
+	            total = dao.totalmyinqokCount(params.get("member_idx").toString(), inqstate);
 	            range = total%10  == 0 ? total/10 : (total/10)+1;	           
 	            page = page>range ? range:page;
 	            
-	    		list = dao.inquiryOkList(offset,inqstate);
+	    		list = dao.myinquiryOkList(offset,params.get("member_idx").toString(),inqstate);
 	        }
 	    }else {
 	        if (inqProcess.equals("default")) {
 	        	// 필터 선택은 했지만 처리여부를 선택 하지 않은 경우
-	            total = dao.totalinqCountfilter(params,categoryCode);
+	            total = dao.totalmyinqCountfilter(params.get("member_idx").toString(), categoryCode);
 	            range = total%10  == 0 ? total/10 : (total/10)+1;	
 	            page = page>range ? range:page;
 	            	    		
-	    		list = dao.inquiryListFilter(offset,categoryCode);
+	    		list = dao.myinquiryListFilter(offset,params.get("member_idx").toString(),categoryCode);
 	        } else {
 	        	// 필터 선택, 처리여부를 선택 한경우
-	            total = dao.totalinqCountAll(inqstate, categoryCode);
+	            total = dao.totalmyinqCountAll(params.get("member_idx").toString(), inqstate, categoryCode);
 	            range = total%10  == 0 ? total/10 : (total/10)+1;	
 	            page = page>range ? range:page;	            	    		
-	    		list = dao.inquiryListAll(offset,inqstate,categoryCode);
+	    		list = dao.myinquiryListAll(offset,params.get("member_idx").toString(),inqstate,categoryCode);
 	        }
 	    }
 		map.put("offset", offset);
@@ -105,5 +85,18 @@ ArrayList<MyInquriyDTO> list = null;
 		
 		return map;
 	}
+	
+	// 문의 작성
+	public void inquirywrite(HashMap<String, Object> params) {
+		dao.inquirywrite(params);
+	}
+
+	// 내 문의 상세보기
+	public MyInquriyDTO myinquirydetail(String inquiry_idx) {
+		
+		return dao.myinquirydetail(inquiry_idx);
+	}
+
+
 
 }

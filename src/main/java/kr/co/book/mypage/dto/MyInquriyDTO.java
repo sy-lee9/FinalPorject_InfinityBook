@@ -1,10 +1,10 @@
-package kr.co.book.admin.dto;
+package kr.co.book.mypage.dto;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("inquiry")
-public class AdminInquiryDTO {
-
+@Alias("myinquriy")
+public class MyInquriyDTO {
+	
 	//Inquiry
 	private String inquiry_idx;
 	private String inquiry_upidx;
@@ -17,22 +17,20 @@ public class AdminInquiryDTO {
 	//Member
 	private String member_nickname;
 
-	
-	
-	public String getInquiry_upidx() {
-		return inquiry_upidx;
-	}
-
-	public void setInquiry_upidx(String inquiry_upidx) {
-		this.inquiry_upidx = inquiry_upidx;
-	}
-
 	public String getInquiry_idx() {
 		return inquiry_idx;
 	}
 
 	public void setInquiry_idx(String inquiry_idx) {
 		this.inquiry_idx = inquiry_idx;
+	}
+
+	public String getInquiry_upidx() {
+		return inquiry_upidx;
+	}
+
+	public void setInquiry_upidx(String inquiry_upidx) {
+		this.inquiry_upidx = inquiry_upidx;
 	}
 
 	public String getCode_idx() {
@@ -82,6 +80,7 @@ public class AdminInquiryDTO {
 	public void setMember_nickname(String member_nickname) {
 		this.member_nickname = member_nickname;
 	}
+
 	
 	
 	

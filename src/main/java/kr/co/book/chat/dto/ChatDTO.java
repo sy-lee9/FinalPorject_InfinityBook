@@ -1,5 +1,7 @@
 package kr.co.book.chat.dto;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("chat")
@@ -30,24 +32,16 @@ public class ChatDTO {
 		
 	// 신청한 사람
 	private String applyuser;
-	
-	
+
 	
 
-	public String getNicknames() {
-		return nicknames;
+
+	public String getChat_date() {
+		return chat_date;
 	}
 
-	public void setNicknames(String nicknames) {
-		this.nicknames = nicknames;
-	}
-
-	public String getMember_nickname() {
-		return member_nickname;
-	}
-
-	public void setMember_nickname(String member_nickname) {
-		this.member_nickname = member_nickname;
+	public void setChat_date(String chat_date) {
+		this.chat_date = chat_date;
 	}
 
 	public String getLibrary_idx() {
@@ -146,20 +140,28 @@ public class ChatDTO {
 		this.chat_check = chat_check;
 	}
 
-	public String getChat_date() {
-		return chat_date;
-	}
-
-	public void setChat_date(String chat_date) {
-		this.chat_date = chat_date;
-	}
-
 	public String getMember_idx() {
 		return member_idx;
 	}
 
 	public void setMember_idx(String member_idx) {
 		this.member_idx = member_idx;
+	}
+
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
+
+	public String getNicknames() {
+		return nicknames;
+	}
+
+	public void setNicknames(String nicknames) {
+		this.nicknames = nicknames;
 	}
 
 	public String getApplyuser() {
@@ -171,6 +173,8 @@ public class ChatDTO {
 	}
 	
 	
+	
+
 
 	
 	
