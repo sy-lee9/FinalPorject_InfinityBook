@@ -6,6 +6,7 @@
 	
 		<!-- 대화중인 대화 방 -->
 		<select id="message_list" parameterType="chat" resultType="chat">
+		<!-- 
 			SELECT c.chat_idx, c.code_idx, c.idx, GROUP_CONCAT(m.member_nickname SEPARATOR ', ') AS nicknames,
 			c.chat_sender, c.chat_chat, c.chat_date
 			FROM chat c
@@ -14,6 +15,14 @@
 			WHERE cr.member_idx = #{member_idx} AND cr.chat_room_state = 0
 			AND c.chat_idx IN (SELECT MAX(chat_idx) FROM chat WHERE chat_sender = #{member_idx})
 			ORDER BY c.chat_idx DESC
+		-->
+			SELECT chat_idx , code_idx , idx , chat_sender , chat_date  
+			FROM chat WHERE code_idx IN (SELECT code_idx FROM chat_room WHERE member_idx = #{member_idx} AND chat_room_state = 0) 
+			AND idx IN (SELECT idx FROM chat_room WHERE member_idx = #{member_idx} AND chat_room_state = 0) 
+			AND chat_idx IN (SELECT MAX(chat_idx) FROM chat WHERE code_idx IN (SELECT code_idx FROM chat_room WHERE member_idx = #{member_idx} AND chat_room_state = 0) 
+			AND idx IN (SELECT idx FROM chat_room WHERE member_idx = #{member_idx} AND chat_room_state = 0)) 
+			ORDER BY chat_idx DESC;
+		
 		</select>		
 		
 		<!-- 교환 신청한 책 IDX -->
