@@ -30,7 +30,7 @@ input[type="submit"] {
   <input type="password" id="member_pw" name="member_pw" placeholder="비밀번호를 입력하세요.">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="button" onclick="login()" value="로그인" style="display: inline-block; margin-top: -45px;">
   <br>
-  	  <input type="checkbox" id="rememberMe">&nbsp;&nbsp;&nbsp;<label for="rememberMe" style="display: inline-block; vertical-align: middle;">아이디 저장 여부 체크</label>
+  	  <input type="checkbox" id="rememberMe">&nbsp;&nbsp;&nbsp;<label for="rememberMe" style="display: inline-block; vertical-align: middle;">아이디 저장</label>
   <br>
 
   <br>	
@@ -106,7 +106,8 @@ $(document).ready(function() {
 	function deleteCookie(name) {
 	  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 	}
-
+	
+	
 	// 쿠키 가져오기
 	function getCookie(name) {
 	  var nameEQ = name + "=";

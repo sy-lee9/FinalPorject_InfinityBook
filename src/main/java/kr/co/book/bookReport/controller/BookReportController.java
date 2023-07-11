@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.book.bookReport.dto.BookReportDTO;
 import kr.co.book.bookReport.service.BookReportService;
 
+
 @Controller
 public class BookReportController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired BookReportService service;
-	
 	
 	@PostMapping(value="/BookReportWrite.do")
 	public String BookReportWrite(HttpSession session,@RequestParam HashMap<String, Object> params,

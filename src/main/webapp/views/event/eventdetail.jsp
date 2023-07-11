@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -24,58 +24,56 @@
 		<script src="/js/jquery-1.11.0.min.js"></script>
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
+		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+	
+	</style>	
 	</head>
 
 <body>
 
 <div id="header-wrap">
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
-
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
-
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="../loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
+    
 	<header id="header">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" >감상문</a></li>
-								<li class="menu-item"><a href="/tracker/trac kerSerach.go" >트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link">일정</a></li>
+								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link">내 정보</a>
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원 정보</a></li>
-								        <li><a href="about.move">활동 내역</a></li>
-								        <li><a href="styles.move">문의 내역</a></li>
+								        <li class="active"><a href="#">회원 정보</a></li>
+								        <li><a href="#">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
 								</li>								
 							</ul>
@@ -91,13 +89,12 @@
 		</div>
 	</header>
 </div>
-
 <section class="hero-section jarallax">
 	
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title">Library</h2>
+				<h2 class="section-title" style="margin-botton:0px;">Book Club</h2>
 			</div>
 		</div>
 	</div>
@@ -108,44 +105,101 @@
 	<div class="container">
 		<table>
 			<tr>
-				<th rowspan="3" style="width: 40%;">
-					<img src="${book.library_cover}" alt="book" class="single-image">
+				<th style="width: 30%; text-align:center;">
+					<img src="${club.cover}" style="text-align:center; width: 90%;" alt="book" class="single-image">
 				</th>
-				<th rowspan="3" style="width: 5%;">
+				<th style="width: 5%;">
 					
 				</th>
 				<td style="width: 55%;">
-					<input type="button" class="btn btn-outline-accent btn-accent-arrow" value="${book.library_use}">
+					<c:if test="${club.club_state eq 0}"> 
+	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
+					</c:if>
+					<c:if test="${club.club_state eq 1}"> 
+	    				<input type="button" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 종료 ">
+					</c:if>
 					
 					<table>
 						<tr>
-							<th colspan="3"><h3 class="item-title">${book.library_title}</h3></th>
+							<th style="width: 800px;" colspan="3"><h4 class="item-title">${club.club_name}</h4></th>
 						</tr>
 						<tr>
-							<td><div class="author-name">By. ${book.library_author}</div></td>
-							<td><div class="author-name">${book.library_publisher}</div></td>
-							<td><div class="author-name">${book.library_pubdate}</div></td>
+							<td style="width: 30%;"><div class="author-name">모임주최</div></td>
+							<td colspan="2"><div class="author-name">${club.member_nickname}</div></td>
 						</tr>
-						
 						<tr>
-							<td colspan="3">
-								<h4 class="item-title">Book Info</h4>
-								${book.library_description}
+							<td><div class="author-name">선정도서</div></td>
+							<td colspan="2"><div class="author-name">${club.title}</div></td>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임일시</div></td>
+							<td colspan="2"><div class="author-name">${club.club_meetdate}</div></td>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임인원</div></td>
+							<td colspan="2">
+								<div class="author-name">
+								    ${club.meet_num}/${club.club_num} 명 
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<th colspan="3" style="text-align: right;">
-								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
-								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="삭제">
-							</th>
+							<td><div class="author-name">참가자 </div></td>
+							<td colspan="2">
+								<div class="author-name">
+								    <c:forEach items="${member}" var="member">
+								    	${member.member_nickname} 
+								    </c:forEach>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><div class="author-name">모임장소</div></td>
+							<td colspan="2"><div class="author-name">${club.code_codename}</div></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<h4 class="item-title">Book ClubInfo</h4>
+								${club.club_content}
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" style="text-align:center;">
+							<c:if test="${loginIdx == club.member_idx}">
+								<c:if test="${club.club_state eq 0}">
+									<input type="button" onclick="clubUpdate(${club.club_idx})" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집종료">	
+								</c:if>
+								
+							</c:if>
+							<c:if test="${loginIdx != club.member_idx}">
+								<c:if test="${club.club_state eq 0}">
+									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+								</c:if>
+							</c:if>
+							
+								<input type="button" style="padding:5 10 5 10;" onclick="location.href='/clubList.go'" class="btn btn-outline-accent btn-accent-arrow" value="목록 ">
+							</td>
 						</tr>
 					</table>
 				</td>
+				<th style="width: 10%; vertical-align: top; text-align:center;">
+					<c:if test="${loginIdx == club.member_idx}">
+						<input type="button" onclick="clubDelete(${club.club_idx})" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
+						<h3>신청자</h3>
+						<c:forEach items="${apply}" var="apply">
+						${apply.member_nickname} 
+						<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
+						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
+						</c:forEach>
+					</c:if>  
+				</th>
 			</tr>
 		</table>
-	
 	</div>
+	
 </section>
+
+
 
 <div id="footer-bottom">
 	<div class="container">
@@ -170,5 +224,44 @@
 
 
 </body>
+<script>
 
-</html>	 --%>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+
+function clubUpdate(club_idx){  
+
+	if(confirm('모집 종료시 신청은 자동으로 모두 거절 됩니다. \n 모집 종료하시겠습니까?')){
+		location.href='/clubUpdate.do?club_idx='+club_idx;
+	}else{
+		return false;
+	}
+}
+
+//onclick="location.href='/clubDelete.do?club_idx='+${club.club_idx}"
+		
+function clubDelete(club_idx){  
+
+	if(confirm('모임 삭제시 모임 채팅방도 삭제되며 복구가 불가능 합니다.  \n 정말 삭제하시겠습니까?')){
+		location.href='/clubDelete.do?club_idx='+club_idx;
+	}else{
+		return false;
+	}
+}
+
+function clubApply(club_idx){  
+	if(${sessionScope.loginIdx != null}){
+		if(confirm('모임 신청시 취소가 불가능합니다. \n 정말 신청하시겠습니까?')){
+				location.href='/clubApply.do?club_idx='+club_idx;
+		}
+		
+	}else{
+		alert('모임 신청은 로그인 후 가능합니다. ');
+		location.href='/login.go';
+	}
+	
+}
+</script>
+</html>	

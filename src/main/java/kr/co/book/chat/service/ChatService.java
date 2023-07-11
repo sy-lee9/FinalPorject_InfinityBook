@@ -62,6 +62,9 @@ public class ChatService {
 				
 				// 대여 신청한 유저 IDX
 				cto.setApplyuser(dao.rentapplyuser(idx));
+			// 모임일 경우
+			}else if(codeidx == 4) {
+				
 			}
 		}
 		logger.info("서비스 종료");
