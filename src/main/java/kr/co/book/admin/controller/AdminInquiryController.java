@@ -58,9 +58,9 @@ public class AdminInquiryController {
 	}	
 	
 	// 문의 리스트 불러오기
-	@RequestMapping(value = "/myinquirylist.ajax")
+	@RequestMapping(value = "/inquirylist.ajax")
 	@ResponseBody
-	public HashMap<String, Object> myinquirylist(@RequestParam HashMap<String,Object> params, HttpSession session) {
+	public HashMap<String, Object> myinquirylist(@RequestParam HashMap<String,Object> params) {
 		logger.info("{}",params);
 
 		HashMap<String, Object> inquiry = service.inquiryList(params);

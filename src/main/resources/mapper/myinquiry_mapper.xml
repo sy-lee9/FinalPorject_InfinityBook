@@ -9,7 +9,7 @@
 			VALUES(0,#{member_idx},#{code_idx},#{inquiry_title},#{inquiry_content},0,0)
 		</insert>
 		
-		<select id="myinquirydetail" resultType="myinquriy">
+		<select id="myinquirydetail" resultType="myinquiry">
 			SELECT i.inquiry_idx, m.member_nickname, i.code_idx, i.inquiry_title, i.inquiry_content, i.inquiry_regdate, i.inquiry_state
 			FROM inquiry i
 			JOIN member m ON i.member_idx = m.member_idx
@@ -36,7 +36,7 @@
 			WHERE	member_idx = #{param1} AND inquiry_state = #{param2} AND code_idx = #{param3} AND inquiry_blind = 0 	
 		</select>
 		
-		<select id="myinquiryList" resultType="myinquriy">
+		<select id="myinquiryList" resultType="myinquiry">
 			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
 			FROM inquiry i
 			JOIN member m ON i.member_idx = m.member_idx 
@@ -44,7 +44,7 @@
 			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
 		</select>
 		
-		<select id="myinquiryOkList" resultType="myinquriy">
+		<select id="myinquiryOkList" resultType="myinquiry">
 			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
 			FROM inquiry i
 			JOIN member m ON i.member_idx = m.member_idx 
@@ -52,7 +52,7 @@
 			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
 		</select>
 		
-		<select id="myinquiryListFilter" resultType="myinquriy">
+		<select id="myinquiryListFilter" resultType="myinquiry">
 			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
 			FROM inquiry i
 			JOIN member m ON i.member_idx = m.member_idx 
@@ -60,7 +60,7 @@
 			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
 		</select>
 		
-		<select id="myinquiryListAll" resultType="myinquriy">
+		<select id="myinquiryListAll" resultType="myinquiry">
 			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
 			FROM inquiry i
 			JOIN member m ON i.member_idx = m.member_idx 

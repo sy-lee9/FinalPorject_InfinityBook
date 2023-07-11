@@ -19,6 +19,62 @@
 			WHERE inquiry_idx = #{inquiry_idx}
 		</update>
 		
+		<select id="totalinqCount" parameterType="hashmap" resultType="int">
+			SELECT COUNT(inquiry_idx) FROM inquiry 
+			WHERE	inquiry_blind = 0		
+		</select>
+		
+		<select id="inquiryList" resultType="inquiry">
+			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
+			FROM inquiry i
+			JOIN member m ON i.member_idx = m.member_idx 
+			WHERE i.inquiry_blind = 0 
+			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
+		</select>
+		
+		<select id="totalinqokCount" resultType="int">
+			SELECT COUNT(inquiry_idx) FROM inquiry 
+			WHERE	inquiry_state = #{param1} AND inquiry_blind = 0 	
+		</select>
+		
+		<select id="inquiryOkList" resultType="inquiry">
+			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
+			FROM inquiry i
+			JOIN member m ON i.member_idx = m.member_idx 
+			WHERE i.inquiry_state = #{param2} AND i.inquiry_blind = 0 
+			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
+		</select>
+		
+		<select id="totalinqCountfilter" parameterType="hashmap" resultType="int">
+			SELECT COUNT(inquiry_idx) FROM inquiry 
+			WHERE	code_idx = #{param2} AND inquiry_blind = 0 	
+		</select>
+		
+		<select id="inquiryListFilter" resultType="inquiry">
+			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
+			FROM inquiry i
+			JOIN member m ON i.member_idx = m.member_idx 
+			WHERE i.code_idx = #{param2} AND i.inquiry_blind = 0 
+			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
+		</select>
+		
+		<select id="totalinqCountAll" parameterType="hashmap" resultType="int">
+			SELECT COUNT(inquiry_idx) FROM inquiry 
+			WHERE	inquiry_state = #{param1} AND code_idx = #{param2} AND inquiry_blind = 0 	
+		</select>
+		
+		<select id="inquiryListAll" resultType="inquiry">
+			SELECT i.inquiry_idx, i.inquiry_upidx, i.code_idx, i.inquiry_title, i.inquiry_regdate, i.inquiry_state, m.member_nickname
+			FROM inquiry i
+			JOIN member m ON i.member_idx = m.member_idx 
+			WHERE i.inquiry_state = #{param2} AND i.code_idx = #{param3} AND i.inquiry_blind = 0 
+			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
+		</select>
+		
+		
+		
+		
+		
 	
 	
 	</mapper>

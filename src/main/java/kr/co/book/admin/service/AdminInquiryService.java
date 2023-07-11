@@ -44,7 +44,7 @@ public class AdminInquiryService {
 	// 문의 리스트
 	public HashMap<String, Object> inquiryList(HashMap<String, Object> params) {
 
-ArrayList<MyInquriyDTO> list = null;
+		ArrayList<MyInquriyDTO> list = null;
 		
 		int page = Integer.parseInt(String.valueOf(params.get("page")));		
 		String categoryCode = String.valueOf(params.get("categoryCode"));
@@ -74,7 +74,7 @@ ArrayList<MyInquriyDTO> list = null;
 	    		list = dao.inquiryList(offset);	    		
 	        } else {
 	        	// 처리여부를 선택 했을 경우
-	            total = dao.totalinqokCount(params.get("member_idx").toString(), inqstate);
+	            total = dao.totalinqokCount(inqstate);
 	            range = total%10  == 0 ? total/10 : (total/10)+1;	           
 	            page = page>range ? range:page;
 	            
@@ -83,7 +83,7 @@ ArrayList<MyInquriyDTO> list = null;
 	    }else {
 	        if (inqProcess.equals("default")) {
 	        	// 필터 선택은 했지만 처리여부를 선택 하지 않은 경우
-	            total = dao.totalinqCountfilter(params,categoryCode);
+	            total = dao.totalinqCountfilter(categoryCode);
 	            range = total%10  == 0 ? total/10 : (total/10)+1;	
 	            page = page>range ? range:page;
 	            	    		

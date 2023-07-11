@@ -11,10 +11,7 @@ public class MainController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/eventList.go")
-	public String EventPage() {
-		return "event/eventList";
-	}
+	
 	
 	
 	

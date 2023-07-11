@@ -2,7 +2,7 @@ package kr.co.book.mypage.dto;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("myinquriy")
+@Alias("myinquiry")
 public class MyInquriyDTO {
 	
 	//Inquiry
