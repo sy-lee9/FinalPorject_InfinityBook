@@ -9,13 +9,13 @@
 			<div class="chat_people">
 				<div class="chat_ib">
 					<h5> 
-						${tmp.nicknames}
-						<span class="chat_date">${tmp.chat_date }</span>
+						${tmp.nicknames}						
 					</h5>
 					<br/>
 					<div class="row">
-						<div class="col-10">
+						<div class="col-10">							
 							<p>${tmp.chat_chat}</p>
+							<p>${tmp.chat_date }</p>
 						</div>
 					</div>
 				</div>

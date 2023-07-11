@@ -114,7 +114,7 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container" style="text-align:center;">
-		<form action="clubWrite.do" method="post" style="text-align:center;">			
+		<form action="clubWrite.do" method="post" enctype="" style="text-align:center;" >			
 			<table style="width:100%;">
 				<tr>
 					<td width="5%"></td>
@@ -154,7 +154,7 @@
 				
 				<tr>
 					<td></td>
-					<td>분류</td>
+					<td>제목</td>
 					<td colspan="3">
 						<input type="text" autocomplete='off' name="club_meetdate" id="club_meetdate" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="모임일시">
 					</td>
@@ -173,25 +173,28 @@
 				<tr>
 					<td></td>
 					<td>포스터 이미지</td>
-					<td colspan="3">
-						
-					</td>
-					<td>이벤트 기간</td>
-					
-					
-					<td colspan="3">당첨자 인원수</td>
+					<td colspan="2">
+						<input type="file" multiple="multiple">
+					</td>					
 					<td></td>
 				</tr>
 				
 				<tr>
 					<td></td>
-					<td colspan="4">
-						<div id="div_editor"></div>
-						<input type="hidden" name="club_content"> 
+					<td>이벤트 기간</td>
+					<td>
+						<input type="text">
 					</td>
+					
+					
 					<td></td>
 				</tr>
-				
+				<tr>
+					<td style="position: absolute; left: 150px;">이벤트 당첨자</td>
+					<td>
+						<input type="text" id="event_success">
+					</td>
+				</tr>
 				<tr>
 					<td></td>
 					<td colspan="4" style="text-align:center;">
