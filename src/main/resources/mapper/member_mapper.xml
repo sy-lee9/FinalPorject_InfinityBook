@@ -37,4 +37,22 @@
 		UPDATE member SET member_pw = #{param3} WHERE 
 		member_email = #{member_email} AND member_nickname = #{param2}
 	</update>	
+	
+	<select id="getMemberInfo" resultType="hashMap">
+		SELECT 
+			m.code_idx,
+			member_email,
+			member_nickname,
+			(SELECT code_codename FROM code WHERE code_upcode = 'region' AND code_code = m.code_idx) AS region
+		FROM member m
+			WHERE member_idx = #{param}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

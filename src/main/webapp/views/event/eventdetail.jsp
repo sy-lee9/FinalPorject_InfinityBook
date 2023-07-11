@@ -26,14 +26,17 @@
 		<script src="/js/script.js"></script>
 		
 		<style>
-			.pagination .page-link {
-	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
-			}
-	
-			.pagination .page-item.active .page-link {
-		 		background-color: #C5A992;
-		 		border:none;
-			}
+	.centered-container {
+        display: inline;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .centered-container img {
+        max-width: 100%;
+    }
 	
 	</style>	
 	</head>
@@ -94,113 +97,32 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:0px;">Book Club</h2>
+				<h2 class="section-title" style="margin-botton:0px;">Book Event Detail</h2>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section id="best-selling" class="leaf-pattern-overlay" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
-	<div class="corner-pattern-overlay"></div>
-	<div class="container">
-		<table>
-			<tr>
-				<th style="width: 30%; text-align:center;">
-					<img src="${club.cover}" style="text-align:center; width: 90%;" alt="book" class="single-image">
-				</th>
-				<th style="width: 5%;">
-					
-				</th>
-				<td style="width: 55%;">
-					<c:if test="${club.club_state eq 0}"> 
-	    				<input type="button" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
-					</c:if>
-					<c:if test="${club.club_state eq 1}"> 
-	    				<input type="button" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집 종료 ">
-					</c:if>
-					
-					<table>
-						<tr>
-							<th style="width: 800px;" colspan="3"><h4 class="item-title">${club.club_name}</h4></th>
-						</tr>
-						<tr>
-							<td style="width: 30%;"><div class="author-name">모임주최</div></td>
-							<td colspan="2"><div class="author-name">${club.member_nickname}</div></td>
-						</tr>
-						<tr>
-							<td><div class="author-name">선정도서</div></td>
-							<td colspan="2"><div class="author-name">${club.title}</div></td>
-						</tr>
-						<tr>
-							<td><div class="author-name">모임일시</div></td>
-							<td colspan="2"><div class="author-name">${club.club_meetdate}</div></td>
-						</tr>
-						<tr>
-							<td><div class="author-name">모임인원</div></td>
-							<td colspan="2">
-								<div class="author-name">
-								    ${club.meet_num}/${club.club_num} 명 
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><div class="author-name">참가자 </div></td>
-							<td colspan="2">
-								<div class="author-name">
-								    <c:forEach items="${member}" var="member">
-								    	${member.member_nickname} 
-								    </c:forEach>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><div class="author-name">모임장소</div></td>
-							<td colspan="2"><div class="author-name">${club.code_codename}</div></td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<h4 class="item-title">Book ClubInfo</h4>
-								${club.club_content}
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3" style="text-align:center;">
-							<c:if test="${loginIdx == club.member_idx}">
-								<c:if test="${club.club_state eq 0}">
-									<input type="button" onclick="clubUpdate(${club.club_idx})" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집종료">	
-								</c:if>
-								
-							</c:if>
-							<c:if test="${loginIdx != club.member_idx}">
-								<c:if test="${club.club_state eq 0}">
-									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
-								</c:if>
-							</c:if>
-							
-								<input type="button" style="padding:5 10 5 10;" onclick="location.href='/clubList.go'" class="btn btn-outline-accent btn-accent-arrow" value="목록 ">
-							</td>
-						</tr>
-					</table>
-				</td>
-				<th style="width: 10%; vertical-align: top; text-align:center;">
-					<c:if test="${loginIdx == club.member_idx}">
-						<input type="button" onclick="clubDelete(${club.club_idx})" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
-						<h3>신청자</h3>
-						<c:forEach items="${apply}" var="apply">
-						${apply.member_nickname} 
-						<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
-						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
-						</c:forEach>
-					</c:if>  
-				</th>
-			</tr>
-		</table>
-	</div>
-	
-</section>
+<div class="centered-container">
+    <img alt="poster" src="${dto.poster}">
+    
+</div>
 
+<div class="centered-container">
+	<button id="event_SignUp">이벤트 신청하기</button>
+</div>
+<br>
 
+<div class="centered-container">
+	${dto.content}
+</div>
+<br>
 
+<div class="centered-container">
+<button onclick="location.href='signUpDelete.go'">삭제</button>
+<button onclick="location.href='signUpUpdate.go'">수정</button>
+<button onclick="location.href='eventList.go'">목록</button>
+</div>
 <div id="footer-bottom">
 	<div class="container">
 		<div class="row">

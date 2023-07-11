@@ -22,6 +22,9 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
+		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
 
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
@@ -53,37 +56,13 @@
         </c:otherwise>
     </c:choose>
 	
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
-
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
-
 	<header id="header">
 		<div class="container">
 			<div class="row">
 
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -101,7 +80,7 @@
 								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
 									<ul>
 								        <li class="active"><a href="index.move">회원정보</a></li>
-								        <li><a href="about.move">활동내역</a></li>
+								        <li><a href="/activitiesChange.go">활동내역</a></li>
 								     </ul>
 								</li>
 							</ul>
@@ -192,10 +171,6 @@
 		</div>
 	</div>
 </div>
-
-<script src="/js/jquery-1.11.0.min.js"></script>
-<script src="/js/plugins.js"></script>
-<script src="/js/script.js"></script>
 
 </body>
 <script>

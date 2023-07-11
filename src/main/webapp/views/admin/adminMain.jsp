@@ -44,7 +44,7 @@
 				  	<div id="products-grid" class="products-grid grid">
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='#'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">회원관리</button>
+								<button type="button" onclick="location.href='/adminMember'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">회원관리</button>
 							</figcaption>
 						</figure>
 					

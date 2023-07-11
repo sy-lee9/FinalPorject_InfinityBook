@@ -75,7 +75,7 @@
 
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -93,7 +93,7 @@
 								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
 									<ul>
 								        <li><a href="index.move">회원정보</a></li>
-								        <li><a href="about.move">활동내역</a></li>
+								        <li><a href="/activitiesChange.go">활동내역</a></li>
 								     </ul>
 								</li>
 							</ul>

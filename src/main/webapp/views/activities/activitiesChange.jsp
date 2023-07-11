@@ -71,8 +71,7 @@
 
 				<div class="col-md-2">
 					<div class="main-logo">
-					
-						<a href="/"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -82,12 +81,17 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home"><b>대여/교환</b></a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
+								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
+								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
+								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
+								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
+								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item"><a href="#pages" class="nav-link" data-effect="Pages">내정보</a>
+									<ul>
+								        <li><a href="index.move">회원정보</a></li>
+								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								     </ul>
+								</li>
 							</ul>
 
 							<div class="hamburger">
@@ -246,18 +250,18 @@
 	    	var reviewChk = parseInt(item.reviewChk);
 	    	
 	    	if (state === 0 || state === 1) {
-	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:blue; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="대기중"></td>';  
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>';  
 			}else if (state == 2){
-				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:red; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="교환 예정"></td>';  
+				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Tomato; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="예약"></td>';  
 			}else if (state == 4){
-				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="교환 완료"></td>';  
+				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="교환"></td>';  
 			}
 	    	
 	    	content += '<td style="text-align:center;"><img src="' + item.myBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.myBook+'</h4></td>';
 	    	content += '<td style="text-align:center;"><img src="' + item.changeBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.changeBook+'</h4></td>';
 	    	
 	    	if (state == 4 && reviewChk == 0) {
-		    	content += '<td style="text-align:center;">' + item.changer + ' <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+		    	content += '<td style="text-align:center;">' + item.changer + ' <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
 	    	}else {
 		    	content += '<td style="text-align:center;">' + item.changer + '</td>';
     		}

@@ -1,6 +1,18 @@
 package kr.co.book.event.dao;
 
+import java.util.ArrayList;
+
+import kr.co.book.event.dto.EventDTO;
+
 public interface EventDAO {
+
+		int totalCount();
+
+		int etotalCountSearch(String search);
+
+		ArrayList<EventDTO> evlist(int cnt, int offset);
+
+		ArrayList<EventDTO> eventSearch(String search);
 
 	/*
 	 * int totalEventList(int member_idx, String type);

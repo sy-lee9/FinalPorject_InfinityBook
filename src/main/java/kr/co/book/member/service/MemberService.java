@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.member.dao.MemberDAO;
 import kr.co.book.member.dto.MemberDTO;
@@ -239,6 +240,13 @@ public class MemberService {
 	      }		
 	      // 이렇게 메일로 임시 비번 보냄...
 	    return sb;
+	}
+
+	public ModelAndView getMemberInfo(int loginIdx) {
+		ModelAndView mav = new ModelAndView("/member/memberInfo");
+		HashMap<String, Object> map = dao.getMemberInfo(loginIdx);
+		mav.addObject("info",map);
+		return mav;
 	}
 
 }
