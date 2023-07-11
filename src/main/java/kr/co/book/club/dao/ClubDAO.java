@@ -67,6 +67,10 @@ public interface ClubDAO {
 
 	void clubReplyUpdate(String reply_idx, String reply_content);
 
+	void clubReReply(String member_idx, String reply_idx, String reply_content);
+
+	ArrayList<ClubDTO> reReplyList(String reply_idx);
+
 	
 
 

@@ -228,6 +228,23 @@ public class ClubService {
 	}
 
 
+	public void clubReReply(String member_idx, String reply_idx, String reply_content) {
+		clubDAO.clubReReply(member_idx,reply_idx,reply_content);
+		
+	}
+
+
+	public HashMap<String, Object> reReplyList(String reply_idx) {
+		HashMap<String, Object> reply = new HashMap<String, Object>();	
+		ArrayList<ClubDTO> list = null;
+		
+		list = clubDAO.reReplyList(reply_idx);
+		logger.info(" list : "+list);
+		reply.put("list", list);
+		return reply;
+	}
+
+
 	
 	
 

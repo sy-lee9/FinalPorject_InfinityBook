@@ -324,9 +324,24 @@ public class ClubController {
 		return reply; 
 	}
 	
+	@RequestMapping("/clubReReply.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> clubReReply(@RequestParam String reply_idx,@RequestParam String reply_content,HttpSession session) {
+		String member_idx = String.valueOf(session.getAttribute("loginIdx")); 
+		
+		clubService.clubReReply(member_idx,reply_idx,reply_content);
+		
+		HashMap<String, Object> reply = new HashMap<String, Object>();
+		reply.put("success", true);
+		return reply; 
+	}
 	
 	
-	
-	
+	@RequestMapping("/reReplyList.ajax") 
+	@ResponseBody
+	public HashMap<String, Object> reReplyList(@RequestParam String reply_idx) {
+		HashMap<String, Object> reReply = clubService.reReplyList(reply_idx);
+		return reReply; 
+	}
 	
 }

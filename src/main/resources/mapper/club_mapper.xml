@@ -23,7 +23,7 @@
 	
 	<select id="totalClubListSearch" resultType="int">
 		SELECT COUNT(c.club_idx) FROM club c JOIN book b ON c.isbn =b.isbn
-		WHERE c.club_blind = 0 AND ((c.club_name LIKE CONCAT('%' #{searchText} '%')) OR (b.title LIKE CONCAT('%' #{searchText} '%')))
+		WHERE c.club_blind = 0 AND ((c.club_name LIKE CONCAT('%' #{param1} '%')) OR (b.title LIKE CONCAT('%' #{param1} '%')))
 		
 	</select>
 	
@@ -34,7 +34,7 @@
 		JOIN code co ON c.code_idx = co.code_idx 
 		JOIN book b ON c.isbn =b.isbn 
 		JOIN club_apply ca ON c.club_idx = ca.club_idx AND ca.club_appstate =1
-		WHERE c.club_blind = 0 AND ((c.club_name LIKE CONCAT('%' #{searchText} '%')) OR (b.title LIKE CONCAT('%' #{searchText} '%')))
+		WHERE c.club_blind = 0 AND ((c.club_name LIKE CONCAT('%' #{param2} '%')) OR (b.title LIKE CONCAT('%' #{param2} '%')))
 		GROUP BY c.club_idx
 		ORDER BY c.club_idx DESC LIMIT 5 OFFSET #{param1}
 	</select>
@@ -172,7 +172,7 @@
 		SELECT COUNT( r.reply_idx)
 		FROM reply r
 		JOIN `member` m ON r.member_idx = m.member_idx 
-		JOIN code c ON c.code_idx = r.code_idx 
+		JOIN code c ON c.code_idx = r.code_idx AND r.code_idx =61
 		WHERE idx =#{param1} AND reply_blind = 0
 	</select> 
 	
@@ -181,14 +181,14 @@
 		FROM reply r
 		JOIN `member` m ON r.member_idx = m.member_idx 
 		JOIN code c ON c.code_idx = r.code_idx 
-		WHERE idx =#{param1} AND reply_blind = 0
+		WHERE idx =#{param1} AND reply_blind = 0 AND r.code_idx =61
 		ORDER BY r.reply_idx ASC LIMIT 10 OFFSET #{param2}
 	</select>
 	
 	<!-- void clubReplyWrite(String member_idx, String reply_content, String club_idx);
 	 -->
 	<insert id="clubReplyWrite">
-		INSERT INTO infinity_book.reply(member_idx,code_idx,idx, reply_blind, reply_content)
+		INSERT INTO reply(member_idx,code_idx,idx, reply_blind, reply_content)
 		VALUES(#{param1}, 61, #{param3}, 0, #{param2});
 	</insert> 
 	
@@ -199,4 +199,19 @@
 	<update id="clubReplyUpdate">
 		UPDATE reply SET reply_content=#{param2} WHERE reply_idx=#{param1}
 	</update>
+	
+	<!-- void clubReReply(String member_idx, String reply_idx, String reply_content, String club_idx); -->
+	
+	<insert id="clubReReply">
+		INSERT INTO reply(member_idx,code_idx,idx, reply_blind, reply_content)
+		VALUES(#{param1}, 62, #{param2}, 0, #{param3});
+	</insert> 
+
+	<select id="reReplyList" resultType="club">
+		SELECT r.reply_idx, c.code_code,m.member_idx ,m.member_nickname, r.reply_content, r.idx , r.reg_date 
+		FROM reply r
+		JOIN `member` m ON r.member_idx = m.member_idx 
+		JOIN code c ON c.code_idx = r.code_idx 
+		WHERE idx =#{param1} AND reply_blind = 0 AND r.code_idx =62
+	</select>
 </mapper>

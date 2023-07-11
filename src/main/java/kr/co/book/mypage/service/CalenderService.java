@@ -50,7 +50,7 @@ public class CalenderService {
 			borrowList.get(i).setBackgroundColor("#B3C890");
 		}
 		
-		logger.info("borrowList : "+borrowList.size());
+		logger.info("list : "+borrowList.size());
 		totalList.addAll(borrowList);
 		
 		//교환 일정 리스트
@@ -65,22 +65,8 @@ public class CalenderService {
 			changeList.get(i).setBackgroundColor("#B3C890");
 		}
 		
-		logger.info("changeList : "+changeList.size());
+		logger.info("list : "+changeList.size());
 		totalList.addAll(changeList);
-		
-		//모임 일정 리스트
-		ArrayList<CalenderDTO> clubList = CalenderDAO.clubEvents(loginIdx);
-		
-		for (int i = 0; i < clubList.size(); i++) {
-			String bookTitle = clubList.get(i).getTitle();
-			logger.info("bookTitle : "+bookTitle);
-			String title = "모임("+bookTitle+")";
-			logger.info("title : "+title);
-			clubList.get(i).setTitle(title);
-		}
-		
-		logger.info("list : "+clubList.size());
-		totalList.addAll(clubList);
 				
 		logger.info("totalList : "+totalList.size());
 		map.put("events", totalList);

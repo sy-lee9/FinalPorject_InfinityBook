@@ -341,54 +341,153 @@ function listCall(page){
 }
 
 
-function listPrint(list){
-	var content = '';
-	
-	content += '<table style="width:100%;">';
-	
-	//r.reply_idx, c.code_code, m.member_nickname, r.reply_content, r.idx , r.reg_date 
-	list.forEach(function(list){
+function listPrint(list) {
+	  var content = '';
+	  
+	  content += '<table style="width:100%;">';
+	  
+	  list.forEach(function(item) {
 	    content += '<tr>';
 	    content += '<th style="width:10%;"></th>';
-	    content += '<th style="width:10%;">'+list.member_nickname+'</th>';
-	    content += '<th style="width:55%;">'+list.reply_content+'</th>';
-	    content += '<th style="width:15%;">'+list.reg_date+'</th>';
-	    content += '<th style="width:10%;">';
-	    if (${sessionScope.loginIdx} == list.member_idx) {
-	        content += '<a onclick="showEditForm(' + list.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + list.reply_idx + ')"> 삭제</a>';
+	    content += '<th style="width:10%;">'+item.member_nickname+'</th>';
+	    content += '<th style="width:50%;">'+item.reply_content+'</th>';
+	    content += '<th style="width:15%;">'+item.reg_date+'</th>';
+	    content += '<th style="width:15%;">';
+	    if (${sessionScope.loginIdx} == item.member_idx) {
+	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
+	    } else {
+	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>';
 	    }
 	    content += '</th>';
-
 	    content += '</tr>';
-	
-	    content += '<tr id="editForm'+list.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
+
+	    content += '<tr id="editForm'+item.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
 	    content += '<th style="width:10%;"></th>';
 	    content += '<th style="width:10%;"></th>';
 	    content += '<th colspan="2">';
-	    content += '<input style="width:100%;" type="text" value="' + list.reply_content + '">';
+	    content += '<input style="width:100%;" type="text" value="' + item.reply_content + '">';
 	    content += '</th>';
 	    content += '<th style="width:15%;">'
-	    content += '<button onclick="clubReplyUpdate('+list.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
+	    content += '<button onclick="clubReplyUpdate('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
 	    content += '<span>수정</span> ';
 	    content += '<i class="icon icon-send"></i>';
 	    content += '</button>';
 	    content += '</th>';
 	    content += '</tr>';
-	});
-	
-	
 
-	
-	content += '</table>';
-	$('#list').empty();
-	$('#list').append(content);
+	    content += '<tr id="re_ReplyForm'+item.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
+	    content += '<th style="width:10%;"></th>';
+	    content += '<th style="width:10%;"></th>';
+	    content += '<th colspan="2">';
+	    content += '<input style="width:100%;" type="text" >';
+	    content += '</th>';
+	    content += '<th style="width:15%;">'
+	    content += '<button onclick="clubReReply('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
+	    content += '<span>작성</span> ';
+	    content += '<i class="icon icon-send"></i>';
+	    content += '</button>';
+	    content += '</th>';
+	    content += '</tr>';
 
-}
+	    content += '<tr id="reReplyContent' + item.reply_idx + '">';
+	    content += '<td colspan="5">'; // 전체 칼럼을 합침
+	    content += '<div id="reReplyContentInner' + item.reply_idx + '"></div>'; // 리댓 내용을 출력할 내부 요소
+	    content += '</td>';
+	    content += '</tr>';
+
+	    reReplyCall(item.reply_idx, function(replyContent) {
+	      $('#reReplyContentInner' + item.reply_idx).html(replyContent); // 수정된 부분: 리댓 내용을 출력할 내부 요소에 추가
+	    });
+
+	  });
+
+	  content += '</table>';
+	  $('#list').empty();
+	  $('#list').append(content);
+	}
+
+function reReplyCall(reply_idx, callback) {
+	  console.log(reply_idx);
+	  $.ajax({
+	    type: 'post',
+	    url: 'reReplyList.ajax',
+	    data: {
+	      'reply_idx': reply_idx
+	    },
+	    dataType: 'json',
+	    success: function(data) {
+	      console.log(data);
+	      var replyContent = reReplyPrint(data.list);
+	      callback(replyContent);
+	    }
+	  });
+	}
+
+function reReplyPrint(replyList) {
+	  var content = '';
+	  replyList.forEach(function(reply) {
+	    content += '<tr>';
+	    content += '<th style="width:15%; text-align:right;">ㄴ</th>';
+	    content += '<th style="width:10%;">' + reply.member_nickname + '</th>';
+	    content += '<th style="width:50%;">' + reply.reply_content + '</th>';
+	    content += '<th style="width:15%;">' + reply.reg_date + '</th>';
+	    content += '<th style="width:10%;">';
+	    if (${sessionScope.loginIdx} == reply.member_idx) {
+	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
+	    }
+	    content += '</th>';
+	    content += '</tr>';
+	    content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; // 입력 필드를 감싸는 행
+	    content += '<th style="width:15%;"></th>';
+	    content += '<th style="width:10%;"></th>';
+	    content += '<th colspan="2">';
+	    content += '<input style="width:100%;" type="text" value="' + reply.reply_content + '">';
+	    content += '</th>';
+	    content += '<th style="width:15%;">'
+	    content += '<button onclick="clubReplyUpdate(' + reply.reply_idx + ')" class="btn-subscribe" style="width: 10%;" value="수정">';
+	    content += '<span>수정</span> ';
+	    content += '<i class="icon icon-send"></i>';
+	    content += '</button>';
+	    content += '</th>';
+	    content += '</tr>';
+	  });
+	  return content;
+	}
+
+
+
 function showEditForm(replyIdx) {
     var editForm = document.getElementById('editForm' + replyIdx);
     editForm.style.display = 'table-row';
 }
 
+function showRe_ReplyForm(replyIdx) {
+    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+    re_ReplyForm.style.display = 'table-row';
+}
+
+function clubReReply(reply_idx){
+	var re_ReplyForm = document.getElementById('re_ReplyForm' + reply_idx);
+	var inputField = re_ReplyForm.querySelector('input');
+	var newContent = inputField.value;
+	
+	$.ajax({
+        url: '/clubReReply.ajax',
+        type: 'post',
+        data: {
+        	'reply_idx':reply_idx,
+        	'reply_content':newContent
+        },
+		dataType:'json',
+		success: function(data) {
+			console.log(data.success);
+			if(data.success == 1){
+				listCall(showPage);	
+			}
+        }
+    });
+	
+}
 
 function clubReplyUpdate(reply_idx){
 	var editForm = document.getElementById('editForm' + reply_idx);

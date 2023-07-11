@@ -33,15 +33,7 @@
 			WHERE c.change_state IN (2,4)
 	</select>
 
-	<select id="clubEvents" resultType="CalenderDTO">
-		SELECT 
-			(club_name) AS title, 
-			(club_meetdate) AS start
-		FROM club c
-			LEFT JOIN club_apply a
-				ON c.club_idx = a.club_idx 
-					WHERE a.member_idx = #{param} AND a.club_appstate = #{param}
-	</select>
+
 
 
 
