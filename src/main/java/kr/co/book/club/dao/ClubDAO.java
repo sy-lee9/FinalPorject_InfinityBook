@@ -71,6 +71,8 @@ public interface ClubDAO {
 
 	ArrayList<ClubDTO> reReplyList(String reply_idx);
 
+	ArrayList<ClubDTO> nicknameList(String club_idx);
+
 	
 
 

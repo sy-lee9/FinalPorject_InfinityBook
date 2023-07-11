@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
 
 
 <c:forEach var="tmp" items="${clist}">
@@ -14,7 +15,7 @@
                         <c:when test="${fn:startsWith(tmp.chat_chat, '/upload/') && (fn:endsWith(tmp.chat_chat, '.jpg') || fn:endsWith(tmp.chat_chat, '.png') || fn:endsWith(tmp.chat_chat, '.gif'))}">
                             <!-- 조건이 참일 때 수행할 작업 -->
                             <span>${tmp.member_nickname}</span>
-                            <image src="${tmp.chat_chat}" width="auto" height="auto"/>                            
+                            <image src="${tmp.chat_chat}" width="auto" height="auto"/>                                                        
                             <span class="time_date">${tmp.chat_date}</span>
                         </c:when>
                         <c:otherwise>
