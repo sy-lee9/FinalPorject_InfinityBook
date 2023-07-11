@@ -37,8 +37,18 @@
 		 		background-color: #C5A992;
 		 		border:none;
 			}
-	
-	</style>	
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			table{
+				font-family: 'IBM Plex Sans KR';	
+			}
+			th{
+				color: black;
+				font-size: 18;
+			}
+			th,td{
+				padding: 2%;
+			}
+		</style>	
 	
 	</head>
 
@@ -102,7 +112,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:0px;">Book Club</h2>
+				<h2 class="section-title" style="margin-botton:0px;">My Activities</h2>
 			</div>
 		</div>
 	</div>
@@ -111,15 +121,14 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/clubList.go">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/myClubList.go">참여 모임</a></li>
+			  <li data-tab-target="#all-genre" class="active tab"><a href="/activitiesChange.go">교환</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/activitiesRent.go">대여</a></li>
 		</ul>
-		<ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right;">
+		<ul class="tab" style="height: 18%;">
+			<li class="search-box" style="text-align:center; list-style-type: none; float: right; margin: 4% 0 4% 0; width: 35%;">
 				<i class="icon icon-search"></i> 
-				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="제목 을 입력해주세요" type="search">
-				<input type="button" id="searchButton" value="검색">	
+				<input id="serchText" name="serchText" class="search-field text search-input" style="width:57%; "placeholder="제목을 입력해주세요" type="search">
+				<input type="button" id="searchButton" style="padding: 2% 4%;" value="검색">	
 			</li>
 		</ul>
 		<div class="tab-content">
@@ -130,7 +139,7 @@
 			    
 			     <div  id="paging" >
 			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px; margin-top: 5%;">
 			          <ul class="pagination justify-content-center" id="pagination"></ul>
 			        </nav>
 			      </div>
@@ -152,9 +161,8 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12" style="text-align:center;">
-							<hr/>
-							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
+						<div class="col-md-12" style="text-align:center; margin: 10% 0% 3% 0%;">
+							<p style="width: 97%;">Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
 
 						
@@ -178,6 +186,7 @@
 		
 	$('#searchButton').click(function(){
 		searchText = $('#serchText').val();
+		console.log(searchText);
 		listCall(showPage);
 		searchText = 'default';
 		$('#pagination').twbsPagination('destroy');
@@ -187,7 +196,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'clubList.ajax',
+		      url:'activitiesChangeList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -195,10 +204,8 @@
 		      dataType:'json',           
 		      success:function(data){
 		         console.log(data);
-		         listPrint(data.list);
-		         
-		        
-		         
+		         listPrint(data.list);		         
+		  	         
 		         $('#pagination').twbsPagination({
 						startPage:1, // 시작 페이지
 						totalPages:data.pages,// 총 페이지 수 
@@ -212,9 +219,7 @@
 							}
 						}
 			         });
-		         
-		         
-		         
+
 		      }
 		   });
 		}
@@ -226,34 +231,43 @@
 	    
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
-	    content += '	<th width="2%" style="text-align:center;"></th>';
-	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
-	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
-	    content += '	<th width="20%" style="text-align:center;">도서</th>';
-	    content += '	<th width="40%" style="text-align:center;"> 모임정보 </th>';
-	    content += '	<th width="20%" style="text-align:left;"> 모임장소 및 일시 </th>';
-	    content += '	<th width="2%" style="text-align:center;"></th>';
+	    content += '	<th width="15%" style="text-align:center;"> 교환 상태 </th>';
+	    content += '	<th width="25%" style="text-align:center;">  교환할 책 </th>';
+	    content += '	<th width="25%" style="text-align:center;"> 교환 받을 책 </th>';
+	    content += '	<th width="15%" style="text-align:center;"> 교환 회원 </th>';
+	    content += '	<th width="20%" style="text-align:center;"> 교환 일시 </th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
 	        
 	    	content += '<tr>';
-	    	content += '	<td></td>';
-	    	if (item.club_state=="0") {
-	    		content += '	<td style="text-align:center;"><input type="button" style="cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
-			}else{
-	    		content += '	<td style="text-align:center;"><input type="button" style="cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
+	    	
+	    	var state = parseInt(item.change_state);
+	    	var reviewChk = parseInt(item.reviewChk);
+	    	
+	    	if (state === 0 || state === 1) {
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:blue; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="대기중"></td>';  
+			}else if (state == 2){
+				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:red; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="교환 예정"></td>';  
+			}else if (state == 4){
+				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="교환 완료"></td>';  
 			}
-	    	content += '	<td style="text-align:center;"><input type="button" style=" cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
-	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
-		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
-		    content += item.member_nickname+'<br/>	';
-		    content += item.title.split("-")[0]+'	</td>';
-		    content += '	<td>';
-		    content += item.code_codename+'<br/>	';
-		    content += item.club_meetdate.split(" ")[0]+'<br/>'+item.club_meetdate.split(" ")[1]+'</td>';
-		    
-		    content += '	<td></td>';
+	    	
+	    	content += '<td style="text-align:center;"><img src="' + item.myBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.myBook+'</h4></td>';
+	    	content += '<td style="text-align:center;"><img src="' + item.changeBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.changeBook+'</h4></td>';
+	    	
+	    	if (state == 4 && reviewChk == 0) {
+		    	content += '<td style="text-align:center;">' + item.changer + ' <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    	}else {
+		    	content += '<td style="text-align:center;">' + item.changer + '</td>';
+    		}
+	    	
+	    	if (typeof item.change_date === "undefined") {
+	    		content += '<td style="text-align:center;"></td>';
+	    	}else {
+	    		content += '<td style="text-align:center;">' + item.change_date + '</td>';
+    		}
+
 	        content += '</tr>';
 	    });
     
@@ -263,17 +277,6 @@
 		$('#list').append(content);
 	}
 
-	
-	function clubWriteGo(){  
-
-		if(${sessionScope.loginIdx != null}){
-			location.href="/clubWrite.go";
-		}else{
-			alert('모임 등록은 로그인이 필요합니다. ');
-			location.href="/login.go";
-		}
-	   
-	}
 </script>
 
 </html>	
