@@ -134,7 +134,7 @@
 	 </select>
 	 
 	 <select id="myClubList" resultType="club">
-	 	SELECT c.club_idx ,c.member_idx,m.member_nickname,COUNT(ca.member_idx) meet_num ,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
+	 	SELECT c.club_idx ,c.member_idx,m.member_nickname,c.isbn, b.title, b.cover ,c.club_name,c.club_meetdate,co.code_codename ,c.club_onoff,c.club_num,c.club_blind,c.club_state 
 		FROM club c
 		JOIN `member` m ON c.member_idx=m.member_idx 
 		JOIN code co ON c.code_idx = co.code_idx 

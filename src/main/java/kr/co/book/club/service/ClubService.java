@@ -143,6 +143,10 @@ public class ClubService {
 		
 		total = clubDAO.totalMyClubList(member_idx);
 		list = clubDAO.myClubList(member_idx,offset);
+		for (ClubDTO clubDTO : list) {
+			clubDTO.setMeet_num(String.valueOf(clubDAO.meetNum(clubDTO.getClub_idx())));
+		}
+		
 		
 		
 		

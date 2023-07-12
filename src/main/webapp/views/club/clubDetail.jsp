@@ -145,6 +145,9 @@
 								<div class="author-name">
 								    <c:forEach items="${member}" var="member">
 								    	${member.member_nickname} 
+								    	<c:if test="${member.member_idx ne club.member_idx}">								    	
+								    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
+								    	</c:if>
 								    </c:forEach>
 								</div>
 							</td>
@@ -183,7 +186,7 @@
 						<input type="button" onclick="clubDelete(${club.club_idx})" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
 						<h3>신청자</h3>
 						<c:forEach items="${apply}" var="apply">
-						${apply.member_nickname} 
+						${apply.member_nickname}
 						<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
 						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
 						</c:forEach>
@@ -529,6 +532,14 @@ function clubDelete(club_idx){
 
 	if(confirm('모임 삭제시 모임 채팅방도 삭제되며 복구가 불가능 합니다.  \n 정말 삭제하시겠습니까?')){
 		location.href='/clubDelete.do?club_idx='+club_idx;
+	}else{
+		return false;
+	}
+}
+
+function deleteMem(member_idx,club_idx){
+	if(confirm('해당 참가자를 삭제 하시겠습니까?')){
+		location.href='/deleteMem.do?member_idx='+member_idx+'&club_idx='+club_idx;
 	}else{
 		return false;
 	}

@@ -47,7 +47,7 @@ public class MyBookReportController {
 		logger.info("searchText : "+searchText);
 		int member_idx = (int) session.getAttribute("loginIdx"); 
 		HashMap<String, Object> myLike = myBookReportService.myLikeList(member_idx,page,searchText);
-		
+		logger.info("mylike :"+myLike);
 		return myLike;
 	}
 	

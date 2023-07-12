@@ -5,7 +5,6 @@
 	<meta charset="UTF-8">
 	<head>
 		<title>Infinite B∞k</title>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,30 +22,44 @@
 		<!-- script
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
-		 <link rel="icon" href="/images/mainLogo.png" class="images">		
+
 	</head>
 
 <body>
 
-<div id="header-wrap" class="show">
+<div id="header-wrap">
 	
-	<c:choose>
-        <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="loginAfterBox.jsp" />
-        </c:when>
-        <c:otherwise>
-            <jsp:include page="loginBeforeBox.jsp" />            
-        </c:otherwise>
-    </c:choose>
-	
+	<div class="top-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="right-element">
+						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
+						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm</span></a>
+
+						<div class="action-menu">
+							<div class="search-bar">
+								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+									<i class="icon icon-search"></i>
+								</a>
+								<form role="search" method="get" class="search-box">
+									<input class="search-field text search-input" placeholder="Search" type="search">
+								</form>
+							</div>
+						</div>
+					</div><!--top-right-->
+				</div>				
+			</div>
+		</div>
+	</div><!--top-content-->
+
 	<header id="header">
 		<div class="container">
 			<div class="row">
 
 				<div class="col-md-2">
 					<div class="main-logo">
-					
-						<a href="index.move"><img src="/images/mainLogo.png" alt="logo"></a>
+						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -58,11 +71,25 @@
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="#home" data-effect="Home">대여/교환</a></li>
 								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link" data-effect="Pages">독서모임</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
+								<li class="menu-item has-sub">
+									<a href="#pages" class="nav-link" data-effect="Pages">독서모임</a>
 
-								<li class="menu-item"><a href="/eventList.go" class="nav-link" data-effect="Articles">이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" class="nav-link" data-effect="Contact">마이페이지</a></li>
+									<ul>
+								        <li class="active"><a href="index.move">Home</a></li>
+								        <li><a href="about.move">About</a></li>
+								        <li><a href="styles.move">Styles</a></li>
+								        <li><a href="blog.move">Blog</a></li>
+								        <li><a href="single-post.move">Post Single</a></li>
+								        <li><a href="shop.move">Our Store</a></li>
+								        <li><a href="single-product.move">Product Single</a></li>
+								        <li><a href="contact.move">Contact</a></li>
+								        <li><a href="thank-you.move">Thank You</a></li>
+								     </ul>
+
+								</li>
+								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">공지사항</a></li>
+								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">이벤트</a></li>
+								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">마이페이지</a></li>
 							</ul>
 
 							<div class="hamburger">
@@ -82,27 +109,15 @@
 		
 </div><!--header-wrap-->
 
-
 <section id="billboard">
 
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-			
-					<div class="action-menu">
-							<form role="search" method="get" class="search-box" action="/search.do" id ="search" style="text-align:center;"> 
-								<select name="QueryType">
-									<option value="Keyword">제목+저자</option>
-									<option value="Title">제목</option>
-									<option value="Author">저자</option>
-									<option value="Publisher">출판사</option>
-								</select>
-								<input class="search-field text search-input" placeholder="Search"  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
-								<input type="submit" value="검색">	
-							</form>
-						
-					</div>
-				
+
+				<button class="prev slick-arrow">
+					<i class="icon icon-arrow-left"></i>
+				</button>
 
 				<div class="main-slider pattern-overlay">
 					<div class="slider-item">
@@ -118,9 +133,13 @@
 
 					<div class="slider-item">
 						<div class="banner-content">
-							
-							
+							<h2 class="banner-title">Birds gonna be Happy</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis urna, a eu.</p>
+							<div class="btn-wrap">
+								<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i class="icon icon-ns-arrow-right"></i></a>
+							</div>
 						</div><!--banner-content--> 
+						<img src="/images/main-banner2.jpg" alt="banner" class="banner-image">
 					</div><!--slider-item-->
 
 				</div><!--slider-->
@@ -1027,6 +1046,9 @@
 						<div class="col-md-12">
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
+
+						
+
 					</div>
 				</div><!--grid-->
 
@@ -1038,11 +1060,6 @@
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
-<script>
-
-
-
-</script>
 
 </body>
 </html>	
