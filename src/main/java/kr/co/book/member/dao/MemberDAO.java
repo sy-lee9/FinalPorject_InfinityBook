@@ -22,4 +22,17 @@ public interface MemberDAO {
 
 	HashMap<String, Object> getMemberInfo(int loginIdx);
 
+	int memberInfoUpdate(HashMap<String, Object> params);
+
+	String getPw(int loginIdx);
+
+	int pwUpdate(String encodedPassword, int loginIdx);
+
+	int leave(int loginIdx);
+
+	HashMap<String, Object> getProfileInfo(int member_idx);
+
+	String getRegion(int code_idx);
+
+
 }

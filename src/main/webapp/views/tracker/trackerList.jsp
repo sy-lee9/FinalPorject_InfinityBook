@@ -131,7 +131,7 @@
 						<c:forEach items="${trackerList}" var="book">
 						<div class="col-md-4" style="margin-bottom: 10%; height: 541px;">
 	
-							<article class="column" data-aos="fade-up">
+							<article class="column">
 								
 								<figure style="text-align: center; height: 48%;">
 									<a href="/trackerDetail.go?trackerIdx=${book.trackerIdx}">

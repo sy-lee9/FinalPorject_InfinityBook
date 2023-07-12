@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="findLocationCode" resultType="int">
-		SELECT CODE_IDX FROM code c WHERE CODE_CODENAME = #{param1}
+		SELECT code_code FROM code WHERE code_codename = #{param1}
 	</select>
 	
 	<select id="findmemberpw" resultType="int">
@@ -47,6 +47,43 @@
 		FROM member m
 			WHERE member_idx = #{param}
 	</select>
+	
+	<update id="memberInfoUpdate">
+		UPDATE 
+			member 
+		SET member_nickname = #{nickname}, code_idx = #{code_idx} 
+			WHERE member_idx = #{loginIdx} 
+	</update>
+	
+	<select id="getPw" resultType="String">
+		SELECT member_pw FROM member WHERE member_idx = #{param1}
+	</select>
+
+	<update id="pwUpdate">
+		UPDATE 
+			member 
+		SET member_pw = #{param1}
+			WHERE member_idx = #{param2} 
+	</update>
+	
+	<update id="leave">
+		UPDATE 
+			member 
+		SET member_state = '탈퇴'
+			WHERE member_idx = #{param} 
+	</update>
+	
+	<select id="getProfileInfo" resultType="hashMap">
+		SELECT member_nickname, code_idx FROM member WHERE member_idx = #{param} 
+	</select>
+	
+	<select id="getRegion" resultType="String">
+		SELECT code_codename FROM code WHERE code_code = #{param}
+	</select>
+	
+	
+	
+	
 	
 	
 	
