@@ -37,8 +37,7 @@ public class MyInquiryService {
 			inqstate = inqProcess.equals("true") ? 1 : 0; // "true"일 때는 1로, "false"일 때는 0으로 저장합니다.
 		}
 				
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+		HashMap<String, Object> map = new HashMap<String, Object>();		
 		int offset = 0;
 		int total = 0;
 		int range = 0;

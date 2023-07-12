@@ -72,27 +72,14 @@
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
-						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
-								<li class="menu-item has-sub">
-									<a href="#" class="nav-link">내 정보</a>
-									<ul>
-								        <li class="active"><a href="#">회원 정보</a></li>
-								        <li><a href="#">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
-								     </ul>
-								</li>								
+								<li class="menu-item"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="#about" class="nav-link">감상문</a></li>
+								<li class="menu-item active"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
 						</div>
 					</nav>
 				</div>

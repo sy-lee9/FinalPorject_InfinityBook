@@ -78,7 +78,7 @@
 			<!-- 출력 장소 -->
 			</tbody>					
 			<tr>
-				<td  colspan="5" id="club_paging" >
+				<td  colspan="5" id="inquiry_paging" >
 				<div class="container" style="text-align:center; width: 600px;">
 					<nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
 				          <ul class="pagination justify-content-center" id="inquiry_pagination"></ul>
