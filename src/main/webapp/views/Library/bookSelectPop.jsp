@@ -93,7 +93,7 @@ function call() {
 function listCall(page,text){
 	   $.ajax({
 	      type:'get',
-	      url:'bookSearch.ajax',
+	      url:'/mypage/bookSearch.ajax',
 	      data:{
 	    	  'text':text,
 	    	  'start':page
@@ -145,7 +145,7 @@ function listCall(page,text){
 			content += '      		<input type="hidden" name="library_isbn" id="library_isbn"  value="' + item.isbn + '">';
 			content += '      		<input type="hidden" name="library_pubdate"  id="library_pubdate" value="' + item.pubdate + '">';
 			content += '      		<input type="hidden" name="library_description"  id="library_description" value="' + item.description + '">';
-			content += '      	<input type="submit" formaction="libraryWrite.go" value="등록"><br/>';
+			content += '      	<input type="submit" formaction="/mypage/libraryWrite.go" value="등록"><br/>';
 			content += '      <input type="button" onclick="wishRegistAjax(this)" value="위시">';
 			content += '    </td>';
 			content += '  </tr>';
@@ -167,7 +167,7 @@ function listCall(page,text){
 		  // AJAX 요청을 보내는 코드 작성
 		  // 예를 들어, jQuery를 사용하여 AJAX 요청을 보낼 경우:
 		  $.ajax({
-		    url: "wishRegist.ajax",
+		    url: "/mypage/wishRegist.ajax",
 		    type: "POST",
 		    data: formData,
 		    processData: false,

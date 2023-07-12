@@ -62,7 +62,7 @@
 				<div class="col-md-2">
 					<div class="main-logo">
 					
-						<a href="/"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -72,12 +72,12 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link">감상문</a></li>
-								<li class="menu-item active"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
 								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>

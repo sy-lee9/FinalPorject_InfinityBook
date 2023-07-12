@@ -21,12 +21,12 @@ public class MyBookReportController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired MyBookReportService myBookReportService;
 	
-	@RequestMapping("/myBookreportList.get")
+	@RequestMapping("/mypage/myBookreportList.get")
 	public String myBookreportList() {	
 		return "/Library/myBookreportList";
 	}
 	
-	@RequestMapping("/myBookreportList.ajax")
+	@RequestMapping("/mypage/myBookreportList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> myBookrpoertListAjax(@RequestParam String page,@RequestParam String searchText,HttpSession session){
 		logger.info("searchText : "+searchText);
@@ -36,12 +36,12 @@ public class MyBookReportController {
 		return myBookreport;
 	}
 	
-	@RequestMapping("myLikeList.get")
+	@RequestMapping("/mypage/myLikeList.get")
 	public String myLikeList() {
 		return "/Library/myLikeList";
 	}
 	
-	@RequestMapping("/myLikeList.ajax")
+	@RequestMapping("/mypage/myLikeList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> myLikeListAjax(@RequestParam String page,@RequestParam String searchText,HttpSession session){
 		logger.info("searchText : "+searchText);
@@ -51,7 +51,7 @@ public class MyBookReportController {
 		return myLike;
 	}
 	
-	@RequestMapping("/deleteMyBookreport.ajax")
+	@RequestMapping("/mypage/deleteMyBookreport.ajax")
 	@ResponseBody
 	public HashMap<String, Object> deleteMyBookreport(@RequestParam(value="delList[]") ArrayList<String> delList,HttpSession session){
 		HashMap<String, Object> map = myBookReportService.deleteMyBookreport(delList);
