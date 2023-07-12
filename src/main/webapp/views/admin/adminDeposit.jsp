@@ -50,7 +50,7 @@
 	
 	<div class="container">
 		<div class="row">
-		<a href="/adminMain" style="font-size:20;"> ← Admin Main</a>
+		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
 				<h2 class="section-title" style="margin-bottom:25px;">Admin-Deposit</h2>
 			</div>
@@ -134,7 +134,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'adminDepositList.ajax',
+		      url:'/admin/adminDepositList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'deposit_type':deposit_type

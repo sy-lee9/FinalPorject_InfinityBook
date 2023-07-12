@@ -44,20 +44,20 @@
 				  	<div id="products-grid" class="products-grid grid">
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='/adminMember'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">회원관리</button>
+								<button type="button" onclick="location.href='/admin/adminMember'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">회원관리</button>
 							</figcaption>
 						</figure>
 					
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='/adminBook'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">도서관리</button>
+								<button type="button" onclick="location.href='/admin/adminBook'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">도서관리</button>
 							</figcaption>
 						</figure>
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='/adminDeposit'"  class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">보증금관리</button>
+								<button type="button" onclick="location.href='/admin/adminDeposit'"  class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">보증금관리</button>
 							</figcaption>
 						</figure>
 					
@@ -81,7 +81,7 @@
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='/adminClub'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">팀관리</button>
+								<button type="button" onclick="location.href='/admin/adminClub'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">팀관리</button>
 							</figcaption>
 						</figure>
 					
@@ -99,7 +99,7 @@
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='/adminCode'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">코드관리</button>
+								<button type="button" onclick="location.href='/admin/adminCode'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">코드관리</button>
 							</figcaption>
 						</figure>
 					</div>

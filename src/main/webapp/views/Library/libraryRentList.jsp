@@ -230,7 +230,7 @@ function listCall(page){
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="/mypage/BookDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '  <a href="/mypage/bookDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
 	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 	        content += '  </a>';

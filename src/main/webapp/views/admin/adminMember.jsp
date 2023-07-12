@@ -49,7 +49,7 @@
 	
 	<div class="container">
 		<div class="row">
-		<a href="/adminMain" style="font-size:20;"> ← Admin Main</a>
+		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
 				<h2 class="section-title" style="margin-bottom:25px;">Admin-Member</h2>
 			</div>
@@ -162,7 +162,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'adminMemberList.ajax',
+		      url:'/admin/adminMemberList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText,
@@ -247,7 +247,7 @@
 		if(confirm('정말 권한을 변경 하시겠습니까?')){
 			$.ajax({
 		      type:'get',
-		      url:'grade.ajax',
+		      url:'/admin/grade.ajax',
 		      data:{
 		    	  'member_grade':member_grade,
 		    	  'member_idx':member_idx
@@ -286,7 +286,7 @@
 		if(confirm('초기화 이후 복구가 불가능 합니다. \n 정말 초기화 하시겠습니까?')){
 			$.ajax({
 			      type:'get',
-			      url:'resetNickname.ajax',
+			      url:'/admin/resetNickname.ajax',
 			      data:{'resetList':checkArr},
 			      dataType:'json',
 			      success:function(data){

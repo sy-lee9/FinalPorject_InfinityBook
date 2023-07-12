@@ -23,7 +23,7 @@ public class AdminCodeController {
 	@Autowired
 	AdminCodeService adminCodeService;
 
-	@RequestMapping("/adminCode")
+	@RequestMapping("/admin/adminCode")
 	public String adminBook(Model model) {
 
 		ArrayList<AdminCodeDTO> codeList = adminCodeService.upCodeList();
@@ -32,13 +32,13 @@ public class AdminCodeController {
 	}
 
 
-	@RequestMapping("/adminCodeList.ajax")
+	@RequestMapping("/admin/adminCodeList.ajax")
 	@ResponseBody public HashMap<String, Object> adminCodeList(@RequestParam String code_upcode){
 		HashMap<String, Object> adminCode =adminCodeService.adminCodeList(code_upcode);		 
 		return adminCode; 
 	}
 
-	@RequestMapping("/upcodeUpdate.ajax")
+	@RequestMapping("/admin/upcodeUpdate.ajax")
 	@ResponseBody public HashMap<String, Object> upcodeUpdate(@RequestParam String code_idx, @RequestParam String code_upcode){
 		
 		// 1. code_idx 이용해서 변경 전 code_upcode 찾기 
@@ -55,7 +55,7 @@ public class AdminCodeController {
 		return data; 
 	}
 	
-	@RequestMapping("/codenameUpdate.ajax")
+	@RequestMapping("/admin/codenameUpdate.ajax")
 	@ResponseBody public HashMap<String, Object> codenameUpdate(@RequestParam String code_idx, @RequestParam String codename){
 		
 		// 1. code_idx 이용해서 변경 전 code_upcode 찾기 

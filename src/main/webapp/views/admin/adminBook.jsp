@@ -49,7 +49,7 @@
 	
 	<div class="container">
 		<div class="row">
-		<a href="/adminMain" style="font-size:20;"> ← Admin Main</a>
+		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
 				<h2 class="section-title" style="margin-bottom:25px;">Admin-Book</h2>
 			</div>
@@ -132,7 +132,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'adminBookList.ajax',
+		      url:'/admin/adminBookList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -211,7 +211,7 @@
 		console.log(library_idx);
 		$.ajax({
 		      type:'get',
-		      url:'bookBlind.ajax',
+		      url:'/admin/bookBlind.ajax',
 		      data:{
 		    	  'blind':blind,
 		    	  'library_idx':library_idx
@@ -246,7 +246,7 @@
 		if(confirm('초기화 이후 복구가 불가능 합니다. \n 정말 초기화 하시겠습니까?')){
 			$.ajax({
 			      type:'get',
-			      url:'resetBookInfo.ajax',
+			      url:'/admin/resetBookInfo.ajax',
 			      data:{'resetList':checkArr},
 			      dataType:'json',
 			      success:function(data){

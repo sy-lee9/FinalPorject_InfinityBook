@@ -10,7 +10,7 @@ public class AminMainController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@RequestMapping("/adminMain")
+	@RequestMapping("/admin/adminMain")
 	public String adminMain() {
 		return "/admin/adminMain";
 	}

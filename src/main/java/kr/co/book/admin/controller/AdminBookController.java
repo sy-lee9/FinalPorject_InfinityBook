@@ -20,12 +20,12 @@ public class AdminBookController {
 	
 	@Autowired AdminBookService adminBookService;
 	
-	@RequestMapping("/adminBook")
+	@RequestMapping("/admin/adminBook")
 	public String adminBook(){
 		return "/admin/adminBook";
 	}
 	
-	@RequestMapping("/adminBookList.ajax")
+	@RequestMapping("/admin/adminBookList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> adminBookListAjax(@RequestParam String page,@RequestParam String searchText){
 		logger.info("searchText : "+searchText);
@@ -35,14 +35,14 @@ public class AdminBookController {
 	}
 	
 	
-	@RequestMapping("/resetBookInfo.ajax")
+	@RequestMapping("/admin/resetBookInfo.ajax")
 	@ResponseBody
 	public HashMap<String, Object> resetBookInfoAjax(@RequestParam(value="resetList[]") ArrayList<String> resetList){
 		HashMap<String, Object> map = adminBookService.resetBookInfo(resetList);
 		return map; 
 	}
 	
-	@RequestMapping("/bookBlind.ajax")
+	@RequestMapping("/admin/bookBlind.ajax")
 	@ResponseBody
 	public HashMap<String, Object> bookBlindAjax(@RequestParam String blind,@RequestParam String library_idx){
 		logger.info("blind : "+blind);
