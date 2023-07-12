@@ -174,6 +174,22 @@ public class ClubController {
 		return "/club/clubList";
 	}
 	
+	//	location.href='/deleteMem.do?member_idx='+member_idx+'&club_idx='+club_idx;
+	@RequestMapping("/deleteMem.do")
+	public String deleteMem(@RequestParam String member_idx, @RequestParam String club_idx) {
+		clubService.applyReject(club_idx, member_idx);
+		
+		
+		// 채팅방 나가기 기능 추가 필요
+		
+		
+		
+		
+		
+		return "redirect:/clubDetail.go?club_idx="+club_idx;
+	}
+	
+	
 	
 	// 모집 종료 
 	@RequestMapping("clubUpdate.do")
