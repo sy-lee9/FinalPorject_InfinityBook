@@ -67,8 +67,8 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/libraryList.get" >서재</a></li>
+								<li class="menu-item  active"><a href="/myBookreportList.get" >감상문</a></li>
 								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
@@ -99,7 +99,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:25px;">Library</h2>
+				<h2 class="section-title" style="margin-botton:25px;">My Report</h2>
 			</div>
 		</div>
 	</div>
@@ -199,6 +199,7 @@
 							console.log(page,showPage);
 							if(page != showPage){
 								showPage=page;
+							
 								listCall(page);
 								
 							}
@@ -217,7 +218,7 @@
 	    content += '<div id="products-grid" class="products-grid grid">';
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#">';
+	    content += '    <a href="/BookReportWrite.go">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
 	    content += '      <figcaption> <h>감상문 작성하기</h> </figcaption>';
 	    content += '    </a>';
@@ -233,11 +234,11 @@
 	   
 	  list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="#">';
+	        content += '  <a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'">';
 	        content += '    <img src="' + item.cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
-	        content += '    <a href="#">';
+	        content += '    <a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'"">';
 	        content += '      	<h>' + item.book_report_title + '</h>';
 	        content += '		<br/><h> ❤️ </h>';
 	        content += '		<br/><h>' + item.book_report_date + '</h>';
