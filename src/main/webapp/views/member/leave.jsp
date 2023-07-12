@@ -10,12 +10,9 @@
 	    <link rel="stylesheet" type="text/css" href="/style.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
-	table{
-	    margin: 0 0 1% 28%;
-    	width: 45%;
-	}
-	th,td{
-		padding: 4%;
+	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+	body,h2{
+		font-family: 'IBM Plex Sans KR', serif;	
 	}
 </style>
 </head>
@@ -88,49 +85,27 @@
 			<div class="col-md-12" style="margin-top:5%;">
 	
 				<div class="section-header align-center">
-					<h2 class="section-title">Profile</h2>
+					<h2 class="section-title">회원탈퇴</h2>
 				</div>					
-				<div>
-					<table>
-						<colgroup>
-							<col width="5%"/>
-							<col width="30%"/>
-							<col width="60%"/>
-							<col width="5%"/>
-						</colgroup>
-						<tr>
-							<th></th>
-							<th>
-								<label for="email">이메일</label>
-							</th>
-							<td>
-			                    ${info.member_email}
-			                </td>
-							<th></th>
-				        </tr>
-						<tr>				
-							<th></th>
-							<th>닉네임</th>
-							<td>						
-								${info.member_nickname}
-							</td>		
-							<th></th>						
-						</tr>
-					    <tr>
-							<th></th>
-					        <th>주소(시/군/구)</th>	              
-							<td>
-								${info.region}
-							</td>
-							<th></th>
-					    </tr>
-						<tr>
-							<th colspan="4" style="text-align: center; padding: 2%; border-bottom: none;">
-								<input type="button" onclick="location.href='memberInfoUpdate.go'" value="회원정보 수정">
-							</th>
-						</tr>
-					</table>
-					<a href='leave.go' style="margin-left: 12%">회원탈퇴</a>
+				<div style="margin: 10% 10% 0% 28%;">
+					<p>
+						<b>사용하고 계신 아이디(${sessionScope.loginEmail})은 탈퇴할 경우 재가입 및 복구가 불가능합니다.</b>
+						<br>탈퇴한 아이디로 본인과 타인 모두 재가입 및 복구가 불가하오니 신중하게 선택하시기 바랍니다.
+					</p>
+					
+					<p>
+						<b>탈퇴 후에도 일부 서비스에 등록한 게시물은 그대로 남아 있습니다.</b>
+						<br>모임, 감상문 등에 올린 게시글 및 댓글, 대여/교환 내역은 탈퇴 시 자동 삭제되지 않고 그대로 남아 있습니다.
+						<br>삭제를 원하는 게시글이 있다면 반드시 탈퇴 전 비공개 처리하거나 삭제하시기 바랍니다.
+						<br>탈퇴 후에는 임의로 삭제해드릴 수 없습니다.
+					</p>
+					
+					<p style="margin: 10% 18% 1%;">
+						비밀번호 확인 : 
+						<input type="password" id="pw" placeholder="비밀번호를 입력해주세요">
+					</p>
+					
+					<input type="button" onclick="leave()" value="탈퇴" style="margin-left: 32%; background-color: crimson;">
 				</div>
 	
 			</div>	
@@ -163,6 +138,41 @@
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	
+	function leave() {
+		
+		$.ajax({
+		    type: 'post'
+		    ,url: 'leave.ajax'
+		    ,data:{'pw':document.getElementById("pw").value}
+		    ,dataType:'json'
+		    ,success:function(data){
+				console.log(data);							
+				if(data.success == true){     
+			        alert("탈퇴되었습니다.");
+			        location.href = './';
+			    } else{
+			    	alert("비밀번호가 일치하지 않습니다.");
+			    }
+		    }
+		    ,error:function(e){
+		       console.log(e);
+		    }
+		 });     
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </html>

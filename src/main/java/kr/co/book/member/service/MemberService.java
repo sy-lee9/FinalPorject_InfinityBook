@@ -3,6 +3,8 @@ package kr.co.book.member.service;
 import java.security.SecureRandom;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.mail.HtmlEmail;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -183,7 +185,7 @@ public class MemberService {
 	    }
 	    
 	    logger.info("임시 비밀번호"+sb);
-	    // 암호ㅗ하
+	    // 암호하
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		// 임시비번을 암호화해서 저장
 		String encodedPassword = encoder.encode(sb);
@@ -242,11 +244,103 @@ public class MemberService {
 	    return sb;
 	}
 
-	public ModelAndView getMemberInfo(int loginIdx) {
-		ModelAndView mav = new ModelAndView("/member/memberInfo");
+	public ModelAndView getMemberInfo(int loginIdx, String flag) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(flag.equals("info")) {
+			mav.setViewName("/member/memberInfo");
+		}else {
+			mav.setViewName("/member/memberInfoUpdate");
+		}
+		
 		HashMap<String, Object> map = dao.getMemberInfo(loginIdx);
 		mav.addObject("info",map);
 		return mav;
 	}
+
+	public HashMap<String, Object> memberInfoUpdate(HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int code_idx = dao.findLocationCode((String) params.get("location"));
+		logger.info("codeIdx : "+code_idx);
+		params.put("code_idx", code_idx);
+		
+		int success = dao.memberInfoUpdate(params);
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> pwChk(String exPw, int loginIdx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String encodePassWord = dao.getPw(loginIdx);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        boolean isMatched = encoder.matches(exPw, encodePassWord);
+        
+        if(isMatched) {
+    		map.put("pwChk", true);
+        }
+		
+		return map;
+	}
+
+	public HashMap<String, Object> pwUpdate(String newPw, int loginIdx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encodedPassword = encoder.encode(newPw);
+		
+		int success = dao.pwUpdate(encodedPassword,loginIdx);
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> leave(String pw, int loginIdx, HttpSession session) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String encodePassWord = dao.getPw(loginIdx);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        boolean isMatched = encoder.matches(pw, encodePassWord);
+        
+        if(isMatched) {
+        	int row = dao.leave(loginIdx);
+        	
+        	if(row == 1) {
+        		map.put("success", true);
+        		session.invalidate();
+        	}
+        }
+		
+		return map;
+	}
+
+	public ModelAndView getProfileInfo(int member_idx) {
+		ModelAndView mav = new ModelAndView("/member/profilePop");
+
+		HashMap<String, Object> map =  dao.getProfileInfo(member_idx);
+		
+		String region = dao.getRegion((int) map.get("code_idx"));
+		map.put("region", region);
+		
+		mav.addObject("info",map);
+		   
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
