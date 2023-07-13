@@ -70,11 +70,11 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
@@ -240,7 +240,7 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
  			
              // AJAX 요청 보내기
              var xhr = new XMLHttpRequest();
-             xhr.open('post', '/depositCharge.ajax', true);
+             xhr.open('post', '/mypage/depositCharge.ajax', true);
              xhr.send(formData);
              
           } else {
@@ -260,7 +260,7 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
 	  var formElement = event.target;
 	  
 	  if (depositType === '출금') {
-	    var url = '/depositWithdraw.go';
+	    var url = '/mypage/depositWithdraw.go';
 	    
 	    // 팝업창 열기
 	    var popupWindow = window.open('', 'Infinity_Book', 'width=600px,height=500px');
@@ -302,7 +302,7 @@ var showPage = 1;
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'depositUseList.ajax',
+		      url:'/mypage/depositUseList.ajax',
 		      data:{
 		    	  'page':page,
 		      },

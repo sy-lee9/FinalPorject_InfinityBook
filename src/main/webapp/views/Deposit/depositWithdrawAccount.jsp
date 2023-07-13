@@ -42,7 +42,7 @@
 		<div class="row" style="text-align:center;">
 			<h3>출금 가능한 계좌를 입력해 주세요</h3>
 			<p> 출금은 영업일 기준 3-5일 이내로 처리됩니다. </p>
-			<form action="depositWithdraw.do" id="withdrawForm" method="post">
+			<form action="/mypage/depositWithdraw.do" id="withdrawForm" method="post">
 				<select name="bank">
 					<option value="default">은행선택</option>
 					<c:forEach items="${bankList}" var="bankList">

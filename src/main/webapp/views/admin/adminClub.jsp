@@ -49,7 +49,7 @@
 	
 	<div class="container">
 		<div class="row">
-		<a href="/adminMain" style="font-size:20;"> ← Admin Main</a>
+		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
 				<h2 class="section-title" style="margin-bottom:25px;">Admin-Book</h2>
 			</div>
@@ -132,7 +132,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'adminClubList.ajax',
+		      url:'/admin/adminClubList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -215,7 +215,7 @@
 	function bookBlind(blind,club_idx){
 		$.ajax({
 		      type:'get',
-		      url:'clubBlind.ajax',
+		      url:'/admin/clubBlind.ajax',
 		      data:{
 		    	  'blind':blind,
 		    	  'club_idx':club_idx

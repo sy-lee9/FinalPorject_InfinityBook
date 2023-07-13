@@ -19,12 +19,12 @@ public class AdminMemberController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired AdminMemberService adminMemberService;
 	
-	@RequestMapping("/adminMember")
+	@RequestMapping("/admin/adminMember")
 	public String adminMember(){
 		return "/admin/adminMember";
 	}
 	
-	@RequestMapping("/adminMemberList.ajax")
+	@RequestMapping("/admin/adminMemberList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> adminMemberListAjax(@RequestParam String page,@RequestParam String searchText,@RequestParam String searchType,@RequestParam String member_state){
 		logger.info("page : "+page);
@@ -38,7 +38,7 @@ public class AdminMemberController {
 		return adminMember;
 	}
 	
-	@RequestMapping("/grade.ajax")
+	@RequestMapping("/admin/grade.ajax")
 	@ResponseBody
 	public HashMap<String, Object> grade(@RequestParam String member_grade, @RequestParam String member_idx){
 		logger.info("member_grade : "+member_grade);
@@ -49,7 +49,7 @@ public class AdminMemberController {
 		return adminMember;
 	}
 	
-	@RequestMapping("/resetNickname.ajax")
+	@RequestMapping("/admin/resetNickname.ajax")
 	@ResponseBody
 	public HashMap<String, Object> resetNickname(@RequestParam(value="resetList[]") ArrayList<String> resetList){
 		

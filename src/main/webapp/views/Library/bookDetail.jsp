@@ -51,11 +51,11 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
@@ -65,11 +65,6 @@
 								     </ul>
 								</li>								
 							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
 						</div>
 					</nav>
 				</div>
@@ -121,7 +116,7 @@
 						</tr>
 						<tr>
 							<th colspan="3" style="text-align: right;">
-								<input type="button" onclick="location.href='libraryList.get'" value="목록"> 
+								<input type="button" onclick="location.href='/mypage/libraryList.get'" value="목록"> 
 								<input type="button" onclick="deleteBook(${book.library_idx})" value="삭제">
 							</th>
 						</tr>
@@ -160,7 +155,7 @@
 
 	function deleteBook(idx){
 		if(confirm("삭제 후 복구가 불가능 합니다. \n 정말 삭제하시겠습니까?")){
-			location.href='library.delete?library_idx='+idx;
+			location.href='/mypage/library.delete?library_idx='+idx;
 		}else{
 			return false;
 		}

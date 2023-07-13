@@ -39,7 +39,7 @@
 	
 	<div class="container">
 		<div class="row">
-		<a href="/adminMain" style="font-size:20;"> ← Admin Main</a>
+		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
 				<h2 class="section-title" style="margin-bottom:25px;">Admin-Code</h2>
 			</div>
@@ -54,7 +54,7 @@
 			<div id="all-genre" style="text-align:center;" data-tab-content class="active">
 				<ul class="tabs" style="margin:10">
 			  		
-						<li class="tab"><a href="/adminCode">System</a></li>							
+						<li class="tab"><a href="/admin/adminCode">System</a></li>							
 					<c:forEach items="${codeList}" var="codeList">
 						<li class="tab"><a onclick="listCall('${codeList.code_upcode}')">${codeList.code_upcode}</a></li>							
 					</c:forEach>
@@ -125,7 +125,7 @@
 	function listCall(code_upcode){
 		$.ajax({
 		      type:'post',
-		      url:'adminCodeList.ajax',
+		      url:'/admin/adminCodeList.ajax',
 		      data:{
 		    	  'code_upcode':code_upcode
 		      },
@@ -175,7 +175,7 @@
         if(confirm('시스템 분류 코드명 변경시 하위 분류는 자동으로 모두 변경됩니다. \n 변경하시겠습니까?')){
         	$.ajax({
 		      type:'post',
-		      url:'upcodeUpdate.ajax',
+		      url:'/admin/upcodeUpdate.ajax',
 		      data:{
 		    	  'code_idx':code_idx,
 		    	  'code_upcode':code_upcode
@@ -196,7 +196,7 @@
         
         $.ajax({
 		      type:'post',
-		      url:'codenameUpdate.ajax',
+		      url:'/admin/codenameUpdate.ajax',
 		      data:{
 		    	  'code_idx':code_idx,
 		    	  'codename':codename

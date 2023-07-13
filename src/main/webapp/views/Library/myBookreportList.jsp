@@ -66,11 +66,11 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item  active"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item  active"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
@@ -80,11 +80,6 @@
 								     </ul>
 								</li>								
 							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
 						</div>
 					</nav>
 				</div>
@@ -107,8 +102,8 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#" class="active tab"><a href="/myBookreportList.get">내 감상문</a></li>
-			  <li data-tab-target="#" class="tab"><a href="/myLikeList.get">❤️</a></li>
+			  <li data-tab-target="#" class="active tab"><a href="/mypage/myBookreportList.get">내 감상문</a></li>
+			  <li data-tab-target="#" class="tab"><a href="/mypage/myLikeList.get">❤️</a></li>
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 		</ul>
 		<ul class="tab">
@@ -180,7 +175,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'/myBookreportList.ajax',
+		      url:'/mypage/myBookreportList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -285,7 +280,7 @@
 	    if(confirm('삭제 이후 복구가 불가능 합니다. \n 정말 삭제 하시겠습니까?')){
 		    $.ajax({
 		      type:'get',
-		      url:'deleteMyBookreport.ajax',
+		      url:'/mypage/deleteMyBookreport.ajax',
 		      data:{'delList':checkArr},
 		      dataType:'json',
 		      success:function(data){
