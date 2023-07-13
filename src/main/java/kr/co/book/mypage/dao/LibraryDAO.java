@@ -46,6 +46,10 @@ public interface LibraryDAO {
 
 	ArrayList<HashMap<String, String>> reviewList(String library_idx);
 
+	ArrayList<LibraryDTO> findWishList(Object library_isbn);
+
+//	void wishAarm(int member_idx, String library_title, String library_isbn);
+
 	
 
 	

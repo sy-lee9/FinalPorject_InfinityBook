@@ -153,4 +153,13 @@
 		WHERE r.review_type ="도서" AND r.reciever_idx =#{param1}
 		ORDER BY review_date DESC LIMIT 5
 	</select>
+	
+	<!-- ArrayList<LibraryDTO> findWishList(Object library_isbn); -->
+	
+	<select id="findWishList" resultType="library">
+		select member_idx FROM library WHERE library_use="위시" AND library_isbn=#{param1}
+	</select>
+	
+	
+	
 </mapper>
