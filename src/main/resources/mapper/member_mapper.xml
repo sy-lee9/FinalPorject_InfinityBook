@@ -78,10 +78,20 @@
 	</select>
 	
 	<select id="getRegion" resultType="String">
-		SELECT code_codename FROM code WHERE code_code = #{param}
+		SELECT code_codename FROM code WHERE code_code = #{param} AND code_upcode = 'region'
 	</select>
 	
-	
+	<select id="reviewList" resultType="hashMap">
+		SELECT 
+			(SELECT member_nickname FROM member WHERE member_idx = sender_idx) AS member_nickname, 
+			sender_idx As member_idx,
+			review_content, 
+			review_date
+		FROM review r
+			WHERE reciever_idx = #{member_idx}	
+				AND review_type = 0 AND review_blind = 0 
+			ORDER BY review_date DESC LIMIT 5 OFFSET #{offset};
+	</select>
 	
 	
 	

@@ -73,7 +73,7 @@
 			if($('#endDate').val() != ''){
 		
 			    $.ajax({
-			        url: '/tracker/add/read/book.ajax',
+			        url: '/mypage/tracker/add/read/book.ajax',
 			        type: 'get',
 			        data: {
 			            'isbn': isbn,
@@ -114,7 +114,7 @@
 	function trackerChk(){
 		
 		$.ajax({
-	        url: '/trackerChk.ajax',
+	        url: '/mypage/trackerChk.ajax',
 	        type: 'get',
 	        data: {
 	            'isbn': isbn

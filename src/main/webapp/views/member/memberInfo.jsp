@@ -21,7 +21,7 @@
 </head>
 <body>	
 
-<div id="header-wrap">
+<div id="header-wrap" class="show">
 
 	<c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
@@ -48,21 +48,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내정보</a>
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원정보</a></li>
-								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								     <a class="dd-toggle" href="#">
-								     	<span class="icon-plus"></span>
-								     </a>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -126,7 +124,7 @@
 					    </tr>
 						<tr>
 							<th colspan="4" style="text-align: center; padding: 2%; border-bottom: none;">
-								<input type="button" onclick="location.href='memberInfoUpdate.go'" value="회원정보 수정">
+								<input type="button" onclick="location.href='/mypage/memberInfoUpdate.go'" value="회원정보 수정">
 							</th>
 						</tr>
 					</table>

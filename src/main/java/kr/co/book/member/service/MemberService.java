@@ -1,6 +1,7 @@
 package kr.co.book.member.service;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -329,6 +330,31 @@ public class MemberService {
 		mav.addObject("info",map);
 		   
 		return mav;
+	}
+
+	public HashMap<String, Object> getReview(HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<HashMap<String, Object>> list = null;
+		int page = Integer.parseInt(String.valueOf(params.get("page"))); 
+		int offset = 5*(page-1);
+		params.put("offset", offset);
+		int total = 0;
+		
+		list = dao.reviewList(params);
+		logger.info("list : "+list);
+		total = list.size();
+		logger.info("total : "+total);		
+		
+		int range = total%5  == 0 ? total/5 : total/5+1;
+		page = page>range ? range:page;
+		
+		map.put("offset", offset);
+		map.put("list", list);
+		map.put("currPage", page);
+		map.put("pages", range);
+		
+		return map;
 	}
 	
 	

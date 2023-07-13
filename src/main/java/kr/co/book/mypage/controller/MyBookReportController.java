@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +31,19 @@ public class MyBookReportController {
 	@ResponseBody
 	public HashMap<String, Object> myBookrpoertListAjax(@RequestParam String page,@RequestParam String searchText,HttpSession session){
 		logger.info("searchText : "+searchText);
-		int member_idx = (int) session.getAttribute("loginIdx"); 
+		
+		int member_idx = (int) session.getAttribute("loginIdx");
+		HashMap<String, Object> myBookreport = myBookReportService.myBookReportList(member_idx,page,searchText);
+		
+		return myBookreport;
+	}
+
+	@RequestMapping("/mypage/profileBookreportList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> profileBookreportList(@RequestParam String memberIdx, @RequestParam String page,@RequestParam String searchText){
+		logger.info("searchText : "+searchText);
+
+		int member_idx = Integer.parseInt(memberIdx);
 		HashMap<String, Object> myBookreport = myBookReportService.myBookReportList(member_idx,page,searchText);
 		
 		return myBookreport;

@@ -29,6 +29,14 @@
 
 	</head>
 	<style>
+		.pagination .page-link {
+	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
+		}
+	
+		.pagination .page-item.active .page-link {
+	 		background-color: #C5A992;
+	 		border:none;
+		}
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
 		.item-price{
 			font-family: 'IBM Plex Sans KR', serif;	
@@ -85,17 +93,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item has-sub">
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li><a href="index.move">회원정보</a></li>
-								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -226,7 +236,7 @@
 	function trackerAddMemo() {
 	    
 	    $.ajax({
-	        url: '/trackerAddMemo.ajax',
+	        url: '/mypage/trackerAddMemo.ajax',
 	        type: 'post',
 	        data: {
 	        	'content':document.getElementById("content").value,
@@ -250,7 +260,7 @@
 	function listCall(){
 		$.ajax({
 			type:'post',
-			url:'getMemoList.ajax',
+			url:'mypage/getMemoList.ajax',
 			data:{
 	        	'trackerIdx':document.getElementById("trackerIdx").value
 			},
@@ -286,7 +296,7 @@
 		
 		$.ajax({
 			type:'post',
-			url:'memoDelete.ajax',
+			url:'mypage/memoDelete.ajax',
 			data:{
 	        	'trackerIdx':trackerIdx,
 	        	'memoIdx':memoIdx
@@ -315,7 +325,7 @@
 	    var height = 400;
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
-	    window.open('trackerMemoUpdate.go?trackerIdx=' + trackerIdx + '&memoIdx=' + memoIdx + '&jsp=' + jsp + '\'', 'updateMemo', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    window.open('mypage/trackerMemoUpdate.go?trackerIdx=' + trackerIdx + '&memoIdx=' + memoIdx + '&jsp=' + jsp + '\'', 'updateMemo', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 		
 	}
 	
@@ -341,7 +351,7 @@
 		if (result) {
 			
 			$.ajax({
-		        url: '/trackerDeleteBook.ajax',
+		        url: '/mypage/trackerDeleteBook.ajax',
 		        type: 'get',
 		        data: {
 		            'isbn': isbn

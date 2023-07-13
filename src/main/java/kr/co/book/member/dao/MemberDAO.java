@@ -1,5 +1,6 @@
 package kr.co.book.member.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.co.book.member.dto.MemberDTO;
@@ -33,6 +34,8 @@ public interface MemberDAO {
 	HashMap<String, Object> getProfileInfo(int member_idx);
 
 	String getRegion(int code_idx);
+
+	ArrayList<HashMap<String, Object>> reviewList(HashMap<String, Object> params);
 
 
 }

@@ -199,19 +199,19 @@ public class MemberController {
 		   return  map;
 	   }	 
 
-	   @RequestMapping(value = "/memberInfo.go")
+	   @RequestMapping(value = "/mypage/memberInfo.go")
 	   public ModelAndView memberInfoGo(HttpSession session) {
 		   int loginIdx = (int) session.getAttribute("loginIdx");
 		   return service.getMemberInfo(loginIdx,"info");
 	   }
 	   
-	   @RequestMapping(value = "/memberInfoUpdate.go")
+	   @RequestMapping(value = "/mypage/memberInfoUpdate.go")
 	   public ModelAndView memberInfoUpdateGo(HttpSession session) {
 		   int loginIdx = (int) session.getAttribute("loginIdx");
 		   return service.getMemberInfo(loginIdx,"updateInfo");
 	   }
 	   
-	   @PostMapping(value="/memberInfoUpdate.ajax")
+	   @PostMapping(value="/mypage/memberInfoUpdate.ajax")
 	   @ResponseBody
 	   public HashMap<String, Object> memberInfoUpdate(HttpSession session, @RequestParam HashMap<String, Object> params){
 		   logger.info("params : "+params);
@@ -222,12 +222,12 @@ public class MemberController {
 	      return service.memberInfoUpdate(params);      
 	   }
 	   
-	   @RequestMapping(value = "/pwUpdate.go")
+	   @RequestMapping(value = "/mypage/pwUpdate.go")
 	   public String pwUpdateGo() {
 		   return "/member/pwUpdate";
 	   }
 	   
-	   @PostMapping(value="/pwChk.ajax")
+	   @PostMapping(value="/mypage/pwChk.ajax")
 	   @ResponseBody
 	   public HashMap<String, Object> pwChk(HttpSession session, @RequestParam String exPw){
 		   logger.info("exPw : "+exPw);
@@ -238,7 +238,7 @@ public class MemberController {
 	      return service.pwChk(exPw,loginIdx);      
 	   }
 	   
-	   @PostMapping(value="/pwUpdate.ajax")
+	   @PostMapping(value="/mypage/pwUpdate.ajax")
 	   @ResponseBody
 	   public HashMap<String, Object> pwUpdate(HttpSession session, @RequestParam String newPw){
 		   logger.info("newPw : "+newPw);
@@ -248,12 +248,12 @@ public class MemberController {
 	      return service.pwUpdate(newPw,loginIdx);      
 	   }
 	   
-	   @RequestMapping(value = "/leave.go")
+	   @RequestMapping(value = "/mypage/leave.go")
 	   public String leaveGo() {
 		   return "/member/leave";
 	   }
 	   
-	   @PostMapping(value="/leave.ajax")
+	   @PostMapping(value="/mypage/leave.ajax")
 	   @ResponseBody
 	   public HashMap<String, Object> leave(HttpSession session, @RequestParam String pw){
 		   logger.info("pw : "+pw);
@@ -264,11 +264,17 @@ public class MemberController {
 	   }
 	   
 	   @RequestMapping(value = "/profilePop.go")
-	   public ModelAndView profilePopGo(int member_idx) {
+	   public ModelAndView profilePopGo(Model model, int member_idx) {
+		   model.addAttribute("member_idx", member_idx);
 		   return service.getProfileInfo(member_idx);
 	   }
 	   
-	   
+	   @PostMapping(value="/getReview.ajax")
+	   @ResponseBody
+	   public HashMap<String, Object> getReview(@RequestParam HashMap<String, Object> params){
+		   logger.info("params : "+params);
+	      return service.getReview(params);      
+	   }
 	   
 	   
 	   

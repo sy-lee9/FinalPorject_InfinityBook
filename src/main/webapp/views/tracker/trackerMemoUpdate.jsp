@@ -68,7 +68,7 @@
 		console.log(content);
 
 	    $.ajax({
-	        url: '/trackerMemoUpdate.ajax',
+	        url: '/mypage/trackerMemoUpdate.ajax',
 	        type: 'post',
 	        data: {
 	            'trackerIdx': trackerIdx,

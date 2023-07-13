@@ -47,21 +47,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내정보</a>
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원정보</a></li>
-								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								     <a class="dd-toggle" href="#">
-								     	<span class="icon-plus"></span>
-								     </a>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -120,7 +118,7 @@
 			<tr>
 				<th colspan="2" style="text-align: center;">
 					<input type="button" onclick="update()" value="수정">&nbsp;&nbsp;		
-					<input type="button" onclick="location.href='/memberInfo.go'" value="취소">
+					<input type="button" onclick="location.href='/mypage/memberInfo.go'" value="취소">
 				</th>
 			</tr>
 		</table>
@@ -160,7 +158,7 @@
 	    var height = 450;
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
-	    var popupWindow = window.open('pwUpdate.go', 'pwUpdate', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    var popupWindow = window.open('/mypage/pwUpdate.go', 'pwUpdate', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 	
 	function update(){
@@ -182,7 +180,7 @@
 	  } else {
 
 		    $.ajax({
-		      url: '/memberInfoUpdate.ajax',
+		      url: '/mypage/memberInfoUpdate.ajax',
 		      type: 'post',
 		      data: {
 		    	  'nickname' : document.getElementById("member_nickname").value,
