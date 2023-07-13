@@ -106,6 +106,14 @@ public class LibraryService {
 		return libraryDAO.reviewList(library_idx);
 	}
 
+	public ArrayList<LibraryDTO> findWishList(Object library_isbn) {
+		return libraryDAO.findWishList(library_isbn);
+	}
+
+//	public void wishAarm(int member_idx, String library_title, String library_isbn) {
+//		libraryDAO.wishAarm(member_idx,library_title,library_isbn);
+//	}
+
 	
 
 

@@ -77,7 +77,7 @@
 								<li class="menu-item active"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
 								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -338,6 +338,15 @@
 		$('#club_list').append(content);
 	}
 	
+	
+	function profilePop(member_idx) {
+	    var width = 1100;
+	     var height = 800;
+	     var left = window.innerWidth / 2 - width / 2;
+	     var top = window.innerHeight / 2 - height / 2;
+	     var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	 };
+	 
 </script>
 
 </html>	
