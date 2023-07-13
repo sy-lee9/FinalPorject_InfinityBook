@@ -2,13 +2,14 @@ package kr.co.book.alarm.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.co.book.alarm.dto.AlarmDTO;
 
+@Mapper
 public interface AlarmDAO {
 
-	int totalAlarmCount(String member_idx);
-
-	ArrayList<AlarmDTO> alarmList(int offset, String member_idx);
+	ArrayList<AlarmDTO> alarmList(String member_idx);
 
 	void alarmCheck(String member_idx);
 

@@ -1,6 +1,6 @@
 package kr.co.book.alarm.controller;
 
-import java.util.HashMap;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -8,13 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.alarm.service.AlarmService;
-import lombok.RequiredArgsConstructor;
 
 @Controller
 public class AlarmController {
@@ -23,29 +23,19 @@ public class AlarmController {
 	
 	@Autowired AlarmService service;
 	
-	@RequestMapping(value="/alarm.go")
-	public String alarm(HttpSession session) {
-		
-		logger.info("alarm으로 이동");		
-		return "alarm/alarmList";
+	@RequestMapping(value="/alarm.ajax")
+	@ResponseBody
+	public ModelAndView alarm(HttpSession session) {
+		String member_idx = session.getAttribute("loginIdx").toString();
+		ModelAndView mav = new ModelAndView("alarm/alarmList");
+		mav.addObject("alarmlist", service.alarmlist(member_idx));
+		return mav;
 	}
 	
-	@RequestMapping(value = "/alarmlist.ajax")
-	@ResponseBody
-	public HashMap<String, Object> alarmlist(@RequestParam int page, HttpSession session){
-		
-		String member_idx = session.getAttribute("loginIdx").toString();
-		
-		HashMap<String, Object> alarmlist = service.alarmlist(page,member_idx);
-		
-		return alarmlist;
-	}
 	
 	
 	@RequestMapping(value="/alarmdetail.go")
-	public String alarmdetail(@RequestParam String code_idx, @RequestParam String idx) {
-		logger.info("alarm상세으로 이동");
-
+	public String alarmdetail(@RequestParam int code_idx, @RequestParam int idx) {
 		String page = service.alarmdetail(code_idx, idx);
 		
 		return page;

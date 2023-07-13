@@ -22,35 +22,42 @@ public class AlarmService {
 	@Autowired AlarmDAO dao;
 
 	@Transactional
-	public HashMap<String, Object> alarmlist(int page, String member_idx) {
+	public HashMap<String, Object> alarmlist(String member_idx) {
 		
 		ArrayList<AlarmDTO> list = null;
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int offset = 0;
-		int total = 0;
-		int range = 0;
-		offset = 10*(page - 1);		
-		total =dao.totalAlarmCount(member_idx);
-		range = total%10  == 0 ? total/10 : (total/10)+1;	
-		page = page>range ? range:page;
-		list = dao.alarmList(offset,member_idx);
-		dao.alarmCheck(member_idx);
-		
-		map.put("offset", offset);
+		list = dao.alarmList(member_idx);
+
 		map.put("list", list);
-		// 현재 페이지
-		map.put("currPage", page);
-		// 총 페이지 수
-		map.put("pages", range);
-		
-		
+
 		return map;
 	}
 
-	public String alarmdetail(String code_idx, String idx) {
+	public String alarmdetail(int code_idx, int idx) {
 		
-		return null;
+		String page = "";
+		
+		if(code_idx == 2) {
+		// 교환			
+			page = "";
+		}else if(code_idx == 3) {
+		// 대여	
+			page = "";	
+		}else if(code_idx == 4) {
+		// 모임	
+			page = "";
+		}else if(code_idx == 1) {
+		// 감상문
+			page = "";
+		}else if(code_idx == 1) {
+		// 문의
+			page = "";
+		}
+		
+		
+		return page;
 	}
+
 
 }

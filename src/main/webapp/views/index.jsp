@@ -15,17 +15,19 @@
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
 
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-
-		<!-- script
-		================================================== -->
-		<script src="/js/jquery-1.11.0.min.js"></script>
+	    
+		<!-- script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
-		<script src="/js/modernizr.js"></script>
 		 <link rel="icon" href="/images/mainLogo.png" class="images">		
 	
 	<style>

@@ -4,15 +4,10 @@
    
 	<mapper namespace="kr.co.book.alarm.dao.AlarmDAO">
 	
-		<select id="totalAlarmCount" resultType="int">
-			SELECT COUNT(alarm_idx) FROM alarm
-			WHERE alarm_check = 0 AND member_idx = #{member_idx}		
-		</select>
-		
 		<select id="alarmList" resultType="alarm">
 			SELECT code_idx, idx, alarm_content, alarm_check, alarm_date FROM alarm
 			WHERE member_idx = #{member_idx} 
-			ORDER BY alarm_idx DESC LIMIT 10 OFFSET #{param1}
+			ORDER BY alarm_idx DESC
 		</select>
 		
 		<update id="alarmCheck">
