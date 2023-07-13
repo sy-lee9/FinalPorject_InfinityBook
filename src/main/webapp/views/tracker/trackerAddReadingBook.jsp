@@ -97,7 +97,7 @@
 	
 	$(document).ready(function() {	
 	    $.ajax({
-	        url: '/getTotalPage.ajax',
+	        url: '/mypage/getTotalPage.ajax',
 	        type: 'get',
 	        data: {
 	            'isbn': isbn,
@@ -132,7 +132,7 @@
 			if($('#startDate').val() != ''){
 		    	    
 			    $.ajax({
-			        url: '/tracker/add/reading/book.ajax',
+			        url: '/mypage/tracker/add/reading/book.ajax',
 			        type: 'get',
 			        data: {
 			            'isbn': isbn,
@@ -173,7 +173,7 @@
 		if($('#startDate').val() != ''){
 	    
 		    $.ajax({
-		        url: '/trackerUpdateBook.ajax',
+		        url: '/mypage/trackerUpdateBook.ajax',
 		        type: 'get',
 		        data: {
 		            'isbn': isbn,

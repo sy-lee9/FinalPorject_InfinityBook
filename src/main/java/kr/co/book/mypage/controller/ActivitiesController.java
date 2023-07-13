@@ -21,12 +21,12 @@ public class ActivitiesController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
-	@RequestMapping(value = "/activitiesChange.go")
+	@RequestMapping(value = "/mypage/activitiesChange.go")
 	public String activitiesChange() {
 		return "/activities/activitiesChange";
 	}
 	
-	@RequestMapping("/activitiesChangeList.ajax") 
+	@RequestMapping("/mypage/activitiesChangeList.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> activitiesChangeList(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		int loginIdx = (int) session.getAttribute("loginIdx");
@@ -35,12 +35,12 @@ public class ActivitiesController {
 		return ActivitiesService.getChangeList(params); 
 	}
 	
-	@RequestMapping(value = "/activitiesRent.go")
+	@RequestMapping(value = "/mypage/activitiesRent.go")
 	public String activitiesRent() {
 		return "/activities/activitiesRent";
 	}
 	
-	@RequestMapping("/activitiesRentList.ajax") 
+	@RequestMapping("/mypage/activitiesRentList.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> activitiesRentList(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		int loginIdx = (int) session.getAttribute("loginIdx");

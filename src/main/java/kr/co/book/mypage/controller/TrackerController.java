@@ -27,25 +27,25 @@ public class TrackerController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	//트래커에 추가할 책 검색 페이지 이동
-	@RequestMapping(value = "/trackerSearch.go")
+	@RequestMapping(value = "/mypage/trackerSearch.go")
 	public String tracker() {		
 		return "/tracker/trackerSearch";
 	}
 	
-	@GetMapping(value = "/clubBookSearch.do")
+	@GetMapping(value = "/mypage/clubBookSearch.do")
 	public ModelAndView clubBookSearch(String searchValue) {
 		return TrackerService.clubBookSearch("title",searchValue);
 	}
 	
 	//트래커에 추가할 책 검색
-	@GetMapping(value = "/trackerSearch.do")
+	@GetMapping(value = "/mypage/trackerSearch.do")
 	public ModelAndView trackerBookSearch(String searchType, String searchValue) {	
 		logger.info("searchType : {} / searchValue : {}",searchType,searchValue);
 		return TrackerService.trackerBookSearch(searchType,searchValue);
 	}
 	
 	//트래커 추가 페이지로 이동
-	@GetMapping(value = "/tracker/add/{state}/book.go")
+	@GetMapping(value = "/mypage/tracker/add/{state}/book.go")
 	public String trackerAddBookGo(@RequestParam HashMap<String, Object> params, Model model,@PathVariable String state) {	
 		logger.info("trackerAddBookGo params : ",params);
 		if(!params.get("isbn").equals("undefined")) {
@@ -59,7 +59,7 @@ public class TrackerController {
 	}
 	
 	//트래커에 완독 / 읽고 있는 책 추가
-	@GetMapping(value = "/tracker/add/{state}/book.ajax")
+	@GetMapping(value = "/mypage/tracker/add/{state}/book.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerAddBook(HttpSession session, @PathVariable String state, @RequestParam HashMap<String, Object> params) {
 		logger.info("state : {} / params : {}",state,params);
@@ -78,7 +78,7 @@ public class TrackerController {
 	}
 	
 	//읽고 있는 책 등록 페이지에 총페이지 수 가져가기
-	@GetMapping(value = "/getTotalPage.ajax")
+	@GetMapping(value = "/mypage/getTotalPage.ajax")
 	@ResponseBody
 	public HashMap<String, Object> getTotalPage(HttpSession session, @RequestParam HashMap<String, Object> params) {
 		logger.info("params : "+params);
@@ -98,7 +98,7 @@ public class TrackerController {
 	}
 	
 	//트래커 리스트로 이동
-	@GetMapping(value = "/trackerList.go")
+	@GetMapping(value = "/mypage/trackerList.go")
 	public ModelAndView trackerListGo(HttpSession session) {
 		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
@@ -107,13 +107,13 @@ public class TrackerController {
 	}
 	
 	//트래커 디테일
-	@GetMapping(value = "/trackerDetail.go")
+	@GetMapping(value = "/mypage/trackerDetail.go")
 	public ModelAndView trackerDetail(HttpSession session, String trackerIdx) {
 		return TrackerService.trackerDetail(trackerIdx);
 	}
 
 	//트래커 업데이트 페이지로 이동
-	@GetMapping(value = "/trackerUpdateBook.go")
+	@GetMapping(value = "/mypage/trackerUpdateBook.go")
 	public String trackerUpdateBookGo(@RequestParam HashMap<String, Object> params, Model model) {	
 		logger.info("params : ",params);
 			model.addAttribute("isbn",params.get("isbn"));
@@ -124,7 +124,7 @@ public class TrackerController {
 	}
 	
 	//트래커 수정
-	@GetMapping(value = "/trackerUpdateBook.ajax")
+	@GetMapping(value = "/mypage/trackerUpdateBook.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerUpdateBook(HttpSession session, @RequestParam HashMap<String, Object> params) {
 		//session.setAttribute("loginIdx", 3);
@@ -135,7 +135,7 @@ public class TrackerController {
 	}
 	
 	//트래커 삭제
-	@GetMapping(value = "/trackerDeleteBook.ajax")
+	@GetMapping(value = "/mypage/trackerDeleteBook.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerDeleteBook(HttpSession session, String isbn) {
 		//session.setAttribute("loginIdx", 3);
@@ -151,7 +151,7 @@ public class TrackerController {
 	}
 	
 	//메모 저장
-	@PostMapping(value = "/trackerAddMemo.ajax")
+	@PostMapping(value = "/mypage/trackerAddMemo.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerAddMemo(HttpSession session, @RequestParam HashMap<String, Object> params) {
 		logger.info("memo params: "+params);
@@ -166,7 +166,7 @@ public class TrackerController {
 	}
 	
 	//메모 리스트 출력
-	@PostMapping(value = "/getMemoList.ajax")
+	@PostMapping(value = "/mypage/getMemoList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> getMemoList(String trackerIdx){
 		logger.info("memo trackerIdx : "+trackerIdx);
@@ -174,7 +174,7 @@ public class TrackerController {
 	}
 	
 	//메모 삭제
-	@PostMapping(value = "/memoDelete.ajax")
+	@PostMapping(value = "/mypage/memoDelete.ajax")
 	@ResponseBody
 	public HashMap<String, Object> memoDelete(@RequestParam HashMap<String, Object> params){
 		logger.info("memo delete : "+params);
@@ -182,7 +182,7 @@ public class TrackerController {
 	}
 	
 	//메모 수정 페이지 이동
-	@GetMapping(value = "/trackerMemoUpdate.go")
+	@GetMapping(value = "/mypage/trackerMemoUpdate.go")
 	public String trackerMemoUpdateGo(@RequestParam HashMap<String, Object> params, Model model) {	
 		logger.info("params : ",params);
 		String content = TrackerService.getContent(params);
@@ -194,7 +194,7 @@ public class TrackerController {
 	}
 	
 	//메모 수정
-	@PostMapping(value = "/trackerMemoUpdate.ajax")
+	@PostMapping(value = "/mypage/trackerMemoUpdate.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerMemoUpdate(@RequestParam HashMap<String, Object> params){
 		logger.info("memo update : "+params);

@@ -84,21 +84,22 @@
 
 	var pweq = false;
 	var newPweq = false;
-	
+
 	$('#exPw').on('keyup', function(e){
 		 var exPw = $('#exPw').val();   
 
 		 $.ajax({
 		    type: 'post'
-		    ,url: 'pwChk.ajax'
+		    ,url: '/mypage/pwChk.ajax'
 		    ,data:{'exPw':exPw}
 		    ,dataType:'json'
 		    ,success:function(data){
 				console.log(data);							
-				if(data.pwChk == true){             
-					pweq = true;
+				if(data.pwChk){        
 			        $('#exPw_msg').css({'font-size': '10px','color': 'darkgreen'});
-			  		$('#exPw_msg').html('비밀번호가 일치합니다.');
+			  		$('#exPw_msg').html('비밀번호가 일치합니다.');     
+					pweq = true;
+					console.log(pweq);
 			     }else {             
 					$('#exPw_msg').css({'font-size': '10px','color': 'red'});
 					$('#exPw_msg').html('비밀번호가 틀립니다.');
@@ -107,14 +108,20 @@
 		    ,error:function(e){
 		       console.log(e);
 		    }
-		 });     
+		 });     	
 	});
+	
 	
 
 	$('#newPw').on('keyup',function(e){
+		console.log(pweq);
 		
 		if($('#exPw').val()==''){
 			  alert('현재 비밀번호를 입력해 주세요!');   
+			  $('#newPw').val('');
+			  $('#exPw').focus();      
+		} else if(pweq != true){
+			  alert('현재 비밀번호를 확인해주세요!');   
 			  $('#newPw').val('');
 			  $('#exPw').focus();      
 		} else if($('#newPw').val().length <=7){
@@ -152,11 +159,13 @@
 	function pwUpdate(){
 		
 	  var $newPw = $('#newPw');	 
-	  
+	  console.log(pweq,newPweq);
+
 	  newPweq = false;
 	  newPwChk();
 	  
 	  if(newPweq){
+
 		  if($newPw.val()==''){
 			  alert('비밀번호를 입력해 주세요!');      
 			  $newPw.focus();      
@@ -165,7 +174,7 @@
 			  $newPw.focus();
 		  } else if(pweq && newPweq){
 			  $.ajax({
-				  url: 'pwUpdate.ajax',
+				  url: '/mypage/pwUpdate.ajax',
 				  type: 'post',
 				  data: {
 					  'newPw' : document.getElementById("newPw").value
@@ -176,9 +185,6 @@
 				    if(data.success == 1){      	
 				      alert('비밀번호가 변경되었습니다.');
 				      window.close(); 
-				      if (window.opener) {
-					      window.opener.location.href = '/memberInfo.go';
-					   }
 				    } else{
 				      console.log('실패');
 				      alert('실패했습니다. 다시 시도해주세요');            
@@ -189,31 +195,8 @@
 				  }
 				});
 			}
-	 	}
+		}	  
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 </script>
 </html>
