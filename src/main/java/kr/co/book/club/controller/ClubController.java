@@ -181,11 +181,8 @@ public class ClubController {
 		
 		
 		// 채팅방 나가기 기능 추가 필요
-		
-		
-		
-		
-		
+		chatservice.clubchatDelete(club_idx);
+						
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
 	
