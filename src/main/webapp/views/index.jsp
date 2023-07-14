@@ -31,10 +31,11 @@
 		 <link rel="icon" href="/images/mainLogo.png" class="images">		
 	
 	<style>
-		
+		.slick-track{
+			height:300px;
+		}
 	</style>
 	
-
 	</head>
 	
 
@@ -108,7 +109,8 @@
 </section>
 
 
-
+<br/>
+<br/>
 
 
 
@@ -165,7 +167,8 @@
 	</div>
 </section>
 
-
+<br/>
+<br/>
 
 <section id="latest-blog" style="margin-bottom: 0px;">
 	<div class="container">
@@ -213,6 +216,14 @@
 		</div>
 	</div>
 </section>
+
+
+
+
+<br/>
+<br/>
+
+
 
 <section id="billboard">
 

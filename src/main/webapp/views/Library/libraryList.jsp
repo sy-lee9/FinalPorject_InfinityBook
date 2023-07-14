@@ -217,7 +217,7 @@
 	function listPrint(list) {
 	    var content = '';
 
-	    content += '<div id="products-grid" class="products-grid grid">';
+	    content += '<div id="products-grid" class="products-grid grid" >';
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
 	    content += '    <a onclick="window.open(\'/mypage/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';

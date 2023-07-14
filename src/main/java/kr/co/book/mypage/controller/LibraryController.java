@@ -95,6 +95,9 @@ public class LibraryController {
 
 	}
 	
+
+	
+	
 	@RequestMapping("/mypage/libraryWrite.do")
 	public String libraryWrite(@RequestParam HashMap<String, Object> bookData,HttpSession session) {
 		logger.info("session loginIdx "+ session.getAttribute("loginIdx"));
@@ -125,7 +128,7 @@ public class LibraryController {
 			for (LibraryDTO libraryDTO : findWishList) {
 				logger.info("필요한 사람 : "+libraryDTO.getMember_idx());
 				
-				// libraryService.wishAarm(libraryDTO.getMember_idx(),String.valueOf(bookData.get("library_title")),String.valueOf(bookData.get("library_isbn")));
+				libraryService.wishAarm(libraryDTO.getMember_idx(),String.valueOf(bookData.get("library_title")),String.valueOf(bookData.get("library_isbn")));
 				
 			}
 		
