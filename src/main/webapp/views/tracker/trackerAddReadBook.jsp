@@ -91,7 +91,7 @@
 								  window.alert("트래커에 추가 되었습니다.");
 								  window.close(); 
 								  if (window.opener) {
-								      window.opener.location.href = '/trackerList.go';
+								      window.opener.location.href = '/mypage/trackerList.go';
 								   }
 							}
 						}else{

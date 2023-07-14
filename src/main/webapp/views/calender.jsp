@@ -19,8 +19,7 @@
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
 
-		<!-- script
-		================================================== -->
+		<!-- script	 -->
 		<script src="/js/modernizr.js"></script>
 		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 		<script src="/js/jquery-1.11.0.min.js"></script>
@@ -57,7 +56,7 @@
 
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="./"><img src="/images/mainLogo.png" alt="logo"></a>
+						<a href="../"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>

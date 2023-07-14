@@ -29,6 +29,10 @@
 
 	</head>
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+		.item-price{
+			font-family: 'IBM Plex Sans KR', serif;	
+		}
 		.pagination .page-link {
 	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
 		}
@@ -36,10 +40,6 @@
 		.pagination .page-item.active .page-link {
 	 		background-color: #C5A992;
 	 		border:none;
-		}
-		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-		.item-price{
-			font-family: 'IBM Plex Sans KR', serif;	
 		}
 		progress {	   
 			width: 100%;
@@ -260,7 +260,7 @@
 	function listCall(){
 		$.ajax({
 			type:'post',
-			url:'mypage/getMemoList.ajax',
+			url:'/mypage/getMemoList.ajax',
 			data:{
 	        	'trackerIdx':document.getElementById("trackerIdx").value
 			},
@@ -296,7 +296,7 @@
 		
 		$.ajax({
 			type:'post',
-			url:'mypage/memoDelete.ajax',
+			url:'/mypage/memoDelete.ajax',
 			data:{
 	        	'trackerIdx':trackerIdx,
 	        	'memoIdx':memoIdx
@@ -325,16 +325,12 @@
 	    var height = 400;
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
-	    window.open('mypage/trackerMemoUpdate.go?trackerIdx=' + trackerIdx + '&memoIdx=' + memoIdx + '&jsp=' + jsp + '\'', 'updateMemo', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    window.open('/mypage/trackerMemoUpdate.go?trackerIdx=' + trackerIdx + '&memoIdx=' + memoIdx + '&jsp=' + jsp + '\'', 'updateMemo', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 		
 	}
 	
-	
-	
-	
-	
-	
 
+	// 트래커 정보 수정
 	var isbn = "${book.isbn}";
 	var readPage = "${book.readPage}";
 	var startDate = "${book.startDate}";
@@ -342,7 +338,7 @@
 
 	function trackerUpdate() {
 		console.log(isbn);
-		window.open('/trackerUpdateBook.go?isbn='+isbn+'&readPage='+readPage+'&jsp='+jsp+'&startDate='+startDate,'읽는 중','width=473px,height=400px');
+		window.open('/mypage/trackerUpdateBook.go?isbn='+isbn+'&readPage='+readPage+'&jsp='+jsp+'&startDate='+startDate,'읽는 중','width=473px,height=400px');
 	};
 	
 	function trackerDelete() {
@@ -362,7 +358,7 @@
 					if(data.success){
 							console.log("삭제 완료");
 							alert("삭제되었습니다.");
-					      	window.location.href = '/trackerList.go';
+					      	window.location.href = '/mypage/trackerList.go';
 					}else{
 						console.log("삭제 실패");
 					}

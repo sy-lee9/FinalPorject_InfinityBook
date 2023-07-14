@@ -192,7 +192,7 @@
 	    var height = 800;
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
-	    var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    var popupWindow = window.open('/profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 
 	var showPage = 1;
@@ -210,7 +210,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'mypage/activitiesRentList.ajax',
+		      url:'/mypage/activitiesRentList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
