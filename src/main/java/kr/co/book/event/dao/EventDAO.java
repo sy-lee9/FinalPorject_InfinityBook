@@ -6,8 +6,8 @@ import java.util.HashMap;
 import kr.co.book.event.dto.EventDTO;
 
 public interface EventDAO {
-
-		int totalCount();
+	/*
+		//int totalCount();
 
 		int etotalCountSearch(String search);
 
@@ -19,7 +19,7 @@ public interface EventDAO {
 
 		int eventWrite(EventDTO dto);
 
-	/*
+
 	 * int totalEventList(int member_idx, String type);
 	 * 
 	 * ArrayList<EventDTO> eventList(int member_idx, int offset, String type);

@@ -28,7 +28,7 @@ public class EventService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired EventDAO dao;
-	
+	/*	
 	public HashMap<String, Object> eventPageList(int page, String search) {
 		logger.info("서비스");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -150,7 +150,7 @@ public class EventService {
 	        }
 			
 		}
-
+*/
 	
 
 }

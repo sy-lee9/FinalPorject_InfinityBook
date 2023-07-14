@@ -56,8 +56,8 @@ public class EventController {
 		   }else if (params.get("event_cnt").equals("")) {
 			   model.addAttribute("msg","이벤트 당첨자 수를 선정하세요.");
 		   }else {				   
+			   //service.eventWrite(photo, params);
 			   model.addAttribute("msg","이벤트가 정상적으로 등록되었습니다.");
-			   service.eventWrite(photo, params);
 				page = "eventList";
 		}  
 	      return page;
@@ -77,7 +77,7 @@ public class EventController {
 	public String eventDelete() {
 		return "event/eventWrite"; 
 	}
-	
+/*	
 	@RequestMapping(value = {"/eventList.ajax"}, method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> eventList(
@@ -89,6 +89,6 @@ public class EventController {
 		
 		return service.eventPageList(Integer.parseInt(page),search);
 	}	
-	 
+*/	 
 	
 }
