@@ -46,7 +46,7 @@
 			</tr>	
 			<tr>
 				<td style="text-align:center;">
-					<button onclick="location.href='/myinquirylist.go'">리스트</button>
+					<button onclick="location.href='/mypage/myinquirylist.go'">리스트</button>
 				</td>
 			</tr>	
 		</table>	

@@ -93,7 +93,7 @@
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='#'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">문의관리</button>
+								<button type="button" onclick="location.href='/admin/inquirylist.go'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; height:150px;">문의관리</button>
 							</figcaption>
 						</figure>
 					

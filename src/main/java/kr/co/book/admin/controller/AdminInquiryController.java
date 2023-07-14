@@ -25,7 +25,7 @@ public class AdminInquiryController {
 	@Autowired AdminInquiryService service;
 	
 	// 문의 상세보기
-	@RequestMapping(value = "/inquirydetail.go")
+	@RequestMapping(value = "/mypage/inquirydetail.go")
 	public ModelAndView inquirydetail(@RequestParam String inquiry_idx) {
 		
 		ModelAndView mav = new ModelAndView("/inquiry/inquirylist");
@@ -39,7 +39,7 @@ public class AdminInquiryController {
 	}
 	
 	// 문의 답변 이동
-	@RequestMapping(value = "/inquiryreplywrite.go")
+	@RequestMapping(value = "/admin/inquiryreplywrite.go")
 	public String inquiryreplywriteForm(@RequestParam String inquiry_idx,@RequestParam String code_idx,Model model) {
 		logger.info(inquiry_idx+"/"+code_idx);
 		model.addAttribute("inquiry_idx", inquiry_idx);
@@ -48,7 +48,7 @@ public class AdminInquiryController {
 	}
 	
 	// 문의 답변 하기
-	@RequestMapping(value = "/inquiryreplywrite.do")
+	@RequestMapping(value = "/admin/inquiryreplywrite.do")
 	public String inquiryreplywrite(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		
 		String loginIdx = session.getAttribute("loginIdx").toString();
@@ -59,14 +59,14 @@ public class AdminInquiryController {
 	}	
 	
 	// 문의 리스트
-	@RequestMapping(value = "/inquirylist.go")
+	@RequestMapping(value = "/admin/inquirylist.go")
 	public String myinquirylistForm() {		
 		
 		return "/inquiry/inquirylist";
 	}
 	
 	// 문의 리스트 불러오기
-	@RequestMapping(value = "/inquirylist.ajax")
+	@RequestMapping(value = "/admin/inquirylist.ajax")
 	@ResponseBody
 	public HashMap<String, Object> myinquirylist(@RequestParam HashMap<String,Object> params) {
 		logger.info("{}",params);

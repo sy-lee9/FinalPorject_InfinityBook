@@ -21,7 +21,6 @@ public class AlarmService {
 	
 	@Autowired AlarmDAO dao;
 
-	@Transactional
 	public HashMap<String, Object> alarmlist(String member_idx) {
 		
 		ArrayList<AlarmDTO> list = null;
@@ -39,20 +38,22 @@ public class AlarmService {
 		String page = "";
 		
 		if(code_idx == 2) {
-		// 교환			
-			page = "";
+			// 교환			
+			page = "/chat/message_list";
 		}else if(code_idx == 3) {
-		// 대여	
-			page = "";	
+			// 대여	
+			page = "/chat/message_list";	
 		}else if(code_idx == 4) {
-		// 모임	
-			page = "";
+			// 모임	
+			page = "/chat/message_list";
 		}else if(code_idx == 1) {
-		// 감상문
-			page = "";
-		}else if(code_idx == 1) {
-		// 문의
-			page = "";
+			// 감상문
+			page = "redirect:/";
+		}else if(code_idx == 64 || code_idx == 65 || code_idx == 66 || code_idx == 67) {
+			// 	문의
+			page = "redirect:/myinquirydetail.go?"+idx;
+		}else if(code_idx == 80) {
+			//위시
 		}
 		
 		
