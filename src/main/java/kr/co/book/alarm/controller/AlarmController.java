@@ -31,15 +31,23 @@ public class AlarmController {
 		mav.addObject("alarmlist", service.alarmlist(member_idx));
 		return mav;
 	}
-	
-	
-	
+			
 	@RequestMapping(value="/alarmdetail.go")
-	public String alarmdetail(@RequestParam int code_idx, @RequestParam int idx) {
+	public String alarmdetail(@RequestParam int code_idx, @RequestParam long idx) {
+		
+		logger.info(code_idx+"/"+idx);
 		
 		String page = service.alarmdetail(code_idx, idx);
 		
 		return page;
+	}
+	
+	@RequestMapping(value="/alarmchk.ajax")
+	@ResponseBody
+	public int alarmchk(HttpSession session) {
+		String member_idx = session.getAttribute("loginIdx").toString();
+		int count = service.alarmchk(member_idx);
+		return count;
 	}
 
 

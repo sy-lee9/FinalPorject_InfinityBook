@@ -21,19 +21,21 @@ public class AlarmService {
 	
 	@Autowired AlarmDAO dao;
 
+	@Transactional
 	public HashMap<String, Object> alarmlist(String member_idx) {
 		
 		ArrayList<AlarmDTO> list = null;
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		list = dao.alarmList(member_idx);
+		dao.alarmCheck(member_idx);
 
 		map.put("list", list);
 
 		return map;
 	}
 
-	public String alarmdetail(int code_idx, int idx) {
+	public String alarmdetail(int code_idx, long idx) {
 		
 		String page = "";
 		
@@ -52,12 +54,18 @@ public class AlarmService {
 		}else if(code_idx == 64 || code_idx == 65 || code_idx == 66 || code_idx == 67) {
 			// 	문의
 			page = "redirect:/myinquirydetail.go?"+idx;
-		}else if(code_idx == 80) {
+		}else if(code_idx == 76) {
 			//위시
+			page = "redirect:/search.do?QueryType=Keyword&Query="+idx;
 		}
 		
 		
 		return page;
+	}
+
+	public int alarmchk(String member_idx) {
+
+		return dao.alarmchk(member_idx);
 	}
 
 
