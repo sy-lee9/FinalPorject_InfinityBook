@@ -1,5 +1,5 @@
-var ws = new WebSocket("ws://" + location.host + "/alarm");	
-var alarm = '.';
+const ws = new WebSocket("ws://" + location.host + "/alarm");	
+
 alarmchk();
 
 ws.onmessage = function(msg) {
@@ -8,13 +8,16 @@ ws.onmessage = function(msg) {
 			  		  
 }
 
-alarm_send();
+ws.onopen = function() {
+  alarm_send();
+};
+
 
 var data = {};//전송 데이터(JSON)
 
 function alarm_send(){			
-	data = alarm;
-	var temp = JSON.stringify(data);
+
+	var temp = JSON.stringify("a");
 	ws.send(temp);			
 }
 
@@ -22,7 +25,7 @@ function alarm_send(){
 function alarmchk(){
 
 		$.ajax({
-			url:"alarmchk.ajax",
+			url:"/alarmchk.ajax",
 			method:"GET",
 			data:{
 			},

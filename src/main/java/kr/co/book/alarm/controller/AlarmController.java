@@ -33,7 +33,9 @@ public class AlarmController {
 	}
 			
 	@RequestMapping(value="/alarmdetail.go")
-	public String alarmdetail(@RequestParam int code_idx, @RequestParam int idx) {
+	public String alarmdetail(@RequestParam int code_idx, @RequestParam long idx) {
+		
+		logger.info(code_idx+"/"+idx);
 		
 		String page = service.alarmdetail(code_idx, idx);
 		
