@@ -346,7 +346,7 @@ function listPrint(list) {
 	    content += '<th style="width:10%;"></th>';
 	    content += '<th style="width:10%;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a></th>';
 	    content += '<th style="width:50%;">'+item.reply_content+'</th>';
-	    content += '<th style="width:15%; text-align:right;">'+item.reg_date+'</th>';
+	    content += '<th style="width:15%; text-align:right;">'+item.reg_date.split(" ")[0]+'</th>';
 	    content += '<th style="width:15%;">';
 	    if (${sessionScope.loginIdx} == item.member_idx) {
 	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
@@ -423,11 +423,13 @@ function reReplyCall(reply_idx, callback) {
 function reReplyPrint(replyList) {
 	  var content = '';
 	  replyList.forEach(function(reply) {
+		  
+		  
 	    content += '<tr>';
 	    content += '<th style="width:15%; text-align:right;">ㄴ</th>';
 	    content += '<th style="width:10%;"><a onclick="profilePop('+reply.member_idx+')" style="cursor: pointer;">'+reply.member_nickname+'</a></th>';
-	    content += '<th style="width:50%;">' + reply.reply_content + '</th>';
-	    content += '<th style="width:15%; text-align:right;">' + reply.reg_date + '</th>';
+	    content += '<th style="width:661px;">' + reply.reply_content + '</th>';
+	    content += '<th style="width:15%; text-align:right;">' + reply.reg_date.split(" ")[0] + '</th>';
 	    content += '<th style="width:10%;">';
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
 	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
@@ -522,10 +524,23 @@ function addMember(club_idx){
 	
 }
 
+var meetNum = ${club.meet_num};
+
+var clubNum = ${club.club_num};
 function clubUpdate(club_idx){  
 
 	if(confirm('모집 종료시 신청은 자동으로 모두 거절 됩니다. \n 모집 종료하시겠습니까?')){
-		location.href='/clubUpdate.do?club_idx='+club_idx;
+		if(meetNum>1){
+			if(meetNum<=clubNum){
+				location.href='/clubUpdate.do?club_idx='+club_idx;
+			}else{
+				confirm('모집 확정 인원보다 참가 인원이 많습니다.그대로 진행하시겠습니까?');
+			}
+		}else{
+			alert('참가 확정 인원이 2명 이상일때만 모집 종료가 가능합니다. ' );
+			return false;
+		}
+		
 	}else{
 		return false;
 	}
@@ -549,6 +564,9 @@ function deleteMem(member_idx,club_idx){
 		return false;
 	}
 }
+
+
+
 
 function clubApply(club_idx){  
 	if(${sessionScope.loginIdx != null}){

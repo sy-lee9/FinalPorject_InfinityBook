@@ -95,6 +95,9 @@ public class LibraryController {
 
 	}
 	
+
+	
+	
 	@RequestMapping("/mypage/libraryWrite.do")
 	public String libraryWrite(@RequestParam HashMap<String, Object> bookData,HttpSession session) {
 		logger.info("session loginIdx "+ session.getAttribute("loginIdx"));

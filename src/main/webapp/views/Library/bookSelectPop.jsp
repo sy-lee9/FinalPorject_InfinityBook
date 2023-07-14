@@ -84,6 +84,10 @@
 
 var showPage = 1;
 var text = '';
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
 
 function call() {
 	text=$('#text').val();
@@ -136,7 +140,7 @@ function listCall(page,text){
 			content += '      <div class="item-price">' + item.pubdate + '</div>';
 			content += '    </td>';
 			content += '    <td>';
-			content += '		<form  method="post" name="bookForm">';
+			content += '		<form  method="post" name="bookForm" id="bookForm">';
 			content += '      		<input type="hidden" name="library_title" id="library_title" value="' + item.title + '">';
 			content += '      		<input type="hidden" name="library_author" id="library_author" value="' + item.author + '">';
 			content += '      		<input type="hidden" name="library_publisher" id="library_publisher" value="' + item.publisher + '">';
@@ -145,7 +149,7 @@ function listCall(page,text){
 			content += '      		<input type="hidden" name="library_isbn" id="library_isbn"  value="' + item.isbn + '">';
 			content += '      		<input type="hidden" name="library_pubdate"  id="library_pubdate" value="' + item.pubdate + '">';
 			content += '      		<input type="hidden" name="library_description"  id="library_description" value="' + item.description + '">';
-			content += '      	<input type="submit" formaction="/mypage/libraryWrite.go" value="등록"><br/>';
+			content += '      	<input type="button" formaction="/mypage/libraryWrite.go" value="등록"><br/>';
 			content += '      <input type="button" onclick="wishRegistAjax(this)" value="위시">';
 			content += '    </td>';
 			content += '  </tr>';

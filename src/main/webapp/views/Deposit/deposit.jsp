@@ -70,11 +70,11 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
 								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
@@ -127,7 +127,7 @@
 				</select>
 				<input type="hidden" id="member_idx" name="member_idx" value="${member_idx}">
 				<input type="number" id="deposit_price" name="deposit_price" style="text-align:right;" placeholder="0" step="1000" min="0" max="100000" onblur="checkInput()"> 원
-				<input type="submit" value="요청" style="margin-left:100px; ">
+				<input type="button" onclick="submitChk()" value="요청" style="margin-left:100px; ">
 			</form>
 		</div>
 		
@@ -201,12 +201,18 @@ function checkInput() {
 	  var depositType = document.getElementsByName("deposit_type")[0].value;
 	  var depositPrice = parseInt(document.getElementById("deposit_price").value);
 	  var depositNow = parseInt("${deposit_now}");
-
-	  if (depositType === "출금" && depositPrice > depositNow) {
+	  if (depositType == "출금" && depositPrice > depositNow) {
 	    alert("현재 잔액보다 큰 금액은 출금이 불가능합니다.");
 	    depositPrice.value = 0;
 	  }
 	}
+	
+ function submitChk() {
+	 if (!checkInput()) {
+			return false;
+	}
+	 $('#depositForm').submit();
+}
 
 var IMP = window.IMP; 
 IMP.init("imp58827418");
@@ -243,6 +249,7 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
              xhr.open('post', '/mypage/depositCharge.ajax', true);
              xhr.send(formData);
              
+             window.location.reload();
           } else {
         	  alert("보증금 충전이 중 문제가 발생했습니다. 다시 시도해 주세요.");
         	  
@@ -279,6 +286,7 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
 	    requestPay();
 	  }
 	}
+
 
 
 function handleOptionChange() {
