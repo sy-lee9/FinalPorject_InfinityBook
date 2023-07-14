@@ -48,7 +48,7 @@ public interface LibraryDAO {
 
 	ArrayList<LibraryDTO> findWishList(Object library_isbn);
 
-//	void wishAarm(int member_idx, String library_title, String library_isbn);
+	void wishAarm(int member_idx, String content, String library_isbn);
 
 	
 

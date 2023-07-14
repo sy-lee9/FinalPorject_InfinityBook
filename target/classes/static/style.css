@@ -1184,9 +1184,11 @@ img.post-image {
 /* -- Slick Slide
 --------------------------------------------------------------*/
 .slick-dots {
+	display:none;
     bottom: -100px;
 }
 .slick-dots li {
+	display:none;
     width: 10px;
     height: 10px;
     background: #D7D5CC;
@@ -1194,6 +1196,7 @@ img.post-image {
     border-radius: 50%;
 }
 .slick-dots .slick-active {
+	display:none;
     color: #74642F;
     background: #74642F;
     border: 1px solid #D7D5CC;
