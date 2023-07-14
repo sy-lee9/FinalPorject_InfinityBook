@@ -1,6 +1,13 @@
 package kr.co.book.event.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -8,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.book.event.dao.EventDAO;
 import kr.co.book.event.dto.EventDTO;
@@ -70,6 +78,78 @@ public class EventService {
 
 		return map;
 	}
+
+	public String eventWrite(MultipartFile photo, HashMap<String, String> params) {
+		
+		EventDTO dto = new EventDTO();
+		
+		
+		logger.info("서비스 도착");
+		dto.setEvent_title(params.get("setEvent_title"));
+		dto.setEvent_content(params.get("event_content"));
+		dto.setEvent_cnt(Integer.parseInt(params.get("event_cnt")));		
+		String eventStartDateStr = params.get("event_startdate");
+		String eventEndDateStr = params.get("event_enddate");
+
+		SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		try {
+		    Date eventStartDate = new Date(inputDateFormat.parse(eventStartDateStr).getTime());
+		    Date eventEndDate = new Date(inputDateFormat.parse(eventEndDateStr).getTime());
+
+		    dto.setEvent_startdate(eventStartDate);
+		    dto.setEvent_enddate(eventEndDate);
+		} catch (Exception e) {
+		    // 예외 처리
+		}
+		
+		int row = dao.eventWrite(dto);
+		
+		if (photo != null && !photo.getOriginalFilename().equals("")) {
+	        qboardFileSave();
+	     }
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+			
+		map.put("success", row);
+		
+		
+		return map;
+		
+		}
+
+		private void qboardFileSave(String id, int board_num, MultipartFile photo) {
+			String ori_photo_name = photo.getOriginalFilename();
+		      
+	        String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
+
+	        String new_photo_name = System.currentTimeMillis()+ext;
+	        
+	        logger.info("board num : filesave" + board_num);
+
+	        try {
+	        	
+	        	logger.info("board num : filesave" + board_num);
+	        	
+	           byte[] bytes = photo.getBytes();
+
+	           Path path = Paths.get("/usr/local/tomcat/webapps/upload//" + new_photo_name);
+	           	            	    
+	           Files.write(path, bytes);
+	           logger.info("a" +photo);
+	           
+	           String board_class = "고객센터";          
+	           
+	           
+	           dao.qboardFileSave(id, board_num, board_class, ori_photo_name, new_photo_name);
+	           
+	           
+	        } catch (IOException e) {
+
+	           e.printStackTrace();
+	        }
+			
+		}
 
 	
 
