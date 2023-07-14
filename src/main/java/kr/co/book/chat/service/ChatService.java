@@ -21,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.book.chat.dao.ChatDAO;
 import kr.co.book.chat.dto.ChatDTO;
 
-
-
 @Service
 @MapperScan(value={"kr.co.book.chat.dao"})
 public class ChatService {
@@ -307,4 +305,3 @@ public class ChatService {
 	
 	
 }
-	

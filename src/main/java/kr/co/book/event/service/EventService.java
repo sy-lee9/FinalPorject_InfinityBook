@@ -14,7 +14,9 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.book.event.dao.EventDAO;
@@ -28,7 +30,9 @@ public class EventService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired EventDAO dao;
-	/*	
+	
+	@Value("${spring.servlet.multipart.location}") private String root;
+	
 	public HashMap<String, Object> eventPageList(int page, String search) {
 		logger.info("서비스");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -78,7 +82,7 @@ public class EventService {
 
 		return map;
 	}
-
+	@Transactional
 	public String eventWrite(MultipartFile photo, HashMap<String, String> params) {
 		
 		EventDTO dto = new EventDTO();
@@ -103,54 +107,39 @@ public class EventService {
 		    // 예외 처리
 		}
 		
-		int row = dao.eventWrite(dto);
+		int success = dao.eventWrite(dto);
 		
-		if (photo != null && !photo.getOriginalFilename().equals("")) {
-	        qboardFileSave();
-	     }
+		logger.info("success: " + success);
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		if (success > 0) {
+			if (photo != null && !photo.getOriginalFilename().equals("")) {
+				// 입력받은 파일 이름
+	          String ori_photo_name = photo.getOriginalFilename();
+	          
+	          // 확장자를 추출하기 위한 과정
+	          String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
+	          // 새로운 파일 이름은?
+	          String new_photo_name = System.currentTimeMillis() + ext;
+	          logger.info("파일 업로드 : " + ori_photo_name + "=>" + new_photo_name + "으로 변경될 예정");
+	          String member_idx = params.get("member_idx");
+	          try {
+	             byte[] bytes = photo.getBytes();
+	             Path path = Paths.get(root+"/"+new_photo_name);
+	             Files.write(path, bytes);
+	             dao.event_FileSave(83,ori_photo_name, new_photo_name,member_idx);
+	          }catch (Exception e) {
+	        	  e.printStackTrace();
+	          }
+	          
+			}	
 			
-		map.put("success", row);
+		}
+		String photoroot = "/upload/";
 		
-		
-		return map;
+		return photoroot;
 		
 		}
 
-		private void qboardFileSave(String id, int board_num, MultipartFile photo) {
-			String ori_photo_name = photo.getOriginalFilename();
-		      
-	        String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
-
-	        String new_photo_name = System.currentTimeMillis()+ext;
-	        
-	        logger.info("board num : filesave" + board_num);
-
-	        try {
-	        	
-	        	logger.info("board num : filesave" + board_num);
-	        	
-	           byte[] bytes = photo.getBytes();
-
-	           Path path = Paths.get("/usr/local/tomcat/webapps/upload//" + new_photo_name);
-	           	            	    
-	           Files.write(path, bytes);
-	           logger.info("a" +photo);
-	           
-	           String board_class = "고객센터";          
-	           
-	           
-	           dao.qboardFileSave(id, board_num, board_class, ori_photo_name, new_photo_name);
-	           
-	           
-	        } catch (IOException e) {
-
-	           e.printStackTrace();
-	        }
-			
-		}
-*/
 	
 
 }
