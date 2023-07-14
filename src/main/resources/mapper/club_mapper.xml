@@ -221,4 +221,32 @@
 		JOIN `member` m ON m.member_idx = ca.member_idx 
 		WHERE ca.club_idx = #{param1}
 	</select>
+	
+	<select id="replyMember">
+		SELECT member_idx FROM reply r WHERE reply_idx = #{param1}
+	</select>
+	
+	<select id="clubTitle">
+		SELECT club_name  
+		FROM club 
+		WHERE club_idx = #{param1}
+	</select>
+	
+	<select id="clubWriter">
+		SELECT member_idx  
+		FROM club 
+		WHERE club_idx = #{param1}
+	</select>
+	
+	<!-- void reReplyAlarm(String member_idx, String idx, String content); -->
+	<insert id="reReplyAlarm">
+		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check)
+		VALUES(75, #{param2}, #{param1}, #{param3}, 0);
+	</insert>
+	
+	<!--	void applyAlarm(String writer_idx, String club_idx, String content);  -->
+	<insert id="applyAlarm">
+		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check)
+		VALUES(75, #{param2}, #{param1}, #{param3}, 0);
+	</insert>
 </mapper>

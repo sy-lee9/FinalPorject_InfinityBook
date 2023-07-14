@@ -258,6 +258,7 @@ $(document).ready(function() {
 });
 
 var club_idx = ${club.club_idx};
+
 function clubReplyWrite() {
     
     $.ajax({
@@ -465,6 +466,7 @@ function showRe_ReplyForm(replyIdx) {
     re_ReplyForm.style.display = 'table-row';
 }
 
+
 function clubReReply(reply_idx){
 	var re_ReplyForm = document.getElementById('re_ReplyForm' + reply_idx);
 	var inputField = re_ReplyForm.querySelector('input');
@@ -475,7 +477,8 @@ function clubReReply(reply_idx){
         type: 'post',
         data: {
         	'reply_idx':reply_idx,
-        	'reply_content':newContent
+        	'reply_content':newContent,
+        	'club_idx':club_idx
         },
 		dataType:'json',
 		success: function(data) {

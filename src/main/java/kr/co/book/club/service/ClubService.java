@@ -255,6 +255,34 @@ public class ClubService {
 	}
 
 
+	public String replyMember(String reply_idx) {
+		return clubDAO.replyMember(reply_idx);
+	}
+
+
+	public String clubTitle(String club_idx) {
+		return clubDAO.clubTitle(club_idx);
+	}
+
+
+	public void reReplyAlarm(String member_idx, String idx, String clubTitle) {
+		String content = "["+clubTitle+"] 댓글에 답댓글이 달렸습니다.";
+		clubDAO.reReplyAlarm(member_idx,idx,content);
+	}
+
+
+	public String clubWriter(String club_idx) {
+		return clubDAO.clubWriter(club_idx);
+	}
+
+
+	public void applyAlarm(String club_idx, String writer_idx, String clubTitle) {
+		String content = "["+clubTitle+"] 신청자가 있습니다. ";
+		clubDAO.applyAlarm(writer_idx,club_idx,content);
+		
+	}
+
+
 	
 	
 
