@@ -260,7 +260,7 @@
 		</div>
 	</div>
 </div>
-
+<script src='./js/alarm.js'></script>
 </body>
 
 

@@ -15,5 +15,10 @@
 			WHERE member_idx = #{member_idx}
 		</update>
 		
+		<select id="alarmchk" resultType="int">
+			SELECT COUNT(alarm_idx) from alarm 
+			WHERE member_idx = #{member_idx} AND alarm_check = 0
+		</select>
+		
 	 	
 	</mapper>

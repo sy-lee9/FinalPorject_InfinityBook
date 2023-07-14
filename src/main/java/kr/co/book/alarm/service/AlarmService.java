@@ -21,12 +21,14 @@ public class AlarmService {
 	
 	@Autowired AlarmDAO dao;
 
+	@Transactional
 	public HashMap<String, Object> alarmlist(String member_idx) {
 		
 		ArrayList<AlarmDTO> list = null;
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		list = dao.alarmList(member_idx);
+		dao.alarmCheck(member_idx);
 
 		map.put("list", list);
 
@@ -58,6 +60,11 @@ public class AlarmService {
 		
 		
 		return page;
+	}
+
+	public int alarmchk(String member_idx) {
+
+		return dao.alarmchk(member_idx);
 	}
 
 
