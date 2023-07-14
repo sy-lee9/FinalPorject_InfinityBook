@@ -44,9 +44,9 @@ public class ChatService {
 			cto.setMember_idx(member_idx);
 			
 			// 현재 채팅방의 책idx를 가져온다.
-			String idx = cto.getIdx();
 			int codeidx = Integer.parseInt(cto.getCode_idx());
-			
+			String idx = cto.getIdx();
+						
 			// 교환일 경우
 			if(codeidx == 2) {
 				// 교환 신청한 책 IDX

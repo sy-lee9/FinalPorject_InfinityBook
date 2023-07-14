@@ -110,6 +110,32 @@ public class LibraryController {
 		logger.info("작성 책 정보 : " + bookData);
 		// 3. 위시리스트에 없다면 등록된 책인지 확인 
 		libraryService.write(bookData);
+		
+		
+		// 등록 된다면 위시 리스트로 해당 책을 가지고 있는 사람들에게 알림을 줘야함  책이 대여/교환 가능으로 들어왔다면!
+		
+		// 만약 책이 대여 or 교환 가능하게 들어 온다면 
+		if (bookData.get("library_use").equals("대여") || bookData.get("library_use").equals("교환") || bookData.get("library_use").equals("교환대여")) {
+			logger.info("library_use : " + bookData.get("library_use"));
+			
+			// 등록 된다면 위시 리스트로 해당 책을 가지고 있는 사람들을 찾아야함 
+			ArrayList<LibraryDTO> findWishList = libraryService.findWishList(bookData.get("library_isbn"));
+			
+			//찾은 이들에게 알림 주기
+			for (LibraryDTO libraryDTO : findWishList) {
+				logger.info("필요한 사람 : "+libraryDTO.getMember_idx());
+				
+				// libraryService.wishAarm(libraryDTO.getMember_idx(),String.valueOf(bookData.get("library_title")),String.valueOf(bookData.get("library_isbn")));
+				
+			}
+		
+			
+		 
+		}
+		
+		
+		
+		
 		return "/Library/libraryDone";
 	}
 		

@@ -240,7 +240,7 @@
 	    	content += '	<td style="text-align:center;"><input type="button" style=" cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
 	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
 		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
-		    content += item.member_nickname+'<br/>	';
+		    content += '<a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a><br/>	';
 		    content += item.title.split("-")[0]+'	</td>';
 		    content += '	<td>';
 		    content += item.code_codename+'<br/>	';
@@ -267,6 +267,14 @@
 		}
 	   
 	}
+	
+	function profilePop(member_idx) {
+	    var width = 1100;
+	     var height = 800;
+	     var left = window.innerWidth / 2 - width / 2;
+	     var top = window.innerHeight / 2 - height / 2;
+	     var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	 };
 </script>
 
 </html>	

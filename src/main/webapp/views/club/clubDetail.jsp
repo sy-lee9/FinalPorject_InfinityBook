@@ -116,7 +116,11 @@
 						</tr>
 						<tr>
 							<td style="width: 30%;"><div class="author-name">모임주최</div></td>
-							<td colspan="2"><div class="author-name">${club.member_nickname}</div></td>
+							<td colspan="2">
+								<div class="author-name">
+									<a onclick="profilePop(${club.member_idx})" style="cursor: pointer;">${club.member_nickname}</a>
+								</div>
+							</td>
 						</tr>
 						<tr>
 							<td><div class="author-name">선정도서</div></td>
@@ -144,7 +148,8 @@
 							<td colspan="2">
 								<div class="author-name">
 								    <c:forEach items="${member}" var="member">
-								    	${member.member_nickname} 
+								    	<a onclick="profilePop(${member.member_idx})" style="cursor: pointer;">${member.member_nickname}</a>
+								    	
 								    	<c:if test="${member.member_idx ne club.member_idx}">								    	
 								    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
 								    	</c:if>
@@ -186,7 +191,7 @@
 						<input type="button" onclick="clubDelete(${club.club_idx})" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
 						<h3>신청자</h3>
 						<c:forEach items="${apply}" var="apply">
-						${apply.member_nickname}
+						<a onclick="profilePop(${apply.member_idx})" style="cursor: pointer;">${apply.member_nickname}</a>
 						<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
 						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
 						</c:forEach>
@@ -339,9 +344,9 @@ function listPrint(list) {
 	  list.forEach(function(item) {
 	    content += '<tr>';
 	    content += '<th style="width:10%;"></th>';
-	    content += '<th style="width:10%;">'+item.member_nickname+'</th>';
+	    content += '<th style="width:10%;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a></th>';
 	    content += '<th style="width:50%;">'+item.reply_content+'</th>';
-	    content += '<th style="width:15%;">'+item.reg_date+'</th>';
+	    content += '<th style="width:15%; text-align:right;">'+item.reg_date+'</th>';
 	    content += '<th style="width:15%;">';
 	    if (${sessionScope.loginIdx} == item.member_idx) {
 	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
@@ -420,9 +425,9 @@ function reReplyPrint(replyList) {
 	  replyList.forEach(function(reply) {
 	    content += '<tr>';
 	    content += '<th style="width:15%; text-align:right;">ㄴ</th>';
-	    content += '<th style="width:10%;">' + reply.member_nickname + '</th>';
+	    content += '<th style="width:10%;"><a onclick="profilePop('+reply.member_idx+')" style="cursor: pointer;">'+reply.member_nickname+'</a></th>';
 	    content += '<th style="width:50%;">' + reply.reply_content + '</th>';
-	    content += '<th style="width:15%;">' + reply.reg_date + '</th>';
+	    content += '<th style="width:15%; text-align:right;">' + reply.reg_date + '</th>';
 	    content += '<th style="width:10%;">';
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
 	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
@@ -557,5 +562,13 @@ function clubApply(club_idx){
 	}
 	
 }
+
+function profilePop(member_idx) {
+    var width = 1100;
+     var height = 800;
+     var left = window.innerWidth / 2 - width / 2;
+     var top = window.innerHeight / 2 - height / 2;
+     var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+ };
 </script>
 </html>
