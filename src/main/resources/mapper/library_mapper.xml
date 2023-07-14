@@ -160,6 +160,10 @@
 		select member_idx FROM library WHERE library_use="위시" AND library_isbn=#{param1}
 	</select>
 	
-	
+	<!-- 	void wishAarm(int member_idx, String content, String library_isbn); -->
+	<insert id="wishAarm">
+		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check)
+		VALUES(76, #{param3}, #{param1}, #{param2}, 0);
+	</insert>
 	
 </mapper>
