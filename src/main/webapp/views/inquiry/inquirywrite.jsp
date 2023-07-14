@@ -24,7 +24,7 @@
 </style>
 </head>
 <body>
-	<form id="inquiry" action="/inquirywrite.do" method="post">
+	<form id="inquiry" action="/mypage/inquirywrite.do" method="post">
 		<table>			
 			<tr>
 				<td>

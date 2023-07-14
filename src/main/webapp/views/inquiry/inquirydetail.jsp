@@ -46,10 +46,10 @@
 			</tr>	
 			<tr>
 				<td style="text-align:center;">
-					<button onclick="location.href='/inquiryreplywrite.go?inquiry_idx=${inquiry.inquiry_idx}&code_idx=${inquiry.code_idx}'">답변 하기</button>
+					<button onclick="location.href='/admin/inquiryreplywrite.go?inquiry_idx=${inquiry.inquiry_idx}&code_idx=${inquiry.code_idx}'">답변 하기</button>
 				</td>		
 				<td style="text-align:center;">
-					<button onclick="location.href='/myinquirylist.go'">리스트</button>
+					<button onclick="location.href='/mypage/myinquirylist.go'">리스트</button>
 				</td>
 			</tr>	
 		</table>	

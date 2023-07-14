@@ -51,6 +51,8 @@ public class ChatService {
 			if(codeidx == 2) {
 				// 교환 신청한 책 IDX
 				cto.setLibrary_idx(dao.chgbookidx(idx));
+				cto.setLibrary_title(dao.findchgbooktitle(cto.getLibrary_idx()));
+				cto.setLibrary_cover(dao.findchgbookcover(cto.getLibrary_idx()));
 				
 				// 교환 신청한 유저 IDX
 				cto.setApplyuser(dao.chgapplyuser(idx));
@@ -59,12 +61,15 @@ public class ChatService {
 			}else if (codeidx ==3) {
 				// 대여 신청한 책 IDX
 				cto.setLibrary_idx(dao.rentbookidx(idx));
+				cto.setLibrary_title(dao.findchgbooktitle(cto.getLibrary_idx()));
+				cto.setLibrary_cover(dao.findchgbookcover(cto.getLibrary_idx()));
 				
 				// 대여 신청한 유저 IDX
 				cto.setApplyuser(dao.rentapplyuser(idx));
+				
 			// 모임일 경우
 			}else if(codeidx == 4) {
-				
+				cto.setClub_name(dao.findclub_name(idx));
 			}
 		}
 		logger.info("서비스 종료");

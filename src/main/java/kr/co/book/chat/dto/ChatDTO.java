@@ -15,11 +15,14 @@ public class ChatDTO {
 	private String library_author;
 	private String library_info;
 	
+	// Club
+	private String club_name; 
+		
 	// Chat
 	private String chat_idx;
 	private String code_idx;
 	private String idx;
-	private String chat_sender;
+	private int chat_sender;
 	private String chat_chat;
 	private String chat_check;
 	private String chat_date;
@@ -32,16 +35,16 @@ public class ChatDTO {
 		
 	// 신청한 사람
 	private String applyuser;
-
+	
+	
 	
 
-
-	public String getChat_date() {
-		return chat_date;
+	public String getClub_name() {
+		return club_name;
 	}
 
-	public void setChat_date(String chat_date) {
-		this.chat_date = chat_date;
+	public void setClub_name(String club_name) {
+		this.club_name = club_name;
 	}
 
 	public String getLibrary_idx() {
@@ -116,11 +119,11 @@ public class ChatDTO {
 		this.idx = idx;
 	}
 
-	public String getChat_sender() {
+	public int getChat_sender() {
 		return chat_sender;
 	}
 
-	public void setChat_sender(String chat_sender) {
+	public void setChat_sender(int chat_sender) {
 		this.chat_sender = chat_sender;
 	}
 
@@ -138,6 +141,14 @@ public class ChatDTO {
 
 	public void setChat_check(String chat_check) {
 		this.chat_check = chat_check;
+	}
+
+	public String getChat_date() {
+		return chat_date;
+	}
+
+	public void setChat_date(String chat_date) {
+		this.chat_date = chat_date;
 	}
 
 	public String getMember_idx() {
@@ -171,12 +182,5 @@ public class ChatDTO {
 	public void setApplyuser(String applyuser) {
 		this.applyuser = applyuser;
 	}
-	
-	
-	
 
-
-	
-	
-	
 }

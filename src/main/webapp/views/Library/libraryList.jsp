@@ -76,7 +76,7 @@
 									<ul>
 		                                <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
 		                                <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
-		                                <li><a href="#">문의 내역</a></li>
+		                                <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
 		                             </ul>
 								</li>								
 							</ul>
