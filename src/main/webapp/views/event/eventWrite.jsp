@@ -5,7 +5,9 @@
 <html>
 <meta charset="UTF-8">
 <head>
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <title>Infinite B∞k</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,7 +45,7 @@
 <script src="/richtexteditor/rte.js"></script>
 <script src="/richtexteditor/plugins/all_plugins.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 <style>
 .pagination .page-link {
 	color: gray; /* 기본 글자색을 검정색으로 지정 */
@@ -97,10 +99,6 @@
 											<li><a href="#">문의 내역</a></li>
 										</ul></li>
 								</ul>
-								<div class="hamburger">
-									<span class="bar"></span> <span class="bar"></span> <span
-										class="bar"></span>
-								</div>
 							</div>
 						</nav>
 					</div>
@@ -167,9 +165,9 @@
 
 					<tr>
 						<th>이벤트 기간</th>
-						<td><input type="text" name="event_startdate" id="startDate"
+						<td><input type="text" name="event_startdate" id="event_startdate"
 							placeholder="이벤트 시작 날짜" style="width: 200px; margin-top: 20px;">
-							~ <input type="text" name="event_enddate" id="endDate"
+							~ <input type="text" name="event_enddate" id="event_enddate"
 							placeholder="이벤트 종료 날짜" style="width: 200px; margin-top: 20px;">
 						</td>
 					</tr>
@@ -228,101 +226,38 @@
 </body>
 
 <script>
-	/* var config = {};
+$.datepicker.setDefaults({
+    dateFormat: 'yy-mm-dd',
+    prevText: '이전 달',
+    nextText: '다음 달',
+    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+    showMonthAfterYear: true,
+    yearSuffix: '년'
+});
 
-	 var win;
+$(function() {
+	  $('#event_startdate').datepicker({
+		    format: 'Y-m-d',  // 입력값의 형식을 지정
+		    lang: 'ko',  // 언어 설정
+		    minDate: new Date(),  // 오늘 이전의 날짜를 선택하지 못하도록 설정
+		    onSelect: function(selectedDate) {
+		      $('#event_enddate').datepicker('option', 'minDate', selectedDate); // 선택한 시작일로 end date의 최소값 업데이트
+		    }
+		  });
 
-	 var link = document.getElementById('clubBookPop');
-
-	 link.addEventListener('click',function(){
-	 win = window.open('/clubBookPop.go','Infinity_Book','width=800px,height=800px');
-	 })
-
-	 // editor 크기 조절 불가
-	 config.editorResizeMode = "none"; 
-
-	 // 파일 업로드 관련 설정
-	 config.file_upload_handler = function(file,callback){
-	 console.log(file);
-	 // file정보 : 크기, 이름, 종류 등을 알 수 있다.
-	 if(file.size>(1*1024*1024)){
-	 alert('1MB 이하 파일만 업로드 가능합니다.');
-	 callback('/images/noimage.png');
-	 }
-	 console.log(callback);
-	 } */
-	/* 
-	 $.datepicker.setDefaults({
-	 dateFormat: 'yy-mm-dd',
-	 prevText: '이전 달',
-	 nextText: '다음 달',
-	 monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	 monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	 dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	 dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-	 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-	 showMonthAfterYear: true,
-	 yearSuffix: '년'
-	 }); */
-
-	$(function() {
-		$('#startDate').datetimepicker(
-				{
-					format : 'Y-m-d H:i', // 입력값의 형식을 지정
-					lang : 'ko', // 언어 설정
-					step : 60, // 분 단위로 선택 가능한 간격을 지정
-					dayOfWeekStart : 1, // 주의 시작일을 월요일로 설정
-					minDate : 0, // 오늘 이후의 날짜만 선택 가능하도록 설정
-					allowTimes : [ '09:00', '10:00', '11:00', '12:00', '13:00',
-							'14:00', '15:00', '16:00', '17:00', '18:00',
-							'19:00', '20:00', '21:00' ]
-				// 선택 가능한 시간을 지정
-				});
-	});
-	$(function() {
-		$('#endDate').datetimepicker(
-				{
-					format : 'Y-m-d H:i', // 입력값의 형식을 지정
-					lang : 'ko', // 언어 설정
-					step : 60, // 분 단위로 선택 가능한 간격을 지정
-					dayOfWeekStart : 1, // 주의 시작일을 월요일로 설정
-					minDate : 0, // 오늘 이후의 날짜만 선택 가능하도록 설정
-					allowTimes : [ '09:00', '10:00', '11:00', '12:00', '13:00',
-							'14:00', '15:00', '16:00', '17:00', '18:00',
-							'19:00', '20:00', '21:00' ]
-				// 선택 가능한 시간을 지정
-				});
+	  $('#event_enddate').datepicker({
+	    format: 'Y-m-d',  // 입력값의 형식을 지정
+	    lang: 'ko',  // 언어 설정
+	    onSelect: function(selectedDate) {
+	      $('#event_startdate').datepicker('option', 'maxDate', selectedDate); // 선택한 종료일로 start date의 최대값 업데이트
+	    }
+	  });
 	});
 
-	/* 
-	 $(function() {
-	 $('#startDate').datepicker({
-	 format: 'Y-m-d',  // 입력값의 형식을 지정
-	 lang: 'ko',  // 언어 설정
-	 maxDate: new Date(),
-	 onSelect: function(selectedDate) {
-	 $('#endDate').datepicker('option', 'minDate', selectedDate); // 선택한 시작일로 endDate의 최소값 업데이트
-	 }
-	 });
-	 }); */
-
-	$(function() {
-		$('#endDate').datepicker({
-			format : 'Y-m-d', // 입력값의 형식을 지정
-			lang : 'ko', // 언어 설정
-			maxDate : new Date()
-		});
-	});
-	
-	 
-	 function limitEventSuccessCount(input) {
-		  if (input.value > 50) {
-		    input.value = 50;
-		  }else if (input.value < 1) {
-			input.value = 1;
-		}
-
-	}
 	 
 </script>
 
