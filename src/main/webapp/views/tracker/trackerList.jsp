@@ -30,19 +30,18 @@
 		
 	</head>
 	<style>
-		.pagination .page-link {
-	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
-		}
-	
-		.pagination .page-item.active .page-link {
-	 		background-color: #C5A992;
-	 		border:none;
-		}
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
 		h3{
 			font-family: 'IBM Plex Sans KR', serif;	
 			font-weight: 600;
 			margin: 10 0 0 0;
+		}
+		.pagination .page-link {
+	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
+		}	
+		.pagination .page-item.active .page-link {
+	 		background-color: #C5A992;
+	 		border:none;
 		}
 		.post-item{
 			font-family: 'IBM Plex Sans KR', serif;	
@@ -129,7 +128,7 @@
 				<div class="section-header align-center">
 					<h2 class="section-title">Tracker</h2>
 				</div>					
-				<input type="button" value="추가" onclick="location.href='mypage/trackerSearch.go'" style="float: right; bottom: 80px;">
+				<input type="button" value="추가" onclick="location.href='/mypage/trackerSearch.go'" style="float: right; bottom: 80px;">
 				<div class="row" style="margin-top: 15%;">
 					<c:if test="${trackerList.size() eq 0}">
 						<h3 style="text-align: center;">읽고 있는 책을 추가 해보세요!</h3>

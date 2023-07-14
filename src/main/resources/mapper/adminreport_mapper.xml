@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.book.admin.dao.AdminReportDAO">
+
+	<insert id="reportSend" parameterType="hashMap">
+		INSERT INTO report(code_idx,idx,member_idx,report_content,report_state) 
+			VALUES((SELECT c.code_idx FROM code c WHERE code_code = #{code_code}),#{idx},#{member_idx},#{content},'접수')
+	</insert>
+	
+	<select id="reportList" resultType="hashmap">
+		SELECT 
+			r.report_idx,
+			r.code_idx, 
+			r.member_idx, 
+			c.code_codeName AS reportType, 
+			(SELECT DATE_FORMAT(report_date, '%Y-%m-%d %H:%i')) AS report_date, 
+			m.member_nickname, 
+			report_content, 
+			report_state, 
+			(SELECT DATE_FORMAT(rc.report_handlingdate, '%Y-%m-%d %H:%i')) AS report_handlingdate
+		FROM report r 
+			LEFT JOIN reportrecord rc ON r.report_idx = rc.report_idx
+			LEFT JOIN code c ON r.code_idx  = c.code_idx
+			LEFT JOIN `member` m ON r.member_idx = m.member_idx			
+				<if test="!reportType.equals('default')">
+					WHERE r.code_idx = (SELECT code_idx FROM code WHERE code_code = #{reportType})
+				</if>				
+				ORDER BY report_state ASC, report_idx DESC
+				LIMIT 10 OFFSET #{offset}
+	</select>
+	
+
+</mapper>

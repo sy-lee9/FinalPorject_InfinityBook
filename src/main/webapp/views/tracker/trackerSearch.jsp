@@ -27,6 +27,12 @@
 		<script src="/js/script.js"></script>
 
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+		h3{
+			font-family: 'IBM Plex Sans KR', serif;	
+			font-weight: 600;
+			margin: 10 0 0 0;
+		}
 		.pagination .page-link {
 	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
 		}
@@ -34,12 +40,6 @@
 		.pagination .page-item.active .page-link {
 	 		background-color: #C5A992;
 	 		border:none;
-		}
-		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-		h3{
-			font-family: 'IBM Plex Sans KR', serif;	
-			font-weight: 600;
-			margin: 10 0 0 0;
 		}
 		.popup{
 		  position: fixed;
@@ -119,7 +119,7 @@
 				<h2 class="section-title">Tracker</h2>
 			</div>
 				<div class="search-bar" style="width: 300px; display: inline;">
-					<form action="mypage/trackerSearch.do" role="search" method="get" class="search-box">
+					<form action="/mypage/trackerSearch.do" role="search" method="get" class="search-box">
 						<select name="searchType">
 							<option value="Title" >제목</option>
 							<option value="Author">저자</option>
@@ -133,7 +133,7 @@
 				<br>
 				<div class="products-grid grid">
 					<c:if test="${search eq false}">
-						<h3>검색 결과가 존재하지 않습니다. </h3>
+						<h3 style="margin:10% 40%;">검색 결과가 존재하지 않습니다. </h3>
 					</c:if>
 					<c:forEach var="item" items="${list}" varStatus="status">
 						<c:if test="${status.index==2}"> 						
@@ -193,7 +193,7 @@
 	    var height = 400;
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
-	    var popupWindow = window.open('mypage/tracker/add/Read/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    var popupWindow = window.open('/mypage/tracker/add/Read/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 	
 	function addReadingBook(isbn, cover) {
@@ -203,7 +203,7 @@
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
 	    
-	    var popupWindow = window.open('mypage/tracker/add/Reading/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'reading', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    var popupWindow = window.open('/mypage/tracker/add/Reading/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'reading', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 	
 </script>
