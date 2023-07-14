@@ -107,6 +107,7 @@
 			  <li data-tab-target="#all-genre" class="active tab"><a href="/clubList.go">전체</a></li>
 			  <li data-tab-target="#business" class="tab"><a href="/myClubList.go">참여 모임</a></li>
 		</ul>
+		<button onclick="eventWrite.go"></button>
 		<ul class="tab">
 			<li class="search-box" style="text-align:center;list-style-type: none;">
 				<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right;">

@@ -1,6 +1,7 @@
 package kr.co.book.event.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.co.book.event.dto.EventDTO;
 
@@ -13,6 +14,10 @@ public interface EventDAO {
 		ArrayList<EventDTO> evlist(int cnt, int offset);
 
 		ArrayList<EventDTO> eventSearch(String search);
+
+		String eventWrite(HashMap<String, String> params);
+
+		int eventWrite(EventDTO dto);
 
 	/*
 	 * int totalEventList(int member_idx, String type);

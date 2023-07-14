@@ -31,7 +31,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
 
 <!-- script -->
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script
@@ -43,7 +43,7 @@
 <script src="/richtexteditor/rte.js"></script>
 <script src="/richtexteditor/plugins/all_plugins.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 <style>
 .pagination .page-link {
 	color: gray; /* 기본 글자색을 검정색으로 지정 */
@@ -97,10 +97,7 @@
 											<li><a href="#">문의 내역</a></li>
 										</ul></li>
 								</ul>
-								<div class="hamburger">
-									<span class="bar"></span> <span class="bar"></span> <span
-										class="bar"></span>
-								</div>
+								
 							</div>
 						</nav>
 					</div>
@@ -114,9 +111,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="section-header align-center">
-		
 					<h2 class="section-title" style="margin-bottom: 10px;">Book
-						Event Insert</h2>
+						Event Update Form</h2>
 				</div>
 			</div>
 		</div>
@@ -125,10 +121,8 @@
 	<section id="latest-blog" class="scrollspy-section padding-large"
 		style="padding-top: 10px; padding-bottom: 10px; margin-bottom: 10px;">
 		<div class="container" style="text-align: center;">
-			<form action="eventWrite.do" method="post" enctype="multipart/form-data">
-				<br>
-				<br>
-				<br>
+			<form action="clubWrite.do" method="post" enctype=""
+				style="text-align: center;">
 				<table style="width: 100%;">
 					<!-- <tr>
 					<td width="5%"></td>
@@ -137,53 +131,53 @@
 					<td width="15%"></td>
 					<td width="15%"></td>
 					<td width="5%"></td>
-				</tr> -->					
+				</tr> -->
 					<tr>
-					  <th>제목</th>
-					  <td>
-					    <input type="text" autocomplete='off' name="event_title" id="event_title"
-					      style="width: 500px; margin-bottom: 0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1; background: transparent;"
-					      placeholder=""
-					      oninput="if (this.value.length > 60) this.value = this.value.slice(0, 60);">
-					  </td>
+						<th>분류</th>
+						<td><select id="class">
+								<option id="baner">배너</option>
+								<option id="list">리스트</option>
+						</select></td>
 					</tr>
 
 					<tr>
-				  <th>유의사항</th>
-				  <td>
-				    <textarea name="event_content" rows="200" cols="60" maxlength="500"
-				      style="overflow: auto; word-wrap: break-word;"
-				      placeholder="최대 500자까지 입력이 가능합니다."></textarea>
-				  </td>
-				</tr>
+						<th>제목</th>
+						<td><input type="text" autocomplete='off' name="event_title"
+							id="event_title"
+							style="width: 500px; margin-bottom: 0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1; background: transparent;"
+							placeholder=""></td>
+					</tr>
 
+					<tr>
+						<th>유의사항</th>
+						<td><textarea rows="200" cols="60"
+								style="overflow: auto; word-wrap: break-word;"
+								placeholder="최대 500자까지 입력이 가능합니다."></textarea></td>
+					</tr>
 					<!-- onchange="checkClubOnOff()"  -->
 					<tr>
 						<th>포스터 이미지</th>
-						<td><input type="file" name="photo"><span
+						<td><input type="file" multiple="multiple"><span
 							style="color: red;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.png,
 								.jpg, .jpeg 확장자를 가진 파일만 업로드가 가능합니다.</span></td>
 					</tr>
 
 					<tr>
 						<th>이벤트 기간</th>
-						<td><input type="text" name="event_startdate" id="startDate"
+						<td><input type="text" name="startDate" id="startDate"
 							placeholder="이벤트 시작 날짜" style="width: 200px; margin-top: 20px;">
-							~ <input type="text" name="event_enddate" id="endDate"
+							~ <input type="text" name="endDate" id="endDate"
 							placeholder="이벤트 종료 날짜" style="width: 200px; margin-top: 20px;">
 						</td>
 					</tr>
 					<tr>
-					  <th>이벤트 당첨자 수</th>
-					  <td>
-					    <input type="number" id="event_cnt" min="1" oninput="limitEventSuccessCount(this)">
-					  </td>
+						<th>이벤트 당첨자 수</th>
+						<td><input type="number" id="event_success"></td>
 					</tr>
 					<tr>
-						<th colspan="4" style="text-align: center;">
-							<input type="button" value="등록"/> 
-							<input type="button" onclick="location.href='event.go'" value="취소" />
-						</th>
+						<th colspan="4" style="text-align: center;"><input
+							type="button" onclick="save()" value="등록" /> <input type="button"
+							onclick="location.href='event.go'" value="취소" /></th>
 					</tr>
 
 				</table>
@@ -313,17 +307,6 @@
 			maxDate : new Date()
 		});
 	});
-	
-	 
-	 function limitEventSuccessCount(input) {
-		  if (input.value > 50) {
-		    input.value = 50;
-		  }else if (input.value < 1) {
-			input.value = 1;
-		}
-
-	}
-	 
 </script>
 
 </html>
