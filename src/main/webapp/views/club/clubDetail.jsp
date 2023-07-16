@@ -458,13 +458,30 @@ function reReplyPrint(replyList) {
 
 function showEditForm(replyIdx) {
     var editForm = document.getElementById('editForm' + replyIdx);
-    editForm.style.display = 'table-row';
+    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+    if (editForm.style.display === 'table-row') {
+    	re_ReplyForm.style.display = 'none';
+    	editForm.style.display = 'none';
+	  } else {
+		  re_ReplyForm.style.display = 'none';
+		  editForm.style.display = 'table-row';
+	  }
 }
 
+
+
 function showRe_ReplyForm(replyIdx) {
-    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
-    re_ReplyForm.style.display = 'table-row';
-}
+	var editForm = document.getElementById('editForm' + replyIdx);
+   	var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+	  if (re_ReplyForm.style.display === 'table-row') {
+		  re_ReplyForm.style.display = 'none';
+	    	editForm.style.display = 'none';
+	  } else {
+		  editForm.style.display = 'none';
+	    re_ReplyForm.style.display = 'table-row';
+	  }
+	}
+
 
 
 function clubReReply(reply_idx){

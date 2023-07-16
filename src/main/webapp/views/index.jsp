@@ -147,11 +147,11 @@
 									</figure>
 									
 									<div class="post-item" style="text-align: center;">	
-									    <h3><a onclick="replaceTitle('${library.library_title}')">${library.library_title}</a></h3>
+									    
 									    <div class="links-element" >
 										    <div class="categories">${library.library_author}</div>
 										</div><!--links-element-->
-									    
+									    <h3><a onclick="replaceTitle('${library.library_title}')">${library.library_title}</a></h3>
 									</div>
 								</article>						
 							</div>

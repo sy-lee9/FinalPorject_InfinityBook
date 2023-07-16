@@ -149,7 +149,7 @@
 					<td></td>
 					<td>모임인원</td>
 					<td colspan="2">
-						<input type="number" autocomplete='off' name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="0"> 명
+						<input type="number" autocomplete='off' name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="2"> 명
 					</td>
 					<td></td>
 				</tr>
