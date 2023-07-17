@@ -1,6 +1,7 @@
 package kr.co.book.transaction.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,6 +19,10 @@ public interface TransactionListDAO {
 	ArrayList<TransactionListDTO> changeMyBook(String member_idx);
 
 	String deposit(String member_idx);
+
+	String getUserNickname(String member_idx);
+
+	void reviewWrite(HashMap<String, Object> params);
 
 	
 }

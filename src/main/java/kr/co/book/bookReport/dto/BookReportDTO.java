@@ -20,6 +20,8 @@ public class BookReportDTO {
 	private Date book_report_date;
 	private int book_report_hit;
 	private int book_report_open;
+	private int member_idx;
+	private String member_nickname;
 	
 	
 	public String getIsbn() {
@@ -117,6 +119,18 @@ public class BookReportDTO {
 	}
 	public void setBook_report_open(int book_report_open) {
 		this.book_report_open = book_report_open;
+	}
+	public int getMember_idx() {
+		return member_idx;
+	}
+	public void setMember_idx(int member_idx) {
+		this.member_idx = member_idx;
+	}
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
 	}
 
 }	

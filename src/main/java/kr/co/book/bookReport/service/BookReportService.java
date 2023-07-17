@@ -1,5 +1,6 @@
 package kr.co.book.bookReport.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,5 +141,67 @@ public class BookReportService {
 			
 			
 		}
+
+		public ArrayList<BookReportDTO> bookReportList() {
+			
+			return dao.bookReportList();
+		}
+		
+		public HashMap<String, Object> replyList(String sPage, String book_idx) {
+			HashMap<String, Object> reply = new HashMap<String, Object>();	
+			ArrayList<BookReportDTO> list = null;
+			int page = Integer.parseInt(String.valueOf(sPage)); 
+			int offset = 10*(page-1);
+			int total = 0;
+			
+			
+			total = dao.totalReplyList(book_idx);
+			logger.info("total list : "+total);
+			list = dao.bookReplyList(book_idx,offset);
+			logger.info(" list : "+list);
+			
+			int range = total%10  == 0 ? total/10 : total/10+1;
+			page = page>range ? range:page;
+			reply.put("offset", offset);
+			reply.put("list", list);
+			reply.put("currPage", page);
+			reply.put("pages", range);
+			
+			return reply;
+		}
+
+
+		public void bookReplyWrite(String member_idx, String reply_content, String book_idx) {
+			dao.bookReplyWrite(member_idx,reply_content,book_idx);
+			
+		}
+
+
+		public void bookReplyDelete(String reply_idx) {
+			dao.bookReplyDelete(reply_idx);
+		}
+
+
+		public void bookReplyUpdate(String reply_idx, String reply_content) {
+			dao.bookReplyUpdate(reply_idx,reply_content);		
+		}
+
+
+		public void bookReReply(String member_idx, String reply_idx, String reply_content) {
+			dao.bookReReply(member_idx,reply_idx,reply_content);
+			
+		}
+
+
+		public HashMap<String, Object> bookreReplyList(String reply_idx) {
+			HashMap<String, Object> reply = new HashMap<String, Object>();	
+			ArrayList<BookReportDTO> list = null;
+			
+			list = dao.reReplyList(reply_idx);
+			logger.info(" list : "+list);
+			reply.put("list", list);
+			return reply;
+		}
+
 
 }
