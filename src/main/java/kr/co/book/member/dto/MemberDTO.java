@@ -9,7 +9,7 @@ public class MemberDTO {
 	private String location;
 	private int code_idx;
 	private String member_state;
-	private boolean grade;
+	private boolean member_grade;
 	private int level;
 	private int reg_member_idx;
 	private String reg_screen;	
@@ -59,12 +59,7 @@ public class MemberDTO {
 	public void setMember_state(String member_state) {
 		this.member_state = member_state;
 	}
-	public boolean isGrade() {
-		return grade;
-	}
-	public void setGrade(boolean grade) {
-		this.grade = grade;
-	}
+	
 	public int getLevel() {
 		return level;
 	}
@@ -94,6 +89,12 @@ public class MemberDTO {
 	}
 	public void setMode_screen(String mode_screen) {
 		this.mode_screen = mode_screen;
+	}
+	public boolean isMember_grade() {
+		return member_grade;
+	}
+	public void setMember_grade(boolean member_grade) {
+		this.member_grade = member_grade;
 	}
 	
 	

@@ -60,6 +60,7 @@ public class MemberController {
 	            session.setAttribute("loginIdx", dto.getMember_idx());
 	            session.setAttribute("loginEmail", dto.getMember_email());
 	            session.setAttribute("loginNickname", dto.getMember_nickname());
+	            session.setAttribute("loginGrade", dto.isMember_grade());
 	        }
 	    }
 	    
