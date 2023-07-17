@@ -1,6 +1,5 @@
 package kr.co.book.transaction.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -90,6 +89,34 @@ public class TransactionListController {
 		return "reportBookPop";
 	}
 	
+	@RequestMapping("/Review.go")
+	public String review(@RequestParam HashMap<String, Object> params, Model model) {
+		logger.info("params : "+params);
+		String page = "";
+		if(((String)params.get("review_type")).equals("0")) {
+			page = "UserReview";
+		}else {
+			page = "BookReview";
+		}
+		
+		model.addAttribute("library", service.searchDetail((String)params.get("book_reciever")));
+		model.addAttribute("user",service.getUserNickname((String) params.get("member_reciever")));
+		model.addAttribute("param", params);
+		// /{type}review.go?member_sender=(하는사람)1&review_type=0
+		// &member_reciever=(받는사람)&book_reciever=(받는책)
+		// &review_transaction_type=(대여/교환여부)&review_tracnsaction_idx=(idx)
+		
+		return page;
+	}
 	
+	@RequestMapping("/{type}Review.do")
+	public String reviewWrite(HttpSession session, @PathVariable String type,@RequestParam HashMap<String, Object> params, Model model) {
+		logger.info("params : "+params);
+		String member_idx = session.getAttribute("loginIdx").toString();
+		params.put("member_sender", member_idx);
+		service.reviewWrite(params);
+		
+	return "";
+	}
 
 }

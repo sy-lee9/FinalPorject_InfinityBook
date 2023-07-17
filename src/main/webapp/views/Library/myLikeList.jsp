@@ -107,12 +107,16 @@
 			  <li data-tab-target="#" class="active tab"><a href="/mypage/myLikeList.get">❤️</a></li>
 		</ul>
 		<ul class="tab">
+		<div class="btn-wrap align-right">
+					<a href="/ReportList.go" class="btn-accent-arrow">감상문 더보기 <i class="icon icon-ns-arrow-right"></i></a>
+		</div>
 			<li class="search-box" style="text-align:center;list-style-type: none;">
 				<i class="icon icon-search"></i> 
 				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
 				<input type="button" id="searchButton" value="검색">	
 			</li>
 		</ul>
+		
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
 				<div class="row" id="list">
@@ -211,14 +215,6 @@
 	    var content = '';
 
 	    content += '<div id="products-grid" class="products-grid grid">';
-	    content += '  <figure class="product-style">';
-	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="/BookReportWrite.go">';
-	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
-	    content += '      <figcaption> <h>감상문 작성하기</h> </figcaption>';
-	    content += '    </a>';
-	    content += '  </figure>';
-
 	    if (list.length === 0) {
 	        content += '</div>';
 	        $('#list').empty();

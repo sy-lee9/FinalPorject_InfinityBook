@@ -38,7 +38,13 @@
 		 		border:none;
 			}
 			
-	
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h4{
+				font-family: 'IBM Plex Sans KR';	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
+			
 	</style>	
 	</head>
 
@@ -149,9 +155,10 @@
 								<div class="author-name">
 								    <c:forEach items="${member}" var="member">
 								    	<a onclick="profilePop(${member.member_idx})" style="cursor: pointer;">${member.member_nickname}</a>
-								    	
-								    	<c:if test="${member.member_idx ne club.member_idx}">								    	
-								    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
+								    	<c:if test="${loginIdx == club.member_idx}">								    	
+									    	<c:if test="${member.member_idx ne club.member_idx}">								    	
+									    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
+									    	</c:if>
 								    	</c:if>
 								    </c:forEach>
 								</div>
@@ -175,7 +182,7 @@
 								</c:if>
 								
 							</c:if>
-							<c:if test="${loginIdx != club.member_idx}">
+							<c:if test="${loginIdx != club.member_idx && loinIdx != null}">
 								<c:if test="${club.club_state eq 0}">
 									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
 								</c:if>
@@ -203,7 +210,15 @@
 		<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
-				<textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				<c:choose>
+				  <c:when test="${loginIdx != null}">
+				    <textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				  </c:when>
+				  <c:otherwise>
+				    <textarea id="replycontent" placeholder="댓글은 로그인 이후 이용가능합니다." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				  </c:otherwise>
+				</c:choose>
+
 				<button onclick="clubReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
 					<span>작성</span> 
 					<i class="icon icon-send"></i>
@@ -260,26 +275,29 @@ $(document).ready(function() {
 var club_idx = ${club.club_idx};
 
 function clubReplyWrite() {
-    
-    $.ajax({
-        url: '/clubReplyWrite.ajax',
-        type: 'post',
-        data: {
-        	'reply_content':document.getElementById("reply_content").value,
-        	'club_idx':club_idx
-        },
-		dataType:'json',
-		success: function(data) {
-			console.log(data.success);
-			if(data.success == 1){
-				document.getElementById("reply_content").value = "";
-				listCall(showPage);	
+	
+		$.ajax({
+	        url: '/clubReplyWrite.ajax',
+	        type: 'post',
+	        data: {
+	        	'reply_content':document.getElementById("reply_content").value,
+	        	'club_idx':club_idx
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data.success);
+				if(data.success == 1){
+					document.getElementById("reply_content").value = "";
+					listCall(showPage);	
+				}
+	        },
+			error:function(e){
+				console.log(e);
 			}
-        },
-		error:function(e){
-			console.log(e);
-		}
-    });
+	    });
+	
+    
+    
 }
 
 function clubReplyDelete(reply_idx) {
@@ -458,13 +476,30 @@ function reReplyPrint(replyList) {
 
 function showEditForm(replyIdx) {
     var editForm = document.getElementById('editForm' + replyIdx);
-    editForm.style.display = 'table-row';
+    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+    if (editForm.style.display === 'table-row') {
+    	re_ReplyForm.style.display = 'none';
+    	editForm.style.display = 'none';
+	  } else {
+		  re_ReplyForm.style.display = 'none';
+		  editForm.style.display = 'table-row';
+	  }
 }
 
+
+
 function showRe_ReplyForm(replyIdx) {
-    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
-    re_ReplyForm.style.display = 'table-row';
-}
+	var editForm = document.getElementById('editForm' + replyIdx);
+   	var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+	  if (re_ReplyForm.style.display === 'table-row') {
+		  re_ReplyForm.style.display = 'none';
+	    	editForm.style.display = 'none';
+	  } else {
+		  editForm.style.display = 'none';
+	    re_ReplyForm.style.display = 'table-row';
+	  }
+	}
+
 
 
 function clubReReply(reply_idx){

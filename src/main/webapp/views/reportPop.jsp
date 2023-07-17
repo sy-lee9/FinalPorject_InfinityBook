@@ -49,7 +49,6 @@
 
 		<input type="text" value="${code}" id="code" hidden/>
 		<input type="text" value="${idx}" id="idx" hidden/>
-		<input type="text" value="${member_idx}" id="member_idx" hidden/>
 		
 		<h2>신고</h2>
 		<hr/>
@@ -77,7 +76,6 @@
 		        data: {
 		            'code_code': document.getElementById("code").value,
 		            'idx':document.getElementById("idx").value,
-		            'member_idx':document.getElementById("member_idx").value,
 		            'content':document.getElementById("content").value
 		        },
 				dataType:'json',

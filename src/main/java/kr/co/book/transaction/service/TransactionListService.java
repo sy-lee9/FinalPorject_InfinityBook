@@ -91,4 +91,17 @@ public class TransactionListService {
 		return deposit;
 	}
 
+
+	public String getUserNickname(String member_idx) {
+		
+		return dao.getUserNickname(member_idx);
+	}
+
+
+	public void reviewWrite(HashMap<String, Object> params) {
+		dao.reviewWrite(params);
+		
+		
+	}
+
 }

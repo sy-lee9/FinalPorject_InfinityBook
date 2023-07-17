@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.book.admin.dto.AdminBookDTO;
 
-@Mapper
+
 public interface AdminMemberDAO {
 
 	int totalAdminBook(String member_state, String searchType, String searchText);

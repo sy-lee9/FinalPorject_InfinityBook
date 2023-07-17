@@ -32,8 +32,17 @@
 </head>
 <body>
 	<form action="BookReview.do" method="post">
+		<input type="hidden" id="review_type" value="${param.review_type}"/>
+		<input type="hidden" id="review_transaction_type" value="${param.review_transaction_type}"/>
+		<input type="hidden" id="review_tracnsaction_idx" value="${param.review_tracnsaction_idx}"/>
+		<input type="hidden" id="review_reciever" value="${param.book_reciever}"/>
 		<h3>도서 리뷰 작성</h3>
-		<input type="text" value="리뷰 내용을 입력해주세요."/>
+		<h3>${library.library_title}</h3>
+		<h3><img src="${library.library_cover}"></h3>
+		<h3>${library.library_author}</h3>
+		<h3>${library.library_publisher}</h3>
+		<h3>${library.library_info}</h3>
+		<input type="text"  id="review_content" value="리뷰 내용을 입력해주세요."/>
 		<input type="submit" value="등록"/>
 		<input type="button" value="취소"/>
 	</form>

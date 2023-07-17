@@ -37,7 +37,12 @@
 		 		background-color: #C5A992;
 		 		border:none;
 			}
-	
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h4{
+				font-family: 'IBM Plex Sans KR';	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
 	</style>	
 	
 	</head>
