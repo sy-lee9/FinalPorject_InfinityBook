@@ -174,12 +174,12 @@
 					<tr>
 					  <th>이벤트 당첨자 수</th>
 					  <td>
-					    <input type="number" id="event_cnt" min="1" oninput="limitEventSuccessCount(this)">
+					    <input type="number" name="event_cnt" id="event_cnt" min="1" oninput="limitEventSuccessCount(this)">
 					  </td>
 					</tr>
 					<tr>
 						<th colspan="4" style="text-align: center;">
-							<input type="button" value="등록"/> 
+							<input type="submit" value="등록"/> 
 							<input type="button" onclick="location.href='event.go'" value="취소" />
 						</th>
 					</tr>
@@ -257,6 +257,11 @@ $(function() {
 	    }
 	  });
 	});
+
+var msg = "${msg}"
+if (msg != "") {
+	alert(msg);
+}
 
 	 
 </script>

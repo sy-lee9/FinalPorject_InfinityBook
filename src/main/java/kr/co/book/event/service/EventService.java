@@ -1,13 +1,11 @@
 package kr.co.book.event.service;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import java.util.HashMap;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -21,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.book.event.dao.EventDAO;
 import kr.co.book.event.dto.EventDTO;
+import kr.co.book.notice.dto.NoticeDTO;
 
 @Service
 @MapperScan(value={"kr.co.book.event.dao"})
@@ -33,63 +32,16 @@ public class EventService {
 	
 	@Value("${spring.servlet.multipart.location}") private String root;
 	
-	public HashMap<String, Object> eventPageList(int page, String search) {
-		logger.info("서비스");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		// 1page = offset : 0
-		// 2page = offset : offset + 5
-		// 3page = offset : 10
-		
-		int offset = (page - 1) * 10;
-		
-		// 만들 수 있는 총 페이지 수 
-		// 전체 게시물 / 페이지 당 보여줄 수 
-		int total = dao.totalCount();
-		
-		
-		if (search.equals("default") || search.equals("")) {
-	         total = dao.totalCount();
-	         logger.info("서비스1");
-	         
-	      } else {
-	         total = dao.etotalCountSearch(search);
-	         logger.info("서비스2");
-	      };	
-		
-		
-		int range = total%10 == 0 ? total/10 : (total/10) + 1;
-		
-		
-		page = page > range ? range : page;
-		
-		ArrayList<EventDTO> evlist = dao.evlist(10, offset);
-		
-		if (search.equals("default") || search.equals("")) {
-			evlist = dao.evlist(10, offset);
-			logger.info("서비스3");
-	         
-	      } else {
-	    	  evlist = dao.eventSearch(search);
-	    	  logger.info("서비스4");
-	      }
-		
-		map.put("currPage", page);
-		map.put("pages", range);		
-		
-		map.put("evlist", evlist);
-		
-
-		return map;
-	}
 	@Transactional
-	public String eventWrite(MultipartFile photo, HashMap<String, String> params) {
+	public int eventWrite(MultipartFile photo, HashMap<String, String> params) {
 		
 		EventDTO dto = new EventDTO();
 		
+		int event_no = 0;
 		
 		logger.info("서비스 도착");
-		dto.setEvent_title(params.get("setEvent_title"));
+		dto.setMember_idx(params.get("member_idx"));                                
+		dto.setEvent_title(params.get("event_title"));
 		dto.setEvent_content(params.get("event_content"));
 		dto.setEvent_cnt(Integer.parseInt(params.get("event_cnt")));		
 		String eventStartDateStr = params.get("event_startdate");
@@ -108,6 +60,9 @@ public class EventService {
 		}
 		
 		int success = dao.eventWrite(dto);
+		if (success > 0) {
+			event_no = dao.event_No_Search(dto);
+		}
 		
 		logger.info("success: " + success);
 		
@@ -126,7 +81,7 @@ public class EventService {
 	             byte[] bytes = photo.getBytes();
 	             Path path = Paths.get(root+"/"+new_photo_name);
 	             Files.write(path, bytes);
-	             dao.event_FileSave(83,ori_photo_name, new_photo_name,member_idx);
+	             dao.event_FileSave(85, event_no, ori_photo_name, new_photo_name,member_idx,0);
 	          }catch (Exception e) {
 	        	  e.printStackTrace();
 	          }
@@ -134,11 +89,35 @@ public class EventService {
 			}	
 			
 		}
-		String photoroot = "/upload/";
+		;
 		
-		return photoroot;
+		return success;
 		
 		}
+	public HashMap<String, Object> eventlist(int page) {
+		
+		ArrayList<EventDTO> list = null;		
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int offset = 0;
+		int total = 0;
+		int range = 0;
+		offset = 10*(page - 1);		
+		total =dao.totalEventCount();
+		range = total%10  == 0 ? total/10 : (total/10)+1;	
+		page = page>range ? range:page;
+		list = dao.eventList(offset);
+		
+		map.put("offset", offset);
+		map.put("list", list);
+		// 현재 페이지
+		map.put("currPage", page);
+		// 총 페이지 수
+		map.put("pages", range);
+		
+		
+		return map;
+	}
 
 	
 
