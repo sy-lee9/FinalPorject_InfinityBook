@@ -56,7 +56,7 @@
       
       <input type="hidden" name=start value="1">
       <i class="icon icon-search"></i> 
-      <input id="text" name="text" class="search-field text search-input" placeholder="제목 또는 글쓴이를 입력해주세요" type="search">
+      <input id="text" name="text" autocomplete='off' class="search-field text search-input" placeholder="제목 또는 글쓴이를 입력해주세요" type="search">
       <input type="button" onclick="call()" value="검색">
    </form>
    <table>

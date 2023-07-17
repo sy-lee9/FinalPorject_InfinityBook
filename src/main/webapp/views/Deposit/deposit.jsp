@@ -41,6 +41,14 @@
 		 		background-color: #C5A992;
 		 		border:none;
 			}
+			
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h3{
+				font-family: 'IBM Plex Sans KR';	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
+			
 		
 		</style>	
 	</head>
@@ -110,7 +118,7 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
-		<h2 class="menu-item">충전 / 결제</h2>
+		<h3 class="menu-item">충전 / 결제</h3>
 		<hr/>
 		<div style="text-align:center;">
 			<form onsubmit="submitForm(event)" id="depositForm">
