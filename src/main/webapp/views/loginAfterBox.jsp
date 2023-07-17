@@ -63,13 +63,24 @@
 	    		    } else {
 	    		        alarmlist.style.display = "none";
 	    		    }
-	    		    /*
-	    		    $('.alaram_list').on('click', function(){
-	    		    	var code_idx = $(this).attr('code');
-	    		    	var idx = $(this).attr('idx');
-	    		    	console.log(code_idx, idx);
-	    		    });
-	    		    */    			
+			
+    			}
+    	});
+    }
+    
+    function alarmdel_all(){
+    	
+    	// 알람 전체 삭제
+    	$.ajax({
+    		url:"/alarmdel_all.ajax",
+    		method:"get",
+    		data:{
+    		},
+    		success:function(data){
+    			console.log("알림 지우기 성공");    		
+    			$('#alarmlist').html('');
+
+    			   			
     			}
     	});
     }

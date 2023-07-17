@@ -37,6 +37,12 @@
 		 		background-color: #C5A992;
 		 		border:none;
 			}
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h4{
+				font-family: 'IBM Plex Sans KR';	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
 	
 		</style>	
 	</head>
@@ -47,7 +53,7 @@
 	
 	<div class="container">
 		<div class="row">
-		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
+		<a href="/admin/adminMain" style="font-size:20;"><h4>← Admin Main</h4></a>
 			<div class="section-header align-center">
 				<h2 class="section-title" style="margin-bottom:25px;">Admin-Report</h2>
 			</div>

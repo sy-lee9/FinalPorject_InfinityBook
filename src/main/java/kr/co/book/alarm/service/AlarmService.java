@@ -39,24 +39,39 @@ public class AlarmService {
 		
 		String page = "";
 		
-		if(code_idx == 2) {
-			// 교환			
-			page = "/chat/message_list";
-		}else if(code_idx == 3) {
-			// 대여	
-			page = "/chat/message_list";	
-		}else if(code_idx == 4) {
-			// 모임	
-			page = "/chat/message_list";
-		}else if(code_idx == 1) {
-			// 감상문
-			page = "redirect:/";
-		}else if(code_idx == 64 || code_idx == 65 || code_idx == 66 || code_idx == 67) {
-			// 	문의
-			page = "redirect:/myinquirydetail.go?"+idx;
+		if(code_idx == 75) {
+			// 모임 신청 알림
+			page = "redirect:/clubDetail.go?club_idx="+idx;
 		}else if(code_idx == 76) {
-			//위시
+			// 위시 도서 알림
 			page = "redirect:/search.do?QueryType=Keyword&Query="+idx;
+		}else if(code_idx == 77) {
+			// 이벤트 당첨 알림
+			page = "redirect:/"+idx;
+		}else if(code_idx == 78) {
+			// 문의 답변 알림
+			page = "redirect:/"+idx;
+		}else if(code_idx == 79) {
+			// 대여교환 알림
+			page = "redirect:/"+idx;
+		}else if(code_idx == 80) {
+			// 감상문 알림
+			page = "redirect:/"+idx;
+		}else if(code_idx == 81) {
+			// 리뷰 알림
+			page = "redirect:/"+idx;
+		}else if(code_idx == 82) {
+			// 제재 알림
+			page = "redirect:/"+idx;
+		}else if(code_idx == 83) {
+			// 감상문 댓글 알림
+			page = "redirect:/"+idx;
+		}else if(code_idx == 84) {
+			// 감상문 답글 
+			page = "redirect:/"+idx;
+		}else if(code_idx == 85) {
+			// 제재 알림
+			page = "redirect:/"+idx;
 		}
 		
 		
@@ -66,6 +81,12 @@ public class AlarmService {
 	public int alarmchk(String member_idx) {
 
 		return dao.alarmchk(member_idx);
+	}
+
+	// 알림 전체 삭제
+	public long alarmdel_all(String member_idx) {
+		
+		return dao.alarmdel_all(member_idx);
 	}
 
 

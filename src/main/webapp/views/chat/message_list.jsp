@@ -9,7 +9,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>채팅 방</title>
+<title>Infinite B∞k</title>
+
 
 <!-- CSS File -->
 <link href="css/message_list.css" rel="stylesheet">
@@ -66,7 +67,7 @@ var apply_user = '';
 // 가장 처음 메세지 리스트를 가져온다.
 const FirstMessageList = function(){
 	$.ajax({
-		url:"/message_ajax_list.do",
+		url:"/message_list.ajax",
 		method:"get",
 		data:{
 		},
@@ -146,8 +147,6 @@ const FirstMessageList = function(){
 					// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
 					// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
 					$('.chat_list_box:first').addClass('active_chat');
-					
-
 				});
 			});// 채팅방 클릭 끝
 		}// 처음리스트 들고오기 성공 끝
@@ -157,10 +156,80 @@ const Messagebook = function(code_idx,room,library,apply_user){
 	// 대화방의 상품정보를 넣는다.
 	$('.mmgs').html('');
 	
-	if(code_idx != 4){
+	if(code_idx == 4){
+		
+		$.ajax({
+			url:"/message_clubdetail.ajax",
+			method:"GET",
+			data:{
+				code_idx : code_idx,
+				idx : room	
+			},							
+			datatype: 'json',
+			success:function(data){
+				console.log("모임 정보 가져오기 성공");
+				console.log(data);
+											
+				let book = '<div style="display: flex;">';
+				book += '<img src="' + data.cover + '" style="width: 50px; margin-right: 10px;"/>';
+				book += '<div class="library">';
+				book += '<div>' + data.club_name + '</div>';
+				book += '<div style="font-size: 10px;">' + data.nicknames + '</div>';
+				book += '</div>';
+				book += '</div>';
 				
+				$('.mmgs').html(book);
+				
+				var outbutton = '<button class="chatout">나가기</button>';		
+				
+				$('.library').html($('.library').html() + outbutton);
+				
+				// 나가기 버튼 클릭시	 													
+				$('.chatout').on('click',function(){							
+					console.log('나가기 버튼 이벤 발생');	
+					
+					$.ajax({
+						url: "/chatout.ajax",
+						method:"GET",
+						data:{
+							code_idx : code_idx,
+							room : room,
+							library : library,
+							apply_user :  apply_user
+						},
+						datatype: 'json',
+						success:function(data){
+							console.log(data);																				
+																																																								
+							if(data == 1){
+								alert('현재 약속 수락대기 상태입니다. \r\n약속 취소 후 시도해주세요.');
+								
+							}else if(data == 2){
+								alert('현재 예약중인 상태입니다. \r\n약속 취소 후 시도해주세요.');
+								
+							}else if(data == 3){
+								alert('현재 대여중인 상태입니다. \r\n책을 돌려받거나 돌려준 후 가능합니다.');
+								
+							}else{
+								// 해당 채팅내역, 책 정보, 메세지 전송칸 지우기
+								$('.msg_history').html("");
+								$('.mmgs').html("");
+								$('.send_message').html("");																					
+								// 메세지 리스트 리로드
+								FirstMessageList();
+								
+								alert('채팅방을 나갔습니다.');
+							}						
+						},error : function(e){
+							console.log(e);
+						}
+					});											 
+				});// 나가기 끝
+			}			
+		});			
+	}else if (code_idx != 4){		
 	$.ajax({
-		url:"/message_librarydetailajax.do",
+		url:"/message_librarydetail.ajax",
 		method:"GET",
 		data:{library : library},							
 		datatype: 'json',
@@ -178,9 +247,10 @@ const Messagebook = function(code_idx,room,library,apply_user){
 			
 			$('.mmgs').html(book);
 			
+			
 			// 상품에 대한 상태정보
 			$.ajax({
-				url: "total_stateajax.do",
+				url: "/total_state.ajax",
 				method:"GET",
 				data:{
 					code_idx : code_idx,
@@ -198,6 +268,9 @@ const Messagebook = function(code_idx,room,library,apply_user){
 						chkbutton +='<button class="chatout">나가기</button>';
 					}else if(data.rentstate == 3){
 						chkbutton +='<div>현재 대여 중인 책입니다.</div>';
+						chkbutton +='<button class="chatout">나가기</button>';
+					}else if(data.rentstate == 4){
+						chkbutton +='<button class="review">후기 작성</button>';
 						chkbutton +='<button class="chatout">나가기</button>';
 					}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
 						chkbutton +='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
@@ -245,7 +318,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 						console.log('약속 수락 이벤 발생');
 						
 						$.ajax({
-							url: "reservationok_ajax.do",
+							url: "/reservationok.ajax",
 							method:"GET",
 							data:{
 								code_idx : code_idx,
@@ -276,7 +349,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 						console.log('약속 취소 이벤 발생');						 
 						
 						$.ajax({
-							url: "reservationno_ajax.do",
+							url: "/reservationno.ajax",
 							method:"GET",
 							data:{
 								code_idx : code_idx,
@@ -304,12 +377,13 @@ const Messagebook = function(code_idx,room,library,apply_user){
 						console.log('나가기 버튼 이벤 발생');	
 						
 						$.ajax({
-							url: "chatout_ajax.do",
+							url: "/chatout.ajax",
 							method:"GET",
 							data:{
 								code_idx : code_idx,
 								room : room,
-								library : library
+								library : library,
+								apply_user :  apply_user
 							},
 							datatype: 'json',
 							success:function(data){
@@ -346,7 +420,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 		},error : function(){// 상태 불러오기 성공 후
 			alert('서버 에러');
 		}		
-	});// 상품들고오기 ajax 끝
+	});
 	}
 }
 	
@@ -354,7 +428,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 const MessageContentList = function(code_idx,room,library,apply_user) {
 	
 	$.ajax({
-		url:"/message_content_list.do",
+		url:"/message_content_list.ajax",
 		method:"GET",
 		data:{
 			code_idx : code_idx,
@@ -395,7 +469,7 @@ const SendPhoto = function(code_idx,room, photo){
 	    
 		$.ajax({
 		      type: 'post',
-		      url: 'chatphoto.ajax',
+		      url: '/chatphoto.ajax',
 			  data: formData,							     
 		      processData: false, // 데이터를 처리하지 않음
 		      contentType: false, // 컨텐츠 타입을 설정하지 않음
@@ -429,7 +503,7 @@ const SendMessage = function(code_idx,room){
 		alert("메세지를 입력하세요!");
 	}else{
 		$.ajax({
-			url:"message_send_inlist.do",
+			url:"message_send_inlist.ajax",
 			method:"GET",
 			data:{
 				code_idx : code_idx,
@@ -507,8 +581,27 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  
 		  // 리스트 리로드
 		  FirstMessageList();			  		  
+	  }else {
+		  // 리스트 리로드
+		  FirstMessageList();				
 	  }	 
 }
+	
+
+
+Date.prototype.toLocaleString = function() {
+    var formattedDate = this.getFullYear() + "-" +
+                        ("0" + (this.getMonth() + 1)).slice(-2) + "-" +
+                        ("0" + this.getDate()).slice(-2) + " " +
+                        ("0" + this.getHours()).slice(-2) + ":" +
+                        ("0" + this.getMinutes()).slice(-2) + ":" +
+                        ("0" + this.getSeconds()).slice(-2);
+
+    return formattedDate;
+};
+	
+	
+	
 		  
 function send(code_idx,room,content){			
 	data.	code =  code_idx;
@@ -528,14 +621,11 @@ $(document).ready(function(){
 </script>
 <body>
 
-
-
 	<br />
 	<br />
 	<br /> 
 	<br /> 
 	<br /> 
-	
 	<div class="msg-container">
 	
 		<div class="messaging">
