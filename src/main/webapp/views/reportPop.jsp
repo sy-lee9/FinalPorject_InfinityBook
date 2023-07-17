@@ -49,14 +49,13 @@
 
 		<input type="text" value="${code}" id="code" hidden/>
 		<input type="text" value="${idx}" id="idx" hidden/>
-		<input type="text" value="${member_idx}" id="member_idx" hidden/>
 		
 		<h2>신고</h2>
-		<hr/>
+		<hr style="margin:0;"/>
 			<br/>	
 			<textarea name="content" id="content" style="width: 500px; height: 200px; resize:none" placeholder="신고사유를 입력해 주세요."></textarea>
 			<br/>	
-		<input type="button" value="제출" onclick="sendReport()" style="margin: 10px; font-size: 15;" class="btn btn-warning" />
+		<input type="button" value="제출" onclick="sendReport()" style="margin: 0% 40%; font-size: 15;" class="btn btn-warning" />
 
 </body>
 <script>
@@ -77,7 +76,6 @@
 		        data: {
 		            'code_code': document.getElementById("code").value,
 		            'idx':document.getElementById("idx").value,
-		            'member_idx':document.getElementById("member_idx").value,
 		            'content':document.getElementById("content").value
 		        },
 				dataType:'json',

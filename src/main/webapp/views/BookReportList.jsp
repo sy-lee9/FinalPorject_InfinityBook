@@ -35,42 +35,35 @@
 	</style>
 </head>
 <body>
+<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
+	<c:forEach var="rep" items="${report}" varStatus="status">
+		<figure class="product-style">
+			<img src="${rep.cover}" alt="Books" class="product-item">
+			<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
+			<figcaption>
+				<h3>${rep.title}</h3>
+				<p>${rep.author}</p>
+			</figcaption>
+		</figure>
+		<h3>${rep.member_nickname}</h3>
+		<h3>${rep.book_report_date}</h3>
+		<h3><a href="/BookReportDetail?book_report_idx=${rep.book_report_idx}">${rep.book_report_title}</a></h3>
+		<h3>${rep.book_report_content}</h3>
+	</c:forEach>
+	
+	
 	<a href="/bookReportWrite.go"></a>
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
 <script>
-var config = {};
-
-
-//editor 크기 조절 불가
-config.editorResizeMode = "none"; 
-
-//파일 업로드 관련 설정
-config.file_upload_handler = function(file,callback){
-console.log(file);
-// file정보 : 크기, 이름, 종류 등을 알 수 있다.
-if(file.size>(1*1024*1024)){
-	alert('1MB 이하 파일만 업로드 가능합니다.');
-	callback('/images/noimage.png');
-}
-console.log(callback);
-}
-var editor = new RichTextEditor("#div_editor",{ skin: "gray", toolbar: "basic" });
-
-function save(){
-console.log('저장');
-var content = editor.getHTMLCode();
-console.log(content.length);
-console.log(content);
-if(content.length>(4*1024*1024)){
-	alert('컨텐츠의 크기가 너무 큽니다. 이미지의 크기나 갯수를 줄여주세요');
-}else{
-	$('input[name="club_content"]').val(content);
-	$('form').submit();
-}
-}
-
 </script>
 </html>

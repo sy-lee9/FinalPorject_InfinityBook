@@ -38,7 +38,13 @@
 		 		border:none;
 			}
 			
-	
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h4{
+				font-family: 'IBM Plex Sans KR';	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
+			
 	</style>	
 	</head>
 
@@ -149,9 +155,10 @@
 								<div class="author-name">
 								    <c:forEach items="${member}" var="member">
 								    	<a onclick="profilePop(${member.member_idx})" style="cursor: pointer;">${member.member_nickname}</a>
-								    	
-								    	<c:if test="${member.member_idx ne club.member_idx}">								    	
-								    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
+								    	<c:if test="${loginIdx == club.member_idx}">								    	
+									    	<c:if test="${member.member_idx ne club.member_idx}">								    	
+									    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
+									    	</c:if>
 								    	</c:if>
 								    </c:forEach>
 								</div>
@@ -175,7 +182,7 @@
 								</c:if>
 								
 							</c:if>
-							<c:if test="${loginIdx != club.member_idx}">
+							<c:if test="${loginIdx != club.member_idx && loinIdx != null}">
 								<c:if test="${club.club_state eq 0}">
 									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
 								</c:if>
@@ -196,6 +203,9 @@
 						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
 						</c:forEach>
 					</c:if>  
+					<c:if test="${loginIdx != club.member_idx}">
+						<a onclick="reportPop('club_report','${club.club_idx}')" style="font-size: 13; cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>
+					</c:if>
 				</th>
 			</tr>
 			
@@ -203,7 +213,15 @@
 		<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
-				<textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				<c:choose>
+				  <c:when test="${loginIdx != null}">
+				    <textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				  </c:when>
+				  <c:otherwise>
+				    <textarea id="replycontent" placeholder="댓글은 로그인 이후 이용가능합니다." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				  </c:otherwise>
+				</c:choose>
+
 				<button onclick="clubReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
 					<span>작성</span> 
 					<i class="icon icon-send"></i>
@@ -251,6 +269,19 @@
 
 </body>
 <script>
+
+function reportPop(code,idx) {
+	var code = code; //'bookReport_report':감상문,'club_report':모임,'reply_report':댓글,'review_report':리뷰,'book_report':도서
+	var idx = idx; // 해당 idx
+	var jsp = "clubDetail.jsp"; // 신고버튼 누른 페이지
+
+	var width = 560;
+    var height = 410;
+    var left = window.innerWidth / 2 - width / 2;
+    var top = window.innerHeight / 2 - height / 2;
+    var popupWindow = window.open('reportPop.go?code='+code+'&idx='+idx+'&jsp='+jsp, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+};
+
 var showPage = 1;
 
 $(document).ready(function() {	
@@ -260,26 +291,29 @@ $(document).ready(function() {
 var club_idx = ${club.club_idx};
 
 function clubReplyWrite() {
-    
-    $.ajax({
-        url: '/clubReplyWrite.ajax',
-        type: 'post',
-        data: {
-        	'reply_content':document.getElementById("reply_content").value,
-        	'club_idx':club_idx
-        },
-		dataType:'json',
-		success: function(data) {
-			console.log(data.success);
-			if(data.success == 1){
-				document.getElementById("reply_content").value = "";
-				listCall(showPage);	
+	
+		$.ajax({
+	        url: '/clubReplyWrite.ajax',
+	        type: 'post',
+	        data: {
+	        	'reply_content':document.getElementById("reply_content").value,
+	        	'club_idx':club_idx
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data.success);
+				if(data.success == 1){
+					document.getElementById("reply_content").value = "";
+					listCall(showPage);	
+				}
+	        },
+			error:function(e){
+				console.log(e);
 			}
-        },
-		error:function(e){
-			console.log(e);
-		}
-    });
+	    });
+	
+    
+    
 }
 
 function clubReplyDelete(reply_idx) {
@@ -352,7 +386,7 @@ function listPrint(list) {
 	    if (${sessionScope.loginIdx} == item.member_idx) {
 	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
 	    } else {
-	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>';
+	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a> / <a onclick="reportPop(reply_report,'+item.reply_idx+')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
@@ -434,6 +468,8 @@ function reReplyPrint(replyList) {
 	    content += '<th style="width:10%;">';
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
 	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
+	    } else{
+	    	content += '<a onclick="reportPop(reply_report,'+reply.reply_idx+')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
@@ -458,13 +494,30 @@ function reReplyPrint(replyList) {
 
 function showEditForm(replyIdx) {
     var editForm = document.getElementById('editForm' + replyIdx);
-    editForm.style.display = 'table-row';
+    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+    if (editForm.style.display === 'table-row') {
+    	re_ReplyForm.style.display = 'none';
+    	editForm.style.display = 'none';
+	  } else {
+		  re_ReplyForm.style.display = 'none';
+		  editForm.style.display = 'table-row';
+	  }
 }
 
+
+
 function showRe_ReplyForm(replyIdx) {
-    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
-    re_ReplyForm.style.display = 'table-row';
-}
+	var editForm = document.getElementById('editForm' + replyIdx);
+   	var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+	  if (re_ReplyForm.style.display === 'table-row') {
+		  re_ReplyForm.style.display = 'none';
+	    	editForm.style.display = 'none';
+	  } else {
+		  editForm.style.display = 'none';
+	    re_ReplyForm.style.display = 'table-row';
+	  }
+	}
+
 
 
 function clubReReply(reply_idx){

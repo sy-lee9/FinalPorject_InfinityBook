@@ -39,7 +39,7 @@ public class ChatController {
 		}
 	
 		// 대화중인 대화 방
-		@RequestMapping(value = "/message_ajax_list.do")
+		@RequestMapping(value = "/message_list.ajax")
 		public String message_ajax_list(HttpServletRequest request, HttpSession session) {		
 			
 			String member_idx = session.getAttribute("loginIdx").toString();					
@@ -54,7 +54,7 @@ public class ChatController {
 		}
 		
 		// 메시지 내용
-		@RequestMapping(value = "/message_content_list.do")
+		@RequestMapping(value = "/message_content_list.ajax")
 		public String message_content_list(HttpServletRequest request, HttpSession session) {
 
 			String code_idx = request.getParameter("code_idx");
@@ -75,7 +75,7 @@ public class ChatController {
 		
 		// 메세지 보내기
 		@ResponseBody
-		@RequestMapping(value = "/message_send_inlist.do")
+		@RequestMapping(value = "/message_send_inlist.ajax")
 		public void message_send_inlist(@RequestParam String code_idx, @RequestParam String room, @RequestParam String content, HttpSession session) {						
 
 			String sender = session.getAttribute("loginIdx").toString();
@@ -83,14 +83,7 @@ public class ChatController {
 
 			service.messageSendInlist(code_idx,room,chat_sender,content);
 
-		}
-		
-		// 신청페이지 이동
-		@RequestMapping(value="/apply.go")
-		public String apply() {
-
-			return "/chat/apply";
-		}		
+		}	
 		
 		// 메세지에서 사진 보내기
 		@RequestMapping(value="/chatphoto.ajax")
@@ -104,7 +97,7 @@ public class ChatController {
 		   return photoroot;
 	   }
 		
-		// 약속잡기
+		// 약속잡기 이동
 		@RequestMapping(value = "/reservation.go", method = RequestMethod.GET)
 		public ModelAndView reservationok(@RequestParam String code_idx, @RequestParam String idx) {
 			
@@ -133,7 +126,7 @@ public class ChatController {
 		}
 		
 		// 대화방에 대한 책 정보
-		@RequestMapping(value="/message_librarydetailajax.do")
+		@RequestMapping(value="/message_librarydetail.ajax")
 		@ResponseBody
 		public HashMap<String, Object> message_librarydetail(@RequestParam String library) {
 			
@@ -144,7 +137,7 @@ public class ChatController {
 		}
 		
 		// 책에 대한 모든 대화방 상태
-		@RequestMapping(value="/total_stateajax.do")
+		@RequestMapping(value="/total_state.ajax")
 		@ResponseBody
 		public HashMap<String, Object> total_stateajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String library, HttpSession session) {
 			
@@ -157,7 +150,7 @@ public class ChatController {
 		}
 		
 		// 약속 잡기 수락
-		@RequestMapping(value="/reservationok_ajax.do")
+		@RequestMapping(value="/reservationok.ajax")
 		@ResponseBody
 		public int reservationok_ajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String library, HttpSession session) {
 			
@@ -169,7 +162,7 @@ public class ChatController {
 		}
 		
 		// 약속 잡기 거절
-		@RequestMapping(value="/reservationno_ajax.do")
+		@RequestMapping(value="/reservationno.ajax")
 		@ResponseBody
 		public int reservationno_ajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String library, HttpSession session) {
 			
@@ -181,17 +174,29 @@ public class ChatController {
 		}
 		
 		// 채팅방 나가기
-		@RequestMapping(value="/chatout_ajax.do")
+		@RequestMapping(value="/chatout.ajax")
 		@ResponseBody
-		public int chatout_ajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String other_nick, @RequestParam String library, HttpSession session) {
+		public int chatout_ajax(@RequestParam String code_idx, @RequestParam String room, @RequestParam String apply_user, @RequestParam String library, HttpSession session) {
 			
 			logger.info("컨트롤 들어옴");
 			String member_idx = session.getAttribute("loginIdx").toString();
-			int success = service.chatout_ajax(code_idx,room,other_nick,library,member_idx);
+			int success = service.chatout_ajax(code_idx,room,apply_user,library,member_idx);
 			
 			
 			return success;
 		}
+		
+		// 모임 정보 가져오기
+		@RequestMapping(value="/message_clubdetail.ajax")
+		@ResponseBody
+		public HashMap<String, Object> message_clubdetail(@RequestParam HashMap<String, Object> params) {
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map = service.message_clubdetail(params);
+			
+			return map;		
+		}
+		
 		
 		
 		

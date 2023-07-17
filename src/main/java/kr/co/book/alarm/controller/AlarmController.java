@@ -49,6 +49,15 @@ public class AlarmController {
 		int count = service.alarmchk(member_idx);
 		return count;
 	}
-
+	
+	@RequestMapping(value="/alarmdel_all.ajax")
+	@ResponseBody
+	public long alarmdel_all(HttpSession session) {
+		String member_idx = session.getAttribute("loginIdx").toString();
+		long i = service.alarmdel_all(member_idx);
+		
+		return i;
+	}
+	
 
 }

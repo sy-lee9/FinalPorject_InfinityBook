@@ -135,6 +135,16 @@ public class ChatService {
 		return dao.message_librarydetail(library);
 	}
 	
+	// 모임 정보 가져오기
+	public HashMap<String, Object> message_clubdetail(HashMap<String, Object> params) {
+			
+		// 모임 isbn, 모임 명 들고오기
+		HashMap<String, Object> map = dao.club_detail(params);
+		
+				
+		return map;
+	}
+	
 	// 대화 방의 책 상태
 	public HashMap<String, Object> total_stateajax(String code_idx, String room, String member_idx, String library) {
 		
@@ -196,7 +206,7 @@ public class ChatService {
 			if(deposit > rentdeposit) {
 				
 				// 대여 보증금 사용
-				dao.usedeposit(member_idx, rentdeposit);
+				dao.usedeposit(member_idx, rentdeposit,room);
 				
 				// 대여 예약 수락
 				dao.finalrentok(room,member_idx);
@@ -237,7 +247,7 @@ public class ChatService {
 	}
 	
 	// 채팅 나가기
-	public int chatout_ajax(String code_idx, String room, String other_nick, String library, String member_idx) {
+	public int chatout_ajax(String code_idx, String room, String apply_user, String library, String member_idx) {
 
 		int success = 0;
 		int state = 0;
@@ -246,12 +256,17 @@ public class ChatService {
 		if(Integer.parseInt(code_idx) == 2) {
 			// 현재 대화방이 교환이면
 			// 현재 교환상태 확인
-			 state = dao.chkchgroomstate(room);			
+			 state = dao.chkchgroomstate(room);		
+			 
 		}else if(Integer.parseInt(code_idx) == 3) {
 			// 현재 대화방이 대여이면
 			// 현재 대여상태 확인
 			state = dao.chkrentroomstate(room);			
+		}else if(Integer.parseInt(code_idx) == 4) {
+			// 모임 방이라면 
+			state = 4;
 		}
+		
 			// 현재 수락대기,예약중,대여중
 			if(state == 1) {
 				// 수락대기 상태라면
@@ -300,6 +315,8 @@ public class ChatService {
 		dao.clubchatDelete(4,club_idx);
 				
 	}
+
+
 
 
 	

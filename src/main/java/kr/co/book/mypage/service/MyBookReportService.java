@@ -52,7 +52,7 @@ public class MyBookReportService {
 		HashMap<String, Object> myLike = new HashMap<String, Object>();	
 		ArrayList<MyBookReportDTO> list = null;
 		int page = Integer.parseInt(String.valueOf(sPage)); 
-		int offset = 9*(page-1);
+		int offset = 10*(page-1);
 		int total = 0;
 		
 		if(searchText.equals("")) {
@@ -68,7 +68,7 @@ public class MyBookReportService {
 			list = myBookReportDAO.myLikeSearch(data);
 		}
 		
-		int range = total%9  == 0 ? total/9 : total/9+1;
+		int range = total%9  == 0 ? total/10 : total/10+1;
 		page = page>range ? range:page;
 		myLike.put("offset", offset);
 		myLike.put("list", list);

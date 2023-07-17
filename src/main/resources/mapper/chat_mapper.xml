@@ -60,8 +60,7 @@
 		    WHERE c.code_idx = #{code_idx} AND c.idx = #{idx} 
 		    ORDER BY c.chat_idx;		
 		</select>
-		
-		
+				
 		<!-- 대화방 참여자 IDX -->
 		<select id="chatuserIDX" resultType="hashmap">
 			SELECT member_idx FROM chat_room
@@ -84,6 +83,16 @@
 		<select id="message_librarydetail" resultType="hashmap">
 			SELECT library_title, library_cover, library_info, library_sharestate FROM library
 			WHERE library_idx = #{param1} AND library_blind = 0
+		</select>
+		
+		<!-- 대화 방의 모임 -->
+		<select id="club_detail" resultType="hashmap">
+			SELECT c.club_name,b.cover ,GROUP_CONCAT(m.member_nickname SEPARATOR ', ') AS nicknames 
+			FROM club c 
+			JOIN club_apply ca ON c.club_idx = ca.club_idx
+			JOIN member m ON ca.member_idx = m.member_idx
+			join book b on b.isbn = c.isbn
+			WHERE ca.club_appstate = 1 AND c.club_idx = #{idx};			
 		</select>
 		
 		<!-- 대화 방의 책 상태 -->
@@ -135,8 +144,8 @@
    		
 		<!-- 대여 보증금 사용 -->
    		<insert id="usedeposit">
-   			INSERT INTO deposit(member_idx, deposit_type, deposit_method, deposit_info, deposit_price, deposit_state)
-   			VALUES(#{param1}, '출금', '대여', '대여',#{param2},1)
+   			INSERT INTO deposit_use(member_idx, deposit_use_price,deposit_use_state,rent_idx)
+   			VALUES(#{param1}, #{param2},'사용', #{param3})
    		</insert>
    		
    		<!-- 대여 예약 수락 -->

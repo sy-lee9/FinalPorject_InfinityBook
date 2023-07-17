@@ -259,7 +259,7 @@ public class MemberService {
 		return mav;
 	}
 
-	public HashMap<String, Object> memberInfoUpdate(HashMap<String, Object> params) {
+	public HashMap<String, Object> memberInfoUpdate(HttpSession session, HashMap<String, Object> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int code_idx = dao.findLocationCode((String) params.get("location"));
@@ -267,8 +267,11 @@ public class MemberService {
 		params.put("code_idx", code_idx);
 		
 		int success = dao.memberInfoUpdate(params);
+		if(success == 1) {
+			map.put("success", success);
+			session.setAttribute("loginNickname", (String)params.get("nickname"));			
+		}
 		
-		map.put("success", success);
 		return map;
 	}
 

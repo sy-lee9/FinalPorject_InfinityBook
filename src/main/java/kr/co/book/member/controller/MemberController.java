@@ -219,7 +219,7 @@ public class MemberController {
 		   int loginIdx = (int) session.getAttribute("loginIdx");
 		   params.put("loginIdx", loginIdx);
 		   
-	      return service.memberInfoUpdate(params);      
+	      return service.memberInfoUpdate(session,params);      
 	   }
 	   
 	   @RequestMapping(value = "/mypage/pwUpdate.go")

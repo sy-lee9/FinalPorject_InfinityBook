@@ -10,7 +10,6 @@ p {
 }
 
 
-
 .msg-container{max-width:1170px; margin:auto;}
 img{ max-width:100%;}
 .inbox_people {
@@ -77,7 +76,7 @@ img{ max-width:100%;}
 	background-color: #d6ead0;
 }
 
-.inbox_chat { height: 550px; overflow-y: scroll;}
+.inbox_chat { height: 625px; overflow-y: scroll;}
 
 .active_chat{ background:#ebebeb;}
 

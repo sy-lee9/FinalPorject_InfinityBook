@@ -34,6 +34,14 @@
 		.slick-track{
 			height:300px;
 		}
+		
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+		h3{
+			font-family: 'IBM Plex Sans KR';	
+			font-weight: 600;
+			margin: 10 0 0 0;
+		}
+		
 	</style>
 	
 	</head>
@@ -87,7 +95,7 @@
 	</header>
 </div>
 
-<section id="billboard">
+<section id="billboard" style="margin-bottom: 100px;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -99,7 +107,7 @@
 							<option value="Author">저자</option>
 							<option value="Publisher">출판사</option>
 						</select>
-						<input class="search-field text search-input" placeholder="Search"  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
+						<input class="search-field text search-input" autocomplete='off' placeholder="제목 또는 저자명 "  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
 						<input type="submit" value="검색">	
 					</form>
 				</div>				
@@ -109,15 +117,7 @@
 </section>
 
 
-<br/>
-<br/>
-
-
-
-
-
-
-<section id="latest-blog2">
+<section id="latest-blog2" style="margin-bottom: 100px;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -147,11 +147,11 @@
 									</figure>
 									
 									<div class="post-item" style="text-align: center;">	
-									    <h3><a onclick="replaceTitle('${library.library_title}')">${library.library_title}</a></h3>
+									    
 									    <div class="links-element" >
 										    <div class="categories">${library.library_author}</div>
 										</div><!--links-element-->
-									    
+									    <h3><a onclick="replaceTitle('${library.library_title}')">${library.library_title}</a></h3>
 									</div>
 								</article>						
 							</div>
@@ -170,7 +170,7 @@
 <br/>
 <br/>
 
-<section id="latest-blog" style="margin-bottom: 0px;">
+<section id="latest-blog" style="margin-bottom: 100px;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">

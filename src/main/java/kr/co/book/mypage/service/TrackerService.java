@@ -254,9 +254,11 @@ public class TrackerService {
 		int totalPage = TrackerDAO.getTotalPage((String) params.get("isbn"));
 		
 		//읽은 페이지랑 총페이지가 같을 경우 종료일 저장
-		if(Integer.parseInt((String) params.get("readPage")) == totalPage) {
-			TrackerDAO.saveEndDate((String) params.get("loginIdx"),(String) params.get("isbn"));
-		}		
+		int readPage = Integer.parseInt((String) params.get("readPage"));
+		logger.info("readPage : "+readPage);
+	    if (readPage == totalPage) {
+	        TrackerDAO.saveEndDate((int) params.get("loginIdx"), (int) params.get("isbn"));
+	    }
 		
 		return map;
 	}

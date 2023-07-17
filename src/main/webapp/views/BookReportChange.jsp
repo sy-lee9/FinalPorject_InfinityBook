@@ -44,7 +44,7 @@
         </c:otherwise>
     </c:choose>
 	<form action="BookReportWrite.do" method="post">
-	<h3>감상문 등록</h3>
+	<h3>감상문 수정</h3>
 	<select name="reportOpen" id="reportOpen">
 	    <option value="select">공개여부</option>
 	    <option value="1">공개</option>
