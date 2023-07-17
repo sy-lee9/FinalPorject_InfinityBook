@@ -72,7 +72,10 @@ $(document).ready(function() {
 	      dataType: "json",
 	      success: function(data) {
 	        console.log(data);
-	        if (data.success === 1) {
+	        if(data.msg != ''){
+	        	alert(data.msg);
+	        	location.href = "./";
+	        } else if(data.success == 1) {
 	          alert("로그인에 성공했습니다.");
 	          setCookie("email", email, 30);
 	          if (rememberMe) {
