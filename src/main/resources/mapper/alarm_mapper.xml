@@ -5,7 +5,7 @@
 	<mapper namespace="kr.co.book.alarm.dao.AlarmDAO">
 	
 		<select id="alarmList" resultType="alarm">
-			SELECT code_idx, idx, alarm_content, alarm_check, alarm_date FROM alarm
+			SELECT alarm_idx, code_idx, idx, alarm_content, alarm_check, alarm_date FROM alarm
 			WHERE member_idx = #{member_idx} AND alarm_blind = 0
 			ORDER BY alarm_idx DESC
 		</select>
