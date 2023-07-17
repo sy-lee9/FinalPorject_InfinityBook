@@ -31,6 +31,14 @@
 	</style>
 </head>
 <body>
+<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	<form action="BookReview.do" method="post">
 		<input type="hidden" id="review_type" value="${param.review_type}"/>
 		<input type="hidden" id="review_transaction_type" value="${param.review_transaction_type}"/>

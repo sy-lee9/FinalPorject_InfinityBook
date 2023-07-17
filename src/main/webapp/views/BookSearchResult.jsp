@@ -38,6 +38,14 @@
 	</style>
 </head>
 <body>
+<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	<c:forEach var="entry" items="${result}" varStatus="status">
 		<c:if test="${status.index==2}"> 
 			<c:forEach var="result" items="${entry.value}" varStatus="id">

@@ -35,6 +35,14 @@
 	</style>
 </head>
 <body>
+<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	<c:forEach var="rep" items="${report}" varStatus="status">
 		<figure class="product-style">
 			<img src="${rep.cover}" alt="Books" class="product-item">
