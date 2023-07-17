@@ -1,5 +1,6 @@
 package kr.co.book.bookReport.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -19,5 +20,21 @@ public interface BookReportDAO {
 	BookReportDTO reportDetail(String book_report_idx);
 
 	HashMap<String, Object> getBookInfo(String isbn);
+
+	ArrayList<BookReportDTO> bookReportList();
+
+	int totalReplyList(String book_idx);
+
+	ArrayList<BookReportDTO> bookReplyList(String book_idx, int offset);
+
+	void bookReplyWrite(String member_idx, String reply_content, String book_idx);
+
+	void bookReplyDelete(String reply_idx);
+
+	void bookReplyUpdate(String reply_idx, String reply_content);
+
+	void bookReReply(String member_idx, String reply_idx, String reply_content);
+
+	ArrayList<BookReportDTO> reReplyList(String reply_idx);
 
 }
