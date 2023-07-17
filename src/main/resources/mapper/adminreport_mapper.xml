@@ -5,8 +5,8 @@
 <mapper namespace="kr.co.book.admin.dao.AdminReportDAO">
 
 	<insert id="reportSend" parameterType="hashMap">
-		INSERT INTO report(code_idx,idx,member_idx,report_content,report_state) 
-			VALUES((SELECT c.code_idx FROM code c WHERE code_code = #{code_code}), #{idx}, #{member_idx}, #{content}, '접수')
+		INSERT INTO report(code_idx,idx,member_idx,report_content,report_state,reg_member_idx,reg_screen) 
+			VALUES((SELECT c.code_idx FROM code c WHERE code_code = #{code_code}), #{idx}, #{member_idx}, #{content}, '접수', #{member_idx}, #{jsp})
 	</insert>
 	
 	<select id="reportList" resultType="hashmap">

@@ -203,6 +203,9 @@
 						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
 						</c:forEach>
 					</c:if>  
+					<c:if test="${loginIdx != club.member_idx}">
+						<a onclick="reportPop('club_report','${club.club_idx}')" style="font-size: 13; cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>
+					</c:if>
 				</th>
 			</tr>
 			
@@ -266,6 +269,19 @@
 
 </body>
 <script>
+
+function reportPop(code,idx) {
+	var code = code; //'bookReport_report':감상문,'club_report':모임,'reply_report':댓글,'review_report':리뷰,'book_report':도서
+	var idx = idx; // 해당 idx
+	var jsp = "clubDetail.jsp"; // 신고버튼 누른 페이지
+
+	var width = 560;
+    var height = 410;
+    var left = window.innerWidth / 2 - width / 2;
+    var top = window.innerHeight / 2 - height / 2;
+    var popupWindow = window.open('reportPop.go?code='+code+'&idx='+idx+'&jsp='+jsp, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+};
+
 var showPage = 1;
 
 $(document).ready(function() {	
@@ -370,7 +386,7 @@ function listPrint(list) {
 	    if (${sessionScope.loginIdx} == item.member_idx) {
 	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
 	    } else {
-	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>';
+	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a> / <a onclick="reportPop(reply_report,'+item.reply_idx+')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
@@ -452,6 +468,8 @@ function reReplyPrint(replyList) {
 	    content += '<th style="width:10%;">';
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
 	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
+	    } else{
+	    	content += '<a onclick="reportPop(reply_report,'+reply.reply_idx+')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
