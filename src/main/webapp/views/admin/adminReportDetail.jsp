@@ -93,7 +93,7 @@
 						<c:if test="${info.code_idx == 69}">
 							<tr>
 								<th style="text-align:center; padding: 1%;">상세보기</th>
-								<td colspan="3">${info.bookReportTitle} <a href="/BookReportDetail?book_report_idx=${info.idx}" style="border-bottom: 1px solid #c5a992;">바로가기</a></td>
+								<td colspan="3">${info.target} <a href="/BookReportDetail?book_report_idx=${info.idx}" style="border-bottom: 1px solid #c5a992;">바로가기</a></td>
 							</tr>
 							<tr>
 								<th style="text-align:center; padding: 1%;">신고내용</th>
@@ -103,7 +103,7 @@
 						<c:if test="${info.code_idx == 70}">
 							<tr>
 								<th style="text-align:center; padding: 1%;">상세보기</th>
-								<td colspan="3">${info.clubTitle} <a href="/clubDetail.go?club_idx=${info.idx}" style="border-bottom: 1px solid #c5a992;">바로가기</a></td>
+								<td colspan="3">${info.target} <a href="/clubDetail.go?club_idx=${info.idx}" style="border-bottom: 1px solid #c5a992;">바로가기</a></td>
 							</tr>
 							<tr>
 								<th style="text-align:center; padding: 1%;">신고내용</th>
@@ -113,7 +113,7 @@
 						<c:if test="${info.code_idx == 71 && (info.postType == 61 || info.postType == 62)}">
 							<tr>
 								<th style="text-align:center; padding: 1%;">댓글내용</th>
-								<td>${info.replyContent} <a href="/clubDetail.go?club_idx=${info.postIdx}" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
+								<td>${info.target} <a href="/clubDetail.go?club_idx=${info.postIdx}" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
 								<th>신고 대상</th>
 								<td><a onclick="profilePop(${info.targetMemberIdx})" style="cursor: pointer;">${info.targetMemberNick}</a></td>
 							</tr>
@@ -125,7 +125,7 @@
 						<c:if test="${info.code_idx == 71 && (info.postType == 83 || info.postType == 84)}">
 							<tr>
 								<th style="text-align:center; padding: 1%;">댓글내용</th>
-								<td>${info.replyContent} <a href="/BookReportDetail?book_report_idx=${info.postIdx}" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
+								<td>${info.target} <a href="/BookReportDetail?book_report_idx=${info.postIdx}" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
 								<th>신고 대상</th>
 								<td><a onclick="profilePop(${info.targetMemberIdx})" style="cursor: pointer;">${info.targetMemberNick}</a></td>
 							</tr>
@@ -137,7 +137,7 @@
 						<c:if test="${info.code_idx == 72}">
 							<tr>
 								<th style="text-align:center; padding: 1%;">리뷰내용</th>
-								<td>${info.reviewContent} <a onclick="profilePop(${info.recieverIdx})" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
+								<td>${info.target} <a onclick="profilePop(${info.recieverIdx})" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
 								<th>신고 대상</th>
 								<td><a onclick="profilePop(${info.targetMemberIdx})" style="cursor: pointer;">${info.targetMemberNick}</a></td>
 							</tr>
@@ -151,7 +151,7 @@
 								<th style="text-align:center; padding: 1%;">신고 대상</th>
 								<td><a onclick="profilePop(${info.targetMemberIdx})" style="cursor: pointer;">${info.targetMemberNick}</a></td>
 								<th>책제목</th>
-								<td>${info.bookTitle} <a onclick="/searchDetail.do?library_idx=${info.bookIdx}" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
+								<td>${info.target} <a onclick="/searchDetail.do?library_idx=${info.bookIdx}" style="cursor: pointer; border-bottom: 1px solid #c5a992;">바로가기</a></td>
 							</tr>
 							<tr>
 								<th style="text-align:center; padding: 1%;">책소개</th>
@@ -273,6 +273,7 @@
 	var code_idx = "${info.code_idx}";
 	var idx = "${info.idx}";
 	var targetMemberIdx = "${info.targetMemberIdx}";
+	var target = "${info.target}";
 
 	function reportHandling(){
 
@@ -293,6 +294,7 @@
 					'reportIdx':reportIdx,
 		        	'blind':blind,
 		        	'targetMemberIdx':targetMemberIdx,
+		        	'target':target,
 		        	'memberState':memberState,
 		        	'reason':reportHandlingReason,
 		        	'jsp':'adminReportDetail'
