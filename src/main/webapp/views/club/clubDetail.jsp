@@ -175,7 +175,7 @@
 								</c:if>
 								
 							</c:if>
-							<c:if test="${loginIdx != club.member_idx}">
+							<c:if test="${loginIdx != club.member_idx || loinIdx != null}">
 								<c:if test="${club.club_state eq 0}">
 									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
 								</c:if>

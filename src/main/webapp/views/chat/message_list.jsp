@@ -7,17 +7,48 @@
 
 <!DOCTYPE html>
 <html>
-<head>
 <meta charset="UTF-8">
-<title>Infinite B∞k</title>
+	<head>
+		<title>Infinite B∞k</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="author" content="">
+	    <meta name="keywords" content="">
+	    <meta name="description" content="">
 
-
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
+	    <link rel="stylesheet" type="text/css" href="/style.css">
+	    
+		<!-- script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
+		 <link rel="icon" href="/images/mainLogo.png" class="images">		
 <!-- CSS File -->
 <link href="css/message_list.css" rel="stylesheet">
 
 <!-- 메세지 전송 아이콘(종이비행기) 때문에 필요 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"/>
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+h4{
+   font-family: 'IBM Plex Sans KR';   
+   font-weight: 600;
+   margin: 10 0 0 0;
+}
+
+
   input[type='file'] {
     width: 0.1px;
     height: 0.1px;
@@ -57,6 +88,14 @@
   #fileName {
     display: none; /* 파일명을 숨김 */
   }
+  
+  .msg_send_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  
 </style>
 </head>
 <script>		
@@ -107,7 +146,7 @@ const FirstMessageList = function(){
 				send_msg += "			<input type='file' id='fileInput' name='photo'/>";
 				send_msg += "			<label for='fileInput'></label>";
 				send_msg += "			<p id='fileName'></p>";					
-				send_msg += "			<input type='text' class='write_msg' placeholder='메세지를 입력...'/>";
+				send_msg += "			<input type='text' class='write_msg' placeholder='메세지를 입력...' style='width:705px;'/>";
 				send_msg += "		</div>";
 				send_msg += "		<div class='col-1'>";
 				send_msg += "			<button class='msg_send_btn' type='button'><i class='fa fa-paper-plane-o' aria-hidden='true'></i></button>";
@@ -171,16 +210,16 @@ const Messagebook = function(code_idx,room,library,apply_user){
 				console.log(data);
 											
 				let book = '<div style="display: flex;">';
-				book += '<img src="' + data.cover + '" style="width: 50px; margin-right: 10px;"/>';
-				book += '<div class="library">';
-				book += '<div>' + data.club_name + '</div>';
+				book += '<img src="' + data.cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
+				book += '<div class="library" style="width:660px;">';
+				book += '<div style="width:500px;">' + data.club_name + '</div>';
 				book += '<div style="font-size: 10px;">' + data.nicknames + '</div>';
 				book += '</div>';
 				book += '</div>';
 				
 				$('.mmgs').html(book);
 				
-				var outbutton = '<button class="chatout">나가기</button>';		
+				var outbutton = '<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';		
 				
 				$('.library').html($('.library').html() + outbutton);
 				
@@ -238,8 +277,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 			console.log(data);
 										
 			let book = '<div style="display: flex;">';
-			book += '<img src="' + data.library_cover + '" style="width: 50px; margin-right: 10px;"/>';
-			book += '<div class="library">';
+			book += '<img src="' + data.library_cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
+			book += '<div class="library" style="width:660px;">';
 			book += '<div>' + data.library_title + '</div>';
 			book += '<div style="font-size: 10px;">' + data.library_info + '</div>';
 			book += '</div>';
@@ -265,31 +304,31 @@ const Messagebook = function(code_idx,room,library,apply_user){
 					// 책 정보의 상태에 따라 다르게 표시
 					if(data.librarystate == 1 && data.rentck > 0 && data.rentstate == 0){
 						chkbutton +='<div>현재 다름사람에게 대여 중인 책입니다.</div>';
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;" >나가기</button>';
 					}else if(data.rentstate == 3){
 						chkbutton +='<div>현재 대여 중인 책입니다.</div>';
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
 					}else if(data.rentstate == 4){
-						chkbutton +='<button class="review">후기 작성</button>';
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
+						chkbutton +='<button class="review" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">후기 작성</button>';						
 					}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
 						chkbutton +='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
-						chkbutton +='<button class="chatout">나가기</button>';
-					}else if(!data.librarystate && data.rentck == 0 && data.rentstate == 0 && ${sessionScope.loginIdx} != apply_user  || data.chgck == 0 && data.changestate == 0 && ${sessionScope.loginIdx} != apply_user){									
-						chkbutton +='<button class="reservation">약속 잡기</button>';
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
+					}else if(!data.librarystate && data.rentck == 0 && data.rentstate == 0 && ${sessionScope.loginIdx} != apply_user  || data.chgck == 0 && data.changestate == 0 && ${sessionScope.loginIdx} != apply_user){
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
+						chkbutton +='<button class="reservation" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">약속 잡기</button>';						
 					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} == apply_user || data.changestate == 1 && ${sessionScope.loginIdx} == apply_user){
-						chkbutton +='<button class="reservationok">약속 승인</button>';
-						chkbutton +='<button class="reservationno">약속 취소</button>';
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
+						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">약속 취소</button>';
+						chkbutton +='<button class="reservationok" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">약속 승인</button>';												
 					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user || data.changestate == 1 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton +='<button class="reservationno">약속 취소</button>';
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
+						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">약속 취소</button>';						
 					}else if(data.rentstate == 2 || data.changestate == 2){
-						chkbutton +='<button class="reservationno">약속 취소</button>';
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
+						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">약속 취소</button>';						
 					}else{
-						chkbutton +='<button class="chatout">나가기</button>';
+						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px;">나가기</button>';
 					}
 					
 					$('.library').html($('.library').html() + chkbutton);
@@ -620,12 +659,53 @@ $(document).ready(function(){
 });	
 </script>
 <body>
+<div id="header-wrap" class="show">
+	
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="../loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
+	
+	<header id="header">
+		<div class="container">
+			<div class="row">
 
+				<div class="col-md-2">
+					<div class="main-logo">
+					
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
+					</div>
+
+				</div>
+
+				<div class="col-md-10">
+					
+					<nav id="navbar">
+						<div class="main-menu stellarnav">
+							<ul class="menu-list">
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+		</div>
+	</header>
+</div>
 	<br />
-	<br />
-	<br /> 
-	<br /> 
-	<br /> 
+
+
 	<div class="msg-container">
 	
 		<div class="messaging">
@@ -651,10 +731,10 @@ $(document).ready(function(){
 				<div class="msg_history" name="contentList" id="ch">
 				<!-- 메세지 내용이 올 자리 -->
 				</div>
-				<div class="send_message">
+				<div class="send_message" style="height:200px; width:745px; margin-left: 15px;">
 				<!-- 메세지 입력란이 올자리 -->
 				</div>				
-				</div>
+			</div>
 	      </div>	      
 	    </div>
 	</div>

@@ -27,6 +27,7 @@
 </style>
 <div id="login"></div>
 <div id="alarmlist" style="height: 400px; overflow: auto; overflow-x: auto; display:none;"></div>
+<script src='./js/alarm.js'></script>
 <script>
     var content = "<div class='top-content'>";
     content += "<div class='container'>";

@@ -9,17 +9,17 @@
 			<!-- active-chat -->
 			<div class="chat_people">
 				<div class="chat_ib">
-					<h5>
+					<h4>
 					<c:if test="${tmp.code_idx eq '2'}">${tmp.library_title}</c:if>
 					<c:if test="${tmp.code_idx eq '3'}">${tmp.library_title}</c:if> 
 					<c:if test="${tmp.code_idx eq '4'}">${tmp.club_name}</c:if>				
-					</h5>
+					</h4>
 					<br/>
 					<div class="row">
 						<div class="col-10">
-							<p>${tmp.member_nickname}</p>								
-							<p>${fn:substring(tmp.chat_chat, 0, 10)}  <c:if test="${tmp.chat_chat.length() > 10}"> ...</c:if></p>																								
-							<p>${tmp.chat_date }</p>
+							<p>&nbsp;&nbsp; ${tmp.member_nickname}</p>								
+							<p>&nbsp;&nbsp; ${fn:substring(tmp.chat_chat, 0, 10)}  <c:if test="${tmp.chat_chat.length() > 10}"> ...</c:if></p>																								
+							<p>&nbsp;&nbsp; ${tmp.chat_date }</p>
 						</div>
 					</div>
 				</div>

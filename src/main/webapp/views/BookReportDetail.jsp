@@ -102,7 +102,7 @@ window.onload = () => {
 	};
 	
 function like(){
-	$.ajax({
+	/* $.ajax({
         url: '/like.ajax',
         type: 'post',
         data: {
@@ -120,8 +120,8 @@ function like(){
 		error:function(e){
 			console.log(e);
 		}
-    });
-	
+    }); */
+	console.log('좋아용');	
 }
 
 
@@ -180,7 +180,7 @@ function clubReplyDelete(reply_idx) {
 
 
 function listCall(page){
-	$.ajax({
+	/* $.ajax({
 		type:'post',
 		url:'bookReplyList.ajax',
 		data:{
@@ -207,8 +207,8 @@ function listCall(page){
 	         });
 		}
 	});
-}
-
+*/
+} 
 
 function listPrint(list) {
 	  var content = '';
