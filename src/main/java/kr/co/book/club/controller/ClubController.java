@@ -80,6 +80,12 @@ public class ClubController {
 		model.addAttribute("member", member);
 		model.addAttribute("apply", apply);
 		model.addAttribute("loginIdx", session.getAttribute("loginIdx"));
+		
+		String clubTitle = clubService.clubTitle(club_idx);
+		String writer_idx = clubService.clubWriter(club_idx);
+		clubService.applyAlarm(club_idx,writer_idx,clubTitle);
+		
+		
 		return "/club/clubDetail";
 	}
 	
@@ -173,6 +179,19 @@ public class ClubController {
 		
 		return "/club/clubList";
 	}
+	
+	//	location.href='/deleteMem.do?member_idx='+member_idx+'&club_idx='+club_idx;
+	@RequestMapping("/deleteMem.do")
+	public String deleteMem(@RequestParam String member_idx, @RequestParam String club_idx) {
+		clubService.applyReject(club_idx, member_idx);
+		
+		
+		// 채팅방 나가기 기능 추가 필요
+		chatservice.clubchatDelete(club_idx);
+						
+		return "redirect:/clubDetail.go?club_idx="+club_idx;
+	}
+	
 	
 	
 	// 모집 종료 
@@ -326,10 +345,15 @@ public class ClubController {
 	
 	@RequestMapping("/clubReReply.ajax") 
 	@ResponseBody
-	public HashMap<String, Object> clubReReply(@RequestParam String reply_idx,@RequestParam String reply_content,HttpSession session) {
+	public HashMap<String, Object> clubReReply(@RequestParam String reply_idx,@RequestParam String reply_content,@RequestParam String club_idx,HttpSession session) {
 		String member_idx = String.valueOf(session.getAttribute("loginIdx")); 
 		
 		clubService.clubReReply(member_idx,reply_idx,reply_content);
+		
+		String clubTitle = clubService.clubTitle(club_idx);
+		String replyMemberIdx = clubService.replyMember(reply_idx);
+		
+		clubService.reReplyAlarm(replyMemberIdx,club_idx,clubTitle);
 		
 		HashMap<String, Object> reply = new HashMap<String, Object>();
 		reply.put("success", true);

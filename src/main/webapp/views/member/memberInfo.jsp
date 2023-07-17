@@ -3,12 +3,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-  		<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+	<title>Infinite B∞k</title>
+  		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="author" content="">
+	    <meta name="keywords" content="">
+	    <meta name="description" content="">
+	    
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	    
+		<!-- script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
 <style>
 	table{
 	    margin: 0 0 1% 28%;
@@ -21,7 +38,7 @@
 </head>
 <body>	
 
-<div id="header-wrap">
+<div id="header-wrap" class="show">
 
 	<c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
@@ -48,21 +65,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내정보</a>
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원정보</a></li>
-								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								     <a class="dd-toggle" href="#">
-								     	<span class="icon-plus"></span>
-								     </a>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -126,11 +141,11 @@
 					    </tr>
 						<tr>
 							<th colspan="4" style="text-align: center; padding: 2%; border-bottom: none;">
-								<input type="button" onclick="location.href='memberInfoUpdate.go'" value="회원정보 수정">
+								<input type="button" onclick="location.href='/mypage/memberInfoUpdate.go'" value="회원정보 수정">
 							</th>
 						</tr>
 					</table>
-					<a href='trackerSearch.go' style="margin-left: 12%">회원탈퇴</a>
+					<a href='leave.go' style="margin-left: 68%">회원탈퇴</a>
 				</div>
 	
 			</div>	
@@ -138,7 +153,7 @@
 	</div>
 </section>
 
-<div id="footer-bottom" style="margin-top:5%">
+<div id="footer-bottom" style="margin-top:10%">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">

@@ -30,7 +30,7 @@
 		<!-- 신청내역 대화방에 뿌려주기-->
 		<insert id="applychatcontent" parameterType="hashmap">
 			INSERT INTO chat(code_idx,idx,chat_sender,chat_chat,chat_date)
-			VALUES(#{code_idx},#{library_idx},#{member_idx},CONCAT('현재 대여 중인','&lt;br/&gt;',#{library.library_title}, '&lt;br/&gt;', '&lt;img src=', #{library.library_cover}, ' width="auto" height="auto"', '&lt;br/&gt;','책을 빌리고 싶어요','&lt;br/&gt;','보증금: ', #{rent_deposit}, '&lt;br/&gt;', '대여일: ', #{rent_startdate}, '&lt;br/&gt;', '반납일: ', #{rent_enddate},'&lt;br/&gt;','신청 정보에요~'),now())
+			VALUES(#{code_idx},#{idx},#{member_idx},CONCAT('현재 대여 중인','&lt;br/&gt;',#{library.library_title}, '&lt;br/&gt;', '&lt;img src=', #{library.library_cover}, ' width="auto" height="auto"', '&lt;br/&gt;','책을 빌리고 싶어요','&lt;br/&gt;','보증금: ', #{rent_deposit}, '&lt;br/&gt;', '대여일: ', #{rent_startdate}, '&lt;br/&gt;', '반납일: ', #{rent_enddate},'&lt;br/&gt;','신청 정보에요~'),now())
 		</insert>		
 		
 		<!-- 처음 대여 신청정보 -->

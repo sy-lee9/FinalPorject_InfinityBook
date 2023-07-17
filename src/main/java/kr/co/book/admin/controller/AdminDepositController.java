@@ -18,12 +18,12 @@ public class AdminDepositController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired AdminDepositService adminDepositService;
 	
-	@RequestMapping("/adminDeposit")
+	@RequestMapping("/admin/adminDeposit")
 	public String adminDeposit(){
 		return "/admin/adminDeposit";
 	}
 	
-	@RequestMapping("/adminDepositList.ajax")
+	@RequestMapping("/admin/adminDepositList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> adminDepositListAjax(@RequestParam String page,@RequestParam String deposit_type){
 		HashMap<String, Object> adminDeposit = adminDepositService.adminBookList(page,deposit_type);

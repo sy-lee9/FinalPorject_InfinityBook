@@ -66,25 +66,20 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="#">회원 정보</a></li>
-								        <li><a href="#">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
-								     </ul>
+		                                <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+		                                <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+		                                <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
+		                             </ul>
 								</li>								
 							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
 						</div>
 					</nav>
 				</div>
@@ -107,12 +102,12 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
-			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
-			  <li data-tab-target="#adventure" class="tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
-			  <li data-tab-target="#business" class="tab"><a href="/libraryLendingList.get">대여 중</a></li>	
+			  <li data-tab-target="#all-genre" class="active tab"><a href="/mypage/libraryList.get">전체</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/mypage/libraryRentList.get">대여</a></li>
+			  <li data-tab-target="#technology" class="tab"><a href="/mypage/libraryChangeList.get">교환</a></li>
+			  <li data-tab-target="#adventure" class="tab"><a href="/mypage/libraryOwnList.get">소장</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/mypage/libraryWishList.get">위시</a></li>	
+			  <li data-tab-target="#business" class="tab"><a href="/mypage/libraryLendingList.get">대여 중</a></li>	
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 		</ul>
 		<ul class="tab">
@@ -187,7 +182,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'libraryList.ajax',
+		      url:'/mypage/libraryList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -222,10 +217,10 @@
 	function listPrint(list) {
 	    var content = '';
 
-	    content += '<div id="products-grid" class="products-grid grid">';
+	    content += '<div id="products-grid" class="products-grid grid" >';
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
+	    content += '    <a onclick="window.open(\'/mypage/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
 	    content += '      <figcaption> <h>책 등록하기</h> </figcaption>';
 	    content += '    </a>';
@@ -242,18 +237,18 @@
 	        content += '<figure class="product-style" style="text-align:center;">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
 	        if(item.library_use == "위시"){
-	        	content += '  <a href=" bookDetail.go?library_idx=' + item.library_idx + '">';
+	        	content += '  <a href="/mypage/bookDetail.go?library_idx=' + item.library_idx + '">';
 		        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 		        content += '  </a>';
 	        	
 	        }else{
-	        	content += '  <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        	content += '  <a href="/mypage/libraryDetail.go?library_idx=' + item.library_idx + '">';
 		        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 		        content += '  </a>';
 	        }
 	        
 	        content += '  <figcaption>';
-	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '    <a href="/mypage/libraryDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
 	        content += '    </br><h>' + item.library_author + '</h>';
 	        content += '    </a>';
@@ -294,7 +289,7 @@
 	    if(confirm('삭제 이후 복구가 불가능 합니다. \n 정말 삭제 하시겠습니까?')){
 		    $.ajax({
 		      type:'get',
-		      url:'deleteLibrary.ajax',
+		      url:'/mypage/deleteLibrary.ajax',
 		      data:{'delList':checkArr},
 		      dataType:'json',
 		      success:function(data){

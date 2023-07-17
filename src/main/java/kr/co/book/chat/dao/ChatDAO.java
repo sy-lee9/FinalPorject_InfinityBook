@@ -104,6 +104,12 @@ public interface ChatDAO {
 	// 모임 채팅 모두 나가기
 	void clubchatDelete(int i, String club_idx);
 
+	String findclub_name(String idx);
+
+	String findchgbooktitle(String library_idx);
+
+	String findchgbookcover(String library_idx);
+
 
 
 

@@ -53,7 +53,7 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
 	<div class="container" >
-		<form action="libraryWrite.do" method="post">
+		<form action="/mypage/libraryWrite.do" method="post">
 			<table>
 				<tr>
 					<td>
@@ -94,7 +94,7 @@
 		</form>
 	</div>
 	<div style="text-align:center;">
-		<input type="button" onclick="location.href='./bookSelectPop.go?text='" value="검색 목록"/>
+		<input type="button" onclick="location.href='/mypage/bookSelectPop.go?text='" value="검색 목록"/>
 		<input type="button" onclick="window.close()" id="closeBtn" value="닫기"/>
 	</div>
 	

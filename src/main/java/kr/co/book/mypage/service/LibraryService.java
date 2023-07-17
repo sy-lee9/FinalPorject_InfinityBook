@@ -106,6 +106,15 @@ public class LibraryService {
 		return libraryDAO.reviewList(library_idx);
 	}
 
+	public ArrayList<LibraryDTO> findWishList(Object library_isbn) {
+		return libraryDAO.findWishList(library_isbn);
+	}
+
+	public void wishAarm(int member_idx, String library_title, String library_isbn) {
+		String content = "["+library_title+"] 대여/교환 가능 도서로 등록되었습니다.";
+		libraryDAO.wishAarm(member_idx,content,library_isbn);
+	}
+
 	
 
 

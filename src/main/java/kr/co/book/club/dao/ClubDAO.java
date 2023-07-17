@@ -73,6 +73,16 @@ public interface ClubDAO {
 
 	ArrayList<ClubDTO> nicknameList(String club_idx);
 
+	String replyMember(String reply_idx);
+
+	String clubTitle(String club_idx);
+
+	void reReplyAlarm(String member_idx, String idx, String content);
+
+	String clubWriter(String club_idx);
+
+	void applyAlarm(String writer_idx, String club_idx, String content);
+
 	
 
 

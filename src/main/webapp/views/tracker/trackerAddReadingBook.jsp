@@ -81,14 +81,6 @@
 	</table>
 </body>
 <script>
-
-	$('#readPage').on('input', function() {
-		console.log("ehl");
-		if (isNaN($(this).val())) {
-			  $(this).val(0);
-			  alert("숫자만 입력 가능합니다.");
-			}
-	});
 	
 	var isbn = "${isbn}";
 	var cover = "${cover}";
@@ -97,7 +89,7 @@
 	
 	$(document).ready(function() {	
 	    $.ajax({
-	        url: '/getTotalPage.ajax',
+	        url: '/mypage/getTotalPage.ajax',
 	        type: 'get',
 	        data: {
 	            'isbn': isbn,
@@ -116,9 +108,15 @@
 	        }
 	    });
 	});
-	
+
 	$('#readPage').on('input', function() {
-	    var readPage = parseInt($('#readPage').val());
+		  if ($(this).val() == '' || isNaN($(this).val())) {
+		    console.log("왜안와");
+		    $(this).val(0);
+		    alert("숫자만 입력 가능합니다.");
+		  }
+		
+	    var readPage = parseInt($(this).val());
 	    var totalPage = parseInt($('#totalPage').val());
 
 	    if (readPage > totalPage) {
@@ -132,7 +130,7 @@
 			if($('#startDate').val() != ''){
 		    	    
 			    $.ajax({
-			        url: '/tracker/add/reading/book.ajax',
+			        url: '/mypage/tracker/add/reading/book.ajax',
 			        type: 'get',
 			        data: {
 			            'isbn': isbn,
@@ -149,7 +147,7 @@
 								  window.alert("트래커에 추가 되었습니다.");
 								  window.close(); 
 								  if (window.opener) {
-								      window.opener.location.href = '/trackerList.go';
+								      window.opener.location.href = '/mypage/trackerList.go';
 								   }
 							}
 						}else{
@@ -173,7 +171,7 @@
 		if($('#startDate').val() != ''){
 	    
 		    $.ajax({
-		        url: '/trackerUpdateBook.ajax',
+		        url: '/mypage/trackerUpdateBook.ajax',
 		        type: 'get',
 		        data: {
 		            'isbn': isbn,
@@ -221,11 +219,6 @@
 		    maxDate: new Date()
 	    });
 	  });
-
-	var msg = "${msg}";
-	if(msg != ''){
-		alert(msg);
-		 window.close(); // 창 닫기
-	}
+	
 </script>
 </html>

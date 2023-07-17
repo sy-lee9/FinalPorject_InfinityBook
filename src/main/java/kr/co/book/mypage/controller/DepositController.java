@@ -27,7 +27,7 @@ public class DepositController {
 	
 	@Autowired DepositService depositService;
 	
-	@RequestMapping("/deposit")
+	@RequestMapping("/mypage/deposit")
 	public String deposit(HttpSession session,Model model) {
 		int member_idx = (int)session.getAttribute("loginIdx");
 		int deposit_now = depositService.depositNow(member_idx); 
@@ -37,7 +37,7 @@ public class DepositController {
 	}
 	
 
-	 @RequestMapping("/depositUseList.ajax") 
+	 @RequestMapping("/mypage/depositUseList.ajax") 
 	 @ResponseBody
 	 public HashMap<String, Object> depositUseListAjax(@RequestParam String page,HttpSession session) {
 		 int member_idx = (int) session.getAttribute("loginIdx"); 
@@ -45,7 +45,7 @@ public class DepositController {
 		 return list; 
 	 }
 	 
-	 @RequestMapping("/depositCharge.ajax")
+	 @RequestMapping("/mypage/depositCharge.ajax")
 	 @ResponseBody
 	 public void depositCharge(@RequestParam HashMap<String, String> data) {
 		 logger.info("chargeData" + data);
@@ -54,7 +54,7 @@ public class DepositController {
 	 }
 	 
 	 
-	 @RequestMapping("/depositWithdraw.go")
+	 @RequestMapping("/mypage/depositWithdraw.go")
 	 public String depositMinus(@RequestParam HashMap<String, String> withdrawData, Model model) {
 		 logger.info("Deposit 출금 정보 : " + withdrawData);
 		 		 
@@ -63,7 +63,7 @@ public class DepositController {
 		 return "/Deposit/depositWithdraw";
 	 }
 	 
-	 @RequestMapping("/depositWithdrawChk")
+	 @RequestMapping("/mypage/depositWithdrawChk")
 	 public String depositWithdrawChk(@RequestParam HashMap<String, String> withdrawData, Model model) {
 		 logger.info("Deposit 출금 정보 : " + withdrawData);
 		 
@@ -90,7 +90,7 @@ public class DepositController {
 	 }
 	 
 
-	 @RequestMapping("/depositWithdraw.do")
+	 @RequestMapping("/mypage/depositWithdraw.do")
 	 public void depositWithdraw(@RequestParam HashMap<String, String> data,HttpSession session) {
 		 logger.info("data : " + data);
 		 data.put("deposit_info", data.get("bank")+data.get("account"));

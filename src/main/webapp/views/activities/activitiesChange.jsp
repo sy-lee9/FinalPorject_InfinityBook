@@ -81,17 +81,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
-								<li class="menu-item"><a href="#pages" class="nav-link" data-effect="Pages">내정보</a>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item has-sub">
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li><a href="index.move">회원정보</a></li>
-								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -125,8 +127,8 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/activitiesChange.go">교환</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/activitiesRent.go">대여</a></li>
+			  <li data-tab-target="#all-genre" class="active tab"><a href="/mypage/activitiesChange.go">교환</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/mypage/activitiesRent.go">대여</a></li>
 		</ul>
 		<ul class="tab" style="height: 18%;">
 			<li class="search-box" style="text-align:center; list-style-type: none; float: right; margin: 4% 0 4% 0; width: 35%;">
@@ -184,6 +186,15 @@
 </body>
 
 <script>
+
+	function profilePop(member_idx) {
+		var width = 1100;
+	    var height = 800;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    var popupWindow = window.open('/profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	};
+
 	var showPage = 1;
 	var searchText = '';
 	listCall(showPage);
@@ -200,7 +211,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'activitiesChangeList.ajax',
+		      url:'/mypage/activitiesChangeList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -261,9 +272,9 @@
 	    	content += '<td style="text-align:center;"><img src="' + item.changeBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.changeBook+'</h4></td>';
 	    	
 	    	if (state == 4 && reviewChk == 0) {
-		    	content += '<td style="text-align:center;">' + item.changer + ' <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer + '</a> <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
 	    	}else {
-		    	content += '<td style="text-align:center;">' + item.changer + '</td>';
+		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer + '</a></td>';
     		}
 	    	
 	    	if (typeof item.change_date === "undefined") {

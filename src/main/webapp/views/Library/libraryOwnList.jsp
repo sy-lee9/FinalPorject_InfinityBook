@@ -66,11 +66,11 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
@@ -80,11 +80,6 @@
 								     </ul>
 								</li>								
 							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
 						</div>
 					</nav>
 				</div>
@@ -108,12 +103,12 @@
 	<div class="container">
 	
 		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="tab"><a href="/libraryList.get">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryRentList.get">대여</a></li>
-			  <li data-tab-target="#technology" class="tab"><a href="/libraryChangeList.get">교환</a></li>
-			  <li data-tab-target="#adventure" class="active tab"><a href="/libraryOwnList.get">소장</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/libraryWishList.get">위시</a></li>	
-			  <li data-tab-target="#business" class="tab"><a href="/libraryLendingList.get">대여 중</a></li>
+			  <li data-tab-target="#all-genre" class="tab"><a href="/mypage/libraryList.get">전체</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/mypage/libraryRentList.get">대여</a></li>
+			  <li data-tab-target="#technology" class="tab"><a href="/mypage/libraryChangeList.get">교환</a></li>
+			  <li data-tab-target="#adventure" class="active tab"><a href="/mypage/libraryOwnList.get">소장</a></li>
+			  <li data-tab-target="#business" class="tab"><a href="/mypage/libraryWishList.get">위시</a></li>	
+			  <li data-tab-target="#business" class="tab"><a href="/mypage/libraryLendingList.get">대여 중</a></li>
 			  <h><input type="checkbox" id="all" />&nbsp; <a href="#" onclick="del()"><img src="/images/trashcan.png" style="width:30px;height:30px;"alt="삭제"></a></h>
 		</ul>
 		<ul class="tab">
@@ -184,7 +179,7 @@ $('#searchButton').click(function(){
 function listCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'libraryOwnList.ajax',
+	      url:'/mypage/libraryOwnList.ajax',
 	      data:{
 	    	  'page':page,
 	    	  'searchText':searchText
@@ -222,7 +217,7 @@ function listCall(page){
 	    content += '<div id="products-grid" class="products-grid grid">';
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
+	    content += '    <a href="#" onclick="window.open(\'/mypage/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
 	    content += '      <figcaption> <h4>책 등록하기</h4> </figcaption>';
 	    content += '    </a>';
@@ -237,12 +232,12 @@ function listCall(page){
 
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <a href="BookDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '  <a href="/mypage/bookDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
 	        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 	        content += '  </a>';
 	        content += '  <figcaption>';
-	        content += '    <a href="libraryDetail.go?library_idx=' + item.library_idx + '">';
+	        content += '    <a href="/mypage/libraryDetail.go?library_idx=' + item.library_idx + '">';
 	        content += '      <input type="checkbox" style="margin-right:10px;" value="'+item.library_idx+'"><h>' + item.library_title + '</h>';
 	        content += '    </br><h>' + item.library_author + '</h>';
 	        content += '    </a>';
@@ -284,7 +279,7 @@ function listCall(page){
 	    if(confirm('삭제 이후 복구가 불가능 합니다. \n 정말 삭제 하시겠습니까?')){
 			$.ajax({
 			    type:'get',
-			    url:'deleteLibrary.ajax',
+			    url:'/mypage/deleteLibrary.ajax',
 			    data:{'delList':checkArr},
 			    dataType:'json',
 			    success:function(data){

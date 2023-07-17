@@ -19,8 +19,7 @@
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
 
-		<!-- script
-		================================================== -->
+		<!-- script	 -->
 		<script src="/js/modernizr.js"></script>
 		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 		<script src="/js/jquery-1.11.0.min.js"></script>
@@ -57,7 +56,7 @@
 
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="./"><img src="/images/mainLogo.png" alt="logo"></a>
+						<a href="../"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -67,17 +66,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item has-sub">
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li><a href="index.move">회원정보</a></li>
-								        <li><a href="about.move">교환/대여 내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -140,7 +141,7 @@
 	$(document).ready(function(){
 		
 		$.ajax({
-	        url: '/calendarGetEvents.ajax',
+	        url: '/mypage/calendarGetEvents.ajax',
 	        type: 'get',
 			dataType:'json',
 			success: function(data) {

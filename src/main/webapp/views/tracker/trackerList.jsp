@@ -36,6 +36,13 @@
 			font-weight: 600;
 			margin: 10 0 0 0;
 		}
+		.pagination .page-link {
+	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
+		}	
+		.pagination .page-item.active .page-link {
+	 		background-color: #C5A992;
+	 		border:none;
+		}
 		.post-item{
 			font-family: 'IBM Plex Sans KR', serif;	
 		}
@@ -81,21 +88,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내정보</a>
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원정보</a></li>
-								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								     <a class="dd-toggle" href="#">
-								     	<span class="icon-plus"></span>
-								     </a>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -123,7 +128,7 @@
 				<div class="section-header align-center">
 					<h2 class="section-title">Tracker</h2>
 				</div>					
-				<input type="button" value="추가" onclick="location.href='trackerSearch.go'" style="float: right; bottom: 80px;">
+				<input type="button" value="추가" onclick="location.href='/mypage/trackerSearch.go'" style="float: right; bottom: 80px;">
 				<div class="row" style="margin-top: 15%;">
 					<c:if test="${trackerList.size() eq 0}">
 						<h3 style="text-align: center;">읽고 있는 책을 추가 해보세요!</h3>
@@ -131,15 +136,15 @@
 						<c:forEach items="${trackerList}" var="book">
 						<div class="col-md-4" style="margin-bottom: 10%; height: 541px;">
 	
-							<article class="column" data-aos="fade-up">
+							<article class="column">
 								
 								<figure style="text-align: center; height: 48%;">
-									<a href="/trackerDetail.go?trackerIdx=${book.trackerIdx}">
+									<a href="/mypage/trackerDetail.go?trackerIdx=${book.trackerIdx}">
 										<img src="${book.cover}" alt="post" class="post-image"  style="width: 170px; height: auto;">		
 									</a>										
 								</figure>
 								<div class="post-item">	
-									<h3 style="height: 20%;"><a href="/trackerDetail.go?trackerIdx=${book.trackerIdx}">${book.title}</a></h3>
+									<h3 style="height: 20%;"><a href="/mypage/trackerDetail.go?trackerIdx=${book.trackerIdx}">${book.title}</a></h3>
 									<div class="meta-date" style="margin-bottom: 10; height:12%;">${book.author}</div>	
 	
 								    <div class="links-element">

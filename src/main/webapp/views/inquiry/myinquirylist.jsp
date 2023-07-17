@@ -55,7 +55,7 @@
 	</select>
 	
 	<div style="text-align: right;">			
-		<button onclick="location.href='inquirywrite.go'">문의 하기</button>				
+		<button onclick="location.href='/mypage/inquirywrite.go'">문의 하기</button>				
 	</div>
 	
 	<hr/>
@@ -159,7 +159,7 @@ function listPrint(list) {
              }else if(item.code_idx == 67){
              	content += '	<td width="20%" style="text-align:center;">기타 문의</td>';
              } 
-            content += '	<td width="20%" style="text-align:center;">'+'<a href="/myinquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';                
+            content += '	<td width="20%" style="text-align:center;">'+'<a href="/mypage/myinquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';                
             content += '	<td width="20%" style="text-align:center;">'+item.member_nickname+'</td>';
             content += '	<td width="20%" style="text-align:center;">'+item.inquiry_regdate+'</td>';
             if (item.inquiry_state == 1) {
@@ -205,7 +205,7 @@ function reReplyPrint(replyList) {
 	  var content = '';
 	  replyList.forEach(function(reply) {
 		content += '<th style="width:20%; text-align:center;">'+'[답변]'+'</th>';		
-		content += '<td style="width:20%; text-align:center;">'+'<a href="/inquirydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
+		content += '<td style="width:20%; text-align:center;">'+'<a href="/mypage/inquirydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.member_nickname + '</td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.inquiry_regdate+'</td>';
 	    content += '<th style="width:20%; text-align:center;"></th>';

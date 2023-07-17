@@ -78,7 +78,7 @@
 								<li class="menu-item active"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
 								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -149,7 +149,7 @@
 					<td></td>
 					<td>모임인원</td>
 					<td colspan="2">
-						<input type="number" autocomplete='off' name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="0"> 명
+						<input type="number" autocomplete='off' name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="2"> 명
 					</td>
 					<td></td>
 				</tr>

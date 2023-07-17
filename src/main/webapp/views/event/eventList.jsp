@@ -116,8 +116,8 @@
 			</div>
 		</div>
 	</section>
-
-	<section id="latest-blog" class="scrollspy-section padding-large"
+<!-- 이벤트 배너 -->
+<!-- 	<section id="latest-blog" class="scrollspy-section padding-large"
 		style="padding-top: 10px; padding-bottom: 10px; margin-bottom: 10px; width: 800; display: flex; left: 175px; position: relative;">
 
 		<button class="prev slick-arrow">
@@ -145,9 +145,9 @@
 			<i class="icon icon-arrow-right"></i>
 		</button>
 		
-	</section>
+	</section> -->
 	
-	
+		
 		<ul class="tab">
 			<li class="search-box"
 				style="text-align: center; list-style-type: none;"> <i class="icon icon-search"></i> <input
@@ -156,24 +156,29 @@
 				placeholder="제목을 입력해주세요" type="search"> <input
 				type="button" id="searchButton" value="검색"></li>
 				
-		</ul>
-		<button onclick="location.href='eventWrite.go'"></button>
+		 </ul>            
+        <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
+		<div class="container">				
 		<div class="tab-content">
 			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list"></div>
+				<div class="row" id="list">
+					
+			    </div>
+			    
+			     <div  id="paging" >
+			      <div class="container" style="text-align:center; width: 600px;">
+			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
+			          <ul class="pagination justify-content-center" id="pagination"></ul>
+			        </nav>
+			      </div>
+			    </div>
+		    </div>
+		    
+		<button onclick="location.href='eventWrite.go'"></button>
 
-				<div id="paging">
-					<div class="container" style="text-align: center; width: 600px;">
-						<nav aria-label="Page navigation"
-							style="text-align: center; width: 500px;">
-							<ul class="pagination justify-content-center" id="pagination"></ul>
-						</nav>
-					</div>
-				</div>
-			</div>
-
-
-		</div>
+	    </div>	    
+	</div>
+</section>
 	<div id="footer-bottom">
 		<div class="container">
 			<div class="row">
@@ -189,9 +194,6 @@
 										href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a>
 								</p>
 							</div>
-
-
-
 						</div>
 					</div>
 					<!--grid-->
@@ -209,7 +211,7 @@
 <script>
 	//console.log(width : window.innerWidth || document.body.clientWidth);
 
-	$(document).ready(function() {
+	/* $(document).ready(function() {
 		$('.event-slider').slick({
 			slidesToShow : 1,
 			slidesToScroll : 1,
@@ -220,7 +222,7 @@
 			prevArrow : $('.prev'),
 			nextArrow : $('.next')
 		});
-	});
+	}); */
 
 	var showPage = 1;
 	var searchText = '';
@@ -264,39 +266,48 @@
 	
 	
 
-	function listPrint(list) {
-		var content = '';
-		list
-				.forEach(function(item) {
+	 function listPrint(list) {
+		    var content = '';
 
-					content += '<tr>';
-					content += '	<td></td>';
-					if (item.club_state == "0") {
-						content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
-					} else {
-						content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
-					}
-					content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';
-					content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
-					content += '	<td><a href="/clubDetail.go?club_idx='
-							+ item.club_idx + '"><h4><b>' + item.club_name
-							+ '</b></h4></a>';
-					content += item.member_nickname + '<br/>	';
-					content += item.title.split("-")[0] + '	</td>';
-					content += '	<td>';
-					content += item.code_codename + '<br/>	';
-					content += item.club_meetdate.split(" ")[0] + '<br/>'
-							+ item.club_meetdate.split(" ")[1] + '</td>';
+		    var rowSize = 3; // 한 줄에 표시할 개수
+		    var rowCount = Math.ceil(list.length / rowSize); // 줄 수 계산
 
-					content += '	<td></td>';
-					content += '</tr>';
-				});
+		    for (var i = 0; i < rowCount; i++) {
+		        content += '<div class="row">'; // 각 줄의 시작 태그
 
-		content += '</table>';
+		        for (var j = i * rowSize; j < (i + 1) * rowSize && j < list.length; j++) {
+		            var item = list[j];
 
-		$('#list').empty();
-		$('#list').append(content);
-	}
+		            content += '<div class="col-md-4">';
+		            content += '<table class="table">';
+		            content += '<tr>';
+		            content += '<td></td>';
+		            if (item.club_state == "0") {
+		                content += '<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
+		            } else {
+		                content += '<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
+		            }
+		            content += '<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num + '/' + item.club_num + '"></td>';
+		            content += '<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
+		            content += '<td><a href="/clubDetail.go?club_idx=' + item.club_idx + '"><h4><b>' + item.club_name + '</b></h4></a>';
+		            content += item.member_nickname + '<br/>	';
+		            content += item.title.split("-")[0] + '</td>';
+		            content += '<td>';
+		            content += item.code_codename + '<br/>';
+		            content += item.club_meetdate.split(" ")[0] + '<br/>' + item.club_meetdate.split(" ")[1] + '</td>';
+		            content += '<td></td>';
+		            content += '</tr>';
+		            content += '</table>';
+		            content += '</div>';
+		        }
+
+		        content += '</div>'; // 각 줄의 종료 태그
+		    }
+
+		    $('#list').empty();
+		    $('#list').append(content);
+		}
+
 </script>
 
 </html>

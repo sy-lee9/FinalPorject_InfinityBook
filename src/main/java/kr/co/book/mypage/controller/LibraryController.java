@@ -39,7 +39,7 @@ public class LibraryController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 
-	@RequestMapping("/library{type}List.get")
+	@RequestMapping("/mypage/library{type}List.get")
 	public String libraryPageList(HttpSession session,@PathVariable String type) {
 		//session.setAttribute("loginIdx", "3");
 		//session.setAttribute("loginNickname", "은영");
@@ -47,7 +47,7 @@ public class LibraryController {
 	}
 	
 
-	@RequestMapping("/library{type}List.ajax") 
+	@RequestMapping("/mypage/library{type}List.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> LibaryListAjax(@PathVariable String type,@RequestParam String page,@RequestParam String searchText,HttpSession session) {
 		logger.info("type : "+type);
@@ -58,7 +58,7 @@ public class LibraryController {
 	}
 	 
 	 
-	@RequestMapping("/{type}Detail.go")
+	@RequestMapping("/mypage/{type}Detail.go")
 	public String libraryDetail(@PathVariable String type,@RequestParam String library_idx, Model model) {
 		LibraryDTO book = libraryService.detail(library_idx);
 		if(type.equals("library")) {
@@ -70,14 +70,14 @@ public class LibraryController {
 	}
 	
 
-	@RequestMapping("/bookSelectPop.go")
+	@RequestMapping("/mypage/bookSelectPop.go")
 	public String bookListPop() {
 		return "/Library/bookSelectPop";
 	}
 	
 	
 
-	@RequestMapping("/libraryWrite.go")
+	@RequestMapping("/mypage/libraryWrite.go")
 	public String libraryWriteGo(@RequestParam HashMap<String, Object> bookInfo, Model model,HttpSession session) {
 		
 		int member_idx = (int) session.getAttribute("loginIdx");
@@ -95,7 +95,10 @@ public class LibraryController {
 
 	}
 	
-	@RequestMapping("/libraryWrite.do")
+
+	
+	
+	@RequestMapping("/mypage/libraryWrite.do")
 	public String libraryWrite(@RequestParam HashMap<String, Object> bookData,HttpSession session) {
 		logger.info("session loginIdx "+ session.getAttribute("loginIdx"));
 		int member_idx = (int) session.getAttribute("loginIdx");
@@ -110,17 +113,43 @@ public class LibraryController {
 		logger.info("작성 책 정보 : " + bookData);
 		// 3. 위시리스트에 없다면 등록된 책인지 확인 
 		libraryService.write(bookData);
+		
+		
+		// 등록 된다면 위시 리스트로 해당 책을 가지고 있는 사람들에게 알림을 줘야함  책이 대여/교환 가능으로 들어왔다면!
+		
+		// 만약 책이 대여 or 교환 가능하게 들어 온다면 
+		if (bookData.get("library_use").equals("대여") || bookData.get("library_use").equals("교환") || bookData.get("library_use").equals("교환대여")) {
+			logger.info("library_use : " + bookData.get("library_use"));
+			
+			// 등록 된다면 위시 리스트로 해당 책을 가지고 있는 사람들을 찾아야함 
+			ArrayList<LibraryDTO> findWishList = libraryService.findWishList(bookData.get("library_isbn"));
+			
+			//찾은 이들에게 알림 주기
+			for (LibraryDTO libraryDTO : findWishList) {
+				logger.info("필요한 사람 : "+libraryDTO.getMember_idx());
+				
+				libraryService.wishAarm(libraryDTO.getMember_idx(),String.valueOf(bookData.get("library_title")),String.valueOf(bookData.get("library_isbn")));
+				
+			}
+		
+			
+		 
+		}
+		
+		
+		
+		
 		return "/Library/libraryDone";
 	}
 		
-	@RequestMapping("/libraryUpdate.go")
+	@RequestMapping("/mypage/libraryUpdate.go")
 	public String libraryUpdateGo(@RequestParam String library_idx, Model model) {
 		LibraryDTO book = libraryService.detail(library_idx);
 		model.addAttribute("book", book);
 		return "/Library/libraryUpdate";
 	}
 
-	@RequestMapping("/libraryUpdate.do")
+	@RequestMapping("/mypage/libraryUpdate.do")
 	public String libraryUpdate(@RequestParam HashMap<String, String> updateData, Model model) {
 		logger.info("update data : " + updateData);
 		libraryService.update(updateData);
@@ -129,13 +158,13 @@ public class LibraryController {
 		return "/Library/libraryDetail";
 	}
 
-	@RequestMapping("/library.delete")
+	@RequestMapping("/mypage/library.delete")
 	public String libraryDelete(@RequestParam String library_idx) {
 		libraryService.libraryDelete(library_idx);
-		return "redirect:/libraryList.get";
+		return "redirect:/mypage/libraryList.get";
 	}
 	
-	@RequestMapping("wishRegist.ajax")
+	@RequestMapping("/mypage/wishRegist.ajax")
 	@ResponseBody
 	public HashMap<String, String> wishRegist(@RequestParam HashMap<String, Object> bookInfo,HttpSession session) {
 		logger.info("선택 책 정보 : " + bookInfo);
@@ -163,7 +192,7 @@ public class LibraryController {
 		
 	}
 	
-	@RequestMapping("/deleteLibrary.ajax")
+	@RequestMapping("/mypage/deleteLibrary.ajax")
 	@ResponseBody
 	public HashMap<String, Object> deleteLibrary(@RequestParam(value="delList[]") ArrayList<String> delList,HttpSession session){
 		int member_idx = (int) session.getAttribute("loginIdx");
@@ -174,7 +203,7 @@ public class LibraryController {
 	
 	
 	
-	@RequestMapping("/bookSearch.ajax")
+	@RequestMapping("/mypage/bookSearch.ajax")
 	@ResponseBody
 	public List<BookSearchDTO> bookSearchList(String text, int start) {
 		List<BookSearchDTO> books = null;

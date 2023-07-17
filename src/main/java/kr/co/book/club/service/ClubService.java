@@ -143,6 +143,10 @@ public class ClubService {
 		
 		total = clubDAO.totalMyClubList(member_idx);
 		list = clubDAO.myClubList(member_idx,offset);
+		for (ClubDTO clubDTO : list) {
+			clubDTO.setMeet_num(String.valueOf(clubDAO.meetNum(clubDTO.getClub_idx())));
+		}
+		
 		
 		
 		
@@ -248,6 +252,34 @@ public class ClubService {
 	public ArrayList<ClubDTO> nicknameList(String club_idx) {
 		// TODO Auto-generated method stub
 		return clubDAO.nicknameList(club_idx);
+	}
+
+
+	public String replyMember(String reply_idx) {
+		return clubDAO.replyMember(reply_idx);
+	}
+
+
+	public String clubTitle(String club_idx) {
+		return clubDAO.clubTitle(club_idx);
+	}
+
+
+	public void reReplyAlarm(String member_idx, String idx, String clubTitle) {
+		String content = "["+clubTitle+"] 댓글에 답댓글이 달렸습니다.";
+		clubDAO.reReplyAlarm(member_idx,idx,content);
+	}
+
+
+	public String clubWriter(String club_idx) {
+		return clubDAO.clubWriter(club_idx);
+	}
+
+
+	public void applyAlarm(String club_idx, String writer_idx, String clubTitle) {
+		String content = "["+clubTitle+"] 신청자가 있습니다. ";
+		clubDAO.applyAlarm(writer_idx,club_idx,content);
+		
 	}
 
 

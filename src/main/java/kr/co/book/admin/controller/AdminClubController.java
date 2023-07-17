@@ -19,13 +19,13 @@ public class AdminClubController {
 	
 	@Autowired AdminClubService adminClubService;
 	
-	@RequestMapping("/adminClub")
+	@RequestMapping("/admin/adminClub")
 	public String adminClub(){
 		return "/admin/adminClub";
 	}
 	
 
-	 @RequestMapping("/adminClubList.ajax")
+	 @RequestMapping("/admin/adminClubList.ajax")
 	 
 	 @ResponseBody 
 	 public HashMap<String, Object> adminBookListAjax(@RequestParam String page,@RequestParam String searchText){
@@ -35,7 +35,7 @@ public class AdminClubController {
 		 return adminClub; 
 	 }
 	
-	 @RequestMapping("/clubBlind.ajax")
+	 @RequestMapping("/admin/clubBlind.ajax")
 		@ResponseBody
 		public HashMap<String, Object> clubBlindAjax(@RequestParam String blind,@RequestParam String club_idx){
 			logger.info("blind : "+blind);

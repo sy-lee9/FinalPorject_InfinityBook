@@ -73,7 +73,7 @@
 			if($('#endDate').val() != ''){
 		
 			    $.ajax({
-			        url: '/tracker/add/read/book.ajax',
+			        url: '/mypage/tracker/add/read/book.ajax',
 			        type: 'get',
 			        data: {
 			            'isbn': isbn,
@@ -91,7 +91,7 @@
 								  window.alert("트래커에 추가 되었습니다.");
 								  window.close(); 
 								  if (window.opener) {
-								      window.opener.location.href = '/trackerList.go';
+								      window.opener.location.href = '/mypage/trackerList.go';
 								   }
 							}
 						}else{
@@ -114,7 +114,7 @@
 	function trackerChk(){
 		
 		$.ajax({
-	        url: '/trackerChk.ajax',
+	        url: '/mypage/trackerChk.ajax',
 	        type: 'get',
 	        data: {
 	            'isbn': isbn

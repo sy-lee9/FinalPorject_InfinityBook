@@ -62,7 +62,7 @@
 				<div class="col-md-2">
 					<div class="main-logo">
 					
-						<a href="/"><img src="/images/KakaoTalk_20230630_091136316.png" alt="logo"></a>
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
 
 				</div>
@@ -73,11 +73,11 @@
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
 								<li class="menu-item"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link">감상문</a></li>
-								<li class="menu-item active"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item  active"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
 								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -240,7 +240,7 @@
 	    	content += '	<td style="text-align:center;"><input type="button" style=" cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
 	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
 		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
-		    content += item.member_nickname+'<br/>	';
+		    content += '<a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a><br/>	';
 		    content += item.title.split("-")[0]+'	</td>';
 		    content += '	<td>';
 		    content += item.code_codename+'<br/>	';
@@ -267,6 +267,14 @@
 		}
 	   
 	}
+	
+	function profilePop(member_idx) {
+	    var width = 1100;
+	     var height = 800;
+	     var left = window.innerWidth / 2 - width / 2;
+	     var top = window.innerHeight / 2 - height / 2;
+	     var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	 };
 </script>
 
 </html>	

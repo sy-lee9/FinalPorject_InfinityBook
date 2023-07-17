@@ -153,4 +153,17 @@
 		WHERE r.review_type ="도서" AND r.reciever_idx =#{param1}
 		ORDER BY review_date DESC LIMIT 5
 	</select>
+	
+	<!-- ArrayList<LibraryDTO> findWishList(Object library_isbn); -->
+	
+	<select id="findWishList" resultType="library">
+		select member_idx FROM library WHERE library_use="위시" AND library_isbn=#{param1}
+	</select>
+	
+	<!-- 	void wishAarm(int member_idx, String content, String library_isbn); -->
+	<insert id="wishAarm">
+		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check)
+		VALUES(76, #{param3}, #{param1}, #{param2}, 0);
+	</insert>
+	
 </mapper>

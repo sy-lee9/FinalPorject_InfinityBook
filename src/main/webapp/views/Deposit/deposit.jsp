@@ -70,11 +70,11 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" >서재</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" >트래커</a></li>
-								<li class="menu-item"><a href="/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
@@ -240,8 +240,10 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
  			
              // AJAX 요청 보내기
              var xhr = new XMLHttpRequest();
-             xhr.open('post', '/depositCharge.ajax', true);
+             xhr.open('post', '/mypage/depositCharge.ajax', true);
              xhr.send(formData);
+             
+             window.location.reload();
              
           } else {
         	  alert("보증금 충전이 중 문제가 발생했습니다. 다시 시도해 주세요.");
@@ -260,21 +262,34 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
 	  var formElement = event.target;
 	  
 	  if (depositType === '출금') {
-	    var url = '/depositWithdraw.go';
-	    
-	    // 팝업창 열기
-	    var popupWindow = window.open('', 'Infinity_Book', 'width=600px,height=500px');
-	    
-	    // 폼 데이터를 팝업창에 전송하는 코드
-	    formElement.target = 'Infinity_Book';
-	    formElement.action = url;
-	    formElement.method = 'POST';
-	    formElement.submit();
-	    
-	    // 팝업창에 전송된 데이터 확인
-	    popupWindow.onload = function() {
-	      console.log('데이터 전송 완료');
-	    };
+		  
+		  var depositType = document.getElementsByName("deposit_type")[0].value;
+		  var depositPrice = parseInt(document.getElementById("deposit_price").value);
+		  var depositNow = parseInt("${deposit_now}");
+
+		  if (depositType === "출금" && depositPrice > depositNow) {
+		    alert("현재 잔액보다 큰 금액은 출금이 불가능합니다.");
+		    depositPrice.value = 0;
+		  } else{
+				var url = '/mypage/depositWithdraw.go';
+			    
+			    // 팝업창 열기
+			    var popupWindow = window.open('', 'Infinity_Book', 'width=600px,height=500px');
+			    
+			    // 폼 데이터를 팝업창에 전송하는 코드
+			    formElement.target = 'Infinity_Book';
+			    formElement.action = url;
+			    formElement.method = 'POST';
+			    formElement.submit();
+			    
+			    // 팝업창에 전송된 데이터 확인
+			    popupWindow.onload = function() {
+			      console.log('데이터 전송 완료');
+			    };
+		  }  
+		  
+		  
+	   
 	  } else if (depositType === '충전') {
 	    requestPay();
 	  }
@@ -302,7 +317,7 @@ var showPage = 1;
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'depositUseList.ajax',
+		      url:'/mypage/depositUseList.ajax',
 		      data:{
 		    	  'page':page,
 		      },

@@ -24,14 +24,14 @@ public class MyInquiryController {
 	@Autowired MyInquiryService service;
 	
 	// 내 문의 리스트
-	@RequestMapping(value = "/myinquirylist.go")
+	@RequestMapping(value = "/mypage/myinquirylist.go")
 	public String myinquirylistForm() {		
 		
 		return "/inquiry/myinquirylist";
 	}
 	
 	// 내 문의 리스트 불러오기
-	@RequestMapping(value = "/myinquirylist.ajax")
+	@RequestMapping(value = "/mypage/myinquirylist.ajax")
 	@ResponseBody
 	public HashMap<String, Object> myinquirylist(@RequestParam HashMap<String,Object> params, HttpSession session) {
 		logger.info("{}",params);
@@ -43,13 +43,13 @@ public class MyInquiryController {
 	}
 	
 	// 문의 작성 이동
-	@RequestMapping(value = "/inquirywrite.go")
+	@RequestMapping(value = "/mypage/inquirywrite.go")
 	public String inquirywriteForm() {				
 		return "/inquiry/inquirywrite";
 	}
 	
 	// 문의 작성 하기
-	@RequestMapping(value = "/inquirywrite.do")
+	@RequestMapping(value = "/mypage/inquirywrite.do")
 	public String inquirywrite(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		String loginIdx = session.getAttribute("loginIdx").toString();
 		params.put("member_idx", loginIdx);
@@ -60,7 +60,7 @@ public class MyInquiryController {
 	}
 	
 	// 내 문의 리스트 상세보기
-	@RequestMapping(value = "/myinquirydetail.go")
+	@RequestMapping(value = "/mypage/myinquirydetail.go")
 	public ModelAndView requestMethodName(@RequestParam String inquiry_idx) {
 		
 		ModelAndView mav = new ModelAndView("/inquiry/myinquirylist");		
@@ -77,7 +77,7 @@ public class MyInquiryController {
 	
 	
 	// 내문의 답변 불러오기
-	@RequestMapping(value = "/inquiryreplylist.ajax")
+	@RequestMapping(value = "/mypage/inquiryreplylist.ajax")
 	@ResponseBody
 	public HashMap<String, Object> myinquiryreplylist(@RequestParam String inquiry_idx) {
 		logger.info(inquiry_idx);

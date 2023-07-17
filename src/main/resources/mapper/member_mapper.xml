@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="findLocationCode" resultType="int">
-		SELECT CODE_IDX FROM code c WHERE CODE_CODENAME = #{param1}
+		SELECT code_code FROM code WHERE code_codename = #{param1}
 	</select>
 	
 	<select id="findmemberpw" resultType="int">
@@ -47,6 +47,53 @@
 		FROM member m
 			WHERE member_idx = #{param}
 	</select>
+	
+	<update id="memberInfoUpdate">
+		UPDATE 
+			member 
+		SET member_nickname = #{nickname}, code_idx = #{code_idx} 
+			WHERE member_idx = #{loginIdx} 
+	</update>
+	
+	<select id="getPw" resultType="String">
+		SELECT member_pw FROM member WHERE member_idx = #{param1}
+	</select>
+
+	<update id="pwUpdate">
+		UPDATE 
+			member 
+		SET member_pw = #{param1}
+			WHERE member_idx = #{param2} 
+	</update>
+	
+	<update id="leave">
+		UPDATE 
+			member 
+		SET member_state = '탈퇴'
+			WHERE member_idx = #{param} 
+	</update>
+	
+	<select id="getProfileInfo" resultType="hashMap">
+		SELECT member_nickname, code_idx FROM member WHERE member_idx = #{param} 
+	</select>
+	
+	<select id="getRegion" resultType="String">
+		SELECT code_codename FROM code WHERE code_code = #{param} AND code_upcode = 'region'
+	</select>
+	
+	<select id="reviewList" resultType="hashMap">
+		SELECT 
+			(SELECT member_nickname FROM member WHERE member_idx = sender_idx) AS member_nickname, 
+			sender_idx As member_idx,
+			review_content, 
+			review_date
+		FROM review r
+			WHERE reciever_idx = #{member_idx}	
+				AND review_type = 0 AND review_blind = 0 
+			ORDER BY review_date DESC LIMIT 5 OFFSET #{offset};
+	</select>
+	
+	
 	
 	
 	

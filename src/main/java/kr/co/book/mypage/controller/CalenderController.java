@@ -21,12 +21,12 @@ public class CalenderController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@RequestMapping(value = "/calender.go")
+	@RequestMapping(value = "/mypage/calender.go")
 	public String calenderPageGo() {
 		return "calender";
 	}
 	
-	@GetMapping(value = "/calendarGetEvents.ajax")
+	@GetMapping(value = "/mypage/calendarGetEvents.ajax")
 	@ResponseBody
 	public HashMap<String, Object> calendarGetEvents(HttpSession session){
 		int loginIdx = (int) session.getAttribute("loginIdx");

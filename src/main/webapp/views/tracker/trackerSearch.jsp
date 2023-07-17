@@ -33,6 +33,14 @@
 			font-weight: 600;
 			margin: 10 0 0 0;
 		}
+		.pagination .page-link {
+	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
+		}
+	
+		.pagination .page-item.active .page-link {
+	 		background-color: #C5A992;
+	 		border:none;
+		}
 		.popup{
 		  position: fixed;
 		  top: 50%;
@@ -72,17 +80,19 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/libraryList.get" data-effect="Home">책장</a></li>
-								<li class="menu-item"><a href="/myBookreportList.get" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="/trackerList.go" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">캘린더</a></li>
-								<li class="menu-item"><a href="/deposit" class="nav-link" data-effect="Articles">보증금</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">내정보</a>
+								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item has-sub">
+									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="index.move">회원정보</a></li>
-								        <li><a href="/activitiesChange.go">활동내역</a></li>
+								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="#">문의 내역</a></li>
 								     </ul>
-								</li>
+								</li>								
 							</ul>
 
 							<div class="hamburger">
@@ -109,7 +119,7 @@
 				<h2 class="section-title">Tracker</h2>
 			</div>
 				<div class="search-bar" style="width: 300px; display: inline;">
-					<form action="trackerSearch.do" role="search" method="get" class="search-box">
+					<form action="/mypage/trackerSearch.do" role="search" method="get" class="search-box">
 						<select name="searchType">
 							<option value="Title" >제목</option>
 							<option value="Author">저자</option>
@@ -123,7 +133,7 @@
 				<br>
 				<div class="products-grid grid">
 					<c:if test="${search eq false}">
-						<h3>검색 결과가 존재하지 않습니다. </h3>
+						<h3 style="margin:10% 40%;">검색 결과가 존재하지 않습니다. </h3>
 					</c:if>
 					<c:forEach var="item" items="${list}" varStatus="status">
 						<c:if test="${status.index==2}"> 						
@@ -183,7 +193,7 @@
 	    var height = 400;
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
-	    var popupWindow = window.open('tracker/add/Read/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    var popupWindow = window.open('/mypage/tracker/add/Read/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 	
 	function addReadingBook(isbn, cover) {
@@ -193,7 +203,7 @@
 	    var left = window.innerWidth / 2 - width / 2;
 	    var top = window.innerHeight / 2 - height / 2;
 	    
-	    var popupWindow = window.open('tracker/add/Reading/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'reading', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	    var popupWindow = window.open('/mypage/tracker/add/Reading/book.go?isbn=' + isbn + '&cover=' + cover + '&jsp=' + jsp + '', 'reading', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 	
 </script>
