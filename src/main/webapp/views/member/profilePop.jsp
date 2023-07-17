@@ -65,9 +65,9 @@
 					<h2 class="section-title" style="margin: 1%;">Profile</h2>
 				</div>
 				
-				<div style="float: right; width: 15%;">
-					<p style="margin: 3%; display: inline;">${info.member_nickname}님</p>
-					<input type="button" style="display:inline; padding:5 10 5 10; color:CornflowerBlue; margin: 1%; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="${info.region}">
+				<div>
+					<input type="button" style="display:inline; padding:5 10 5 10; float: right; color:CornflowerBlue; margin: 1%; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="${info.region}">
+					<p style="margin-top: 1%; display: inline; float: right;">${info.member_nickname}님</p>
 				</div>
 				
 				<div style="margin-top: 10%">

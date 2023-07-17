@@ -43,8 +43,6 @@
 
 <body>
 
-
-
 <section class="hero-section jarallax">
 	
 	<div class="container">
@@ -66,7 +64,7 @@
 					<li class="search-box" style="text-align:center; list-style-type: none;">
 						<select id="reportType" name="reportType" style="float: right; margin-bottom: 4%;">
 							<option value="default">신고 분류</option>
-							<option value=bookReport_report>감상문</option>
+							<option value="bookReport_report">감상문</option>
 							<option value="club_report">모임</option>						
 							<option value="reply_report">댓글</option>
 							<option value="review_report">리뷰</option>
@@ -170,7 +168,6 @@
 
 	function listPrint(list) {
 	    var content = '';
-	    //SELECT member_idx, member_email,member_nickname ,member_state ,member_grade  FROM `member` m ;
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
 	    content += '<th width="10%" style="text-align:center; padding: 1%;">신고번호</th>';
@@ -182,7 +179,7 @@
 	    content += '<th width="15%" style="text-align:center; padding: 1%;">처리일시</th>';
 		content += '<tr>';
 		
-		 if(list.lenght == 0){
+		 if(list.length == 0){
 			 content += '<th colspan="6" style="text-align:center;">신고내역이 없습니다.</th>';
 		 } else{
 			 
@@ -192,7 +189,7 @@
 			        content += '<td style="text-align:center;">'+item.reportType+'</td>';
 				    content += '<td style="text-align:center;">'+item.report_date+'</td>';
 			        content += '<td style="text-align:center;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">' + item.member_nickname + '</a></td>';
-				    content += '<td><a href="/admin/adminReportDetail.go">'+item.report_content+'</a></td>';
+				    content += '<td><a href="/admin/adminReportDetail.go?report_idx='+item.report_idx+'&code_idx='+item.code_idx+'">'+item.report_content+'</a></td>';
 				    
 				    if(item.report_state == "접수"){
 			       		content += '<td style="text-align:center;"><input type="button" style="cursor: default; display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="'+item.report_state+'"></td>';        
@@ -207,7 +204,7 @@
 			    		content += '<td style="text-align:center; padding: 1%;">'+item.report_handlingdate+'</td>';
 		    		}
 				     
-			    });
+		    });
 			 
 		 }
 
@@ -216,6 +213,7 @@
 	    
 	    $('#list').empty();
 		$('#list').append(content);
+		
 	}
 
 	function profilePop(member_idx) {

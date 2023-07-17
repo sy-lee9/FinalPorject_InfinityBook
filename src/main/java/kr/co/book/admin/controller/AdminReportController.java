@@ -25,20 +25,21 @@ public class AdminReportController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(value = "/reportPop.go")
-	public String reportPopGo(HttpSession session, Model model, String code, String idx) {
-		
-		int member_idx = (int) session.getAttribute("loginIdx");
+	public String reportPopGo(Model model, String code, String idx) {
 		
 		model.addAttribute("code",code);
 		model.addAttribute("idx",idx);
-		model.addAttribute("member_idx",member_idx);
 		
 		return "reportPop";
 	}
 	
 	@PostMapping(value = "/reportSend.ajax")
 	@ResponseBody
-	public HashMap<String, Object> reportSend(@RequestParam HashMap<String, Object> params) {
+	public HashMap<String, Object> reportSend(HttpSession session, @RequestParam HashMap<String, Object> params) {
+		
+		int member_idx = (int) session.getAttribute("loginIdx");
+		params.put("member_idx", member_idx);
+		
 		return adminReportService.reportSend(params);
 	}
 
@@ -54,13 +55,25 @@ public class AdminReportController {
 	}
 	
 	@RequestMapping(value = "/admin/adminReportDetail.go")
-	public String adminReportDetailGo() {
-		return "/admin/adminReportDetail";
+	public ModelAndView adminReportDetailGo(@RequestParam HashMap<String, Object> params) {	
+		logger.info("params : "+params);
+		return adminReportService.getReportInfor(params);
 	}
 	
+	@PostMapping(value = "/admin/reportRecordList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> reportRecordList(@RequestParam HashMap<String, Object> params) {
+		logger.info("params : "+params);
+		return adminReportService.reportRecordList(params);
+	}
 	
-	
-	
+	@PostMapping(value = "/admin/reportHandling.ajax")
+	@ResponseBody
+	public HashMap<String, Object> reportHandling(HttpSession session, @RequestParam HashMap<String, Object> params) {
+		params.put("member_idx", session.getAttribute("loginIdx"));
+		logger.info("params : "+params);
+		return adminReportService.reportHandling(params);
+	}
 	
 	
 	
