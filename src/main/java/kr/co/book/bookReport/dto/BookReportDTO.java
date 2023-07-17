@@ -22,7 +22,22 @@ public class BookReportDTO {
 	private int book_report_open;
 	private int member_idx;
 	private String member_nickname;
-	
+    private String code_idx;
+    private String code_codename;
+    private String code_code;
+    private String code_upcode;
+    private String member_email;
+    private String member_pw;
+    private String member_state;
+    private String member_grade;
+    private String member_level;
+    
+    private String parent_idx;
+    private String reply_idx;
+    private String idx;
+    private String reply_content;
+    private String reg_date;
+    
 	
 	public String getIsbn() {
 		return isbn;
@@ -131,6 +146,90 @@ public class BookReportDTO {
 	}
 	public void setMember_nickname(String member_nickname) {
 		this.member_nickname = member_nickname;
+	}
+	public String getCode_idx() {
+		return code_idx;
+	}
+	public void setCode_idx(String code_idx) {
+		this.code_idx = code_idx;
+	}
+	public String getCode_codename() {
+		return code_codename;
+	}
+	public void setCode_codename(String code_codename) {
+		this.code_codename = code_codename;
+	}
+	public String getCode_code() {
+		return code_code;
+	}
+	public void setCode_code(String code_code) {
+		this.code_code = code_code;
+	}
+	public String getCode_upcode() {
+		return code_upcode;
+	}
+	public void setCode_upcode(String code_upcode) {
+		this.code_upcode = code_upcode;
+	}
+	public String getMember_email() {
+		return member_email;
+	}
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+	public String getMember_pw() {
+		return member_pw;
+	}
+	public void setMember_pw(String member_pw) {
+		this.member_pw = member_pw;
+	}
+	public String getMember_state() {
+		return member_state;
+	}
+	public void setMember_state(String member_state) {
+		this.member_state = member_state;
+	}
+	public String getMember_grade() {
+		return member_grade;
+	}
+	public void setMember_grade(String member_grade) {
+		this.member_grade = member_grade;
+	}
+	public String getMember_level() {
+		return member_level;
+	}
+	public void setMember_level(String member_level) {
+		this.member_level = member_level;
+	}
+	public String getParent_idx() {
+		return parent_idx;
+	}
+	public void setParent_idx(String parent_idx) {
+		this.parent_idx = parent_idx;
+	}
+	public String getReply_idx() {
+		return reply_idx;
+	}
+	public void setReply_idx(String reply_idx) {
+		this.reply_idx = reply_idx;
+	}
+	public String getIdx() {
+		return idx;
+	}
+	public void setIdx(String idx) {
+		this.idx = idx;
+	}
+	public String getReply_content() {
+		return reply_content;
+	}
+	public void setReply_content(String reply_content) {
+		this.reply_content = reply_content;
+	}
+	public String getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
 	}
 
 }	

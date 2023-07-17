@@ -36,6 +36,14 @@
 	</style>
 </head>
 <body>
+<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	<h3>${book.title}</h3>
 	<h3><img src="${book.cover}"></h3>
 	<h3>${book.author}</h3>

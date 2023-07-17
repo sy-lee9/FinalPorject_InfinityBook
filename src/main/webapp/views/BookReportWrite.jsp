@@ -35,6 +35,14 @@
 	</style>
 </head>
 <body>
+<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	<form action="BookReportWrite.do" method="post">
 	<h3>감상문 등록</h3>
 	<select name="reportOpen" id="reportOpen">
