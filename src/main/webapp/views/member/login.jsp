@@ -46,6 +46,7 @@ $(document).ready(function() {
 	  if (rememberMe === "true" && email) {
 	    $('#member_email').val(email);
 	    $('#rememberMe').prop('checked', true);
+	    password != "";
 	    login();
 	  }
 	});

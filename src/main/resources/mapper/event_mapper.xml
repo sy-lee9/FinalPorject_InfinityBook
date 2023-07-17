@@ -3,7 +3,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.book.event.dao.EventDAO">
-   <!-- 	   
+   <!--   
    <insert id="eventWrite" parameterType="kr.co.book.event.dto.EventDAO">
       INSERT INTO event(event_title, member_idx, event_content, event_startdate, event_enddate, event_cnt, event_hit, event_blind)
          VALUES(#{event_title},#{member_idx},#{event_content},#{event_startdate},#{event_enddate},#{event_cnt},0,#event_blind})
@@ -27,5 +27,5 @@
       SELECT COUNT(event_idx) FROM event
          WHERE event_title LIKE CONCAT('%' #{param1} '%')
    </select>	
-    -->	
+    -->
 </mapper>

@@ -66,7 +66,7 @@ var apply_user = '';
 // 가장 처음 메세지 리스트를 가져온다.
 const FirstMessageList = function(){
 	$.ajax({
-		url:"message_ajax_list.do",
+		url:"/message_ajax_list.do",
 		method:"get",
 		data:{
 		},
@@ -160,7 +160,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 	if(code_idx != 4){
 				
 	$.ajax({
-		url:"message_librarydetailajax.do",
+		url:"/message_librarydetailajax.do",
 		method:"GET",
 		data:{library : library},							
 		datatype: 'json',
@@ -354,7 +354,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 const MessageContentList = function(code_idx,room,library,apply_user) {
 	
 	$.ajax({
-		url:"message_content_list.do",
+		url:"/message_content_list.do",
 		method:"GET",
 		data:{
 			code_idx : code_idx,
@@ -542,22 +542,10 @@ $(document).ready(function(){
 	      <div class="inbox_msg">
 	      	<!-- 메세지 목록 영역 -->
 	        <div class="inbox_people">
-	          <div class="headind_srch">
+	          <div class="headind_srch">	         
 	            <div class="recent_heading">
 	              <h4>List</h4>
-	            </div>
-	            <!-- 메세지 검색 -->
-	            <div class="srch_bar">
-	              <div class="stylish-input-group">
-	              <!-- 
-	                <input type="text" class="search-bar"  placeholder="Search" >
-	                <span class="input-group-addon">
-	                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>	                
-	                </span>
-				 	-->	                
-	                 
-	              </div>	              
-	            </div>	            
+	            </div>           
 	          </div>
 	          
 	          <!-- 메세지 리스트 -->

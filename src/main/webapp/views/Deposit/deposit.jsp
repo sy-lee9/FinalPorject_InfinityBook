@@ -243,6 +243,8 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
              xhr.open('post', '/mypage/depositCharge.ajax', true);
              xhr.send(formData);
              
+             window.location.reload();
+             
           } else {
         	  alert("보증금 충전이 중 문제가 발생했습니다. 다시 시도해 주세요.");
         	  
@@ -260,21 +262,34 @@ console.log(member_idx +'-'+today.getYear()+today.getMonth()+today.getDay()+'-'+
 	  var formElement = event.target;
 	  
 	  if (depositType === '출금') {
-	    var url = '/mypage/depositWithdraw.go';
-	    
-	    // 팝업창 열기
-	    var popupWindow = window.open('', 'Infinity_Book', 'width=600px,height=500px');
-	    
-	    // 폼 데이터를 팝업창에 전송하는 코드
-	    formElement.target = 'Infinity_Book';
-	    formElement.action = url;
-	    formElement.method = 'POST';
-	    formElement.submit();
-	    
-	    // 팝업창에 전송된 데이터 확인
-	    popupWindow.onload = function() {
-	      console.log('데이터 전송 완료');
-	    };
+		  
+		  var depositType = document.getElementsByName("deposit_type")[0].value;
+		  var depositPrice = parseInt(document.getElementById("deposit_price").value);
+		  var depositNow = parseInt("${deposit_now}");
+
+		  if (depositType === "출금" && depositPrice > depositNow) {
+		    alert("현재 잔액보다 큰 금액은 출금이 불가능합니다.");
+		    depositPrice.value = 0;
+		  } else{
+				var url = '/mypage/depositWithdraw.go';
+			    
+			    // 팝업창 열기
+			    var popupWindow = window.open('', 'Infinity_Book', 'width=600px,height=500px');
+			    
+			    // 폼 데이터를 팝업창에 전송하는 코드
+			    formElement.target = 'Infinity_Book';
+			    formElement.action = url;
+			    formElement.method = 'POST';
+			    formElement.submit();
+			    
+			    // 팝업창에 전송된 데이터 확인
+			    popupWindow.onload = function() {
+			      console.log('데이터 전송 완료');
+			    };
+		  }  
+		  
+		  
+	   
 	  } else if (depositType === '충전') {
 	    requestPay();
 	  }

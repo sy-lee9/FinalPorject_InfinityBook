@@ -31,10 +31,11 @@
 		 <link rel="icon" href="/images/mainLogo.png" class="images">		
 	
 	<style>
-		
+		.slick-track{
+			height:300px;
+		}
 	</style>
 	
-
 	</head>
 	
 
@@ -108,7 +109,8 @@
 </section>
 
 
-
+<br/>
+<br/>
 
 
 
@@ -145,11 +147,11 @@
 									</figure>
 									
 									<div class="post-item" style="text-align: center;">	
-									    <h3><a onclick="replaceTitle('${library.library_title}')">${library.library_title}</a></h3>
+									    
 									    <div class="links-element" >
 										    <div class="categories">${library.library_author}</div>
 										</div><!--links-element-->
-									    
+									    <h3><a onclick="replaceTitle('${library.library_title}')">${library.library_title}</a></h3>
 									</div>
 								</article>						
 							</div>
@@ -165,7 +167,8 @@
 	</div>
 </section>
 
-
+<br/>
+<br/>
 
 <section id="latest-blog" style="margin-bottom: 0px;">
 	<div class="container">
@@ -214,6 +217,14 @@
 	</div>
 </section>
 
+
+
+
+<br/>
+<br/>
+
+
+
 <section id="billboard">
 
 	<div class="container">
@@ -260,7 +271,7 @@
 		</div>
 	</div>
 </div>
-
+<script src='./js/alarm.js'></script>
 </body>
 
 

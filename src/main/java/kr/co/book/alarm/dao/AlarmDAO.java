@@ -13,4 +13,6 @@ public interface AlarmDAO {
 
 	void alarmCheck(String member_idx);
 
+	int alarmchk(String member_idx);
+
 }
