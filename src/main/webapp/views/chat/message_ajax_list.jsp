@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
-<c:forEach var="tmp" items="${list }">
+<c:forEach var="tmp" items="${list}">
 	<div class="chat_list_box${tmp.code_idx}-${tmp.idx } chat_list_box">
 		<div type="button" class="chat_list" code="${tmp.code_idx }" room="${tmp.idx}" library="${tmp.library_idx}" apply-user="${tmp.applyuser}">
 			<!-- active-chat -->
@@ -18,8 +18,7 @@
 					<div class="row">
 						<div class="col-10">
 							<p>${tmp.member_nickname}</p>								
-							<p>${fn:substring(tmp.chat_chat, 0, 10)}....</p>																	
-							<!-- <p>${tmp.chat_chat}</p> -->
+							<p>${fn:substring(tmp.chat_chat, 0, 10)}  <c:if test="${tmp.chat_chat.length() > 10}"> ...</c:if></p>																								
 							<p>${tmp.chat_date }</p>
 						</div>
 					</div>

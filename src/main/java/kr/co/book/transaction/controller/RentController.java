@@ -34,7 +34,7 @@ public class RentController {
 		return "/chat/message_list";
 	}
 	
-	// 대여 약속 시
+	// 대여 약속 잡기 시 
 	@RequestMapping(value="/rentreservation.do")
 	public String rentreservation(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		

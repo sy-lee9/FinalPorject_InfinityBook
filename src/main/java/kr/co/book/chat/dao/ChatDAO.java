@@ -66,7 +66,7 @@ public interface ChatDAO {
 	int rentdeposit(String room);
 
 	// 대여 보증금 사용
-	void usedeposit(String member_idx, int rentdeposit);
+	void usedeposit(String member_idx, int rentdeposit, String room);
 
 	// 대여 예약 수락
 	void finalrentok(String room, String member_idx);
@@ -109,6 +109,8 @@ public interface ChatDAO {
 	String findchgbooktitle(String library_idx);
 
 	String findchgbookcover(String library_idx);
+
+	HashMap<String, Object> club_detail(HashMap<String, Object> params);
 
 
 

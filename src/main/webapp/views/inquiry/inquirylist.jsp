@@ -37,30 +37,50 @@
 </style>
 </head>
 <body>
-	<h3 id="title" style="text-align: center;">문의 내역</h3>
-	<!-- 문의 종류 필터링  -->
-	<select id="categoryCode">
-		<option value="default">문의 종류</option>
-		<option value="64">이벤트 문의</option>
-		<option value="65">계정 문의</option>						
-		<option value="66">결제 문의</option>
-		<option value="67">기타 문의</option>
-	</select>
+	<section class="hero-section jarallax">
 	
-	<!-- 처리 여부 필터링  -->
-	<select id="inqProcess">
-		<option value="default">처리 여부 필터링</option>
-		<option value="false">미처리</option>
-		<option value="true">처리완료</option>
-	</select>
+	<div class="container">
+		<div class="row">
+		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-bottom:25px;">Admin-Inquiry</h2>
+			</div>
+		</div>
+	</div>
+	</section>
+
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
+	<div class="container">
+
+		<div class="tab-content" style="text-align:center;">
+			<div id="all-genre" style="text-align:center;" data-tab-content class="active">
+			
+	<ul class="tab">
+		<li class="search-box" style="text-align:center;list-style-type: none;">	
+		
+		<!-- 문의 종류 필터링  -->
+		<select id="categoryCode">
+			<option value="default">문의 종류</option>
+			<option value="64">이벤트 문의</option>
+			<option value="65">계정 문의</option>						
+			<option value="66">결제 문의</option>
+			<option value="67">기타 문의</option>
+		</select>
+		
+		<!-- 처리 여부 필터링  -->
+		<select id="inqProcess">
+			<option value="default">처리 여부 필터링</option>
+			<option value="false">미처리</option>
+			<option value="true">처리완료</option>
+		</select>
 	
-		<ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">				
-				<i class="icon icon-search"></i> 
-				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="닉네임 을 입력해주세요" type="search">
-				<input type="button" id="searchButton" value="검색">	
-			</li>
-		</ul>
+			
+			<i class="icon icon-search"></i> 
+			<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="닉네임 을 입력해주세요" type="search">
+			<input type="button" id="searchButton" value="검색">	
+		</li>
+	</ul>
+	
 	
 	<hr/>
 	
@@ -87,6 +107,10 @@
 			</td>
 			</tr>
 		</table>
+			</div>
+		</div>
+	</div>
+</section>
 	
 </body>
 <script>
