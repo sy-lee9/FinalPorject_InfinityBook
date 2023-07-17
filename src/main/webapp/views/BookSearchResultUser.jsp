@@ -8,6 +8,14 @@
 <style></style>
 </head>
 <body>
+<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 		<c:if test="${RentList.size() == 0}">
 			<h3>대여 가능 사용자가 없습니다.</h3>
 		</c:if>
