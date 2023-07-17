@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.book.admin.dto.AdminInquiryDTO;
 import kr.co.book.mypage.dto.MyInquriyDTO;
 
-@Mapper
+
 public interface AdminInquiryDAO {
 
 	AdminInquiryDTO inquirydetail(String inquiry_idx);

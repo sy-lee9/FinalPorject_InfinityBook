@@ -30,8 +30,8 @@
 		select member_nickname from member where member_idx = #{member_idx}
 	</select>
 	
-	<insert id="getUserNickname" parameterType="HashMap">
+	<!-- <insert id="getUserNickname" parameterType="HashMap">
 		insert into review (member_sender,review_type,review_reciever,review_transaction_type,review_tracnsaction_idx,review_content,review_date,review_blind)
 		values(#{member_sender},#{review_type},#{review_reciever},#{review_transaction_type},#{review_tracnsaction_idx},#{review_content},current_timestamp(),0)
-	</insert>
+	</insert> -->
 </mapper>
