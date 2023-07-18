@@ -207,7 +207,7 @@ $('#inqProcess').change(function(){
 function listCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'myinquirylist.ajax',
+	      url:'/mypage/myinquirylist.ajax',
 	      data:{
 	    	  'page':page,
 	    	  'categoryCode' : selectedcategoryCode,
@@ -280,7 +280,7 @@ function reReplyCall(inquiry_idx, callback) {
 	  console.log(inquiry_idx);
 	  $.ajax({
 	    type: 'post',
-	    url: 'inquiryreplylist.ajax',
+	    url: '/inquiryreplylist.ajax',
 	    data: {
 	      'inquiry_idx': inquiry_idx
 	    },
@@ -296,8 +296,8 @@ function reReplyCall(inquiry_idx, callback) {
 function reReplyPrint(replyList) {
 	  var content = '';
 	  replyList.forEach(function(reply) {
-		content += '<th style="width:20%; text-align:center;">'+'[답변]'+'</th>';		
-		content += '<td style="width:20%; text-align:center;">'+'<a href="/mypage/inquirydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
+		content += '<th style="width:20%; text-align:center;">'+'ㄴ [답변]'+'</th>';		
+		content += '<td style="width:20%; text-align:center;">'+'<a href="/myinquiryreplydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.member_nickname + '</td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.inquiry_regdate+'</td>';
 	    content += '<th style="width:20%; text-align:center;"></th>';
