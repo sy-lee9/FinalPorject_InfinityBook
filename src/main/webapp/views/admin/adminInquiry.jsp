@@ -112,6 +112,28 @@
 	</div>
 </section>
 	
+	
+<div id="footer-bottom" style="margin-top:10%">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="copyright">
+					<div class="row">
+
+						<div class="col-md-12" style="margin-top: 5%;">
+							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
+						</div>
+
+						
+
+					</div>
+				</div><!--grid-->
+
+			</div><!--footer-bottom-content-->
+		</div>
+	</div>
+</div>
 </body>
 <script>
 var showPage = 1;

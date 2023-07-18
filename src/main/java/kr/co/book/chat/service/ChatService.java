@@ -70,7 +70,7 @@ public class ChatService {
 				cto.setClub_name(dao.findclub_name(idx));
 			}
 		}
-		logger.info("서비스 종료");
+
 		return list;
 	}
 	

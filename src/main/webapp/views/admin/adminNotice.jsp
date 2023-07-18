@@ -46,61 +46,23 @@
 </style>
 </head>
 <body>
-<div id="header-wrap" class="show">
+	<section class="hero-section jarallax">
 	
-	<c:choose>
-        <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="../loginAfterBox.jsp" />
-        </c:when>
-        <c:otherwise>
-            <jsp:include page="../loginBeforeBox.jsp" />            
-        </c:otherwise>
-    </c:choose>
-	
-	<header id="header">
-		<div class="container">
-			<div class="row">
-
-				<div class="col-md-2">
-					<div class="main-logo">
-					
-						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
-					</div>
-
-				</div>
-
-				<div class="col-md-10">
-					
-					<nav id="navbar">
-						<div class="main-menu stellarnav">
-							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
-							</ul>
-						</div>
-					</nav>
-
-				</div>
-
-			</div>
-		</div>
-	</header>
-</div><!--header-wrap-->
-
-
-<section class="hero-section jarallax">	
 	<div class="container">
 		<div class="row">
+		<a href="/admin/adminMain" style="font-size:20;"> ← Admin Main</a>
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:0px;">Notice</h2>
+				<h2 class="section-title" style="margin-bottom:25px;">Admin-Notice</h2>
 			</div>
 		</div>
 	</div>
-</section>
+	</section>
+	
+	<div style="text-align: right;">			
+		<button onclick="location.href='/admin/noticewrite.go'">공지 작성</button>				
+	</div>
+	
+	<hr/>
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
 	<div class="container">	
@@ -163,7 +125,7 @@ listCall(showPage);
 function listCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'noticelist.ajax',
+	      url:'/admin/noticelist.ajax',
 	      data:{
 	    	  'page':page,
 	      },
