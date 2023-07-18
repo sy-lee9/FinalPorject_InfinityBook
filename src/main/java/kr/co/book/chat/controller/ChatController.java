@@ -49,6 +49,7 @@ public class ChatController {
 			ArrayList<ChatDTO> list = service.messageList(dto);
 	
 			request.setAttribute("list", list);
+			logger.info("컨트롤 끝");
 			return "/chat/message_ajax_list";
 		}
 		

@@ -78,7 +78,7 @@
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='/admin/noticelist.go'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; border:1px solid black; height:150px;"><h4>공지사항관리</h4></button>
+								<button type="button" onclick="location.href='#'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; border:1px solid black; height:150px;"><h4>공지사항관리</h4></button>
 							</figcaption>
 						</figure>
 					

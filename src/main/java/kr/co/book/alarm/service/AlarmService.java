@@ -77,8 +77,7 @@ public class AlarmService {
 		
 		return page;
 	}
-	
-	// 알림 읽음 처리
+
 	public int alarmchk(String member_idx) {
 
 		return dao.alarmchk(member_idx);
@@ -88,12 +87,6 @@ public class AlarmService {
 	public long alarmdel_all(String member_idx) {
 		
 		return dao.alarmdel_all(member_idx);
-	}
-
-	// 알림 하나 삭제
-	public int alarmdel(String alarm_idx) {
-
-		return dao.alarmdel(alarm_idx);
 	}
 
 

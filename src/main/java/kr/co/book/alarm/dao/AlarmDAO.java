@@ -17,6 +17,4 @@ public interface AlarmDAO {
 
 	long alarmdel_all(String member_idx);
 
-	int alarmdel(String alarm_idx);
-
 }
