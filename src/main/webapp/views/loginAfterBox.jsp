@@ -34,12 +34,12 @@
     content += "<div class='row'>";
     content += "<div class='col-md-12'>";
     content += "<div class='right-element'>";
-    /*
+   
     if(${sessionScope.loginGrade}){
     	content += "<a href='/admin/adminMain' style='color: red;'>[관리자 페이지]&nbsp;&nbsp;</a>";	
     }
-    */
-    content += "<a href='/admin/adminMain' style='color: red;'>[관리자 페이지]&nbsp;&nbsp;</a>";
+   
+   
     content += "반가워요 <b>${sessionScope.loginNickname}</b>님! <a href='/logout.do' style='color: blue;'>[로그아웃]</a>&nbsp;&nbsp;&nbsp;&nbsp;";
     content += "<a href='/message_list.go'>💬 채팅</a>&nbsp;&nbsp;&nbsp;&nbsp;";
     content += "<a onclick='alarm_list()' style='cursor: pointer;'>🔔알림 <span class='alarm'></span></a>";
