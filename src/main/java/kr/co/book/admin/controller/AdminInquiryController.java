@@ -62,7 +62,7 @@ public class AdminInquiryController {
 	@RequestMapping(value = "/admin/inquirylist.go")
 	public String myinquirylistForm() {		
 		
-		return "/inquiry/inquirylist";
+		return "/admin/adminInquiry";
 	}
 	
 	// 문의 리스트 불러오기

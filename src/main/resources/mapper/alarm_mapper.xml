@@ -24,5 +24,12 @@
 			UPDATE alarm SET alarm_blind = 1
 			where member_idx = #{member_idx}
 		</update>
+		
+		<update id="alarmdel">
+			UPDATE alarm SET alarm_blind = 1
+			where alarm_idx = #{alarm_idx}
+		</update>
+		
+		
 	 	
 	</mapper>

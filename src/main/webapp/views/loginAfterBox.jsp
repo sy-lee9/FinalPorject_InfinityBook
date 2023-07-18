@@ -70,7 +70,7 @@
     }
     
     function alarmdel_all(){
-    	
+    	var alarmlist = document.getElementById("alarmlist");
     	// 알람 전체 삭제
     	$.ajax({
     		url:"/alarmdel_all.ajax",
@@ -78,12 +78,19 @@
     		data:{
     		},
     		success:function(data){
-    			console.log("알림 지우기 성공");    		
-    			$('#alarmlist').html('');
-
-    			   			
+    			console.log("알림 지우기 성공");    
+    			
+    		    if (alarmlist.style.display === "none") {
+    		        alarmlist.style.display = "block";
+    		        
+    		    } else {
+    		        alarmlist.style.display = "none";
+    		    }
+ 			
     			}
     	});
     }
+    
+
     
 </script>

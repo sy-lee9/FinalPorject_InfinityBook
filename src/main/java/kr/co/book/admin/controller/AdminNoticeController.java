@@ -8,14 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.admin.service.AdminNoticeService;
 import kr.co.book.notice.dto.NoticeDTO;
 import kr.co.book.notice.service.NoticeService;
+
 
 
 @Controller
@@ -26,14 +27,31 @@ public class AdminNoticeController {
 	@Autowired AdminNoticeService service;
 	@Autowired NoticeService nservice;
 	
+	// 관리자 공지사항 리스트
+	@RequestMapping(value = "/admin/noticelist.go")
+	public String adminnoticelistForm() {		
+		
+		return "/admin/adminNotice";
+	}
+	
+	// 공지사항 리스트 불러오기
+	@RequestMapping(value = "/admin/noticelist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> adminnoticelist(@RequestParam int page) {
+
+		HashMap<String, Object> noticelist = nservice.noticelist(page);
+		
+		return noticelist;
+	}
+	
 	// 공지 작성 이동
-	@RequestMapping(value = "/noticewrite.go")
+	@RequestMapping(value = "/admin/noticewrite.go")
 	public String noticewriteForm() {				
 		return "/notice/noticewrite";
 	}
 	
 	// 공지 작성 하기
-	@RequestMapping(value = "/noticewrite.do")
+	@RequestMapping(value = "/admin/noticewrite.do")
 	public String noticewrite(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		String loginIdx = session.getAttribute("loginIdx").toString();
 		params.put("member_idx", loginIdx);
@@ -44,7 +62,7 @@ public class AdminNoticeController {
 	}
 	
 	// 공지  수정 이동
-	@RequestMapping(value = "/noticeupdate.go")
+	@RequestMapping(value = "/admin/noticeupdate.go")
 	public ModelAndView noticeupdateForm(@RequestParam String notice_idx) {			
 		
 		ModelAndView mav = new ModelAndView("/notice/noticelist");
