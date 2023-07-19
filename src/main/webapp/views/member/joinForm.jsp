@@ -23,10 +23,22 @@
 	input{
 		width: 268px;
 	}
+	h1{
+	
+			top: 50px;
+			text-align: center;
+		  margin-top: 250px
+		  transform: translateY(-50%);
+            font-family: 'IBM Plex Sans KR';   
+            font-weight: 600;
+            margin: 10 0 0 0;
+         }
 </style>
 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">
 </head>
 <body>	
+
+	<h1>회원가입</h1>
 	<div class="container">
 		<table>
 			<tr>
@@ -87,7 +99,7 @@
 			<tr>
 				<th colspan="2">
 					<button onclick="join()">회원가입</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;							
-					<button onclick="location.href='./'">취소</button>
+					<button onclick="location.href='./login.go'">취소</button>
 				</th>
 			</tr>
 		</table>
