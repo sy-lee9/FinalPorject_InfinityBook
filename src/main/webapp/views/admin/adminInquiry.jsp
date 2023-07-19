@@ -112,6 +112,28 @@
 	</div>
 </section>
 	
+	
+<div id="footer-bottom" style="margin-top:10%">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="copyright">
+					<div class="row">
+
+						<div class="col-md-12" style="margin-top: 5%;">
+							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
+						</div>
+
+						
+
+					</div>
+				</div><!--grid-->
+
+			</div><!--footer-bottom-content-->
+		</div>
+	</div>
+</div>
 </body>
 <script>
 var showPage = 1;
@@ -164,7 +186,7 @@ $('#serchText').on('keyup',function(ev){
 function listCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'inquirylist.ajax',
+	      url:'/admin/inquirylist.ajax',
 	      data:{
 	    	  'page':page,
 	    	  'categoryCode' : selectedcategoryCode,
@@ -209,7 +231,7 @@ function listPrint(list) {
             }else if(item.code_idx == 67){
             	content += '	<td width="20%" style="text-align:center;">기타 문의</td>';
             }
-            content += '	<td width="20%" style="text-align:center;">'+'<a href="/inquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';      
+            content += '	<td width="20%" style="text-align:center;">'+'<a href="/admin/inquirydetail.go?inquiry_idx='+item.inquiry_idx+'">'+item.inquiry_title+'</a></td>';      
             content += '	<td width="20%" style="text-align:center;">'+item.member_nickname+'</td>';
             content += '	<td width="20%" style="text-align:center;">'+item.inquiry_regdate+'</td>';
             if (item.inquiry_state == 1) {
@@ -240,7 +262,7 @@ function reReplyCall(inquiry_idx, callback) {
 	  console.log(inquiry_idx);
 	  $.ajax({
 	    type: 'post',
-	    url: 'inquiryreplylist.ajax',
+	    url: '/inquiryreplylist.ajax',
 	    data: {
 	      'inquiry_idx': inquiry_idx
 	    },
@@ -256,8 +278,8 @@ function reReplyCall(inquiry_idx, callback) {
 function reReplyPrint(replyList) {
 	  var content = '';
 	  replyList.forEach(function(reply) {
-		content += '<th style="width:20%; text-align:center;">'+'[답변]'+'</th>';		
-		content += '<td style="width:20%; text-align:center;">'+'<a href="/inquirydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
+		content += '<th style="width:20%; text-align:center;">'+'ㄴ [답변]'+'</th>';		
+		content += '<td style="width:20%; text-align:center;">'+'<a href="/admin/inquiryreplydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.member_nickname + '</td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.inquiry_regdate+'</td>';
 	    content += '<th style="width:20%; text-align:center;"></th>';

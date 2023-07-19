@@ -6,6 +6,7 @@ import org.apache.ibatis.type.Alias;
 public class AlarmDTO {
 
 	//Alarm
+	private String alarm_idx;
 	private String code_idx;
 	private String idx;
 	private String alarm_content;
@@ -13,6 +14,12 @@ public class AlarmDTO {
 	private String alarm_date;
 	
 	
+	public String getAlarm_idx() {
+		return alarm_idx;
+	}
+	public void setAlarm_idx(String alarm_idx) {
+		this.alarm_idx = alarm_idx;
+	}
 	public String getCode_idx() {
 		return code_idx;
 	}

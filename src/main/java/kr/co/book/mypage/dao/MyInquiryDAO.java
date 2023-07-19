@@ -33,6 +33,8 @@ public interface MyInquiryDAO {
 
 	ArrayList<MyInquriyDTO> myinquiryreplylist(String reply_idx);
 
+	MyInquriyDTO myinquiryreplydetail(String inquiry_idx);
+
 	
 	
 

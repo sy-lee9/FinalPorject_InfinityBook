@@ -106,6 +106,11 @@ public class MyInquiryService {
 		
 		return reply;
 	}
+	// 내 문의 답변 상세보기
+	public MyInquriyDTO myinquiryreplydetail(String inquiry_idx) {
+		
+		return dao.myinquiryreplydetail(inquiry_idx);
+	}
 
 
 
