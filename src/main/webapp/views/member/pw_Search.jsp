@@ -15,61 +15,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.container {
-  width: 470px;
-  padding: 40px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-h4 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-h5 {
-  font-size: 14px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-input[type="email"],
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  box-sizing: border-box; /* 입력 값에 패딩과 테두리를 포함하도록 설정 */
-}
-
-a {
-  display: inline-block;
-  margin-top: 10px;
-  text-decoration: none;
-  color: #ffffff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  padding: 12px 24px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-a:hover {
-  background-color: #0056b3;
-}
-
 
 </style>
 </head>
