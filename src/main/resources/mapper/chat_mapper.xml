@@ -166,7 +166,7 @@
 			WHERE change_idx = #{param1}
 		</update>
 		
-		<!-- 대여 예약 취소 -->
+		<!-- 약속 거절 -->
 		<update id="rentreservationno">
 			UPDATE rent SET rent_state = 0, mod_member_idx = #{param2}
 			WHERE rent_idx = #{param1}
@@ -244,31 +244,6 @@
 			WHERE library_idx = #{param1}
 		</select>
 		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-   		
-   		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-						
+				
 		 
 	</mapper>

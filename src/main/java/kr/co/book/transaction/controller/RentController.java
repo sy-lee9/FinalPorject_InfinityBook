@@ -45,6 +45,17 @@ public class RentController {
 		return "/Library/libraryDone";
 	}
 	
+	// 완료 시
+	@RequestMapping(value="/rentend.ajax")
+	public String rentend(@RequestParam HashMap<String, Object> params, HttpSession session) {
+		
+		params.put("member_idx", (session.getAttribute("loginIdx").toString()));
+		// 상태 변경
+		service.rentend(params);
+		
+		return "/Library/libraryDone";
+	}
+	
 
 	
 }
