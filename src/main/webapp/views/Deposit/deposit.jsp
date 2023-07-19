@@ -78,25 +78,20 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
 								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
-								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item  active"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="#">회원 정보</a></li>
-								        <li><a href="#">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
-								     </ul>
+		                                <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+		                                <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+		                                <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
+		                             </ul>
 								</li>								
 							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
 						</div>
 					</nav>
 				</div>
