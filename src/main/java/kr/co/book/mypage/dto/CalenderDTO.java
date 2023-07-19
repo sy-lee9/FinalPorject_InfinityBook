@@ -11,7 +11,6 @@ public class CalenderDTO {
 	private String title;
 	private int stateNum;
 	private String backgroundColor;
-	
 	public String getState() {
 		return state;
 	}

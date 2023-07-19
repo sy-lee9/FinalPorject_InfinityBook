@@ -87,18 +87,19 @@
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item active"><a href="/mypage/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/memberInfo.go">회원 정보</a></li>
 								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
+								        <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
 								     </ul>
 								</li>								
 							</ul>
@@ -123,15 +124,15 @@
 <section id="padding-large">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12" style="margin-top:5%;">
+			<div class="col-md-12">
 
 				<div class="section-header align-center">
-					<h2 class="section-title">Tracker</h2>
+					<h2 class="section-title" style="margin-botton:25px;">Tracker</h2>
 				</div>					
 				<input type="button" value="추가" onclick="location.href='/mypage/trackerSearch.go'" style="float: right; bottom: 80px;">
-				<div class="row" style="margin-top: 15%;">
+				<div class="row" style="margin-top: 10%;">
 					<c:if test="${trackerList.size() eq 0}">
-						<h3 style="text-align: center;">읽고 있는 책을 추가 해보세요!</h3>
+						<h3 style="text-align: center; margin-top: 10%;">읽고 있는 책을 추가 해보세요!</h3>
 					</c:if>
 						<c:forEach items="${trackerList}" var="book">
 						<div class="col-md-4" style="margin-bottom: 10%; height: 541px;">

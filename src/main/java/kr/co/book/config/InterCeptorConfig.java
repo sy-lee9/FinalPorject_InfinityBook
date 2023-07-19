@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import kr.co.book.utils.GradeCheck;
 import kr.co.book.utils.LoginCheck;
+import kr.co.book.utils.StateCheck;
 
 @Configuration
 public class InterCeptorConfig implements WebMvcConfigurer {
@@ -14,6 +15,7 @@ public class InterCeptorConfig implements WebMvcConfigurer {
 	
 	@Autowired LoginCheck check;
 	@Autowired GradeCheck gCheck;
+	@Autowired StateCheck sCheck;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -26,5 +28,9 @@ public class InterCeptorConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(gCheck) // 1. 실행할 클래스
 		.addPathPatterns("/admin/**");
+
+		registry.addInterceptor(sCheck) // 1. 실행할 클래스
+		.addPathPatterns("/**")
+        .excludePathPatterns("/logout.do");
 	}	
 }

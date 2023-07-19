@@ -92,18 +92,19 @@
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item active"><a href="/mypage/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/memberInfo.go">회원 정보</a></li>
 								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
+								        <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
 								     </ul>
 								</li>								
 							</ul>
@@ -124,19 +125,25 @@
 	</header>
 		
 </div><!--header-wrap-->
-	<div class="section-header align-center" style="margin: 5%;">
-		<h2 class="section-title">Tracker</h2>
+
+<section id="padding-large">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+	<div class="section-header align-center"">
+		<h2 class="section-title" style="margin-botton:25px;">Tracker</h2>
 	</div>					
 	<input type="button" value="삭제" onclick="trackerDelete()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
 	<input type="button" value="수정" onclick="trackerUpdate()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
-<section id="best-selling" class="leaf-pattern-overlay" style="margin-top: 6%; margin-bottom: 1%">
+
 	<input type="hidden" id="trackerIdx" name="trackerIdx" value="${book.tracker_idx}">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">	
-		<div class="row" style=" padding-left: 0px; padding-right: 13%;">			
+		<div class="row" style=" margin-top: 11%; padding-right: 17%;">			
 			<div class="col-md-8 col-md-offset-2">				
 				<div class="row">	
-					<div class="col-md-6" style="height: 48%;">
+					<div class="col-md-6" style="height: 48%; margin-top: -5%;">
 						<figure class="products-thumb" style="height: 96%; width: 100%; display: flex; justify-content: center; align-items: center;">
 							<img src="${book.cover}" alt="book" class="single-image" style="height: 90%; width: 72%;">
 						</figure>	
@@ -167,12 +174,9 @@
 
 		</div>
 	</div>
-</section>
 
-<section id="subscribe" style="padding-top: 0%;">
-	<div class="col-md-6" style=" padding: 1% 1% 2% 20%;">
-		<div class="title-element">
-			<h2 class="section-title divider">MEMO</h2>
+
+			<h2 class="section-title divider" style="margin: 9% 17% 6%;">MEMO</h2>
 		</div>
 	</div>
 	<div class="container">
@@ -191,7 +195,7 @@
 									<i class="icon icon-send"></i>
 								</button>
 							</div>
-							<hr>
+							<hr style="marigin: 3%;">
 							<div id="list" style="position: relative;">
 								<!-- list 출력 영역 -->
 							</div>							
@@ -202,9 +206,12 @@
 				</div>
 			</div>
 			
+
+			</div>	
 		</div>
 	</div>
 </section>
+
 
 <div id="footer-bottom" style="margin-top:5%">
 	<div class="container">
@@ -215,7 +222,7 @@
 					<div class="row">
 
 						<div class="col-md-12">
-							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
+							<p style="margin-top: 5%;">Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>				
 
 					</div>
@@ -279,11 +286,12 @@
 		var content = '';
 		
 		list.forEach(function(list){			
-			content +='<div class="memo-div">';
+			content +='<div class="memo-div" style="margin: 7% 5% 0%; width: 90%;">';
 			content +='<p style="width: 90%; height: 4%; padding:0.5% 1% 0.5% 1%; margin-bottom: 0px; display: inline;">'+list.content.replace(/\n/g, "<br>")+
-						'<input type="button" onclick="memoDelete(\''+list.tracker_idx+"\',\'"+list.memo_idx+'\')" id="delete" value="삭제" style="margin: 0.5%; float: right; padding: 0.5%; width: auto; height: auto; font-size: 11px; float: right;"><input type="button" class="update" onclick="memoUpdate(\''+list.tracker_idx+"\',\'"+list.memo_idx+'\')" id="update" value="수정" style="margin: 0.5%; float: right; padding: 0.5%; width: auto; height: auto; font-size: 11px; float: right;">';	
+						'<input type="button" onclick="memoDelete(\''+list.tracker_idx+"\',\'"+list.memo_idx+'\')" id="delete" value="삭제" style="margin: 0.5%; float: right; padding: 0.5%; width: auto; height: auto; font-size: 11px; float: right;">'+
+						'<input type="button" class="update" onclick="memoUpdate(\''+list.tracker_idx+"\',\'"+list.memo_idx+'\')" id="update" value="수정" style="margin: 0.5%; float: right; padding: 0.5%; width: auto; height: auto; font-size: 11px; float: right;">';	
 			content +='</div>';
-			content +='<p style="position: absolute; right: 0; margin-top: 0%; font-size: 13px;">'+list.regDate+'</p>';
+			content +='<p style="position: absolute; right: 0; margin: 0% 5%; font-size: 13px;">'+list.regDate+'</p>';
 		}); 
 		$('#list').empty();
 		$('#list').append(content);

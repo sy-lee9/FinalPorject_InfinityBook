@@ -53,23 +53,13 @@ public class MemberController {
 	        boolean isMatched = encoder.matches(member_pw, encodePassWord);
 	        
 	        if (isMatched) {
-	        	String memberState = dto.getMember_state();
-	        	if(!memberState.equals("정상")) {
-	        		if(memberState.equals("7일 제한")) {
-	        			map.put("msg","신고처리로 인해 7일 동안 이용제한 되었습니다.");
-	        		} else if(memberState.equals("15일 제한")) {
-	        			map.put("msg","신고처리로 인해 15일 동안 이용제한 되었습니다.");
-	        		} else if(memberState.equals("영구제한")) {
-	        			map.put("msg","신고처리로 인해 이용이 영구제한 되었습니다.");
-	        		}
-	        	} else{
 		        	logger.info("컨트롤러" + isMatched);
 		            map.put("success", 1);
 		            session.setAttribute("loginIdx", dto.getMember_idx());
 		            session.setAttribute("loginEmail", dto.getMember_email());
 		            session.setAttribute("loginNickname", dto.getMember_nickname());
-		            session.setAttribute("loginGrade", dto.isMember_grade());	        		
-	        	}
+		            session.setAttribute("loginGrade", dto.isMember_grade());	  
+		            session.setAttribute("memberState", dto.getMember_state());
 	        }
 	    }
 	    

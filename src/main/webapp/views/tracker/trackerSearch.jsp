@@ -79,18 +79,19 @@
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
-								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item active"><a href="/mypage/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li><a href="/mypage/memberInfo.go">회원 정보</a></li>
 								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
+								        <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
 								     </ul>
 								</li>								
 							</ul>
@@ -111,15 +112,15 @@
 	</header>
 		
 </div><!--header-wrap-->
-<section class="padding-large">
+<section class="padding-large" style="padding:0;">
 	<div class="container">
-		<div class="row">
+		<div class="row" style="margin-bottom: 21%;">
 		
 			<div class="section-header align-center">
-				<h2 class="section-title">Tracker</h2>
+				<h2 class="section-title" style="margin-botton:25px;">Tracker</h2>
 			</div>
 				<div class="search-bar" style="width: 300px; display: inline;">
-					<form action="/mypage/trackerSearch.do" role="search" method="get" class="search-box">
+					<form action="/mypage/trackerSearch.do" role="search" method="get" class="search-box" style=" margin-top: -1%; padding-left: 66%;">
 						<select name="searchType">
 							<option value="Title" >제목</option>
 							<option value="Author">저자</option>
