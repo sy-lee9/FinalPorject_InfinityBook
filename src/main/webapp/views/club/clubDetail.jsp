@@ -38,13 +38,7 @@
 		 		border:none;
 			}
 			
-			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-			h4{
-				font-family: 'IBM Plex Sans KR';	
-				font-weight: 600;
-				margin: 10 0 0 0;
-			}
-			
+	
 	</style>	
 	</head>
 
@@ -155,10 +149,9 @@
 								<div class="author-name">
 								    <c:forEach items="${member}" var="member">
 								    	<a onclick="profilePop(${member.member_idx})" style="cursor: pointer;">${member.member_nickname}</a>
-								    	<c:if test="${loginIdx == club.member_idx}">								    	
-									    	<c:if test="${member.member_idx ne club.member_idx}">								    	
-									    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
-									    	</c:if>
+								    	
+								    	<c:if test="${member.member_idx ne club.member_idx}">								    	
+								    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
 								    	</c:if>
 								    </c:forEach>
 								</div>
@@ -182,7 +175,7 @@
 								</c:if>
 								
 							</c:if>
-							<c:if test="${loginIdx != club.member_idx && loinIdx != null}">
+							<c:if test="${loginIdx != club.member_idx || loinIdx != null}">
 								<c:if test="${club.club_state eq 0}">
 									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
 								</c:if>
@@ -213,15 +206,7 @@
 		<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
-				<c:choose>
-				  <c:when test="${loginIdx != null}">
-				    <textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
-				  </c:when>
-				  <c:otherwise>
-				    <textarea id="replycontent" placeholder="댓글은 로그인 이후 이용가능합니다." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
-				  </c:otherwise>
-				</c:choose>
-
+				<textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
 				<button onclick="clubReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
 					<span>작성</span> 
 					<i class="icon icon-send"></i>
@@ -291,29 +276,26 @@ $(document).ready(function() {
 var club_idx = ${club.club_idx};
 
 function clubReplyWrite() {
-	
-		$.ajax({
-	        url: '/clubReplyWrite.ajax',
-	        type: 'post',
-	        data: {
-	        	'reply_content':document.getElementById("reply_content").value,
-	        	'club_idx':club_idx
-	        },
-			dataType:'json',
-			success: function(data) {
-				console.log(data.success);
-				if(data.success == 1){
-					document.getElementById("reply_content").value = "";
-					listCall(showPage);	
-				}
-	        },
-			error:function(e){
-				console.log(e);
+    
+    $.ajax({
+        url: '/clubReplyWrite.ajax',
+        type: 'post',
+        data: {
+        	'reply_content':document.getElementById("reply_content").value,
+        	'club_idx':club_idx
+        },
+		dataType:'json',
+		success: function(data) {
+			console.log(data.success);
+			if(data.success == 1){
+				document.getElementById("reply_content").value = "";
+				listCall(showPage);	
 			}
-	    });
-	
-    
-    
+        },
+		error:function(e){
+			console.log(e);
+		}
+    });
 }
 
 function clubReplyDelete(reply_idx) {
@@ -386,7 +368,7 @@ function listPrint(list) {
 	    if (${sessionScope.loginIdx} == item.member_idx) {
 	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
 	    } else {
-	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a> / <a onclick="reportPop(reply_report,'+item.reply_idx+')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
+	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a> / <a onclick="reportPop(\'reply_report\',\''+item.reply_idx+'\')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
@@ -469,7 +451,7 @@ function reReplyPrint(replyList) {
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
 	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
 	    } else{
-	    	content += '<a onclick="reportPop(reply_report,'+reply.reply_idx+')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
+	    	content += '<a onclick="reportPop(\'reply_report\',\''+reply.reply_idx+'\')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';

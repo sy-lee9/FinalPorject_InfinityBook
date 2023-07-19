@@ -74,5 +74,12 @@
 			JOIN member m ON i.member_idx = m.member_idx 
 			WHERE i.inquiry_upidx = #{param1} 
 		</select>
+						
+		<select id="myinquiryreplydetail" resultType="myinquiry">
+			SELECT i.inquiry_idx, m.member_nickname, i.code_idx, i.inquiry_title, i.inquiry_content, i.inquiry_regdate, i.inquiry_state
+			FROM inquiry i
+			JOIN member m ON i.member_idx = m.member_idx
+			WHERE i.inquiry_idx = #{inquiry_idx} AND i.inquiry_blind = 0
+		</select>	
 	
 	</mapper>

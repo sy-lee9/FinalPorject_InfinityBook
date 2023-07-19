@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 	<meta charset="UTF-8">
 	<head>
 		<title>Infinite B∞k</title>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 	    <meta name="author" content="">
 	    <meta name="keywords" content="">
 	    <meta name="description" content="">
-
+	    
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
@@ -27,16 +27,22 @@
 		<script src="/js/modernizr.js"></script>		
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
-		 <link rel="icon" href="/images/mainLogo.png" class="images">
+		
 <style>
 	.pagination .page-link {
-  		color: gray; /* 기본 글자색을 검정색으로 지정 */
-	}
-
-	.pagination .page-item.active .page-link {
-	 	background-color: #C5A992;
-	 	border:none;
-	}
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
+	
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h4{
+				font-family: 'IBM Plex Sans KR';	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
 </style>
 </head>
 <body>
@@ -83,12 +89,22 @@
 			</div>
 		</div>
 	</header>
-</div>
+</div><!--header-wrap-->
 
-	<h2 class="section-title" style="margin-bottom:25px; text-align:center;">My Inquiry</h2>
-	
-	<hr/>
-	
+
+
+<section class="hero-section jarallax">	
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-botton:0px;">My Inquiry</h2>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
+	<div class="container">
 	<!-- 문의 종류 필터링  -->
 	<select id="categoryCode">
 		<option value="default">문의 종류</option>
@@ -134,7 +150,32 @@
 			</td>
 			</tr>
 		</table>
-	
+	</div>
+</section>
+
+<div id="footer-bottom">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="copyright">
+					<div class="row">
+
+						<div class="col-md-12" style="text-align:center;">
+							<hr/>
+							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
+						</div>
+
+						
+
+					</div>
+				</div><!--grid-->
+
+			</div><!--footer-bottom-content-->
+		</div>
+	</div>
+</div>
+
 </body>
 <script>
 var showPage = 1;
@@ -166,7 +207,7 @@ $('#inqProcess').change(function(){
 function listCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'myinquirylist.ajax',
+	      url:'/mypage/myinquirylist.ajax',
 	      data:{
 	    	  'page':page,
 	    	  'categoryCode' : selectedcategoryCode,
@@ -239,7 +280,7 @@ function reReplyCall(inquiry_idx, callback) {
 	  console.log(inquiry_idx);
 	  $.ajax({
 	    type: 'post',
-	    url: 'inquiryreplylist.ajax',
+	    url: '/inquiryreplylist.ajax',
 	    data: {
 	      'inquiry_idx': inquiry_idx
 	    },
@@ -255,8 +296,8 @@ function reReplyCall(inquiry_idx, callback) {
 function reReplyPrint(replyList) {
 	  var content = '';
 	  replyList.forEach(function(reply) {
-		content += '<th style="width:20%; text-align:center;">'+'[답변]'+'</th>';		
-		content += '<td style="width:20%; text-align:center;">'+'<a href="/mypage/inquirydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
+		content += '<th style="width:20%; text-align:center;">'+'ㄴ [답변]'+'</th>';		
+		content += '<td style="width:20%; text-align:center;">'+'<a href="/myinquiryreplydetail.go?inquiry_idx='+reply.inquiry_idx+'">'+reply.inquiry_title+'</a></td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.member_nickname + '</td>';
 	    content += '<td style="width:20%; text-align:center;">' + reply.inquiry_regdate+'</td>';
 	    content += '<th style="width:20%; text-align:center;"></th>';

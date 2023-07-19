@@ -27,13 +27,20 @@
 </style>
 <div id="login"></div>
 <div id="alarmlist" style="height: 400px; overflow: auto; overflow-x: auto; display:none;"></div>
+<script src='./js/alarm.js'></script>
 <script>
     var content = "<div class='top-content'>";
     content += "<div class='container'>";
     content += "<div class='row'>";
     content += "<div class='col-md-12'>";
     content += "<div class='right-element'>";
-    content += "<a href='/admin/adminMain' style='color: red;'>[관리자 페이지]&nbsp;&nbsp;</a>" + "반가워요 <b>${sessionScope.loginNickname}</b>님! <a href='/logout.do' style='color: blue;'>[로그아웃]</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+   
+    if(${sessionScope.loginGrade}){
+    	content += "<a href='/admin/adminMain' style='color: red;'>[관리자 페이지]&nbsp;&nbsp;</a>";	
+    }
+   
+   
+    content += "반가워요 <b>${sessionScope.loginNickname}</b>님! <a href='/logout.do' style='color: blue;'>[로그아웃]</a>&nbsp;&nbsp;&nbsp;&nbsp;";
     content += "<a href='/message_list.go'>💬 채팅</a>&nbsp;&nbsp;&nbsp;&nbsp;";
     content += "<a onclick='alarm_list()' style='cursor: pointer;'>🔔알림 <span class='alarm'></span></a>";
     content += "</div><!--top-right-->";
@@ -69,7 +76,7 @@
     }
     
     function alarmdel_all(){
-    	
+    	var alarmlist = document.getElementById("alarmlist");
     	// 알람 전체 삭제
     	$.ajax({
     		url:"/alarmdel_all.ajax",
@@ -77,12 +84,19 @@
     		data:{
     		},
     		success:function(data){
-    			console.log("알림 지우기 성공");    		
-    			$('#alarmlist').html('');
-
-    			   			
+    			console.log("알림 지우기 성공");    
+    			
+    		    if (alarmlist.style.display === "none") {
+    		        alarmlist.style.display = "block";
+    		        
+    		    } else {
+    		        alarmlist.style.display = "none";
+    		    }
+ 			
     			}
     	});
     }
+    
+
     
 </script>

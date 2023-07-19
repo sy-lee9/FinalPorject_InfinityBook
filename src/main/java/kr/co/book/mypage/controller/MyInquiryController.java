@@ -61,7 +61,7 @@ public class MyInquiryController {
 	
 	// 내 문의 리스트 상세보기
 	@RequestMapping(value = "/mypage/myinquirydetail.go")
-	public ModelAndView requestMethodName(@RequestParam String inquiry_idx) {
+	public ModelAndView myinquirydetail(@RequestParam String inquiry_idx) {
 		
 		ModelAndView mav = new ModelAndView("/inquiry/myinquirylist");		
 
@@ -75,9 +75,25 @@ public class MyInquiryController {
 		return mav;
 	}
 	
+	// 내 문의 답변 상세보기
+	@RequestMapping(value = "/myinquiryreplydetail.go")
+	public ModelAndView myinquiryreplydetail(@RequestParam String inquiry_idx) {
+		
+		ModelAndView mav = new ModelAndView("/inquiry/myinquirylist");		
+
+		MyInquriyDTO dto =  service.myinquiryreplydetail(inquiry_idx);
+		
+		if (dto != null) {
+			mav.addObject("inquiry", dto);
+			mav.setViewName("/inquiry/myinquirydetail");
+		}
+		
+		return mav;
+	}
+	
 	
 	// 내문의 답변 불러오기
-	@RequestMapping(value = "/mypage/inquiryreplylist.ajax")
+	@RequestMapping(value = "/inquiryreplylist.ajax")
 	@ResponseBody
 	public HashMap<String, Object> myinquiryreplylist(@RequestParam String inquiry_idx) {
 		logger.info(inquiry_idx);

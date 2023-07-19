@@ -16,8 +16,12 @@ public interface AdminReportDAO {
 
 	int blind(HashMap<String, Object> params);
 
-	void updateMemberState(HashMap<String, Object> params);
+	void blindAlarm(HashMap<String, Object> params);
+
+	int updateMemberState(HashMap<String, Object> params);
 
 	int reportHandlingRecord(HashMap<String, Object> params);
+
+	int reportHandlingCompleted(HashMap<String, Object> params);
 
 }

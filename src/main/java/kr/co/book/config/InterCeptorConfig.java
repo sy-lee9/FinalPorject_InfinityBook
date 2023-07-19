@@ -21,7 +21,8 @@ public class InterCeptorConfig implements WebMvcConfigurer {
 		registry.addInterceptor(check) // 1. 실행할 클래스
 		.addPathPatterns("/admin/**")
 		.addPathPatterns("/mypage/**")
-		.addPathPatterns("/myClubList.go");
+		.addPathPatterns("/myClubList.go")
+		.addPathPatterns("/message_list.go");
 		
 		registry.addInterceptor(gCheck) // 1. 실행할 클래스
 		.addPathPatterns("/admin/**");
