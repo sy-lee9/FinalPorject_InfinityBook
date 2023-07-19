@@ -43,13 +43,16 @@
 		<table>
 			<tr>
 				<th>
-					<label for="email">이메일</label>
+					<label for="email">이메일</label>					
+					
 				</th>
 				<td>
                     <input type="email" id="member_email" placeholder="이메일을 입력하세요.">
-                    <span id="email_msg"></span>                    
+                    <span id="email_msg"></span>
+                                        
                     &nbsp;
                     <button onclick="member_email_check()">메일 전송</button>
+                    <div id="duplicate_email_message"></div>
                 </td>
 	        </tr>
 	        <tr>
@@ -128,30 +131,33 @@ function join(){
   var specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   
   // 회원가입 버튼 클릭시 실행되는 빈칸 체크
-  if($member_email.val()==''){
-    alert('이메일을 입력해 주세요!');
-    $member_email.focus();
-  } else if($member_email.val().length <= 4){
-    alert('이메일을 5자리 이상 입력해 주세요!'); 
-    $member_email.focus();    
-  } else if($member_pw.val()==''){
-    alert('비밀번호를 입력해 주세요!');      
-    $member_pw.focus();      
-  } else if($member_pw.val().length <= 7){
-    alert('비밀번호는 8자리 이상 입력해 주세요!');
-    $member_pw.focus();
-  } else if($member_nickname.val()==''){
-    alert('닉네임를 입력해 주세요!');
-    $member_nickname.focus();      
-  } else if($member_nickname.val().length <= 1 || $member_nickname.val().length >= 11){      
-    alert('닉네임을 2글자 이상 10글자 이하로 입력해주세요.');
-    $member_nickname.focus();
-  } else if (specialChars.test($member_nickname.val())) {
-	alert('특수문자는 ‘!, @, #, $, %, ^, &, *’만 사용 가능합니다.');
-	$member_nickname.focus();
-  } else if($location.val()==''){
-    alert('주소를 입력해 주세요!');
-  } else if(pweq && overlayNicknameChk){
+  if ($member_email.val() == '') {
+	  alert('이메일을 입력해 주세요!');
+	  $member_email.focus();
+	} else if ($member_email.val().length <= 4) {
+	  alert('이메일을 5자리 이상 입력해 주세요!');
+	  $member_email.focus();
+	} else if ($member_pw.val() == '') {
+	  alert('비밀번호를 입력해 주세요!');
+	  $member_pw.focus();
+	} else if ($member_pw.val().length <= 7) {
+	  alert('비밀번호는 8자리 이상 입력해 주세요!');
+	  $member_pw.focus();
+	} else if (!/[!@#$%^&*]/.test($member_pw.val())) {
+	  alert('비밀번호 특수문자를 포함해야 합니다. ‘!, @, #, $, %, ^, &, *’만 사용 가능합니다.');
+	  $member_pw.focus();
+	} else if ($member_nickname.val() == '') {
+	  alert('닉네임을 입력해 주세요!');
+	  $member_nickname.focus();
+	} else if ($member_nickname.val().length <= 1 || $member_nickname.val().length >= 11) {
+	  alert('닉네임을 2글자 이상 10글자 이하로 입력해주세요.');
+	  $member_nickname.focus();
+	} else if (!/[!@#$%^&*]/.test($member_nickname.val())) {
+	  alert('닉네임 특수문자를 포함해야 합니다. ‘!, @, #, $, %, ^, &, *’만 사용 가능합니다.');
+	  $member_nickname.focus();
+	} else if ($location.val() == '') {
+	  alert('주소를 입력해 주세요!');	  
+	}else if(pweq && overlayNicknameChk){
     // 입력한 값을 배열에 담음
     var param = {};
     param.member_email = $member_email.val();
@@ -210,15 +216,25 @@ $('#member_nickname').on('keyup', function(e){
     ,success:function(data){
 		console.log(data);			
 		
-		if(data.overlaynickname==0){             
-          overlayNicknameChk=true;
-          $('#nickname_msg').css({'font-size': '10px','color': 'darkgreen'});
-  		$('#nickname_msg').html('사용 가능한 닉네임 입니다.');
-     }else {             
-          overlayNicknameChk=false;
-          $('#nickname_msg').css({'font-size': '10px','color': 'red'});
-   		$('#nickname_msg').html('중복된 닉네임 입니다.');
-       }
+		if (data.overlaynickname == 0) {
+			  overlayNicknameChk = true;
+			  $('#nickname_msg').css({
+			    'font-size': '10px',
+			    'color': 'darkgreen'
+			  }).text('사용 가능한 닉네임입니다.');
+
+			  if (!/[!@#$%^&*]/.test($('#member_nickname').val())) {
+			    $('#nickname_msg').css('color', 'red').append('<br>특수문자를 포함해야 합니다. ‘!, @, #, $, %, ^, &, *’만 사용 가능합니다.');
+			    overlayNicknameChk = false;
+			  }
+			} else {
+			  overlayNicknameChk = false;
+			  $('#nickname_msg').css({
+			    'font-size': '10px',
+			    'color': 'red'
+			  }).text('중복된 닉네임입니다.');
+			}
+
     }
     ,error:function(e){
        console.log(e);
@@ -227,18 +243,23 @@ $('#member_nickname').on('keyup', function(e){
 	}
 });
 
-$('#member_pw').on('keyup',function(e){
+$('#member_pw').on('keyup', function(e) {
+	  if ($('#member_pw').val().length <= 7) {
+	    $('#pw_msg1').css({
+	      'font-size': '10px',
+	      'color': 'red'
+	    }).text('비밀번호를 8자리 이상 입력해주세요.');
 
-	if($('#member_pw').val().length <=7){
-		$('#pw_msg1').css({'font-size': '10px','color': 'red'});
-		$('#pw_msg1').html('비밀번호를 8자리 이상 입력해주세요');
-	}else{
-		$('#pw_msg1').css({'font-size': '10px','color': 'darkgreen'});
-		$('#pw_msg1').html('사용 가능한 비밀번호 입니다.');
-	}
-});
-
-
+	    if (!/[!@#$%^&*]/.test($('#member_pw').val())) {
+	      $('#pw_msg1').css('color', 'red').append('<br>특수문자를 포함해야 합니다. ‘!, @, #, $, %, ^, &, *’ 중 하나를 사용하세요.');
+	    }
+	  } else {
+	    $('#pw_msg1').css({
+	      'font-size': '10px',
+	      'color': 'darkgreen'
+	    }).text('사용 가능한 비밀번호입니다.');
+	  }
+	});
 $('#pw_confirm').on('keyup',function(e){
 	pweq = false;
 	if($('#pw_confirm').val() == $('#member_pw').val()){
@@ -265,34 +286,42 @@ document.getElementById("address_kakao").addEventListener("click", function(){
 });
 
 function member_email_check() {
+	  var member_email = $('#member_email').val();
+
+	  // Check if member_email is null or does not contain "@" and "."
+	  if (!member_email || member_email.indexOf('@') === -1 || member_email.indexOf('.') === -1) {
+	    alert('이메일 주소를 올바르게 입력해주세요.');
+	    return;
+	  }
+
 	  $.ajax({
 	    type: 'post',
 	    url: 'member_email_check.ajax',
 	    data: {
-	      member_email: $('#member_email').val()
+	      member_email: member_email
 	    },
 	    dataType: 'json',
 	    success: function(data) {
 	      console.log(data);
 	      if (data.check != null) {
-	        alert('입력한 이메일로 인증번호를 전송했습니다.\r\n 인증번호를 확인 해주세요.');
-	        
+	        alert('입력한 이메일로 인증번호를 전송했습니다.\r\n인증번호를 확인해주세요.');
 	        check = data.check;
-	        
-	      }else if (data.check != null) {
-			alert('가입된 이메일이 존재합니다.');
-		  }else {
-	        alert('입력한 이메일은 존재하지 않습니다.');
+	      } else {
+	        $('#duplicate_email_message').text('중복된 이메일입니다. 다른 이메일을 입력해주세요.').css({
+	          'color': 'red',
+	          'font-size': '12px' // Adjust the font size as per your requirement
+	        });
 	      }
-	      
-	      
 	    },
 	    error: function(e) {
 	      console.log(e);
-	      alert('오류가 발생했습니다. 잠시 후 다시 시도해 주세요');
+	      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
 	    }
 	  });
 	}
+
+
+
 
 // 1. 인증번호를 입력하고 나갈떄(keyup)
 // 2. 인증번호를 확인해서
