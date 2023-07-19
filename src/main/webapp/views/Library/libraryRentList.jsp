@@ -215,7 +215,7 @@ function listCall(page){
 	    content += '<div id="products-grid" class="products-grid grid">';
 	    content += '  <figure class="product-style">';
 	    content += '    <input type="button" class="btn btn-outline-accent btn-accent-arrow" style="border:none;">';
-	    content += '    <a href="#" onclick="window.open(\'/mypage/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=600px\')">';
+	    content += '    <a href="#" onclick="window.open(\'/mypage/bookSelectPop.go?start=1&text=\',\'Infinity_Book\',\'width=800px,height=700px\')">';
 	    content += '      <img src="/images/client-image5.png" style="width:230px; height:290px;" alt="Books" class="product-item">';
 	    content += '      <figcaption> <h4>책 등록하기</h4> </figcaption>';
 	    content += '    </a>';

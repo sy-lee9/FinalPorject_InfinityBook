@@ -55,7 +55,7 @@
 </section>
 
 <form action="clubBookSearch.do" role="search" method="get" class="search-box" style="text-align: center;">
-	<input class="search-field text search-input" placeholder="검색어를 입력하세요." type="search" name="searchValue" >
+	<input class="search-field text search-input" autocomplete='off' placeholder="검색어를 입력하세요." type="search" name="searchValue" >
 	<input type="submit" value="검색"/>
 </form>
 		
@@ -68,10 +68,10 @@
 					<c:forEach var="book" items="${item.value}" varStatus="status">
 						<tr> 
 							<td> 
-								<img src="${book.cover}" style="width:400px; height:200px;" alt="Books" class="product-item"> 
+								<img src="${book.cover}" style="width:180px; height:200px;" alt="Books" class="product-item"> 
 							</td> 
-							<td> 
-								<div class="item-price" style="width:500px;" >${book.title}</div> 
+							<td style="width:400px;"> 
+								<div class="item-price" style="width:400px;" >${book.title}</div> 
 								<div class="item-price">${book.author}</div> 
 							</td>
 							<td> 
