@@ -82,7 +82,7 @@
 				if(data.success){
 					console.log("수정 완료");
 					if (data.success == 1) {
-						  window.alert("수정 되었습니다.");
+						  window.alert("수정되었습니다.");
 						  window.close(); 
 						  if (window.opener) {
 							  window.opener.location.reload();

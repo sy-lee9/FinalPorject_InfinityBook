@@ -72,22 +72,18 @@ $(document).ready(function() {
 	      dataType: "json",
 	      success: function(data) {
 	        console.log(data);
-	        if(data.msg != ''){
-	        	alert(data.msg);
-	        	location.href = "./";
-	        } else if(data.success == 1) {
-	          alert("로그인에 성공했습니다.");
+	        if(data.success == 1) {
 	          setCookie("email", email, 30);
-	          if (rememberMe) {
+	          if(rememberMe) {
 	            setCookie("rememberMe", "true", 30);
-	          } else {
+	          } else{
 	            deleteCookie("rememberMe");
 	          }
 	          location.href = "./";
-	        } else {
+	       } else{
 	          alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");
-	        }
-	      },
+	       }
+	    },
 	      error: function(e) {
 	        console.log(e);
 	        alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");

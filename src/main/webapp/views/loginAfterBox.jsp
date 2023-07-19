@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 	#alarmlist{
 		position: absolute;
@@ -34,7 +35,7 @@
     content += "<div class='row'>";
     content += "<div class='col-md-12'>";
     content += "<div class='right-element'>";
-    content += "<a href='/admin/adminMain' style='color: red;'>[관리자 페이지]&nbsp;&nbsp;</a>" + "반가워요 <b>${sessionScope.loginNickname}</b>님! <a href='/logout.do' style='color: blue;'>[로그아웃]</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+    content += "<a href='/admin/adminMain' style='color: red;'>[관리자페이지]&nbsp;&nbsp;</a>" + "반가워요 <b>${sessionScope.loginNickname}</b>님! <a href='/logout.do' style='color: blue;'>[로그아웃]</a>&nbsp;&nbsp;&nbsp;&nbsp;";
     content += "<a href='/message_list.go'>💬 채팅</a>&nbsp;&nbsp;&nbsp;&nbsp;";
     content += "<a onclick='alarm_list()' style='cursor: pointer;'>🔔알림 <span class='alarm'></span></a>";
     content += "</div><!--top-right-->";

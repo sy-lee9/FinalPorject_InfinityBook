@@ -80,18 +80,19 @@
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
 								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
-								<li class="menu-item has-sub">
+								<li class="menu-item has-sub active">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
-								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
+								        <li><a href="/mypage/memberInfo.go">회원 정보</a></li>
+								        <li class="active"><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+								        <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
 								     </ul>
 								</li>								
 							</ul>
@@ -272,8 +273,8 @@
 	    	content += '<td style="text-align:center;"><img src="' + item.changeBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.changeBook+'</h4></td>';
 	    	
 	    	if (state == 4 && reviewChk == 0) {
-		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer + '</a> <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
-	    	}else {
+		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer + '</a> <input type="button" onclick="reviewGo('+item.+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    	}else { 
 		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer + '</a></td>';
     		}
 	    	
@@ -290,6 +291,10 @@
 
 	    $('#list').empty();
 		$('#list').append(content);
+	}
+	
+	function reviewGo() {
+		location.href="/Review.go?member_sender=(하는사람)1&review_type=0&member_reciever=(받는사람)&book_reciever=(받는책)&review_transaction_type=(대여/교환여부)&review_tracnsaction_idx=(idx)";
 	}
 
 </script>
