@@ -69,9 +69,12 @@ a {
 a:hover {
   background-color: #0056b3;
 }
+
+
 </style>
 </head>
 <body>
+
 <div class="container">
   <h4>비밀번호를 찾고자하는 이메일과 닉네임을 입력해주세요.</h4>
   <h4>임시 비밀번호를 보내드립니다.</h4>
@@ -80,7 +83,7 @@ a:hover {
     <input type="email" id="member_email" placeholder="이메일을 입력해주세요.">
     닉네임
     <input type="text" id="member_nickname" placeholder="닉네임을 입력해주세요.">
-    <span><a onclick="findmemberpw()">확인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./">취소</a></span>
+    <span><a onclick="findmemberpw()">확인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./login.go">취소</a></span>
   </form>
 </div>
 </body>
