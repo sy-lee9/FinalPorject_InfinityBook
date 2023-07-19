@@ -149,7 +149,7 @@
 					<td></td>
 					<td>모임인원</td>
 					<td colspan="2">
-						<input type="number" autocomplete='off' name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="2"> 명
+						<input type="number" autocomplete='off' name="club_num" id="club_num" min="2" max="10" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" value="2"> 명
 					</td>
 					<td></td>
 				</tr>
@@ -272,14 +272,25 @@ function save(){
 	}else if($('#club_name').val()==''){
 		alert('모임명을 작성해 주세요');
 		return false;
+	}else if($('#club_name').val()!=''){
+		if($('#club_name').val().length > 20){
+			alert('모임명은 20자 이하로 입력해주세요');
+			return false;
+		}
+		$('input[name="club_content"]').val(content);
+		$('form').submit();
 	}else if($('#club_meetdate').val()==''){
 		alert('모임일시를 선택해 주세요');
 		return false;
 	}else if($('#club_num').val()==''){
-		alert('모임인원을 설정해 주세요. \n 최소 2인 이상 10인 이하로 선택 가능합니다. ');
+		alert('모임인원을 설정해 주세요. \n 최소 2인 이상 등록 가능합니다. ');
 		return false;
-	}else if($('#club_num').val()==''){
-		alert('모임인원을 설정해 주세요. \n 최소 2인 이상 10인 이하로 선택 가능합니다. ');
+	}else if($('#club_num').val()==1){
+		alert('모임인원을 수정해주세요 \n 최소 2인 이상 등록 가능합니다. ');
+		return false;
+	}
+	else if($('#club_num').val()==''){
+		alert('모임인원을 설정해 주세요. \n 최소 2인 이상 10인 이하로 등록 가능합니다. ');
 		return false;
 	}else if($('#club_onoff').val()=='0'){
 		if($('#code_idx').val()=='26'){
