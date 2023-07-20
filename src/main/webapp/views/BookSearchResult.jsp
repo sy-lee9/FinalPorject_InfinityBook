@@ -31,19 +31,19 @@
 		
 		</script>
 	<style>
-	div.test{
-	float:none;
-	width:25%;
-	}
-	div.item-price{
-	float:left;
-	}
-	
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+		h3{
+			font-family: 'IBM Plex Sans KR', serif;	
+			font-weight: 600;
+			margin: 10 0 0 0;
+		}
 	</style>
 </head>
 <body>
 
-<c:choose>
+<div id="header-wrap">
+
+	<c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
             <jsp:include page="loginAfterBox.jsp" />
         </c:when>
@@ -68,13 +68,13 @@
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="#home" >대여/교환</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
+								<li class="menu-item active"><a href="/clubList.go" class="nav-link"  >독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link"  >공지사항</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link"  >마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -84,11 +84,12 @@
 			</div>
 		</div>
 	</header>
-	<section id="billboard" style="margin-bottom: 100px;">
+		
+</div><!--header-wrap-->	
+	
+<section class="padding-large" style="padding:0;">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="action-menu">
+		<div class="row" style="margin-top: 5%;">
 					<form role="search" method="get" class="search-box" action="/search.do" id ="search" style="text-align:center;"> 
 						<select name="QueryType">
 							<option value="Keyword">제목+저자</option>
@@ -99,39 +100,37 @@
 						<input class="search-field text search-input" autocomplete='off' placeholder="제목 또는 저자명 "  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
 						<input type="submit" value="검색">	
 					</form>
-				</div>				
-			</div>
-		</div>
-	</div>	
-</section>
+				</div>			
+				<br>
+				<br>
+				<div class="products-grid grid">
+					<c:if test="${search eq false}">
+						<h3 style="margin:10% 40%;">검색 결과가 존재하지 않습니다. </h3>
+					</c:if>								
  
-	<c:forEach var="entry" items="${result}" varStatus="status">
-		<c:if test="${status.index==2}"> 
-			<table style="width:100%">
-			<c:forEach var="result" items="${entry.value}" varStatus="id">
-					<tr>
-						<th>
-							<figure class="product-style" style="width:70%; border:5px">
-							<img src="${result.cover}" alt="Books" class="product-item">
-							<figcaption>
-								<h3>${result.title}</h3>
-								<p>${result.author}</p>
-							</figcaption>
-						</figure>
-						</th>
-						<th>
-							<div class="item-price" style="width:70%; background-color: #EFEEE8;">${result.description}</div>
-						</th>
-						<th>
-							<button type="button" onclick = "SearchUser(${id.index});">대여/교환</button>
-						<input type="hidden" value="${result.isbn13}" name="Isbn" id="id${id.index}" />
-						</th>
-					</tr>
-			</c:forEach>
-						</table>
-		</c:if>
-  		
-	</c:forEach>
+					<c:forEach var="entry" items="${result}" varStatus="status">
+						<c:if test="${status.index==2}"> 
+							<c:forEach var="result" items="${entry.value}" varStatus="id">
+								<figure class="product-style" style="margin-bottom: 20px;">
+									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
+									 <input type="button" onclick ="SearchUser(${id.index})" value="대여/교환" style="margin: 10% 26% 0%;">
+									<figcaption style="height: 200px; margin-top:13%;">
+										<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${result.title}</h3>
+										<p id="author" style="height: 11%; font-size: 15;">${result.author}</p>
+									</figcaption>
+									
+									
+									<input type="hidden" value="${result.isbn13}" name="Isbn" id="id${id.index}"/>									
+								</figure>
+							</c:forEach>
+						</c:if>  		
+					</c:forEach>
+
+
+
+		</div>
+	</div>
+</section>
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
