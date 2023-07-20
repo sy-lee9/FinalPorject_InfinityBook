@@ -30,6 +30,14 @@
 		<script src="/js/twbsPagination.js"></script>    
 
 	<style>
+		
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+         h2,h3{
+            font-family: 'IBM Plex Sans KR';   
+            font-weight: 600;
+            margin: 10 0 0 0;
+            }
+	
 	div{
 	display:block;
 	}
@@ -58,7 +66,11 @@
 	line-height:2.5;
 	}
 	table{
-	    width: 100%;
+	    width: 83%;
+	    margin:60px
+	}
+	.fa{
+	font-size: x-large;
 	}
 	</style>
 </head>
@@ -88,11 +100,10 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="#home">대여/교환</a></li>
+								<li class="menu-item active"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
 								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>
@@ -116,15 +127,11 @@
 				<tr>
 					<th>
 						 <div class="author-name" style="padding:0px 0px; float:left; margin-right:30px;">${report.book_report_date}</div>
-						 <div class="author-name" style="padding:0px 0px; float:left;">${name}</div>
+						 <div class="author-name" style="padding:0px 0px; float:left;">작성자 ${name}</div>
 					</th>
 					<td style="padding:0px 0px;">
-					<div class="author-name" id="aLike">${like}</div>
-					 <button id='btn'>
-					      <i id="like" class="fa fa-heart"></i>
-					    </button>
 					    <div class="author-name" style="	float:right;
-					margin-top:27px;">${report.book_report_hit}</div>
+					margin-top:27px;">조회수 ${report.book_report_hit}</div>
 					</td>
 				</tr>
 				<tr>
@@ -134,12 +141,20 @@
 			<div class="author-name">저자 ${book.author}</div>
 			<div class="author-name">출판사 ${book.publisher}</div>
 			<div class="author-name">발행일 ${book.pubdate}</div>
+			<div class="author-name" id="aLike" style="margin-right: 550px;
+    margin-top: 125px">${like}</div>
+					 <button id='btn' style="    margin-right: 2px;
+    margin-top: 111px;
+    margin-bottom: -20px;">
+					      <i id="like" class="fa fa-heart-o"></i>
+					    </button>
 		</th>
 	</tr>	
-		<tr >
+		<tr>
 			<td colspan="2"><div class="author-name">${report.book_report_content}</div></td>
 		</tr>	
 			</table>
+			
 	<input type="hidden" id ="myLike" value="${myLike}"/>
 	<input type="hidden" id ="isbn" value="${report.isbn}"/>
   </div>
@@ -191,17 +206,17 @@ window.onload = () => {
 	  if(document.getElementById("myLike").value == "0"){
 		  like.addEventListener("click", (e) => {
 			  	var val = 0;
-			  	if(e.target.className == 'fa fa-heart'){
+			  	if(e.target.className == 'fa fa-heart-o'){
 			  		val = 1;
 			  	}else{
 			  		val = -1;
 			  	}
-			    e.target.classList.toggle('fa-heart-o');
 			    e.target.classList.toggle('fa-heart');
+			    e.target.classList.toggle('fa-heart-o');
 			    likeCheck(val);
 			  });
 	  }else{
-		  document.getElementById('like').className = 'fa fa-heart-o'
+		  document.getElementById('like').className = 'fa fa-heart'
 		  like.addEventListener("click", (e) => {
 			  	var val = 0;
 			  	if(e.target.className == "fa fa-heart"){
@@ -209,8 +224,8 @@ window.onload = () => {
 			  	}else{
 			  		val = -1;
 			  	}
-			    e.target.classList.toggle("fa-heart");
-			    e.target.classList.toggle('fa-heart-o');
+			    e.target.classList.toggle("fa-heart-o");
+			    e.target.classList.toggle('fa-heart');
 			    likeCheck(val);
 		  });
 	  };

@@ -55,7 +55,7 @@
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
 								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
@@ -105,19 +105,23 @@
 
 <section id="best-selling" class="leaf-pattern-overlay">
 	<div class="corner-pattern-overlay"></div>
-	<div class="container">
+	<div class="container" style="    float: left;
+    width: 36%;">
 		<img src="${book.library_cover}" alt="book" class="single-image">
-		<h3 class="item-title">${book.library_title}</h3>
 		
+	</div>
+	<div class="container" style="line-height: 5;
+    width: 47%;">
+	<h3 class="item-title">${book.library_title}</h3>
 		<form action="rentapply.do"  method="post">
 			<input type="hidden" name="library_idx" value="${book.library_idx}">
 			<div>현재 보증금 : ${rent_deposit}</div>
 			<input type="text" name="rent_deposit" placeholder="희망 보증금액">
-			<input type="date" id ="date" name="rent_startdate" placeholder="희망 대여일자">
-			<input type="date" id ="date" name="rent_enddate" placeholder="희망 반납일자">
+			<input type="date" id ="date" name="rent_startdate" placeholder="희망 대여일자" style="height: 30px;">
+			<input type="date" id ="date" name="rent_enddate" placeholder="희망 반납일자" style="height: 30px;">
 			<button type="submit">신청</button>
 		</form>
-	</div>
+		</div>
 </section>
 
 
