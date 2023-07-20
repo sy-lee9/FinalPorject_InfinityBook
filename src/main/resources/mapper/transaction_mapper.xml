@@ -31,7 +31,7 @@
 	</select>
 	
 	 <insert id="reviewWrite" parameterType="HashMap">
-		insert into review (member_sender,review_type,review_reciever,review_transaction_type,review_tracnsaction_idx,review_content,review_date,review_blind)
+		insert into review (sender_idx,review_type,reciever_idx,review_transaction_type,review_transaction_idx,review_content,review_date,review_blind)
 		values(#{member_sender},#{review_type},#{review_reciever},#{review_transaction_type},#{review_tracnsaction_idx},#{review_content},current_timestamp(),0)
 	</insert> 
 </mapper>

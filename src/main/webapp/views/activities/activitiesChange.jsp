@@ -291,7 +291,11 @@
 	
 	function review(changer_idx,changeBook_idx,change_idx) {
 		var my_memberIdx = ${sessionScope.loginIdx};
-		location.href="/Review.go?member_sender="+my_memberIdx+"&member_reciever="+changer_idx+"&book_reciever="+changeBook_idx+"%20&review_transaction_type=0&review_tracnsaction_idx="+change_idx+"&review_type=0";
+		var width = 787;
+	    var height = 600;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    var popupWindow = window.open('/Review.go?member_sender='+my_memberIdx+'&member_reciever='+changer_idx+'&book_reciever='+changeBook_idx+'%20&review_transaction_type=0&review_tracnsaction_idx='+change_idx+'&review_type=0', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	}
 
 </script>

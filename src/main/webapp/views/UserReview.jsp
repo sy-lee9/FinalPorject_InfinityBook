@@ -77,7 +77,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align:center;">
-						<input type="text" class="review_content" id="review_content" style="width:600px;" placeholder="리뷰 내용을 입력해주세요.">
+						<input type="text" class="review_content" id="review_content" style="width:600px;" placeholder="리뷰 내용을 입력해주세요."><br>
 						<input type="submit" value="등록"/>
 						<input type="button" onclick="window.close()" value="취소"/>
 					</td>
