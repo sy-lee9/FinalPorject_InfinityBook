@@ -48,4 +48,8 @@ public interface BookReportDAO {
 	void bookReReplyAlarm(String member_idx, String idx, String content);
 
 	String bookTitle(String book_report_idx);
+
+	void hit(String book_report_idx);
+
+	Object getName(String book_report_idx);
 }

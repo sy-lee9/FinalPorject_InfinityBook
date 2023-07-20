@@ -71,13 +71,15 @@
 			<h3>교환 가능 사용자</h3>
 		</c:if>
 		<c:forEach var="user" items="${ChangeList}" varStatus="status">
+		<div class="top-content">
 			<h3>${user.member_nickname}</h3>
-			<h3>${user.code_codename}</h3>
+			<h3 class="code">${user.code_codename}</h3>
 			<button type="button" onclick="(function() {
 				  var url = '/searchDetail.do?library_idx=' + '${user.library_idx}';
 				  window.opener.location.href = url;
 				  self.close();
 				})()">이동</button>
+		</div>
 		</c:forEach>
 </body>
 <script></script>

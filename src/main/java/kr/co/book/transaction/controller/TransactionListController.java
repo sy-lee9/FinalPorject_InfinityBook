@@ -42,13 +42,13 @@ public class TransactionListController {
 	}
 	
 	@GetMapping(value = "/searchUser.do")
-	public String searchUser(
+	public String searchUser(HttpSession session,
 			String Isbn, Model model) {
 		
 		logger.info("Isbn = "+Isbn);
-		
-		model.addAttribute("RentList", service.searchUserRent(Isbn));
-		model.addAttribute("ChangeList", service.searchUserChange(Isbn));
+		String member_idx = session.getAttribute("loginIdx").toString();
+		model.addAttribute("RentList", service.searchUserRent(Isbn,member_idx));
+		model.addAttribute("ChangeList", service.searchUserChange(Isbn,member_idx));
 		
 		
 		return "BookSearchResultUser";

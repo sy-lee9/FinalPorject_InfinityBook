@@ -78,6 +78,7 @@ public class BookReportController {
 		model.addAttribute("book", bookinfo);
 		model.addAttribute("report", dto);
 		model.addAttribute("like", service.getLike(book_report_idx));
+		model.addAttribute("name", service.getName(book_report_idx));
 		if(session.getAttribute("loginIdx") != null) {
 			String member_idx = session.getAttribute("loginIdx").toString();
 			model.addAttribute("myLike", service.myLike(book_report_idx,member_idx));

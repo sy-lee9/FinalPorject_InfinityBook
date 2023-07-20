@@ -107,21 +107,28 @@
  
 	<c:forEach var="entry" items="${result}" varStatus="status">
 		<c:if test="${status.index==2}"> 
+			<table style="width:100%">
 			<c:forEach var="result" items="${entry.value}" varStatus="id">
-				<div class="test">
-						<figure class="product-style">
+					<tr>
+						<th>
+							<figure class="product-style" style="width:70%; border:5px">
 							<img src="${result.cover}" alt="Books" class="product-item">
 							<figcaption>
 								<h3>${result.title}</h3>
 								<p>${result.author}</p>
 							</figcaption>
 						</figure>
-						<div class="item-price">${result.description}</div>
-					<button type="button" onclick = "SearchUser(${id.index});">대여/교환</button>
-					<input type="hidden" value="${result.isbn13}" name="Isbn" id="id${id.index}" />
-					</div>
-					
+						</th>
+						<th>
+							<div class="item-price" style="width:70%; background-color: #EFEEE8;">${result.description}</div>
+						</th>
+						<th>
+							<button type="button" onclick = "SearchUser(${id.index});">대여/교환</button>
+						<input type="hidden" value="${result.isbn13}" name="Isbn" id="id${id.index}" />
+						</th>
+					</tr>
 			</c:forEach>
+						</table>
 		</c:if>
   		
 	</c:forEach>
