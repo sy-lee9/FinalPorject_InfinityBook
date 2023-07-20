@@ -5,15 +5,17 @@ alarmchk();
 ws.onmessage = function(msg) {
 	
 	
-	setInterval(function() {
-	  	alarmchk();
-	}, 1000);
+	setInterval(alarmchk(), 1000);
 
 	console.log('받아?');
 			  		  
 }
 
 var data = {};//전송 데이터(JSON)
+
+
+
+
 
 function alarm_send(){			
 

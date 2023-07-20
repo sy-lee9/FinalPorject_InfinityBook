@@ -5,7 +5,7 @@
 	<mapper namespace="kr.co.book.admin.dao.AdminInquiryDAO">			
 	
 		<select id="inquirydetail" resultType="inquiry">
-			SELECT i.inquiry_idx, m.member_nickname, i.code_idx, i.inquiry_title, i.inquiry_content, i.inquiry_regdate, i.inquiry_state
+			SELECT i.inquiry_idx, i.member_idx, m.member_nickname, i.code_idx, i.inquiry_title, i.inquiry_content, i.inquiry_regdate, i.inquiry_state
 			FROM inquiry i
 			JOIN member m ON i.member_idx = m.member_idx
 			WHERE i.inquiry_idx = #{inquiry_idx} AND i.inquiry_blind = 0
@@ -128,6 +128,11 @@
 			WHERE i.inquiry_state = #{param2} AND i.code_idx = #{param3} AND i.inquiry_blind = 0 AND i.inquiry_upidx = 0 AND member_nickname LIKE CONCAT('%' #{param4} '%')
 			ORDER BY i.inquiry_idx DESC LIMIT 10 OFFSET #{param1}
 		</select>
+		
+		<insert id="inquiryalarm">
+			INSERT INTO alarm(code_idx,idx,member_idx,alarm_content,alarm_check)
+			VALUES(63,#{inquiry_idx},#{member_i},'['#{inq_title}']문의 답변이 달렸습니다.',0)
+		</insert>
 		
 		
 		

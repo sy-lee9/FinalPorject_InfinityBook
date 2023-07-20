@@ -20,12 +20,16 @@ import kr.co.book.club.dto.ClubDTO;
 import kr.co.book.club.service.ClubService;
 import kr.co.book.mypage.service.TrackerService;
 
+
+
 @Controller
 public class ClubController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired ClubService clubService;
+	
 	@Autowired TrackerService TrackerService;
+	
 	@Autowired ChatService chatservice;
 	
 	@RequestMapping("/clubList.go")
@@ -94,9 +98,9 @@ public class ClubController {
 	public String applyAccept(@RequestParam String club_idx, @RequestParam String member_idx){
 		
 		clubService.applyAccept(club_idx, member_idx);
-		
-		// 채팅방 입장후 채팅생성
-		chatservice.clubchatjoin(club_idx, Integer.parseInt(member_idx));
+		String member_nickname = clubService.findmembernickname(member_idx);
+		// 채팅방 입장후 채팅생성		
+		chatservice.clubchatjoin(club_idx, Integer.parseInt(member_idx),member_nickname);
 		
 		return "redirect:/clubDetail.go?club_idx="+club_idx;
 	}
@@ -127,7 +131,7 @@ public class ClubController {
 	@RequestMapping("/clubWrite.do")
 	public String clubWrite(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		logger.info("글쓰기 정보" + params);
-		int member_idx = (int)session.getAttribute("loginIdx"); 
+		int member_idx = (int)session.getAttribute("loginIdx"); 		
 		params.put("loginIdx", member_idx);
 		int totalPage = TrackerService.getTotalPage(params);
 		params.put("totalPage",totalPage);
@@ -260,8 +264,9 @@ public class ClubController {
 			if(chk==0) {
 				clubService.clubApply(club_idx, member_idx);
 				clubService.applyAccept(club_idx, member_idx);				
-				// 채팅방 입장후 채팅생성
-				chatservice.clubchatjoin(club_idx, Integer.parseInt(member_idx));
+				// 채팅방 입장후 채팅생성				
+				String member_nickname = clubService.findmembernickname(member_idx);
+				chatservice.clubchatjoin(club_idx, Integer.parseInt(member_idx),member_nickname);
 			}			
 		}
 			

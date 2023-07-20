@@ -38,6 +38,8 @@ public class AdminInquiryService {
 		// 상태 변경
 		dao.inquirystateupdate(params);
 		
+		// 알림 보내고
+		dao.inquiryalarm(params);
 		
 	}
 	
@@ -122,5 +124,7 @@ public class AdminInquiryService {
 		
 		return map;
 	}
+
+
 
 }

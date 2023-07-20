@@ -47,7 +47,6 @@ public class AlarmService {
 			page = "redirect:/search.do?QueryType=Keyword&Query="+idx;
 		}else if(code_idx == 77) {
 			// 이벤트 당첨 알림
-			page = "redirect:/"+idx;
 		}else if(code_idx == 78) {
 			// 문의 답변 알림
 			page = "redirect:/"+idx;

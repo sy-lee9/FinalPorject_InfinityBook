@@ -13,12 +13,21 @@ public class AdminInquiryDTO {
 	private String inquiry_content;
 	private String inquiry_regdate;
 	private String inquiry_state;
+	private String member_i;
 	
 	//Member
 	private String member_nickname;
 
 	
 	
+	public String getMember_i() {
+		return member_i;
+	}
+
+	public void setMember_i(String member_i) {
+		this.member_i = member_i;
+	}
+
 	public String getInquiry_upidx() {
 		return inquiry_upidx;
 	}

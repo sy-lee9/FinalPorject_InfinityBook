@@ -83,6 +83,8 @@ public interface ClubDAO {
 
 	void applyAlarm(String writer_idx, String club_idx, String content);
 
+	String findmembernickname(String member_idx);
+
 	
 
 

@@ -43,10 +43,12 @@ public class AdminInquiryController {
 	
 	// 문의 답변 이동
 	@RequestMapping(value = "/admin/inquiryreplywrite.go")
-	public String inquiryreplywriteForm(@RequestParam String inquiry_idx,@RequestParam String code_idx,Model model) {
+	public String inquiryreplywriteForm(@RequestParam String inquiry_idx,@RequestParam String code_idx,@RequestParam String member_i,@RequestParam String inq_title,Model model) {
 		logger.info(inquiry_idx+"/"+code_idx);
 		model.addAttribute("inquiry_idx", inquiry_idx);
 		model.addAttribute("code_idx", code_idx);
+		model.addAttribute("member_i", member_i);
+		model.addAttribute("inq_title", inq_title);
 		return "/inquiry/inquiryreplywrite";
 	}
 	
