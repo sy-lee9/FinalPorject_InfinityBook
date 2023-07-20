@@ -194,9 +194,9 @@
 	 	    content += '	<th style="text-align:center;">'+item.deposit_info+'</th>';
 	 		content += '	<th style="text-align:center;">'+item.deposit_price+'</th>';
 	 		if (item.deposit_type=="충전") {
-	 			content += '	<th style="text-align:center;"><a href="#">결제 취소</a></th>';
+	 			content += '	<th style="text-align:center;">결제 완료</th>';
 			}else{
-				content += '	<th style="text-align:center;"><a href="#">출금 거절</a></th>';
+				content += '	<th style="text-align:center;">출금 완료</th>';
 			}
 	 		
 	 		content += '	<th style="text-align:center;">'+item.deposit_date+'</th>';

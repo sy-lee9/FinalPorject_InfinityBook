@@ -38,71 +38,25 @@
 		 		border:none;
 			}
 			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-			h3, h4{
+			h4{
 				font-family: 'IBM Plex Sans KR';	
 				font-weight: 600;
 				margin: 10 0 0 0;
 			}
-	</style>	
-	
+		</style>	
 	</head>
 
 <body>
 
-<div id="header-wrap" class="show">
-	
-	<c:choose>
-        <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="../loginAfterBox.jsp" />
-        </c:when>
-        <c:otherwise>
-            <jsp:include page="../loginBeforeBox.jsp" />            
-        </c:otherwise>
-    </c:choose>
-	
-<header id="header">
-		<div class="container">
-			<div class="row">
 
-				<div class="col-md-2">
-					<div class="main-logo">
-					
-						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
-					</div>
-
-				</div>
-
-				<div class="col-md-10">
-					<br>
-
-					<nav id="navbar">
-						<div class="main-menu stellarnav">
-						<br/><br/>
-							<ul class="menu-list">
-								<li class="menu-item"><a href="#home" >대여/교환</a></li>
-								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
-								<li class="menu-item active"><a href="/clubList.go" class="nav-link"  >독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link"  >공지사항</a></li>
-								<!-- <li class="menu-item"><a href="/eventList.go" class="nav-link"  >이벤트</a></li> -->
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link"  >마이페이지</a></li>
-							</ul>
-						</div>
-					</nav>
-
-				</div>
-
-			</div>
-		</div>
-	</header>
-		
-</div><!--header-wrap-->
 
 <section class="hero-section jarallax">
 	
 	<div class="container">
 		<div class="row">
+		<a href="/admin/adminMain" style="font-size:20;"><h4>← Admin Main</h4></a>
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-botton:0px;">Book Club</h2>
+				<h2 class="section-title" style="margin-bottom:25px;">Admin-BookReport</h2>
 			</div>
 		</div>
 	</div>
@@ -110,21 +64,17 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
-		<ul class="tabs" style="margin:10">
-			  <li data-tab-target="#all-genre" class="active tab"><a href="/clubList.go">전체</a></li>
-			  <li data-tab-target="#business" class="tab"><a href="/myClubList.go">참여 모임</a></li>
-		</ul>
-		<ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right; padding:10px; margin-right:180px;">
-				<i class="icon icon-search"></i> 
-				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="제목 을 입력해주세요" type="search">
-				<input type="button" id="searchButton" value="검색">	
-			</li>
-		</ul>
-		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list">
+
+		<div class="tab-content" style="text-align:center;">
+			<div id="all-genre" style="text-align:center;" data-tab-content class="active">
+				<ul class="tab">
+					<li class="search-box" style="text-align:center;list-style-type: none;">
+						<i class="icon icon-search"></i> 
+						<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
+						<input type="button" id="searchButton" value="검색">
+					</li>
+				</ul>
+				<div class="row" style="text-align:center;" id="list">
 					
 			    </div>
 			    
@@ -187,7 +137,7 @@
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'clubList.ajax',
+		      url:'/admin/adminBookReportList.ajax',
 		      data:{
 		    	  'page':page,
 		    	  'searchText':searchText
@@ -219,69 +169,70 @@
 		   });
 		}
 
-
-
 	function listPrint(list) {
 	    var content = '';
 	    
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
 	    content += '	<th width="2%" style="text-align:center;"></th>';
-	    content += '	<th width="8%" style="text-align:center;"> 모집 상태 </th>';
-	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
+	    content += '	<th width="10%" style="text-align:center;"> 감상문 IDX</th>';
+	    content += '	<th width="10%" style="text-align:center;"> 작성자 </th>';	 
 	    content += '	<th width="20%" style="text-align:center;">도서</th>';
-	    content += '	<th width="40%" style="text-align:center;"> 모임정보 </th>';
-	    content += '	<th width="20%" style="text-align:left;"> 모임장소 / 일시 </th>';
-	    content += '	<th width="2%" style="text-align:center;"></th>';
+	    content += '	<th width="40%" > 감상문정보 </th>';
+		content += '	<th width="16%" style="text-align:center;">블라인드</th>';
+		 content += '	<th width="2%" style="text-align:center;"></th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
-	        
+	    	/* book_report_idx, member.email, cover, title, author  */
 	    	content += '<tr>';
 	    	content += '	<td></td>';
-	    	if (item.club_state=="0") {
-	    		content += '	<td style="text-align:center;"><input type="button" style="cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집"></td>';
-			}else{
-	    		content += '	<td style="text-align:center;"><input type="button" style="cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
-			}
-	    	content += '	<td style="text-align:center;"><input type="button" style=" cursor:default; border:none; display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
+	    	content += '	<td style="text-align:center;">'+item.book_report_idx+'</td>';
+	    	content += '	<td style="text-align:center;">'+item.member_email+'</td>';
 	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
-		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h3><b>'+item.club_name+'</b></h3></a>';
-		    content += '<a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a><br/>	';
-		    content += item.title.split("-")[0]+'	</td>';
-		    content += '	<td>';
-		    content += item.code_codename+'<br/>	';
-		    content += item.club_meetdate.split(" ")[0]+'<br/>'+item.club_meetdate.split(" ")[1]+'</td>';
-		    
-		    content += '	<td></td>';
+	    	content += '	<td><a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'">';
+	    	content += '		<h4>'+item.book_report_title+'</h4></a>';
+	    	content +=  item.title+'<br/>';
+	    	content +=  item.author+'</a>';
+	    	content += '	</td>';
+	    	
+	    	
+	    	if(item.book_report_blind == "1"){
+		    	content += '<td style="text-align:center;"><input type="button" style="margin-right:20px; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="bookReportBlind(0,'+item.book_report_idx+')" value="숨김 해제"/></td>';
+		    }else{
+		        content += '<td style="text-align:center;"><input type="button" style="margin-right:20px; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="bookReportBlind(1,'+item.book_report_idx+')" value="숨김"/></td>';
+		    }
+	    	content += '	<td></td>';
 	        content += '</tr>';
 	    });
-    
-	    content += '</table>'; 
 
+	    content += '</table>'; 
+	    
 	    $('#list').empty();
 		$('#list').append(content);
 	}
-
 	
-	function clubWriteGo(){  
-
-		if(${sessionScope.loginIdx != null}){
-			location.href="/clubWrite.go";
-		}else{
-			alert('모임 등록은 로그인이 필요합니다. ');
-			location.href="/login.go";
-		}
-	   
-	}
 	
-	function profilePop(member_idx) {
-	    var width = 1100;
-	     var height = 800;
-	     var left = window.innerWidth / 2 - width / 2;
-	     var top = window.innerHeight / 2 - height / 2;
-	     var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
-	 };
+	 function bookReportBlind(blind,book_report_idx){
+		$.ajax({
+		      type:'get',
+		      url:'/admin/bookReportBlind.ajax',
+		      data:{
+		    	  'blind':blind,
+		    	  'book_report_idx':book_report_idx
+		    	  },
+		      dataType:'json',
+		      success:function(data){
+		         listCall(showPage);
+		      },
+		      error:function(e){
+		         console.log(e);
+		      }
+		   });
+		
+	} 
+ 	
+
 </script>
 
 </html>	

@@ -119,5 +119,14 @@ public class TransactionListController {
 		
 	return "";
 	}
-
+	
+	@RequestMapping("/BookSearch.go")
+	public String BookSearch(Model model) {
+		String sQuery="안녕";
+		String QueryType="Keyword";
+		Map<String, Object> result = service.bookSearch(sQuery, QueryType);
+		model.addAttribute("result", result);
+		
+		return "BookSearch";
+	}
 }

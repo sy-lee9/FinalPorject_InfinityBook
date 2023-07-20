@@ -28,6 +28,13 @@
 		<script src="/richtexteditor/plugins/all_plugins.js"></script>
 
 	<style>
+		
+	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+         h4,h3{
+            font-family: 'IBM Plex Sans KR';   
+            font-weight: 600;
+            margin: 10 0 0 0;
+	
 	div{
 	display:block;
 	}
@@ -60,11 +67,10 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="#home">대여/교환</a></li>
+								<li class="menu-item active"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
 								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>
@@ -75,37 +81,91 @@
 			</div>
 		</div>
 	</header>
-    
-	<form id="write" action="BookReportWrite.do" method="post"  onsubmit='return formSubmit();'>
-	<div class="section-header align-center">
-		<div class="title">
-					</div>
-					<h2 class="section-title" >감상문 등록</h2>
-				</div>
-	<select name="reportOpen" id="reportOpen">
-	    <option value="select">공개여부</option>
-	    <option value="1">공개</option>
-	    <option value="0">비공개</option>
-  	</select>
-	<input type="text"  id ="reportTitle" name="reportTitle" value="제목을 입력해주세요." style="width:80%"/>
-	<div class="form-group" style="text-align:center;">
-			<a href="#" id="reportBookPop">
-		 		<img src="/images/book.png" id="cover2" style="width:120px; height:150px;" alt="Books" ><br/>책 선택
-			</a>
-			<br/><br/>
-			<br/><br/>
-			   	<input type="text" readonly id="title" name="title" style=" width:90%; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder=" 도서 제목"><br/>
-				<input type="text" readonly id="author" name="author" style="width:90%; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="저자">					
-				<input type="hidden" id="isbn" name="isbn"/>
-				<input type="hidden" id="publisher" name="publisher"/>
-				<input type="hidden" id="description" name="description"/>
-				<input type="hidden" id="pubdate" name="pubdate"/>
-				<input type="hidden" id="cover" name="cover"/>
-    </div>
-	<div id="div_editor"></div>
-	<input type="submit" value="등록"/>
-	<input type="hidden" id= "content" name="content"/>
-	</form>
+	
+	<section class="hero-section jarallax">
+	
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-bottom:10px;">감상문 작성</h2>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
+	<div class="container" style="text-align:center;">
+		<form id="write" action="BookReportWrite.do" method="post"  onsubmit='return formSubmit();'>
+			<table style="width:100%;">
+				<tr>
+					<td width="5%"></td>
+					<td width="45%"></td>
+					<td width="15%"></td>
+					<td width="15%"></td>
+					<td width="15%"></td>
+					<td width="5%"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td rowspan="5">
+						<div class="form-group" style="text-align:center;">
+							<a href="#" id="clubBookPop">
+							 	<img src="/images/book.png" id="cover2" style="width:120px; height:150px;" alt="Books" ><br/>책 선택
+							</a>
+							<br/><br/>
+							<br/><br/>
+					      	<input type="text" readonly id="title" name="title" style=" width:90%; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder=" 도서 제목"><br/>
+							<input type="text" readonly id="author" name="author" style="width:90%; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="저자">					
+							<input type="hidden" id="isbn" name="isbn"/>
+							<input type="hidden" id="publisher" name="publisher"/>
+							<input type="hidden" id="description" name="description"/>
+							<input type="hidden" id="pubdate" name="pubdate"/>
+							<input type="hidden" id="cover" name="cover"/>
+					    </div>
+					</td>
+					<td>제목</td>
+					<td colspan="2">
+						<input type="text" id="reportTitle" autocomplete='off' name="reportTitle" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;" placeholder="제목을 입력하세요.">
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>공개여부</td>
+					<td colspan="2">
+							<select name="reportOpen" id="reportOpen" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
+						    <option value="select">공개여부</option>
+						    <option value="1">공개</option>
+						    <option value="0">비공개</option>
+						</select>
+					</td>
+					<td></td>
+				</tr>
+				
+				<tr>
+					<td></td>
+					<td colspan="4">
+						<div id="div_editor"></div>
+						<input type="hidden" name="content"> 
+					</td>
+					<td></td>
+				</tr>
+				
+				<tr>
+					<td></td>
+					<td colspan="4" style="text-align:center;">
+						<input type="submit" value="등록"/>
+					
+					</td>
+					<td></td>
+				</tr>
+				
+			</table>
+		</form>
+
+	</div>
+</section>
+
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>

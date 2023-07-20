@@ -26,7 +26,6 @@ public class AdminClubController {
 	
 
 	 @RequestMapping("/admin/adminClubList.ajax")
-	 
 	 @ResponseBody 
 	 public HashMap<String, Object> adminBookListAjax(@RequestParam String page,@RequestParam String searchText){
 		 logger.info("searchText : "+searchText); 

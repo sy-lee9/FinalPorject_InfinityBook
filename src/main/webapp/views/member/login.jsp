@@ -38,7 +38,15 @@ input[type="submit"] {
 <body>
 
 <div id="header-wrap" class="show">
-	
+		
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="../loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	
 	<header id="header">
 		<div class="container">
@@ -56,13 +64,13 @@ input[type="submit"] {
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="#home" >대여/교환</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
+								<li class="menu-item active"><a href="/clubList.go" class="nav-link"  >독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link"  >공지사항</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link"  >마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -84,8 +92,9 @@ input[type="submit"] {
   <br>
 	
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="join.go" onclick="closePopup1()">회원가입</a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="pw_Search.go" onclick="closePopup2()">비밀번호 찾기</a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="pw_Search.go" onclick="closePopup2()">비밀번호 찾기</a>
 </div>
+</body>
 <script>
 
 $(document).ready(function() {
@@ -192,5 +201,4 @@ $(document).ready(function() {
 
 
 </script>
-</body>
 </html>

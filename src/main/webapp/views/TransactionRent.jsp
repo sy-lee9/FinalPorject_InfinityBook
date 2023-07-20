@@ -55,7 +55,7 @@
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
 								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
