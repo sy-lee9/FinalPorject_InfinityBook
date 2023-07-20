@@ -1,10 +1,15 @@
-const ws = new WebSocket("ws://" + location.host + "/alarm");	
+var ws = new WebSocket("ws://" + location.host + "/chat");	
 
 alarmchk();
 
 ws.onmessage = function(msg) {
+	
+	
+	setInterval(function() {
+	  	alarmchk();
+	}, 1000);
 
-	alarmchk();
+	console.log('받아?');
 			  		  
 }
 
