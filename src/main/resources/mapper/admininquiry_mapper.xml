@@ -131,7 +131,7 @@
 		
 		<insert id="inquiryalarm">
 			INSERT INTO alarm(code_idx,idx,member_idx,alarm_content,alarm_check)
-			VALUES(63,#{inquiry_idx},#{member_i},'['#{inq_title}']문의 답변이 달렸습니다.',0)
+			VALUES(78,#{inquiry_idx},#{member_i},#{content},0)
 		</insert>
 		
 		
