@@ -69,11 +69,9 @@
 		</div>
 	</header>
 
-<section id="billboard" style="margin-bottom: 100px;">
+<section class="padding-large" style="padding:0;">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="action-menu">
+		<div class="row" style="margin-top: 5%;">
 					<form role="search" method="get" class="search-box" action="/search.do" id ="search" style="text-align:center;"> 
 						<select name="QueryType">
 							<option value="Keyword">제목+저자</option>
@@ -84,10 +82,36 @@
 						<input class="search-field text search-input" autocomplete='off' placeholder="제목 또는 저자명 "  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
 						<input type="submit" value="검색">	
 					</form>
-				</div>				
-			</div>
+				</div>			
+				<br>
+				<br>
+				<div class="products-grid grid">
+					<c:if test="${search eq false}">
+						<h3 style="margin:10% 40%;">검색 결과가 존재하지 않습니다. </h3>
+					</c:if>								
+ 
+					<c:forEach var="entry" items="${result}" varStatus="status">
+						<c:if test="${status.index==2}"> 
+							<c:forEach var="result" items="${entry.value}" varStatus="id">
+								<figure class="product-style" style="margin-bottom: 20px;">
+									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
+									 <input type="button" onclick ="SearchUser(${id.index})" value="대여/교환" style="margin: 10% 26% 0%;">
+									<figcaption style="height: 200px; margin-top:13%;">
+										<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${result.title}</h3>
+										<p id="author" style="height: 11%; font-size: 15;">${result.author}</p>
+									</figcaption>
+									
+									
+									<input type="hidden" value="${result.isbn13}" name="Isbn" id="id${id.index}"/>									
+								</figure>
+							</c:forEach>
+						</c:if>  		
+					</c:forEach>
+
+
+
 		</div>
-	</div>	
+	</div>
 </section>
 
 
