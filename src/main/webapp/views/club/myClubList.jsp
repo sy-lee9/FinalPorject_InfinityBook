@@ -37,7 +37,15 @@
 	 		background-color: #C5A992;
 	 		border:none;
 		}
-	
+		
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+	         h4{
+	            font-family: 'IBM Plex Sans KR';   
+	            font-weight: 600;
+	            margin: 10 0 0 0;
+	    }
+	    
+	    
 	</style>	
 	</head>
 	
@@ -237,7 +245,7 @@
 			}
 	        
 	        content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
-		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
+		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';   
 		    content += item.member_nickname+'<br/>	';
 		    content += item.title+'	</td>';
 		    content += '	<td>';
@@ -254,6 +262,13 @@
 		$('#apply_list').append(content);
 	}
 	
+	function profilePop(member_idx) {
+	    var width = 1100;
+	     var height = 800;
+	     var left = window.innerWidth / 2 - width / 2;
+	     var top = window.innerHeight / 2 - height / 2;
+	     var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	 };
 	
 	
 	
@@ -338,14 +353,7 @@
 		$('#club_list').append(content);
 	}
 	
-	
-	function profilePop(member_idx) {
-	    var width = 1100;
-	     var height = 800;
-	     var left = window.innerWidth / 2 - width / 2;
-	     var top = window.innerHeight / 2 - height / 2;
-	     var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
-	 };
+
 	 
 </script>
 

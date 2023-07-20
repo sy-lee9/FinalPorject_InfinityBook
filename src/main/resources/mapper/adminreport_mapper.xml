@@ -5,8 +5,8 @@
 <mapper namespace="kr.co.book.admin.dao.AdminReportDAO">
 
 	<insert id="reportSend" parameterType="hashMap">
-		INSERT INTO report(code_idx,idx,member_idx,report_content,report_state) 
-			VALUES((SELECT c.code_idx FROM code c WHERE code_code = #{code_code}), #{idx}, #{member_idx}, #{content}, '접수')
+		INSERT INTO report(code_idx,idx,member_idx,report_content,report_state,reg_member_idx,reg_screen) 
+			VALUES((SELECT c.code_idx FROM code c WHERE code_code = #{code_code}), #{idx}, #{member_idx}, #{content}, '접수', #{member_idx}, #{jsp})
 	</insert>
 	
 	<select id="reportList" resultType="hashmap">
@@ -46,19 +46,19 @@
 				<if test="code_idx.equals('69')"><!-- 감상문 신고 -->
 					(SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = 
 						(SELECT b.member_idx FROM book_report b WHERE b.book_report_idx = r.idx)) AS targetMemberNick,   
-					(SELECT b.book_report_title FROM book_report b WHERE b.book_report_idx = r.idx) AS bookReportTitle         
+					(SELECT b.book_report_title FROM book_report b WHERE b.book_report_idx = r.idx) AS target   
 		       </if>
 		       <if test="code_idx.equals('70')"><!-- 모임 신고 -->
 		           (SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = 
 						(SELECT cl.member_idx FROM club cl WHERE cl.club_idx = r.idx)) AS targetMemberIdx,
 		           (SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = 
 						(SELECT cl.member_idx FROM club cl WHERE cl.club_idx = r.idx)) AS targetMemberNick,
-					(SELECT cl.club_name FROM club cl WHERE cl.club_idx = r.idx) AS clubTitle
+					(SELECT cl.club_name FROM club cl WHERE cl.club_idx = r.idx) AS target
 		       </if>
 		       <if test="code_idx.equals('71')"><!-- 댓글 신고 -->
 	       			(SELECT rp.code_idx FROM reply rp WHERE rp.reply_idx = r.idx) AS postType,
 	       			(SELECT rp.idx FROM reply rp WHERE rp.reply_idx = r.idx) AS postIdx,		  
-	       			(SELECT rp.reply_content FROM reply rp WHERE rp.reply_idx = r.idx) AS replyContent,		       		
+	       			(SELECT rp.reply_content FROM reply rp WHERE rp.reply_idx = r.idx) AS target,		       		
 		          	(SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = 
 						(SELECT rp.member_idx FROM reply rp WHERE rp.reply_idx = r.idx)) AS targetMemberIdx,		       		
 		          	(SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = 
@@ -67,7 +67,7 @@
 		       <if test="code_idx.equals('72')"><!-- 리뷰 신고 -->
 		       		(SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = 
 						(SELECT rv.reciever_idx FROM review rv WHERE rv.review_idx = r.idx)) AS recieverIdx,
-					(SELECT rv.review_content FROM review rv WHERE rv.review_idx = r.idx) AS reviewContent,
+					(SELECT rv.review_content FROM review rv WHERE rv.review_idx = r.idx) AS target,
 		           (SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = 
 						(SELECT rv.sender_idx FROM review rv WHERE rv.review_idx = r.idx)) AS targetMemberIdx,     
 		           (SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = 
@@ -75,7 +75,7 @@
 		       </if>
 		       <if test="code_idx.equals('73')"><!-- 도서 신고 -->
 		       		(SELECT library_idx FROM library WHERE library_idx = r.idx) AS bookIdx,
-		       		(SELECT library_title FROM library WHERE library_idx = r.idx) AS bookTitle,
+		       		(SELECT library_title FROM library WHERE library_idx = r.idx) AS target,
 		       		(SELECT library_info FROM library WHERE library_idx = r.idx) AS bookInfo,
 		           (SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = 
 						(SELECT l.member_idx FROM library l WHERE l.library_idx = r.idx)) AS targetMemberIdx,
@@ -135,7 +135,7 @@
   	     		library_blind = #{blind},    
     	   </if>
     	   
-    	   mod_member_idx = #{memberIdx}, mod_date = NOW(), mod_screen = #{jsp}
+    	   mod_member_idx = #{member_idx}, mod_date = NOW(), mod_screen = #{jsp}
     	   
    	   	<where>
    	   		<if test="code_idx.equals('69')"><!-- 감상문 신고 -->
@@ -157,8 +157,13 @@
    	   	</where>
 	</update>
 	
+	<insert id="blindAlarm" parameterType="hashmap">
+		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check, reg_member_idx, reg_screen) 
+			VALUES(#{code_idx},#{idx},#{targetMemberIdx},#{alarmContent},0,#{member_idx},#{jsp})
+	</insert>	
+	
 	<update id="updateMemberState" parameterType="hashMap">
-		UPDATE member SET member_state = #{memberState}, mod_member_idx = #{memberIdx}, mod_date = NOW(), mod_screen = #{jsp}
+		UPDATE member SET member_state = #{memberState}, mod_member_idx = #{member_idx}, mod_date = NOW(), mod_screen = #{jsp}
 			WHERE member_idx = #{targetMemberIdx}
 	</update>
 	
@@ -167,6 +172,11 @@
 			VALUES(#{reportIdx}, #{member_idx}, #{result}, #{reason}, #{member_idx}, #{jsp})
 	</insert>
 	
+	<update id="reportHandlingCompleted" parameterType="hashMap">
+		UPDATE report 
+			SET report_state = '처리완료', mod_member_idx = #{member_idx}, mod_date = NOW(), mod_screen = #{jsp}
+				WHERE  report_idx = #{reportIdx}
+	</update>
 	
 	
 	

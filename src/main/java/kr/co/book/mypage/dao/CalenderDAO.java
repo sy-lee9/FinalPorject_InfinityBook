@@ -12,4 +12,6 @@ public interface CalenderDAO {
 
 	ArrayList<CalenderDTO> changeEvents(int loginIdx);
 
+	ArrayList<CalenderDTO> clubEvents(int loginIdx);
+
 }

@@ -80,5 +80,22 @@ public class RentService {
 		
 	}
 
+	// 대여 완료 시 
+	@Transactional
+	public void rentend(HashMap<String, Object> params) {
+		
+		// 상태 변경
+		dao.rentend(params);
+		
+		// 보증금 들고오기
+		int deposit = dao.rentenddeposit(params);
+		
+		params.put("deposit", deposit);
+		// 보증금 돌려주기
+		dao.rentendreturn(params);
+		
+		
+	}
+
 	
 }

@@ -17,14 +17,64 @@ body {
   height: 100vh;
 }
 
+#header-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
 input[type="submit"] {
   width: 150px;
   height: 70px;
 }
 </style>
 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">
+
+
+
 </head>
 <body>
+
+<div id="header-wrap" class="show">
+	
+	
+	<header id="header">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-2">
+					<div class="main-logo">
+					
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
+					</div>
+
+				</div>
+
+				<div class="col-md-10">
+					
+					<nav id="navbar">
+						<div class="main-menu stellarnav">
+							<ul class="menu-list">
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+		</div>
+	</header>
+</div>
+
+
 <div class="input-container">
   <input type="email" id="member_email" name="member_email" placeholder="이메일을 입력하세요." style="display: block;">
   <input type="password" id="member_pw" name="member_pw" placeholder="비밀번호를 입력하세요.">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -32,8 +82,7 @@ input[type="submit"] {
   <br>
   	  <input type="checkbox" id="rememberMe">&nbsp;&nbsp;&nbsp;<label for="rememberMe" style="display: inline-block; vertical-align: middle;">아이디 저장</label>
   <br>
-
-  <br>	
+	
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="join.go" onclick="closePopup1()">회원가입</a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="pw_Search.go" onclick="closePopup2()">비밀번호 찾기</a>
 </div>
@@ -72,19 +121,18 @@ $(document).ready(function() {
 	      dataType: "json",
 	      success: function(data) {
 	        console.log(data);
-	        if (data.success === 1) {
-	          alert("로그인에 성공했습니다.");
+	        if(data.success == 1) {
 	          setCookie("email", email, 30);
-	          if (rememberMe) {
+	          if(rememberMe) {
 	            setCookie("rememberMe", "true", 30);
-	          } else {
+	          } else{
 	            deleteCookie("rememberMe");
 	          }
 	          location.href = "./";
-	        } else {
+	       } else{
 	          alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");
-	        }
-	      },
+	       }
+	    },
 	      error: function(e) {
 	        console.log(e);
 	        alert("아이디 또는 비밀번호를 잘못 입력했습니다.\r\n입력하신 내용을 다시 확인해주세요.");

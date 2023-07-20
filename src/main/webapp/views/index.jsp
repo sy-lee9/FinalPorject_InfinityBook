@@ -74,16 +74,17 @@
 				</div>
 
 				<div class="col-md-10">
-					
+					<br>
+
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="#home" >대여/교환</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link"  >독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link"  >공지사항</a></li>
+								<!-- <li class="menu-item"><a href="/eventList.go" class="nav-link"  >이벤트</a></li> -->
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link"  >마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -95,10 +96,11 @@
 	</header>
 </div>
 
-<section id="billboard" style="margin-bottom: 100px;">
+<section id="billboard" style="margin-bottom:50px;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+				<br/><br/>
 				<div class="action-menu">
 					<form role="search" method="get" class="search-box" action="/search.do" id ="search" style="text-align:center;"> 
 						<select name="QueryType">
@@ -107,7 +109,7 @@
 							<option value="Author">저자</option>
 							<option value="Publisher">출판사</option>
 						</select>
-						<input class="search-field text search-input" autocomplete='off' placeholder="제목 또는 저자명 "  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
+						<input class="search-field text search-input" autocomplete='off' placeholder="대여/교환 하고싶은 도서 제목을 입력해 주세요😊 "  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
 						<input type="submit" value="검색">	
 					</form>
 				</div>				
@@ -271,7 +273,6 @@
 		</div>
 	</div>
 </div>
-<script src='./js/alarm.js'></script>
 </body>
 
 

@@ -125,8 +125,8 @@ function listPrint(list) {
     content += '<tr>';
     content += '	<th width="2%" style="text-align:center;"></th>';
     content += '	<th width="20%" style="text-align:center;">도서</th>';
-    content += '	<th width="40%" style="text-align:center;"> 모임정보 </th>';
-    content += '	<th width="10%" style="text-align:center;"> 참여인원 </th>';
+    content += '	<th width="30%" style="text-align:center;"> 모임정보 </th>';
+    content += '	<th width="20%" style="text-align:center;"> 참여인원 </th>';
     content += '	<th width="10%" style="text-align:center;"></th>';
     content += '	<th width="2%" style="text-align:center;"></th>';
 	content += '<tr>';

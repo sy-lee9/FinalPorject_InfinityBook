@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,8 +39,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/login.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> login(@RequestParam String member_email, 
-	                                     @RequestParam String member_pw, HttpSession session) {
+	public HashMap<String, Object> login(@RequestParam String member_email, @RequestParam String member_pw, HttpSession session) {
 	    logger.info("로그인시도");
 	    logger.info("email : " + member_email + ", pw : " + member_pw);
 	    
@@ -55,11 +53,13 @@ public class MemberController {
 	        boolean isMatched = encoder.matches(member_pw, encodePassWord);
 	        
 	        if (isMatched) {
-	        	logger.info("컨트롤러" + isMatched);
-	            map.put("success", 1);
-	            session.setAttribute("loginIdx", dto.getMember_idx());
-	            session.setAttribute("loginEmail", dto.getMember_email());
-	            session.setAttribute("loginNickname", dto.getMember_nickname());
+		        	logger.info("컨트롤러" + isMatched);
+		            map.put("success", 1);
+		            session.setAttribute("loginIdx", dto.getMember_idx());
+		            session.setAttribute("loginEmail", dto.getMember_email());
+		            session.setAttribute("loginNickname", dto.getMember_nickname());
+		            session.setAttribute("loginGrade", dto.isMember_grade());	  
+		            session.setAttribute("memberState", dto.getMember_state());
 	        }
 	    }
 	    

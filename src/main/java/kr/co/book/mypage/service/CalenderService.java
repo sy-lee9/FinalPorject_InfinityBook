@@ -32,7 +32,7 @@ public class CalenderService {
 			String bookTitle = rentList.get(i).getBookTitle();
 			String title = "대여("+bookTitle+")";
 			rentList.get(i).setTitle(title);
-			rentList.get(i).setBackgroundColor("#F7E6C4");
+			rentList.get(i).setBackgroundColor("#c9cba3");
 		}
 		
 		logger.info("rentList : "+rentList.size());
@@ -47,7 +47,7 @@ public class CalenderService {
 			String title = "대출("+bookTitle+")";
 			logger.info("title : "+title);
 			borrowList.get(i).setTitle(title);
-			borrowList.get(i).setBackgroundColor("#B3C890");
+			borrowList.get(i).setBackgroundColor("#ffaf87");
 		}
 		
 		logger.info("list : "+borrowList.size());
@@ -62,11 +62,25 @@ public class CalenderService {
 			String title = "교환("+bookTitle+")";
 			logger.info("title : "+title);
 			changeList.get(i).setTitle(title);
-			changeList.get(i).setBackgroundColor("#B3C890");
+			changeList.get(i).setBackgroundColor("#F7E6C4");
 		}
 		
 		logger.info("list : "+changeList.size());
 		totalList.addAll(changeList);
+
+		//모임 일정 리스트
+		ArrayList<CalenderDTO> clubList = CalenderDAO.clubEvents(loginIdx);
+		
+		for (int i = 0; i < clubList.size(); i++) {
+			String bookTitle = clubList.get(i).getTitle();
+			logger.info("bookTitle : "+bookTitle);
+			String title = "모임("+bookTitle+")";
+			logger.info("title : "+title);
+			clubList.get(i).setTitle(title);
+		}
+		
+		logger.info("list : "+clubList.size());
+		totalList.addAll(clubList);
 				
 		logger.info("totalList : "+totalList.size());
 		map.put("events", totalList);

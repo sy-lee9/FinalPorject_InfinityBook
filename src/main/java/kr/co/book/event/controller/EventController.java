@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.book.club.dto.ClubDTO;
 import kr.co.book.event.dto.EventDTO;
@@ -40,25 +41,33 @@ public class EventController {
 	}
 	
 	@RequestMapping(value = "/eventWrite.do", method = RequestMethod.POST)
-	public String eventWrite(HttpSession session ,Model model, @RequestParam HashMap<String, String>params, MultipartFile photo){
-		String page = "eventWrite";
+	public String eventWrite(HttpSession session ,Model model, @RequestParam HashMap<String, String>params, MultipartFile photo, RedirectAttributes rttr){
+		String page = "event/eventWrite";
 		  
 			params.put("member_idx", session.getAttribute("loginIdx").toString()); 
 			
 		   if (params.get("event_title").equals("")) {
-			model.addAttribute("msg","제목을 입력하세요.");
+			rttr.addFlashAttribute("msg","제목을 입력하세요.");
 		   }else if (params.get("event_content").equals("")) {
-			   model.addAttribute("msg","유의사항을 입력하세요.");
+			   rttr.addFlashAttribute("msg","유의사항을 입력하세요.");
 		   }else if(params.get("event_startdate").equals("")){
-			   model.addAttribute("msg","이벤트 시작 날짜를 선택하세요.");
+			   rttr.addFlashAttribute("msg","이벤트 시작 날짜를 선택하세요.");
 		   }else if (params.get("event_enddate").equals("")) {
-			   model.addAttribute("msg","이벤트 종료 날짜를 선택하세요.");
+			   rttr.addFlashAttribute("msg","이벤트 종료 날짜를 선택하세요.");
 		   }else if (params.get("event_cnt").equals("")) {
-			   model.addAttribute("msg","이벤트 당첨자 수를 선정하세요.");
+			   rttr.addFlashAttribute("msg","이벤트 당첨자 수를 선정하세요.");
 		   }else {				   
-			   service.eventWrite(photo, params);
-			   model.addAttribute("msg","이벤트가 정상적으로 등록되었습니다.");
-				page = "eventList";
+			   int success = service.eventWrite(photo, params);
+			   
+			   if (success > 0) {
+				   rttr.addFlashAttribute("msg","이벤트가 정상적으로 등록되었습니다.");
+					page = "event/eventList";
+			   }else {
+				   rttr.addFlashAttribute("msg","이벤트 등록에 오류가 발생하였습니다.");					
+				
+			}
+			   
+			   
 		}  
 	      return page;
 	   }
@@ -78,16 +87,14 @@ public class EventController {
 		return "event/eventWrite"; 
 	}
 
-	@RequestMapping(value = {"/eventList.ajax"}, method = RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> eventList(
-			@RequestParam String page,			
-			@RequestParam String search
-			){
-		
-		logger.info("컨트롤러 등장");
-		
-		return service.eventPageList(Integer.parseInt(page),search);
-	}	
+	// 이벤트 리스트 불러오기
+		@RequestMapping(value = "/event_list.ajax")
+		@ResponseBody
+		public HashMap<String, Object> eventlist(@RequestParam int page) {
+
+			HashMap<String, Object> eventlist = service.eventlist(page);
+			
+			return eventlist;
+		}
 	
 }

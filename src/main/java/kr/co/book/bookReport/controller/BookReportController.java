@@ -98,6 +98,7 @@ public class BookReportController {
 		service.likeCheck(map); 
 		HashMap<String, Object> like = new HashMap<String, Object>();
 		like.put("like", service.getLike(book_report_idx));
+		like.put("success", true);
 		return like;
 	}
 

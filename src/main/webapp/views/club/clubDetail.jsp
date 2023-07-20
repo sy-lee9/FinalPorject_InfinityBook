@@ -39,12 +39,13 @@
 			}
 			
 			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-			h4{
-				font-family: 'IBM Plex Sans KR';	
-				font-weight: 600;
-				margin: 10 0 0 0;
-			}
+	         h4{
+	            font-family: 'IBM Plex Sans KR';   
+	            font-weight: 600;
+	            margin: 10 0 0 0;
+	         }
 			
+	
 	</style>	
 	</head>
 
@@ -97,18 +98,18 @@
 	</div>
 </section>
 
-<section id="best-selling" class="leaf-pattern-overlay" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
+<section id="best-selling" class="leaf-pattern-overlay" style="padding-top: 50px;padding-bottom: 10px;margin-bottom: 10px;">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
 		<table>
 			<tr>
-				<th style="width: 30%; text-align:center;">
+				<th style="width: 25%; text-align:center;">
 					<img src="${club.cover}" style="text-align:center; width: 90%;" alt="book" class="single-image">
 				</th>
 				<th style="width: 5%;">
 					
 				</th>
-				<td style="width: 55%;">
+				<td style="width: 50%;">
 					<c:if test="${club.club_state eq 0}"> 
 	    				<input type="button" style="cursor:default; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
 					</c:if>
@@ -155,10 +156,9 @@
 								<div class="author-name">
 								    <c:forEach items="${member}" var="member">
 								    	<a onclick="profilePop(${member.member_idx})" style="cursor: pointer;">${member.member_nickname}</a>
-								    	<c:if test="${loginIdx == club.member_idx}">								    	
-									    	<c:if test="${member.member_idx ne club.member_idx}">								    	
-									    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
-									    	</c:if>
+								    	
+								    	<c:if test="${member.member_idx ne club.member_idx}">								    	
+								    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
 								    	</c:if>
 								    </c:forEach>
 								</div>
@@ -182,27 +182,31 @@
 								</c:if>
 								
 							</c:if>
-							<c:if test="${loginIdx != club.member_idx && loinIdx != null}">
-								<c:if test="${club.club_state eq 0}">
-									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+							<c:if test="${loginIdx != null}">
+								<c:if test="${loginIdx != club.member_idx}">
+									<c:if test="${club.club_state eq 0}">
+										<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+									</c:if>
 								</c:if>
 							</c:if>
-							
 								<input type="button" style="padding:5 10 5 10;" onclick="location.href='/clubList.go'" class="btn btn-outline-accent btn-accent-arrow" value="목록 ">
 							</td>
 						</tr>
 					</table>
 				</td>
-				<th style="width: 10%; vertical-align: top; text-align:center;">
+				<th style="width: 20%; vertical-align: top; text-align:center;">
 					<c:if test="${loginIdx == club.member_idx}">
 						<input type="button" onclick="clubDelete(${club.club_idx})" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
-						<h3>신청자</h3>
+						<h4>신청자</h4><br/>
 						<c:forEach items="${apply}" var="apply">
-						<a onclick="profilePop(${apply.member_idx})" style="cursor: pointer;">${apply.member_nickname}</a>
-						<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
-						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
+						<a onclick="profilePop(${apply.member_idx})" style="cursor: pointer;">${apply.member_nickname}</a> <br/>
+						<input type="button" style="padding:0 ; margin:0; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
+						<input type="button" style="padding:0; margin:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/><br/><br/>
 						</c:forEach>
 					</c:if>  
+					<c:if test="${loginIdx != club.member_idx}">
+						<a onclick="reportPop('club_report','${club.club_idx}')" style="font-size: 13; cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>
+					</c:if>
 				</th>
 			</tr>
 			
@@ -210,15 +214,7 @@
 		<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
-				<c:choose>
-				  <c:when test="${loginIdx != null}">
-				    <textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
-				  </c:when>
-				  <c:otherwise>
-				    <textarea id="replycontent" placeholder="댓글은 로그인 이후 이용가능합니다." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
-				  </c:otherwise>
-				</c:choose>
-
+				<textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
 				<button onclick="clubReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
 					<span>작성</span> 
 					<i class="icon icon-send"></i>
@@ -266,6 +262,19 @@
 
 </body>
 <script>
+
+function reportPop(code,idx) {
+	var code = code; //'bookReport_report':감상문,'club_report':모임,'reply_report':댓글,'review_report':리뷰,'book_report':도서
+	var idx = idx; // 해당 idx
+	var jsp = "clubDetail.jsp"; // 신고버튼 누른 페이지
+
+	var width = 560;
+    var height = 410;
+    var left = window.innerWidth / 2 - width / 2;
+    var top = window.innerHeight / 2 - height / 2;
+    var popupWindow = window.open('reportPop.go?code='+code+'&idx='+idx+'&jsp='+jsp, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+};
+
 var showPage = 1;
 
 $(document).ready(function() {	
@@ -275,29 +284,26 @@ $(document).ready(function() {
 var club_idx = ${club.club_idx};
 
 function clubReplyWrite() {
-	
-		$.ajax({
-	        url: '/clubReplyWrite.ajax',
-	        type: 'post',
-	        data: {
-	        	'reply_content':document.getElementById("reply_content").value,
-	        	'club_idx':club_idx
-	        },
-			dataType:'json',
-			success: function(data) {
-				console.log(data.success);
-				if(data.success == 1){
-					document.getElementById("reply_content").value = "";
-					listCall(showPage);	
-				}
-	        },
-			error:function(e){
-				console.log(e);
+    
+    $.ajax({
+        url: '/clubReplyWrite.ajax',
+        type: 'post',
+        data: {
+        	'reply_content':document.getElementById("reply_content").value,
+        	'club_idx':club_idx
+        },
+		dataType:'json',
+		success: function(data) {
+			console.log(data.success);
+			if(data.success == 1){
+				document.getElementById("reply_content").value = "";
+				listCall(showPage);	
 			}
-	    });
-	
-    
-    
+        },
+		error:function(e){
+			console.log(e);
+		}
+    });
 }
 
 function clubReplyDelete(reply_idx) {
@@ -370,7 +376,7 @@ function listPrint(list) {
 	    if (${sessionScope.loginIdx} == item.member_idx) {
 	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
 	    } else {
-	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>';
+	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a> / <a onclick="reportPop(\'reply_report\',\''+item.reply_idx+'\')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
@@ -451,11 +457,14 @@ function reReplyPrint(replyList) {
 	    content += '<th style="width:15%; text-align:right;">' + reply.reg_date.split(" ")[0] + '</th>';
 	    content += '<th style="width:10%;">';
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
-	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
+	    	content += '<a onclick="showEditForm2(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
+	    } else{
+	    	content += '<a onclick="reportPop(\'reply_report\',\''+reply.reply_idx+'\')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
-	    content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; 
+	    content += '<tr id="editForm'+reply.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
+	    //content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; 
 	    content += '<th style="width:15%;"></th>';
 	    content += '<th style="width:10%;"></th>';
 	    content += '<th colspan="2">';
@@ -486,6 +495,14 @@ function showEditForm(replyIdx) {
 	  }
 }
 
+function showEditForm2(replyIdx) {
+    var editForm = document.getElementById('editForm' + replyIdx);
+    if (editForm.style.display === 'table-row') {
+    	editForm.style.display = 'none';
+	  } else {
+		  editForm.style.display = 'table-row';
+	  }
+}
 
 
 function showRe_ReplyForm(replyIdx) {
@@ -572,7 +589,8 @@ function clubUpdate(club_idx){
 			if(meetNum<=clubNum){
 				location.href='/clubUpdate.do?club_idx='+club_idx;
 			}else{
-				confirm('모집 확정 인원보다 참가 인원이 많습니다.그대로 진행하시겠습니까?');
+				alert('모집 확정 인원보다 참가 인원이 많습니다. ');
+				return false;
 			}
 		}else{
 			alert('참가 확정 인원이 2명 이상일때만 모집 종료가 가능합니다. ' );

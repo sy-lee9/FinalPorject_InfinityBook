@@ -8,11 +8,6 @@ ws.onmessage = function(msg) {
 			  		  
 }
 
-ws.onopen = function() {
-  alarm_send();
-};
-
-
 var data = {};//전송 데이터(JSON)
 
 function alarm_send(){			

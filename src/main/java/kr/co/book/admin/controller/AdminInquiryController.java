@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.admin.dto.AdminInquiryDTO;
 import kr.co.book.admin.service.AdminInquiryService;
+import kr.co.book.mypage.dto.MyInquriyDTO;
+import kr.co.book.mypage.service.MyInquiryService;
 
 @Controller
 public class AdminInquiryController {
@@ -23,9 +25,10 @@ public class AdminInquiryController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired AdminInquiryService service;
+	@Autowired MyInquiryService mservice;
 	
 	// 문의 상세보기
-	@RequestMapping(value = "/mypage/inquirydetail.go")
+	@RequestMapping(value = "/admin/inquirydetail.go")
 	public ModelAndView inquirydetail(@RequestParam String inquiry_idx) {
 		
 		ModelAndView mav = new ModelAndView("/inquiry/inquirylist");
@@ -55,14 +58,14 @@ public class AdminInquiryController {
 		params.put("member_idx", loginIdx);
 		service.inquiryreplywrite(params);
 		
-		return "/inquiry/inquirylist";
+		return "/admin/adminInquiry";
 	}	
 	
 	// 문의 리스트
 	@RequestMapping(value = "/admin/inquirylist.go")
 	public String myinquirylistForm() {		
 		
-		return "/inquiry/inquirylist";
+		return "/admin/adminInquiry";
 	}
 	
 	// 문의 리스트 불러오기
@@ -75,5 +78,23 @@ public class AdminInquiryController {
 		
 		return inquiry;
 	}
+	
+	// 문의 답변 상세보기
+	@RequestMapping(value = "/admin/inquiryreplydetail.go")
+	public ModelAndView inquiryreplydetail(@RequestParam String inquiry_idx) {
+		
+		ModelAndView mav = new ModelAndView("/admin/adminInquiry");		
+
+		MyInquriyDTO dto =  mservice.myinquiryreplydetail(inquiry_idx);
+		
+		if (dto != null) {
+			mav.addObject("inquiry", dto);
+			mav.setViewName("/inquiry/inquirydetail");
+		}
+		
+		return mav;
+	}
+	
+	
 
 }

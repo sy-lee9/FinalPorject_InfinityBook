@@ -52,5 +52,23 @@
 		    VALUES(#{code_idx}, #{rent_idx}, #{member_idx}, CONCAT('현재 대여 중인','&lt;br/&gt;','&lt;br/&gt;','&lt;img src=', #{library.library_cover}, ' width="auto" height="auto"', '&lt;br/&gt;','&lt;br/&gt;',#{library.library_title},'&lt;br/&gt;','&lt;br/&gt;','보증금: ', #{rent_deposit}, '&lt;br/&gt;', '대여일: ', #{rent_startdate}, '&lt;br/&gt;', '반납일: ', #{rent_enddate},'&lt;br/&gt;','&lt;br/&gt;','정보로 대여 하실래요?'), now())	
 		</insert>
 		
+		<!-- 완료 시 -->
+		<update id="rentend" parameterType="hashmap">
+			UPDATE rent SET  rent_state = 3, mod_member_idx = #{member_idx}, mod_date = now()
+			WHERE rent_idx = #{room}
+		</update>
+		
+		<!-- 보증금 들고오기 -->
+		<select id="rentenddeposit" parameterType="hashmap" resultType="int">
+			SELECT rent_deposit FROM rent
+			WHERE rent_idx = #{room}
+		</select>
+		
+		<!-- 보증금 돌려주기 -->
+		<insert id="rentendreturn">
+			INSERT INTO deposit_use(member_idx, deposit_use_price, deposit_use_state,rent_idx)
+			VALUES(#{member_idx}, #{deposit}, '환급',#{room})
+		</insert>
+		
 	
 	</mapper>

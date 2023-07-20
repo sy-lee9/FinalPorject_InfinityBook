@@ -177,6 +177,7 @@ window.onload = () => {
 	  
 	};
 	
+
 function likeCheck(val){
 	$.ajax({
         url: '/like.ajax',
@@ -196,8 +197,7 @@ function likeCheck(val){
 		error:function(e){
 			console.log(e);
 		}
-    });
-	
+    }); 	
 }
 
 var book_report_idx = ${report.book_report_idx};
@@ -280,8 +280,8 @@ function listCall(page){
 	         });
 		}
 	});
-}
 
+} 
 
 function listPrint(list) {
 	  var content = '';

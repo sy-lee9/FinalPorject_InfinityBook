@@ -75,10 +75,10 @@
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-								        <li class="active"><a href="#">회원 정보</a></li>
-								        <li><a href="#">대여/교환 내역</a></li>
-								        <li><a href="#">문의 내역</a></li>
-								     </ul>
+		                                <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+		                                <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
+		                                <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
+		                             </ul>
 								</li>								
 							</ul>
 						</div>

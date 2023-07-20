@@ -94,11 +94,33 @@ public class AdminReportService {
 		
 		int blind = Integer.parseInt((String) params.get("blind"));
 		String memberState = (String) params.get("memberState");
+		int code_idx = Integer.parseInt((String) params.get("code_idx"));
+		String target = (String) params.get("target");
+		String alarmContent = "";
 		String result = "";
 
 		if(blind == 1) {
 			
 			if(adminReportDAO.blind(params) == 1) {
+				switch (code_idx) {
+				case 69:
+					alarmContent = "신고처리로 ["+target+"] 감상문이 삭제되었습니다.";
+					break;
+				case 70:
+					alarmContent = "신고처리로 ["+target+"] 모임이 삭제되었습니다.";
+					break;
+				case 71:
+					alarmContent = "신고처리로 ["+target+"] 댓글이 삭제되었습니다.";
+					break;
+				case 72:
+					alarmContent = "신고처리로 ["+target+"] 리뷰가 삭제되었습니다.";
+					break;
+				case 73:
+					alarmContent = "신고처리로 ["+target+"] 도서가 삭제되었습니다.";
+					break;
+				}
+				params.put("alarmContent", alarmContent);
+				adminReportDAO.blindAlarm(params);
 				result += "블라인드 처리";		
 				
 				if(!memberState.equals("정상")) {
@@ -117,15 +139,15 @@ public class AdminReportService {
 		}
 		
 		params.put("result", result);
-		
-		int row = adminReportDAO.reportHandlingRecord(params);
+		int row = 0;
+		if(adminReportDAO.reportHandlingCompleted(params) == 1) {
+			row = adminReportDAO.reportHandlingRecord(params);
+		}
 		map.put("success", row);
 		
 		return map;
 	}
 
-	
-	
 	
 	
 	
