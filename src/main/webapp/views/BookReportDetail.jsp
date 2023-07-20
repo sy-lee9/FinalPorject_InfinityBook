@@ -2,9 +2,9 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<title>Infinite B∞k</title>
+		<meta charset="utf-8">
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,15 +32,11 @@
 	<style>
 		
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-         h2,h3{
+         h2,h3,h4{
             font-family: 'IBM Plex Sans KR';   
             font-weight: 600;
             margin: 10 0 0 0;
             }
-	
-	div{
-	display:block;
-	}
 	#btn{
 	background-color: #C5A992;
 	  border: none; /* 테두리 제거 */
@@ -56,109 +52,104 @@
 	float:right;
 	margin-top:27px;
 	}
-	.section-title{
-	font-size:30px;
-	}
+
 	i{
 	color:ff0000;
 	}
 	.author-name{
 	line-height:2.5;
 	}
-	table{
-	    width: 83%;
-	    margin:60px
-	}
+	
 	.fa{
 	font-size: x-large;
 	}
 	</style>
 </head>
 <body>
-<c:choose>
+
+  <div id="header-wrap">
+	<c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="loginAfterBox.jsp" />
+            <jsp:include page="./loginAfterBox.jsp" />
         </c:when>
         <c:otherwise>
-            <jsp:include page="loginBeforeBox.jsp" />            
+            <jsp:include page="./loginBeforeBox.jsp" />            
         </c:otherwise>
     </c:choose>
-<header id="header">
+    
+	<header id="header">
 		<div class="container">
 			<div class="row">
-
 				<div class="col-md-2">
 					<div class="main-logo">
-					
 						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
-
 				</div>
-
 				<div class="col-md-10">
-					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item"><a href="#home">대여/교환</a></li>
-								<li class="menu-item active"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/BookSearch.go">대여/교환</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item active"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
 								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
-
 				</div>
-
 			</div>
 		</div>
 	</header>
+</div>
+
+<section class="hero-section jarallax">
 	
-				<div class="section-header align-center">
-					<div class="title">
-						<span>감상문</span>
-					</div>
-					<h2 class="section-title" >${report.book_report_title}</h2>
-					<div class="toggle">
-				  
-				</div>
-			<table>
-				<tr>
-					<th>
-						 <div class="author-name" style="padding:0px 0px; float:left; margin-right:30px;">${report.book_report_date}</div>
-						 <div class="author-name" style="padding:0px 0px; float:left;">작성자 ${name}</div>
-					</th>
-					<td style="padding:0px 0px;">
-					    <div class="author-name" style="	float:right;
-					margin-top:27px;">조회수 ${report.book_report_hit}</div>
-					</td>
-				</tr>
-				<tr>
-					<th><h3><img src="${book.cover}"></h3></th>
-					<th>
-			<div class="author-name">${book.title}</div>
-			<div class="author-name">저자 ${book.author}</div>
-			<div class="author-name">출판사 ${book.publisher}</div>
-			<div class="author-name">발행일 ${book.pubdate}</div>
-			<div class="author-name" id="aLike" style="margin-right: 550px;
-    margin-top: 125px">${like}</div>
-					 <button id='btn' style="    margin-right: 2px;
-    margin-top: 111px;
-    margin-bottom: -20px;">
-					      <i id="like" class="fa fa-heart-o"></i>
-					    </button>
-		</th>
-	</tr>	
-		<tr>
-			<td colspan="2"><div class="author-name">${report.book_report_content}</div></td>
-		</tr>	
-			</table>
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h2 class="section-title" style="margin-botton:0px;">Book Report</h2>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section id="best-selling" class="leaf-pattern-overlay" style="padding-top: 50px;padding-bottom: 10px;margin-bottom: 10px;">
+	<div class="corner-pattern-overlay"></div>
+	<div class="container">
+		<table>
+            <tr>
+            
+                <td></td>
+                <td><h3 style="display:inline;">${report.book_report_title}</h3><h4 style="display:inline;float:right;   "> ${name}&nbsp; | &nbsp;${report.book_report_date}</h4></td>
+                
+            </tr>
+			<tr>
+				<th style="width: 20%; text-align:center;">
+					<img src="${book.cover}" style="text-align:center; width: 90%;" alt="book" class="single-image">
+				</th>
+				<th style="width: 50%;">
+					<br><br>
+					<div class="author-name"><h4 style="display:inline;">제목 &nbsp; </h4> ${book.title}</div>
+                    <div class="author-name"><h4 style="display:inline;">저자 &nbsp; </h4> ${book.author} &nbsp;&nbsp;&nbsp;${book.publisher}</div>
+                    <br>
+                    <div class="author-name">${report.book_report_content}</div>
+                    <div class="author-name" id="aLike" style="margin-right: 550px;  margin-top: 125px">${like}</div>
+                    <button id='btn' style="    margin-right: 2px; margin-top: 111px; margin-bottom: -20px;">
+                        <i id="like" class="fa fa-heart-o"></i>
+                    </button>
+				</th>
+			</tr>
 			
+		</table>
+    </div>
 	<input type="hidden" id ="myLike" value="${myLike}"/>
 	<input type="hidden" id ="isbn" value="${report.isbn}"/>
-  </div>
-  	
+</section>
+			
 	<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
@@ -171,22 +162,14 @@
 				  </c:otherwise>
 				</c:choose>
 
-				<button onclick="bookReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
+				<button class="btn-subscribe" style="width: 10%;" value="작성">
 					<span>작성</span> 
 					<i class="icon icon-send"></i>
 				</button>
 			</div> 
 			<hr>
-			<div id="list" style="position: relative; text-align:center;">
-				
-			</div>
-			<div  id="paging" >
-				<div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px;">
-			          <ul class="pagination justify-content-center" id="pagination"></ul>
-			        </nav>
-				</div>
-			</div>							
+
+								
 		</div>
 
 
@@ -200,8 +183,6 @@
 var showPage = 1;
 
 window.onload = () => {
-	
-		listCall(showPage);
 	  var like = document.querySelector('.fa');
 	  if(document.getElementById("myLike").value == "0"){
 		  like.addEventListener("click", (e) => {
@@ -258,282 +239,6 @@ function likeCheck(val){
 
 var book_report_idx = ${report.book_report_idx};
 
-function bookReplyWrite() {
-	
-		$.ajax({
-	        url: '/bookReplyWrite.ajax',
-	        type: 'post',
-	        data: {
-	        	'reply_content':document.getElementById("reply_content").value,
-	        	'book_report_idx':book_report_idx
-	        },
-			dataType:'json',
-			success: function(data) {
-				console.log(data.success);
-				if(data.success == 1){
-					document.getElementById("reply_content").value = "";
-					listCall(showPage);	
-				}
-	        },
-			error:function(e){
-				console.log(e);
-			}
-	    });
-	
-    
-    
-}
-
-function bookReplyDelete(reply_idx) {
-	
-	if(confirm('정말 삭제하시겠습니까?')){
-		$.ajax({
-	        url: '/bookReplyDelete.ajax',
-	        type: 'post',
-	        data: {
-	        	'reply_idx':reply_idx
-	        },
-			dataType:'json',
-			success: function(data) {
-				console.log(data.success);
-				if(data.success == 1){
-					listCall(showPage);	
-				}
-	        }
-	    });
-	}
-    
-    
-}
-
-
-
-function listCall(page){
-	$.ajax({
-		type:'post',
-		url:'bookReplyList.ajax',
-		data:{
-			'page':page,
-			'book_report_idx':book_report_idx
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			listPrint(data.list);
-			
-			$('#pagination').twbsPagination({
-				startPage:1, // 시작 페이지
-				totalPages:data.pages,// 총 페이지 수 
-				visiblePages:5,// 보여줄 페이지
-				onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
-					console.log(page,showPage);
-					if(page != showPage){
-						showPage=page;
-						listCall(page);
-						
-					}
-				}
-	         });
-		}
-	});
-
-} 
-
-function listPrint(list) {
-	  var content = '';
-	  
-	  content += '<table style="width:100%;">';
-	  
-	  list.forEach(function(item) {
-	    content += '<tr>';
-	    content += '<th style="width:10%;"></th>';
-	    content += '<th style="width:10%;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a></th>';
-	    content += '<th style="width:50%;">'+item.reply_content+'</th>';
-	    content += '<th style="width:15%; text-align:right;">'+item.reg_date.split(" ")[0]+'</th>';
-	    content += '<th style="width:15%;">';
-	    if (${sessionScope.loginIdx} == item.member_idx) {
-	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="bookReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
-	    } else {
-	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>';
-	    }
-	    content += '</th>';
-	    content += '</tr>';
-
-	    content += '<tr id="editForm'+item.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
-	    content += '<th style="width:10%;"></th>';
-	    content += '<th style="width:10%;"></th>';
-	    content += '<th colspan="2">';
-	    content += '<input style="width:100%;" type="text" value="' + item.reply_content + '">';
-	    content += '</th>';
-	    content += '<th style="width:15%;">'
-	    content += '<button onclick="bookReplyUpdate('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
-	    content += '<span>수정</span> ';
-	    content += '<i class="icon icon-send"></i>';
-	    content += '</button>';
-	    content += '</th>';
-	    content += '</tr>';
-
-	    content += '<tr id="re_ReplyForm'+item.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
-	    content += '<th style="width:10%;"></th>';
-	    content += '<th style="width:10%;"></th>';
-	    content += '<th colspan="2">';
-	    content += '<input style="width:100%;" type="text" >';
-	    content += '</th>';
-	    content += '<th style="width:15%;">'
-	    content += '<button onclick="bookReReply('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
-	    content += '<span>작성</span> ';
-	    content += '<i class="icon icon-send"></i>';
-	    content += '</button>';
-	    content += '</th>';
-	    content += '</tr>';
-
-	    content += '<tr id="reReplyContent' + item.reply_idx + '">';
-	    content += '<td colspan="5">'; // 전체 칼럼을 합침
-	    content += '<div id="reReplyContentInner' + item.reply_idx + '"></div>'; // 리댓 내용을 출력할 내부 요소
-	    content += '</td>';
-	    content += '</tr>';
-
-	    reReplyCall(item.reply_idx, function(replyContent) {
-	      $('#reReplyContentInner' + item.reply_idx).html(replyContent); // 수정된 부분: 리댓 내용을 출력할 내부 요소에 추가
-	    });
-
-	  });
-
-	  content += '</table>';
-	  $('#list').empty();
-	  $('#list').append(content);
-	}
-
-function reReplyCall(reply_idx, callback) {
-	  console.log(reply_idx);
-	  $.ajax({
-	    type: 'post',
-	    url: 'bookReReplyList.ajax',
-	    data: {
-	      'reply_idx': reply_idx
-	    },
-	    dataType: 'json',
-	    success: function(data) {
-	      
-	     
-	    	console.log(data);
-	     	var replyContent = reReplyPrint(data.list);
-	    	callback(replyContent);
-	    }
-	  });
-	}
-
-function reReplyPrint(replyList) {
-	  var content = '';
-	  replyList.forEach(function(reply) {
-		  
-		  
-	    content += '<tr>';
-	    content += '<th style="width:15%; text-align:right;">ㄴ</th>';
-	    content += '<th style="width:10%;"><a onclick="profilePop('+reply.member_idx+')" style="cursor: pointer;">'+reply.member_nickname+'</a></th>';
-	    content += '<th style="width:661px;">' + reply.reply_content + '</th>';
-	    content += '<th style="width:15%; text-align:right;">' + reply.reg_date.split(" ")[0] + '</th>';
-	    content += '<th style="width:10%;">';
-	    if (${sessionScope.loginIdx} == reply.member_idx) {
-	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="bookReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
-	    }
-	    content += '</th>';
-	    content += '</tr>';
-	    content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; 
-	    content += '<th style="width:15%;"></th>';
-	    content += '<th style="width:10%;"></th>';
-	    content += '<th colspan="2">';
-	    content += '<input style="width:100%;" type="text" value="' + reply.reply_content + '">';
-	    content += '</th>';
-	    content += '<th style="width:15%;">'
-	    content += '<button onclick="bookReplyUpdate(' + reply.reply_idx + ')" class="btn-subscribe" style="width: 10%;" value="수정">';
-	    content += '<span>수정</span> ';
-	    content += '<i class="icon icon-send"></i>';
-	    content += '</button>';
-	    content += '</th>';
-	    content += '</tr>';
-	  });
-	  return content;
-	}
-
-
-
-function showEditForm(replyIdx) {
-    var editForm = document.getElementById('editForm' + replyIdx);
-    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
-    if (editForm.style.display === 'table-row') {
-    	re_ReplyForm.style.display = 'none';
-    	editForm.style.display = 'none';
-	  } else {
-		  re_ReplyForm.style.display = 'none';
-		  editForm.style.display = 'table-row';
-	  }
-}
-
-
-
-function showRe_ReplyForm(replyIdx) {
-	var editForm = document.getElementById('editForm' + replyIdx);
-   	var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
-	  if (re_ReplyForm.style.display === 'table-row') {
-		  re_ReplyForm.style.display = 'none';
-	    	editForm.style.display = 'none';
-	  } else {
-		  editForm.style.display = 'none';
-	    re_ReplyForm.style.display = 'table-row';
-	  }
-	}
-
-
-
-function bookReReply(reply_idx){
-	var re_ReplyForm = document.getElementById('re_ReplyForm' + reply_idx);
-	var inputField = re_ReplyForm.querySelector('input');
-	var newContent = inputField.value;
-	
-	$.ajax({
-        url: '/bookReReply.ajax',
-        type: 'post',
-        data: {
-        	'reply_idx':reply_idx,
-        	'reply_content':newContent,
-        	'book_report_idx':book_report_idx
-        },
-		dataType:'json',
-		success: function(data) {
-			console.log(data.success);
-			if(data.success == 1){
-				listCall(showPage);	
-			}
-        }
-    });
-	
-}
-
-function bookReplyUpdate(reply_idx){
-	var editForm = document.getElementById('editForm' + reply_idx);
-	var inputField = editForm.querySelector('input');
-	var newContent = inputField.value;
-	
-	$.ajax({
-        url: '/bookReplyUpdate.ajax',
-        type: 'post',
-        data: {
-        	'reply_idx':reply_idx,
-        	'reply_content':newContent
-        },
-		dataType:'json',
-		success: function(data) {
-			console.log(data.success);
-			if(data.success == 1){
-				listCall(showPage);	
-			}
-        }
-    });
-	
-}
-	
-	
 var msg = "${msg}";
 if(msg != ""){
 	alert(msg);

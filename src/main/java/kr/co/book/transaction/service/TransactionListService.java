@@ -104,4 +104,10 @@ public class TransactionListService {
 		
 	}
 
+
+	public ArrayList<TransactionListDTO> searchReview(String library_idx) {
+		
+		return dao.searchReview(library_idx);
+	}
+
 }

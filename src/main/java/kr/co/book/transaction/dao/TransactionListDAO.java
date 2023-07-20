@@ -24,5 +24,7 @@ public interface TransactionListDAO {
 
 	void reviewWrite(HashMap<String, Object> params);
 
+	ArrayList<TransactionListDTO> searchReview(String library_idx);
+
 	
 }
