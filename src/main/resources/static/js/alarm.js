@@ -1,4 +1,4 @@
-const ws = new WebSocket("ws://" + location.host + "/alarm");	
+var ws = new WebSocket("ws://" + location.host + "/chat");	
 
 alarmchk();
 
