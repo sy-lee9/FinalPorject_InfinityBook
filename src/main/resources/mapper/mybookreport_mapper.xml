@@ -49,7 +49,7 @@
 		FROM `like` l
 		JOIN book_report br ON br.book_report_idx = l.book_report_idx 
 		JOIN book b ON b.isbn =br.isbn 
-		WHERE l.member_idx =1 AND br.book_report_open=0 AND br.book_report_blind = 0
+		WHERE l.member_idx =1 AND br.book_report_open=1 AND br.book_report_blind = 0
 		GROUP BY l.book_report_idx
 		) AS subquery
 	 </select>
@@ -60,7 +60,7 @@
 		FROM `like` l
 		JOIN book_report br ON br.book_report_idx = l.book_report_idx 
 		JOIN book b ON b.isbn =br.isbn 
-		WHERE l.member_idx =#{member_idx} AND br.book_report_open=0 AND br.book_report_blind = 0
+		WHERE l.member_idx =#{member_idx} AND br.book_report_open=1 AND br.book_report_blind = 0
 		GROUP BY l.book_report_idx
 		ORDER BY book_report_idx DESC LIMIT 9 OFFSET #{offset}
 	 </select>
