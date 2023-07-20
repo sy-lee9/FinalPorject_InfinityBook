@@ -125,11 +125,15 @@
 			  $('#newPw').val('');
 			  $('#exPw').focus();      
 		} else if($('#newPw').val().length <=7){
-			$('#pw_msg1').css({'font-size': '10px','color': 'red'});
-			$('#pw_msg1').html('비밀번호를 8자리 이상 입력해주세요');
-		}else{
-			$('#pw_msg1').css({'font-size': '10px','color': 'darkgreen'});
-			$('#pw_msg1').html('사용 가능한 비밀번호 입니다.');
+			  $('#pw_msg1').css({'font-size': '10px','color': 'red'});
+		      $('#pw_msg1').html('비밀번호를 8자리 이상 입력해주세요');
+		} else if (!/[!@#$%^&*]/.test($('#newPw').val())) {
+			  $('#pw_msg1').css({'font-size': '10px','color': 'red'});
+			  $('#pw_msg1').html('특수문자를 포함해야 합니다<br>사용가능한 특수문자 : ‘!, @, #, $, %, ^, &, *’');
+			  $('#newPw').focus();
+		} else{
+		$('#pw_msg1').css({'font-size': '10px','color': 'darkgreen'});
+		$('#pw_msg1').html('사용가능한 비밀번호 입니다');
 		}
 	});
 	

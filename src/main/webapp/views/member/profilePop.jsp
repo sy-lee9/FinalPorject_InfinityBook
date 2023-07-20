@@ -116,6 +116,26 @@
 </body>
 <script>
 
+	var showPage = 1;
+	var searchText = '';
+	var member_idx = "${member_idx}";
+	
+	reviewListCall(showPage);
+	reportListCall(showPage);
+
+	//신고 팝업창 오픈
+	function reportPop(idx) {
+		var code = "review_report";
+		var jsp = "profilePop.jsp"; // 신고버튼 누른 페이지
+
+		var width = 560;
+	    var height = 410;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    var popupWindow = window.open('reportPop.go?code='+code+'&idx='+idx+'&jsp='+jsp, 'reportPop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	};
+
+	//프로필 팝업창 오픈 
 	function profilePop(member_idx) {
 		var width = 1100;
 	    var height = 800;
@@ -124,12 +144,7 @@
 	    var popupWindow = window.open('profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	};
 
-	var showPage = 1;
-	var searchText = '';
-	var member_idx = "${member_idx}";
-	
-	reviewListCall(showPage);
-	
+	//리뷰 리스트 불러오기
 	function reviewListCall(page){
 		   $.ajax({
 		      type:'post',
@@ -162,7 +177,7 @@
 		}
 
 
-
+	//리뷰 리스트 출력
 	function reviewListPrint(list) {
 	    var content = '';
 	    content += '<table>';
@@ -174,9 +189,13 @@
 	    
 	    list.forEach(function(item) {	    	
 	    	
-		    	content += '<td style="width=20%; padding-left:5%;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a></td>';
+		    	content += '<td width="20%" style="padding-left:5%;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a></td>';
 		    	content += '<td width="60%">'+item.review_content+'</td>';
-		    	content += '<td style="width=15%; padding-right:5%;">'+item.review_date+'</td>';		    	
+		    	content += '<td width="20%" style="text-align:center;">'+item.review_date;
+		    	if(${sessionScope.loginIdx == member_idx}){
+		    		content += '<a onclick="reportPop('+item.review_idx+')" style="font-size: 13; cursor: pointer; color:black;">신고<img src="/images/siren.png" alt="siren" style="width: 25; height: 25; margin-top:-5;"></a>';
+		    	}		
+		    	content += '</td>';		    	
 	    	
 	  	    });
 	    }
@@ -188,22 +207,7 @@
 		$('#reviewList').append(content);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	reportListCall(showPage);
-
+	//감상문 리스트 불러오기
 	function reportListCall(page){
 	   $.ajax({
 	      type:'post',
@@ -217,52 +221,45 @@
 	      success:function(data){
 	         console.log(data);
 	         reportListPrint(data.list);
-	         
-	        
-	         
+
 	         $('#pagination').twbsPagination({
-					startPage:1, // 시작 페이지
-					totalPages:data.pages,// 총 페이지 수 
-					visiblePages:5,// 보여줄 페이지
-					onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
-						console.log(page,showPage);
-						if(page != showPage){
-							showPage=page;
-							reportListCall(page);
-							
-						}
+				startPage:1, // 시작 페이지
+				totalPages:data.pages,// 총 페이지 수 
+				visiblePages:5,// 보여줄 페이지
+				onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
+					console.log(page,showPage);
+					if(page != showPage){
+						showPage=page;
+						reportListCall(page);						
 					}
-		         });
-	         
-	         
-	         
+				}
+	         });
 	      }
 	   });
 	}
 
+	//감상문 리스트 출력
 	function reportListPrint(list) {
 	    var content = '';
     	content += '<div id="products-grid" class="products-grid grid">';
 	
 	   list.forEach(function(item) {
-
-
-		        if (item.book_report_open == "1") {
-		        content += '<figure class="product-style" style="text-align:center; width: 30%; height: 60%;">';
-		        	
-		        content += '  <a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'">';
-		        content += '    <img src="' + item.cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
-		        content += '  </a>';
-		        content += '  <figcaption>';
-		        content += '    <a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'">';
-		        content += '      	<input type="checkbox" style="margin-right:10px;" value="'+item.book_report_idx+'"><h>' + item.book_report_title + '</h>';
-		        content += '		<br/><h> ❤️' + item.likes + '</h>';
-		        content += '		<br/><h>' + item.book_report_date + '</h>';
-		        
-		        content += '    </a>';
-		        content += '  </figcaption>';
-		        content += '</figure>';
-		   	}
+	        if (item.book_report_open == "1") {
+	        content += '<figure class="product-style" style="text-align:center; width: 30%; height: 60%;">';
+	        	
+	        content += '  <a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'">';
+	        content += '    <img src="' + item.cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
+	        content += '  </a>';
+	        content += '  <figcaption>';
+	        content += '    <a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'">';
+	        content += '      	<input type="checkbox" style="margin-right:10px;" value="'+item.book_report_idx+'"><h>' + item.book_report_title + '</h>';
+	        content += '		<br/><h> ❤️' + item.likes + '</h>';
+	        content += '		<br/><h>' + item.book_report_date + '</h>';
+	        
+	        content += '    </a>';
+	        content += '  </figcaption>';
+	        content += '</figure>';
+	   		}
 	    });
 	
 	    content += '</div>';

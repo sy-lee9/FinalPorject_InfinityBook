@@ -204,7 +204,7 @@ public class ChatService {
 			
 			int don = rentdeposit* -1;
 			// 내가 들고있는 보증금이 걸린 보증금보다 크다면
-			if(deposit > rentdeposit) {
+			if(deposit >= rentdeposit) {
 				
 				// 대여 보증금 사용
 				dao.usedeposit(member_idx, don,room);

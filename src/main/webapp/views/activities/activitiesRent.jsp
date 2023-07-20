@@ -247,11 +247,12 @@
 	    content += '<table style="width:100%; text-align:center; margin-left:2%;">';
 	    content += '<tr>';
 	    content += '	<th width="10%" style="text-align:center; padding-left: 2%; text-align: center;"> 대여 상태 </th>';
-	    content += '	<th width="25%" style="text-align:center;">  대여 도서 </th>';
+	    content += '	<th width="20%" style="text-align:center;">  대여 도서 </th>';
+	    content += '	<th width="15%" style="text-align:center;"> 대출자 </th>';
 	    content += '	<th width="15%" style="text-align:center;"> 대여자 </th>';
 	    content += '	<th width="15%" style="text-align:center;"> 대여 일시 </th>';
 	    content += '	<th width="15%" style="text-align:center;"> 반납 일시 </th>';
-	    content += '	<th width="20%" style="text-align:center; padding-right: 2%;"> 보증금 </th>';
+	    content += '	<th width="10%" style="text-align:center; padding-right: 2%;"> 보증금 </th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
@@ -277,24 +278,33 @@
 	    	
 	    	
 	    	if (loginIdx == memberIdx && state == 4 && bookReview == 0){
-		    	content += '<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.title+' <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></h4></td>';
+		    	content += '<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.title+' <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+book+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></h4></td>';
 	    	}else {
 		    	content += '<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.title+'</h4></td>';
 	    	}
+	    	
+	    	
+	    	if (loginIdx == memberIdx && state == 4 && memberReview == 0){
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a> <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    	}else {
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.memberIdx+')" style="cursor: pointer;">' + item.renter + '</a> <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    	}  	
 
 	    	
 	    	if (loginIdx != memberIdx && state == 4 && memberReview == 0){
-	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.memberIdx+')" style="cursor: pointer;">' + item.renter + '</a> <input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.memberIdx+')" style="cursor: pointer;">' + item.renter + '</a> <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
 	    	}else {
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.memberIdx+')" style="cursor: pointer;">' + item.renter + '</a></td>';
 	    	}  		    	
 	    	
 	    	content += '<td style="text-align:center;">' + item.rent_startdate + '</td>';
 	    	content += '<td style="text-align:center;">' + item.rent_enddate + '</td>';
-	    	content += '<td style="text-align:center; padding-right: 2%;">' + item.rent_deposit + '원</td>';
 	    	
-
-	    	
+	    	if (typeof item.rent_deposit === "undefined") {
+	    		content += '<td style="text-align:center;">0원</td>';
+	    	}else {
+		    	content += '<td style="text-align:center; padding-right: 2%;">' + item.rent_deposit + '원</td>';
+    		}
 
 	        content += '</tr>';
 	    });
@@ -304,6 +314,16 @@
 	    $('#list').empty();
 		$('#list').append(content);
 	}
+	
+	
+	var member = 0;
+	var book = 1;
+
+	function review(lenderIdx,library_idx,rent_idx,review_type) {
+		var my_memberIdx = ${sessionScope.loginIdx};
+		location.href="/Review.go?member_sender="+my_memberIdx+"&member_reciever="+lenderIdx+"&book_reciever="+library_idx+"%20&review_transaction_type=1&review_tracnsaction_idx="+rent_idx+"&review_type="+review_type;
+	}
+
 
 </script>
 

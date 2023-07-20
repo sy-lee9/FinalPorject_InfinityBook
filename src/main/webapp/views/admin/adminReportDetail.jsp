@@ -355,7 +355,7 @@
 	   var content = '';
 			content += '<table style="margin-top:1%; height: 20%; width:70%; margin-left:17%">';
     		content += '<tr>';
-   			content += '<th width="35%" style="text-align:center; padding: 1%;">조치결과<br>(블라인드 여부/회원 이용제한)</th>';
+   			content += '<th width="35%" style="text-align:center; padding: 1%;">조치결과<br>(블라인드 여부 / 회원 이용제한)</th>';
 			content += '<th width="30%"  style="text-align:center;">조치사유</th>';
 			content += '<th width="15%"  style="text-align:center;">담당자</th>';
 			content += '<th width="20%"  style="text-align:center; padding: 1%;">조치일시</th>';

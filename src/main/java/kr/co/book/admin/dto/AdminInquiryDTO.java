@@ -15,11 +15,20 @@ public class AdminInquiryDTO {
 	private String inquiry_state;
 	private String member_i;
 	
+	
 	//Member
 	private String member_nickname;
+	private String member_idx;
+	
+	
+	public String getMember_idx() {
+		return member_idx;
+	}
 
-	
-	
+	public void setMember_idx(String member_idx) {
+		this.member_idx = member_idx;
+	}
+
 	public String getMember_i() {
 		return member_i;
 	}
