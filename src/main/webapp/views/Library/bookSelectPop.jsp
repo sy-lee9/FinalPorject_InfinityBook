@@ -52,7 +52,7 @@
       </div>
    </div>
 </section>
-   <form onsubmit="call()" class="search-box" style="text-align:center;" id="form">
+   <form onsubmit="event.preventDefault(); call();" class="search-box" style="text-align:center;" id="form">
       
       <input type="hidden" name=start value="1">
       <i class="icon icon-search"></i> 
@@ -89,6 +89,7 @@ function call() {
    text=$('#text').val();
    listCall(showPage,text);
 }
+
 
 function listCall(page,text){
       $.ajax({
