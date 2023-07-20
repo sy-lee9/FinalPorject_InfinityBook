@@ -43,9 +43,7 @@
 				font-weight: 600;
 				margin: 10 0 0 0;
 			}
-		
 		</style>	
-	
 	</head>
 
 <body>
@@ -58,7 +56,7 @@
 		<div class="row">
 		<a href="/admin/adminMain" style="font-size:20;"><h4>← Admin Main</h4></a>
 			<div class="section-header align-center">
-				<h2 class="section-title" style="margin-bottom:25px;">Admin-Deposit</h2>
+				<h2 class="section-title" style="margin-bottom:25px;">Admin-BookReport</h2>
 			</div>
 		</div>
 	</div>
@@ -67,14 +65,15 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container">
 
-		<div class="tab-content" >
-			<div id="all-genre" data-tab-content class="active">
-				<div style="font-size:20;">
-					<input type="radio" name="deposit_type" value="default" checked="checked"> 전체 &nbsp; 
-					<input type="radio" name="deposit_type" value="출금"> 출금 &nbsp;
-					<input type="radio" name="deposit_type" value="충전"> 충전 &nbsp;
-					<br/><br/>
-				</div>
+		<div class="tab-content" style="text-align:center;">
+			<div id="all-genre" style="text-align:center;" data-tab-content class="active">
+				<ul class="tab">
+					<li class="search-box" style="text-align:center;list-style-type: none;">
+						<i class="icon icon-search"></i> 
+						<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%;"placeholder="제목 을 입력해주세요" type="search">
+						<input type="button" id="searchButton" value="검색">
+					</li>
+				</ul>
 				<div class="row" style="text-align:center;" id="list">
 					
 			    </div>
@@ -124,26 +123,24 @@
 
 <script>
 	var showPage = 1;
-	var deposit_type = 'default';
+	var searchText = '';
 	listCall(showPage);
 		
-	$('input[type="radio"]').click(function(){
-		deposit_type = $(this).val();
-		console.log(deposit_type);
+	$('#searchButton').click(function(){
+		searchText = $('#serchText').val();
 		listCall(showPage);
-		deposit_type = 'default';
+		searchText = 'default';
 		$('#pagination').twbsPagination('destroy');
 	});
-	
 	
 	
 	function listCall(page){
 		   $.ajax({
 		      type:'post',
-		      url:'/admin/adminDepositList.ajax',
+		      url:'/admin/adminBookReportList.ajax',
 		      data:{
 		    	  'page':page,
-		    	  'deposit_type':deposit_type
+		    	  'searchText':searchText
 		      },
 		      dataType:'json',           
 		      success:function(data){
@@ -177,30 +174,36 @@
 	    
 	    content += '<table style="width:100%; text-align:center;">';
 	    content += '<tr>';
-	    content += '	<th width="10%" style="text-align:center;">결제 IDX</th>';
-	    content += '	<th width="10%" style="text-align:center;">회원 IDX</th>';
-	    content += '	<th width="20%" style="text-align:center;">결제</th>';
-	    content += '	<th width="20%" style="text-align:center;">결제 정보 </th>';
-		content += '	<th width="10%" style="text-align:center;">결제 금액</th>';
-		content += '	<th width="10%" style="text-align:center;">상태</th>';
-		content += '	<th width="20%" style="text-align:center;">결제 일시</th>';
+	    content += '	<th width="2%" style="text-align:center;"></th>';
+	    content += '	<th width="10%" style="text-align:center;"> 감상문 IDX</th>';
+	    content += '	<th width="10%" style="text-align:center;"> 작성자 </th>';	 
+	    content += '	<th width="20%" style="text-align:center;">도서</th>';
+	    content += '	<th width="40%" > 감상문정보 </th>';
+		content += '	<th width="16%" style="text-align:center;">블라인드</th>';
+		 content += '	<th width="2%" style="text-align:center;"></th>';
 		content += '<tr>';
 	
 	    list.forEach(function(item) {
+	    	/* book_report_idx, member.email, cover, title, author  */
 	    	content += '<tr>';
-	 	    content += '	<th style="text-align:center;">'+item.deposit_idx+'</th>';
-	 	    content += '	<th style="text-align:center;">'+item.member_idx+'</th>';
-	 	    content += '	<th style="text-align:center;">'+item.deposit_type+'</th>';
-	 	    content += '	<th style="text-align:center;">'+item.deposit_info+'</th>';
-	 		content += '	<th style="text-align:center;">'+item.deposit_price+'</th>';
-	 		if (item.deposit_type=="충전") {
-	 			content += '	<th style="text-align:center;">결제 완료</th>';
-			}else{
-				content += '	<th style="text-align:center;">출금 완료</th>';
-			}
-	 		
-	 		content += '	<th style="text-align:center;">'+item.deposit_date+'</th>';
-	 		content += '<tr>';
+	    	content += '	<td></td>';
+	    	content += '	<td style="text-align:center;">'+item.book_report_idx+'</td>';
+	    	content += '	<td style="text-align:center;">'+item.member_email+'</td>';
+	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
+	    	content += '	<td><a href="/BookReportDetail?book_report_idx='+item.book_report_idx+'">';
+	    	content += '		<h4>'+item.book_report_title+'</h4></a>';
+	    	content +=  item.title+'<br/>';
+	    	content +=  item.author+'</a>';
+	    	content += '	</td>';
+	    	
+	    	
+	    	if(item.book_report_blind == "1"){
+		    	content += '<td style="text-align:center;"><input type="button" style="margin-right:20px; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="bookReportBlind(0,'+item.book_report_idx+')" value="숨김 해제"/></td>';
+		    }else{
+		        content += '<td style="text-align:center;"><input type="button" style="margin-right:20px; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="bookReportBlind(1,'+item.book_report_idx+')" value="숨김"/></td>';
+		    }
+	    	content += '	<td></td>';
+	        content += '</tr>';
 	    });
 
 	    content += '</table>'; 
@@ -210,6 +213,25 @@
 	}
 	
 	
+	 function bookReportBlind(blind,book_report_idx){
+		$.ajax({
+		      type:'get',
+		      url:'/admin/bookReportBlind.ajax',
+		      data:{
+		    	  'blind':blind,
+		    	  'book_report_idx':book_report_idx
+		    	  },
+		      dataType:'json',
+		      success:function(data){
+		         listCall(showPage);
+		      },
+		      error:function(e){
+		         console.log(e);
+		      }
+		   });
+		
+	} 
+ 	
 
 </script>
 

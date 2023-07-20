@@ -108,7 +108,7 @@
 			</div>
 		</div>
 	</header>
-	<button type="button" onclick="location.href=bookReportWrite.go">감상문 작성</button>
+	<button type="button" onclick="location.href='BookReportWrite.go'">감상문 작성</button>
 		<table style="width:100%">
 	<c:forEach var="rep" items="${report}" varStatus="status">
 		<tr>
