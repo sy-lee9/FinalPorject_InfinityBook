@@ -305,6 +305,8 @@
 					if(data.success == 1){
 						alert("처리되었습니다.");
 						listCall(showPage);
+						var temp = JSON.stringify("a");
+						ws.send(temp);		
 					}
 				},
 				error:function(e){

@@ -14,12 +14,12 @@
                     <c:choose>
                         <c:when test="${fn:startsWith(tmp.chat_chat, '/upload/') && (fn:endsWith(tmp.chat_chat, '.jpg') || fn:endsWith(tmp.chat_chat, '.png') || fn:endsWith(tmp.chat_chat, '.gif'))}">
                             <!-- 조건이 참일 때 수행할 작업 -->
-                            <span>${tmp.member_nickname}</span>
+                            <span><a onclick="profilePop(${tmp.chat_sender})" style="cursor: pointer;">${tmp.member_nickname}</a></span>
                             <image src="${tmp.chat_chat}" width="auto" height="auto"/>                                                        
                             <span class="time_date">${tmp.chat_date}</span>
                         </c:when>
                         <c:otherwise>
-                        	<span>${tmp.member_nickname}</span>
+                        	<span><a onclick="profilePop(${tmp.chat_sender})" style="cursor: pointer;">${tmp.member_nickname}</a></span>
                             <p>${tmp.chat_chat}</p>
                             <span class="time_date">${tmp.chat_date}</span>
                         </c:otherwise>
