@@ -51,7 +51,7 @@ public class AlarmService {
 			// 문의 답변 알림
 			page = "redirect:/mypage/myinquirylist.go";			
 		}else if(code_idx == 79) {
-			// 대여교환 알림
+			// 교환대여 알림
 			page = "redirect:/"+idx;
 		}else if(code_idx == 80) {
 			// 감상문 알림

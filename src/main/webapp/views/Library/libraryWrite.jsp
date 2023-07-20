@@ -68,7 +68,7 @@
 						  <option value="소장">소장</option>
 						  <option value="대여">대여 가능</option>
 						  <option value="교환">교환 가능</option>
-						  <option value="대여교환">대여/교환 가능</option>
+						  <option value="교환대여">대여/교환 가능</option>
 						</select>
 					</td>
 				</tr>
