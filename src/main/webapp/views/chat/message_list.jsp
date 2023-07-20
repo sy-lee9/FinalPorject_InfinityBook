@@ -212,8 +212,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 				let book = '<div style="display: flex;">';
 				book += '<img src="' + data.cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
 				book += '<div class="library" style="width:660px;">';
-				book += '<div style="width:500px;">' + data.club_name + '</div>';
-				book += '<div style="font-size: 10px;">' + data.nicknames + '</div>';
+				book += '<div style="width:500px; font-weight: 600;">' + data.club_name + '</div>';
+				book += '<div style="font-size: 11px; font-weight: 600;">' + data.nicknames + '</div>';
 				book += '</div>';
 				book += '</div>';
 				
@@ -279,8 +279,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 			let book = '<div style="display: flex;">';
 			book += '<img src="' + data.library_cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
 			book += '<div class="library" style="width:660px;">';
-			book += '<div>' + data.library_title + '</div>';
-			book += '<div style="font-size: 10px;">' + data.library_info + '</div>';
+			book += '<div style="font-weight: 600;">' + data.library_title + '</div>';
+			book += '<div style="font-size: 11px; font-weight: 600;">' + data.library_info + '</div>';
 			book += '</div>';
 			book += '</div>';
 			
@@ -303,13 +303,13 @@ const Messagebook = function(code_idx,room,library,apply_user){
 					var chkbutton = '';
 					// 책 정보의 상태에 따라 다르게 표시
 					if(data.librarystate == 1 && data.rentck > 0 && data.rentstate == 0){
-						chkbutton +='<div>현재 다름사람에게 대여 중인 책입니다.</div>';
+						chkbutton +='<div style="font-weight: 600;">현재 다름사람에게 대여 중인 책입니다.</div>';
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px" >나가기</button>';
 					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user){						
-						chkbutton +='<div>현재 상대방의 의사를 기다리고 있어요!</div>';
+						chkbutton +='<div style="font-weight: 600;">현재 상대방의 의사를 기다리고 있어요!</div>';
 					}else if(data.rentstate == 2 && ${sessionScope.loginIdx} != apply_user){
 						chkbutton +='<button class="rentend" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">확인</button>';
-						chkbutton +='<div style="float: right; margin-right: 5px;">대여 후 책을 돌려받으신 다음 눌러주세요!</div>';
+						chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여 후 책을 돌려받으신 다음 눌러주세요!</div>';
 					}else if(data.rentstate == 3 && ${sessionScope.loginIdx} != apply_user){
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 						chkbutton +='<button class="review" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">후기 작성</button>';
@@ -375,7 +375,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 								if(data == 1){													
 									alert('보증금이 부족합니다.');																										
 								}else if(data == 2){
-									alert('약속을 수락했습니다.');													
+									alert('약속을 수락했습니다.');	
 								}																																			
 							},error : function(e){
 								console.log(e);
@@ -421,7 +421,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 							data:{
 								code_idx : code_idx,
 								room : room,
-								library : library
+								library : library,
+								apply_user : apply_user
 							},
 							datatype: 'json',
 							success:function(data){
@@ -586,7 +587,10 @@ const SendMessage = function(code_idx,room){
 				MessageContentList(code_idx,room,library,apply_user);
 									
 				// 메세지 리스트 리로드
-				FirstMessageList();				
+				FirstMessageList();	
+				
+				// 대화방 정보업데이트
+				Messagebook(code_idx,room,library,apply_user);
 			},
 			error : function() {
 				alert('서버 에러');
@@ -632,7 +636,10 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
 		  
 		  // 리스트 리로드
-		  //FirstMessageList();
+		  FirstMessageList();
+		  
+		// 대화방 정보업데이트
+		Messagebook(code_idx,room,library,apply_user);
 		  		  			  		    
 	  }else if(code_idx == receivedData.code && room == receivedData.room){
 		// 그냥 메세지일시 
@@ -644,7 +651,10 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);  		
 		  
 		  // 리스트 리로드
-		  FirstMessageList();			  		  
+		  FirstMessageList();	
+		  
+		// 대화방 정보업데이트
+		Messagebook(code_idx,room,library,apply_user);
 	  }else {
 		  // 리스트 리로드
 		  FirstMessageList();			
@@ -709,6 +719,7 @@ $(document).ready(function(){
 				</div>
 
 				<div class="col-md-10">
+					<br>
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">

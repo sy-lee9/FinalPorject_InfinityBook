@@ -66,6 +66,8 @@ public class AlarmController {
 		service.alarmdel(alarm_idx);
 		return "index";
 	}
+	// 문의 답변 알림
+	
 	
 
 }

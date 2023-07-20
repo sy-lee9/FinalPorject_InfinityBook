@@ -67,7 +67,7 @@
 		<!-- 보증금 돌려주기 -->
 		<insert id="rentendreturn">
 			INSERT INTO deposit_use(member_idx, deposit_use_price, deposit_use_state,rent_idx)
-			VALUES(#{member_idx}, #{deposit}, '환급',#{room})
+			VALUES(#{apply_user}, #{deposit}, '환급',#{room})
 		</insert>
 		
 	

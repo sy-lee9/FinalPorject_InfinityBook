@@ -38,6 +38,11 @@ public class AdminInquiryService {
 		// 상태 변경
 		dao.inquirystateupdate(params);
 		
+		// 알림 보내고
+		String inq_title = params.get("inq_title").toString();
+		String content = "["+inq_title+"] 문의에 답변이 달렸습니다.";
+		params.put("content", content);
+		dao.inquiryalarm(params);
 		
 	}
 	
@@ -122,5 +127,7 @@ public class AdminInquiryService {
 		
 		return map;
 	}
+
+
 
 }

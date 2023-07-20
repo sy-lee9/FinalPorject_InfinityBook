@@ -12,12 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.admin.dao.AdminReportDAO;
+import kr.co.book.chat.service.ChatService;
+import kr.co.book.club.service.ClubService;
 
 @Service
 @MapperScan(value = {"kr.co.book.admin.dao"}) 
 public class AdminReportService {
 	
 	@Autowired AdminReportDAO adminReportDAO;
+	@Autowired ChatService chatservice;
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -108,6 +111,7 @@ public class AdminReportService {
 					break;
 				case 70:
 					alarmContent = "신고처리로 ["+target+"] 모임이 삭제되었습니다.";
+					chatservice.clubchatDelete((String) params.get("idx"));
 					break;
 				case 71:
 					alarmContent = "신고처리로 ["+target+"] 댓글이 삭제되었습니다.";
@@ -123,19 +127,16 @@ public class AdminReportService {
 				adminReportDAO.blindAlarm(params);
 				result += "블라인드 처리";		
 				
-				if(!memberState.equals("정상")) {
-					adminReportDAO.updateMemberState(params);
-					result += " / "+memberState;
-				}					
+				adminReportDAO.updateMemberState(params);
+				result += " / "+memberState;
 			}			
 			
 		} else{
-			if(!memberState.equals("정상")) {
-				adminReportDAO.updateMemberState(params);
-				result += memberState;
-			} else {
-				result += "조치 내용 없음";
-			}
+			adminReportDAO.blind(params);
+			result += "	공개";
+			
+			adminReportDAO.updateMemberState(params);
+			result += " / "+ memberState;
 		}
 		
 		params.put("result", result);

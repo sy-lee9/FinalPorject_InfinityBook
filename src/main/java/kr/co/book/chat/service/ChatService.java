@@ -204,7 +204,7 @@ public class ChatService {
 			
 			int don = rentdeposit* -1;
 			// 내가 들고있는 보증금이 걸린 보증금보다 크다면
-			if(deposit > rentdeposit) {
+			if(deposit >= rentdeposit) {
 				
 				// 대여 보증금 사용
 				dao.usedeposit(member_idx, don,room);
@@ -294,18 +294,18 @@ public class ChatService {
 		// 모임 메세지방 생성
 		dao.createchatroom(club_idx,member_idx);
 		// 모임 채팅방 생성 됐다는 메세지
-		dao.createchat(club_idx,member_idx,"모임 채팅방 생성!");
+		dao.createchat(club_idx,member_idx,"모임 채팅방이 생성되었습니다.");
 		
 	}
 
 	// 모임 참여시 메세지방 생성
 	@Transactional
-	public void clubchatjoin(String club_idx, int member_idx) {
+	public void clubchatjoin(String club_idx, int member_idx, String member_nickname) {
 		
 		// 모임 메세지방 가입
 		dao.createchatroom(club_idx,member_idx);	
 		// 모임 참여자에게 메세지 전송
-		dao.sendclubmembermessage(club_idx,member_idx,"등장");
+		dao.sendclubmembermessage(club_idx,member_idx,member_nickname+"님이 참여하셨습니다.");
 
 	}
 	

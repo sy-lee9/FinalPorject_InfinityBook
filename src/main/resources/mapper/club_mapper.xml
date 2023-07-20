@@ -249,4 +249,10 @@
 		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check)
 		VALUES(75, #{param2}, #{param1}, #{param3}, 0);
 	</insert>
+	
+	<!-- 닉네임 -->
+	<select id="findmembernickname" resultType="String">
+		SELECT member_nickname FROM member
+		WHERE member_idx = #{member_idx}
+	</select>
 </mapper>

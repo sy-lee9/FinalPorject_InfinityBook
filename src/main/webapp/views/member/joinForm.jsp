@@ -20,14 +20,19 @@
 	    align-items: center;
 	    height: 100vh;
 	}
+	.container2 {
+	 	margin-top : 100px
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    height: 1vh;
+	}
 	input{
 		width: 268px;
 	}
 	h1{
-	
-			top: 50px;
 			text-align: center;
-		  margin-top: 250px
+		  margin-top: 0px
 		  transform: translateY(-50%);
             font-family: 'IBM Plex Sans KR';   
             font-weight: 600;
@@ -37,8 +42,42 @@
 <link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">
 </head>
 <body>	
+	<div id="header-wrap" class="show">
+	
+	
+	<header id="header">
+		<div class="container2">
+			<div class="row">
 
-	<h1>회원가입</h1>
+				<div class="col-md-2">
+					<div class="main-logo">
+					
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
+					</div>
+
+				</div>
+
+				<div class="col-md-10">
+					
+					<nav id="navbar">
+						<div class="main-menu stellarnav">
+							<ul class="menu-list">
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+		</div>
+	</header>
+</div>
 	<div class="container">
 		<table>
 			<tr>
@@ -161,8 +200,7 @@ function join() {
     $member_nickname.focus();
   } else if ($location.val() == '') {
     alert('주소를 입력해 주세요!');
-  } else if (!isVerificationCodeSent($member_email.val())) {
-    alert('인증번호가 전송된 아이디가 아닙니다. 인증번호를 요청해주세요.');
+  
   } else if (pweq && overlayNicknameChk) {
     // 입력한 값을 배열에 담음
     // 회원 가입 로직 실행
@@ -184,7 +222,7 @@ function join() {
       success: function (data) {
         console.log(data);
         console.log('클릭3');
-        if (data.success == 1) {
+        if (data.success > 0) {
           alert('회원가입이 완료되었습니다.');
           location.href = './login.go';
         } else {
@@ -197,7 +235,10 @@ function join() {
         alert('회원가입에 실패했습니다. 다시 시도해 주세요');
       }
     });
-  } 
+  } else {
+    alert('중복된 닉네임입니다.');
+    $member_nickname.focus();
+  }
   console.log('컨트롤러도 못탐');
 }
 
@@ -228,7 +269,7 @@ $('#member_nickname').on('keyup', function(e) {
 	      dataType: 'json',
 	      success: function(data) {
 	        console.log(data);
-
+			console.log(data.overlaynickname);
 	        if (data.overlaynickname == 0) {
 	          overlayNicknameChk = true; // 중복 체크를 성공으로 간주하여 true로 설정
 	          $('#nickname_msg').css({
@@ -289,6 +330,7 @@ $('#member_pw').on('keyup', function(e) {
 	      'font-size': '10px',
 	      'color': 'darkgreen'
 	    }).text('비밀번호가 일치합니다.');
+	    pweq =true;
 	  }
 	});
 
@@ -356,11 +398,6 @@ function member_email_check() {
 	});
 }
 
-
-
-
-
-
 // 1. 인증번호를 입력하고 나갈떄(keyup)
 // 2. 인증번호를 확인해서
 // 3. msg에 일치하는지 표시
@@ -369,6 +406,7 @@ $('#email_confirm').keyup(function() {
 
     if (check === $('#email_confirm').val()) {
         $('#email_msg2').html('인증번호가 일치합니다.').css('color', 'green');
+        $('#member_email').css('pointer-events', 'none');
     } else {
         if ($('#email_confirm').val() !== '') {
             $('#email_msg2').html('인증번호가 일치하지 않습니다.').css('color', 'red');

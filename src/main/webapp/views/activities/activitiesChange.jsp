@@ -139,20 +139,17 @@
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div id="all-genre" data-tab-content class="active">
-				<div class="row" id="list">
-					
-			    </div>
-			    
-			     <div  id="paging" >
-			      <div class="container" style="text-align:center; width: 600px;">
-			        <nav aria-label="Page navigation"  style="text-align:center; width: 500px; margin-top: 5%;">
-			          <ul class="pagination justify-content-center" id="pagination"></ul>
-			        </nav>
-			      </div>
-			    </div>
+			<div class="row" id="list" style="padding: 5%;">
+				
 		    </div>
 		    
+		     <div  id="paging" >
+		      <div class="container" style="text-align:center; width: 600px;">
+		        <nav aria-label="Page navigation"  style="text-align:center; width: 500px; margin-top: 5%;">
+		          <ul class="pagination justify-content-center" id="pagination"></ul>
+		        </nav>
+		      </div>
+		    </div>		    
 
 	    </div>	    
 	</div>
@@ -230,12 +227,10 @@
 							console.log(page,showPage);
 							if(page != showPage){
 								showPage=page;
-								listCall(page);
-								
+								listCall(page);								
 							}
 						}
 			         });
-
 		      }
 		   });
 		}
@@ -262,7 +257,7 @@
 	    	var reviewChk = parseInt(item.reviewChk);
 	    	
 	    	if (state === 0 || state === 1) {
-	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue;; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>';  
+	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>';  
 			}else if (state == 2){
 				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Tomato; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="예약"></td>';  
 			}else if (state == 4){
@@ -273,7 +268,8 @@
 	    	content += '<td style="text-align:center;"><img src="' + item.changeBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.changeBook+'</h4></td>';
 	    	
 	    	if (state == 4 && reviewChk == 0) {
-		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer + '</a> <input type="button" onclick="reviewGo('+item.+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer +
+		    				 '</a> <input type="button" onclick="review('+item.changer_idx+','+item.changeBook_idx+','+item.change_idx+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
 	    	}else { 
 		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer + '</a></td>';
     		}
@@ -281,7 +277,7 @@
 	    	if (typeof item.change_date === "undefined") {
 	    		content += '<td style="text-align:center;"></td>';
 	    	}else {
-	    		content += '<td style="text-align:center;">' + item.change_date + '</td>';
+	    		content += '<td style="text-align:center;">'+item.change_date+'</td>';
     		}
 
 	        content += '</tr>';
@@ -293,8 +289,9 @@
 		$('#list').append(content);
 	}
 	
-	function reviewGo() {
-		location.href="/Review.go?member_sender=(하는사람)1&review_type=0&member_reciever=(받는사람)&book_reciever=(받는책)&review_transaction_type=(대여/교환여부)&review_tracnsaction_idx=(idx)";
+	function review(changer_idx,changeBook_idx,change_idx) {
+		var my_memberIdx = ${sessionScope.loginIdx};
+		location.href="/Review.go?member_sender="+my_memberIdx+"&member_reciever="+changer_idx+"&book_reciever="+changeBook_idx+"%20&review_transaction_type=0&review_tracnsaction_idx="+change_idx+"&review_type=0";
 	}
 
 </script>

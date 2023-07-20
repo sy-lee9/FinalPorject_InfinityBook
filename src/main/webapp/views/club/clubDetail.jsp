@@ -539,6 +539,8 @@ function clubReReply(reply_idx){
 			console.log(data.success);
 			if(data.success == 1){
 				listCall(showPage);	
+				var temp = JSON.stringify("a");
+				ws.send(temp);		
 			}
         }
     });
@@ -630,6 +632,9 @@ function clubApply(club_idx){
 	if(${sessionScope.loginIdx != null}){
 		if(confirm('모임 신청시 취소가 불가능합니다. \n 정말 신청하시겠습니까?')){
 				location.href='/clubApply.do?club_idx='+club_idx;
+				
+				var temp = JSON.stringify("a");
+				ws.send(temp);		
 		}
 		
 	}else{

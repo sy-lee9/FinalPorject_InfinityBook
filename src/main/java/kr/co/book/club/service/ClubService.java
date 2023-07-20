@@ -282,6 +282,11 @@ public class ClubService {
 		
 	}
 
+	// 닉네임 가져오기
+	public String findmembernickname(String member_idx) {
+		return clubDAO.findmembernickname(member_idx);
+	}
+
 
 	
 	

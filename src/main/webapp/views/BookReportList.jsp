@@ -118,6 +118,7 @@
 			</div>
 		</div>
 	</header>
+
 	
 		<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;"> 
 	<div class="container" >

@@ -46,11 +46,10 @@ public class AlarmService {
 			// 위시 도서 알림
 			page = "redirect:/search.do?QueryType=Keyword&Query="+idx;
 		}else if(code_idx == 77) {
-			// 이벤트 당첨 알림
-			page = "redirect:/"+idx;
+			// 이벤트 당첨 알림 이벤트안함.
 		}else if(code_idx == 78) {
 			// 문의 답변 알림
-			page = "redirect:/"+idx;
+			page = "redirect:/mypage/myinquirylist.go";			
 		}else if(code_idx == 79) {
 			// 대여교환 알림
 			page = "redirect:/"+idx;
