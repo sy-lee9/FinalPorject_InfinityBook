@@ -18,6 +18,11 @@
 		SELECT * FROM library WHERE library_idx=#{library_idx}
 	</select>
 	
+			<select id="searchReview" resultType="TransactionListDTO">
+		select r.review_content,m.member_nickname  from review r inner join member m on m.member_idx = r.sender_idx where review_type = 1 and reciever_idx = #{library_idx}
+	</select>
+	
+	
 			<select id="changeMyBook" resultType="TransactionListDTO">
 		SELECT * FROM library WHERE member_idx =#{member_idx}
 	</select>

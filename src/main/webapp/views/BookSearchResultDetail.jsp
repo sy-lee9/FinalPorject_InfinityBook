@@ -90,7 +90,7 @@
 	</div>	
 </section>
 
-<section class="hero-section jarallax">
+<section class="hero-section jarallax" >
 	
 	<div class="container">
 		<div class="row">
@@ -101,7 +101,7 @@
 	</div>
 </section>
 
-<section id="best-selling" class="leaf-pattern-overlay">
+<section id="best-selling" class="leaf-pattern-overlay" style="width:80%; margin:auto;">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
 		<table>
@@ -129,8 +129,13 @@
 						</tr>
 						<tr>
 							<td colspan="3">
-								<h4 class="item-title">책 소개</h4>
-							${book.library_description}<br/>
+								<h4 class="item-title">리뷰</h4>
+								<c:if test="${empty review}">
+									<h3>리뷰가 없습니다.</h3>
+								</c:if>
+							<c:forEach var="re" items="${review}" >
+							<h3>${re.review_content}</h3>${re.member_nickname}<h3>${re.review_content}</h3><br/>
+							</c:forEach>
 							</td>
 						</tr>
 						<tr>

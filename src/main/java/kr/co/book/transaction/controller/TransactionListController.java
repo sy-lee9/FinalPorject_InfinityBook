@@ -37,6 +37,7 @@ public class TransactionListController {
 		Map<String, Object> result = service.bookSearch(sQuery, QueryType);
 		model.addAttribute("result", result);
 		
+		
 		return "BookSearchResult";
 		
 	}
@@ -62,7 +63,7 @@ public class TransactionListController {
 		logger.info("LIBRARY_IDX = "+library_idx);
 		
 		model.addAttribute("book", service.searchDetail(library_idx));
-		
+		model.addAttribute("review", service.searchReview(library_idx));
 		
 		return "BookSearchResultDetail";
 		

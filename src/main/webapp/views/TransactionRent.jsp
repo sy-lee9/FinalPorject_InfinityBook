@@ -103,7 +103,8 @@
 	</div>
 </section>
 
-<section id="best-selling" class="leaf-pattern-overlay">
+<section id="best-selling" class="leaf-pattern-overlay" style="margin: auto;
+    width: 92%;">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container" style="    float: left;
     width: 36%;">
@@ -113,13 +114,13 @@
 	<div class="container" style="line-height: 5;
     width: 47%;">
 	<h3 class="item-title">${book.library_title}</h3>
-		<form action="rentapply.do"  method="post">
+		<form action="rentapply.do"  method="post" onsubmit='return formSubmit();'>
 			<input type="hidden" name="library_idx" value="${book.library_idx}">
 			<div>현재 보증금 : ${rent_deposit}</div>
-			<input type="text" name="rent_deposit" placeholder="희망 보증금액">
-			<input type="date" id ="date" name="rent_startdate" placeholder="희망 대여일자" style="height: 30px;">
-			<input type="date" id ="date" name="rent_enddate" placeholder="희망 반납일자" style="height: 30px;">
-			<button type="submit">신청</button>
+			<input type="number" id="rent_deposit" name="rent_deposit" placeholder="희망 보증금액">
+			<input type="date" id ="date" name="rent_startdate" placeholder="희망 대여일자" style="height: 30px; position:static">
+			<input type="date" id ="date2" name="rent_enddate" placeholder="희망 반납일자" style="height: 30px;">
+			<button type="submit" style="    height: 47px;">신청</button>
 		</form>
 		</div>
 </section>
@@ -272,6 +273,35 @@
 		// new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
 		var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
 		document.getElementById("date").setAttribute("min", today);
+		document.getElementById("date2").setAttribute("min", today);
+		
+		window.onload = () => {
+		var date = document.getElementById("date");
+		  date.addEventListener("change", (e) => {
+			  var val = document.getElementById("date").value;
+			  document.getElementById("date2").setAttribute("min", val);
+			  });
+		};
+		
+		function formSubmit() {
+			
+		
+			if(document.getElementById("rent_deposit").value == ""){
+				alert('보증금을 입력 해 주세요.');
+				  return false;
+			}else if(document.getElementById("date").value == ""){ 
+				alert('시작 기간을 입력해주세요.');
+				return false;
+			}else if(document.getElementById("date2").value == ""){
+				alert('종료 기간을 입력해주세요.');
+				  return false;
+			}else if(document.getElementById("rent_deposit").value >${rent_deposit}){
+				alert('최대 보증금을 넘을 수 없습니다.');
+				  return false;
+			}else{
+				 return true;
+			 }
+		};
 		</script>
 
 </html>	
