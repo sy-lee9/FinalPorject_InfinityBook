@@ -6,7 +6,9 @@
 	
 	<select id="changeList" resultType="hashMap">
 		(SELECT
+		    c.change_idx,
 		    c.change_state,
+		    l1.library_idx AS changeBook_idx,
 		    l1.library_cover AS changeBook_cover,
 		    l1.library_title AS changeBook,
 		    l2.library_cover AS myBook_cover,
@@ -24,11 +26,13 @@
 				WHERE c.member_idx = #{loginIdx})
 		UNION
 		(SELECT
+		    c.change_idx,
 		    c.change_state,
-		    l2.library_cover AS changeBook_cover,
-		    l2.library_title AS changeBook,
-		    l1.library_cover AS myBook_cover,
-		    l1.library_title AS myBook,
+		    l1.library_idx AS changeBook_idx,
+		    l1.library_cover AS changeBook_cover,
+		    l1.library_title AS changeBook,
+		    l2.library_cover AS myBook_cover,
+		    l2.library_title AS myBook,
 		    m1.member_nickname AS my_nickName,
 		    m2.member_nickname AS changer,
 		    m2.member_idx AS changer_idx,
@@ -45,7 +49,9 @@
 	
 	<select id="changeListSearch" resultType="hashMap">
 		(SELECT
+		    c.change_idx,
 		    c.change_state,
+		    l1.library_idx AS changeBook_idx,
 		    l1.library_cover AS changeBook_cover,
 		    l1.library_title AS changeBook,
 		    l2.library_cover AS myBook_cover,
@@ -63,11 +69,13 @@
 		WHERE c.member_idx = #{loginIdx} AND (l1.library_title LIKE CONCAT('%', #{searchText}, '%') OR l2.library_title LIKE CONCAT('%', #{searchText}, '%')))
 		UNION
 		(SELECT
+		    c.change_idx,
 		    c.change_state,
-		    l2.library_cover AS changeBook_cover,
-		    l2.library_title AS changeBook,
-		    l1.library_cover AS myBook_cover,
-		    l1.library_title AS myBook,
+		    l1.library_idx AS changeBook_idx,
+		    l1.library_cover AS changeBook_cover,
+		    l1.library_title AS changeBook,
+		    l2.library_cover AS myBook_cover,
+		    l2.library_title AS myBook,
 		    m1.member_nickname AS my_nickName,
 		    m2.member_nickname AS changer,
 		    m2.member_idx AS changer_idx,
@@ -84,14 +92,18 @@
 	
 	<select id="rentList" resultType="hashMap">
 		(SELECT 
+			rent_idx,
 			rent_state,
+			l.library_idx,
 			l.library_cover AS cover,
 			l.library_title AS title,
+			(SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = l.member_idx) AS lenderIdx,
+			(SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = l.member_idx) AS lender,
 			r.member_idx AS memberIdx,
 			m.member_nickname AS renter,
 			rent_startdate,
 			rent_enddate,
-			rent_deposit,    
+			rent_deposit,  
 			(select count(rv.review_idx) from review rv where rv.review_type = 0 
 				and rv.review_transaction_type = 1 and rv.review_transaction_idx = r.rent_idx) as memberReview,    
 			(select count(rv.review_idx) from review rv where rv.review_type = 1 
@@ -102,9 +114,13 @@
 		WHERE r.member_idx = #{loginIdx})
 		UNION
 		(SELECT 
+			rent_idx,
 			rent_state,
+			l.library_idx,
 			l.library_cover AS cover,
 			l.library_title AS title,
+			(SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = l.member_idx) AS lenderIdx,
+			(SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = l.member_idx) AS lender,
 			r.member_idx AS memberIdx,
 			m.member_nickname AS renter,
 			rent_startdate,
@@ -123,14 +139,18 @@
 	
 	<select id="rentListSearch" resultType="hashMap">
 		(SELECT 
+			rent_idx,
 			rent_state,
+			l.library_idx,
 			l.library_cover AS cover,
 			l.library_title AS title,
+			(SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = l.member_idx) AS lenderIdx,
+			(SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = l.member_idx) AS lender,
 			r.member_idx AS memberIdx,
 			m.member_nickname AS renter,
 			rent_startdate,
 			rent_enddate,
-			rent_deposit,    
+			rent_deposit,  
 			(select count(rv.review_idx) from review rv where rv.review_type = 0 
 				and rv.review_transaction_type = 1 and rv.review_transaction_idx = r.rent_idx) as memberReview,    
 			(select count(rv.review_idx) from review rv where rv.review_type = 1 
@@ -141,14 +161,18 @@
 		WHERE r.member_idx = #{loginIdx} AND l.library_title LIKE CONCAT('%', #{searchText}, '%'))
 		UNION
 		(SELECT 
+			rent_idx,
 			rent_state,
+			l.library_idx,
 			l.library_cover AS cover,
 			l.library_title AS title,
+			(SELECT m2.member_idx FROM member m2 WHERE m2.member_idx = l.member_idx) AS lenderIdx,
+			(SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = l.member_idx) AS lender,
 			r.member_idx AS memberIdx,
 			m.member_nickname AS renter,
 			rent_startdate,
 			rent_enddate,
-			rent_deposit,    
+			rent_deposit,  
 			(select count(rv.review_idx) from review rv where rv.review_type = 0 
 				and rv.review_transaction_type = 1 and rv.review_transaction_idx = r.rent_idx) as memberReview,    
 			(select count(rv.review_idx) from review rv where rv.review_type = 1 

@@ -24,7 +24,7 @@ public interface TrackerDAO {
 
 	int trackerUpdateBook(HashMap<String, Object> params);
 
-	void saveEndDate(int loginIdx, int isbn);
+	void saveEndDate(int loginIdx, String isbn);
 
 	int trackerDeleteBook(String isbn, int loginIdx);
 

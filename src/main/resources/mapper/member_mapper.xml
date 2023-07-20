@@ -41,6 +41,7 @@
 	<select id="getMemberInfo" resultType="hashMap">
 		SELECT 
 			m.code_idx,
+			member_idx,
 			member_email,
 			member_nickname,
 			(SELECT code_codename FROM code WHERE code_upcode = 'region' AND code_code = m.code_idx) AS region
@@ -85,6 +86,7 @@
 		SELECT 
 			(SELECT member_nickname FROM member WHERE member_idx = sender_idx) AS member_nickname, 
 			sender_idx As member_idx,
+			review_idx,
 			review_content, 
 			review_date
 		FROM review r

@@ -227,8 +227,8 @@
 	var member_nickname = "${info.member_nickname}";
 	var overlayNicknameChk = false;
 	var check = '';
-	var specialChars = /[\\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-	
+	var specialChars = /[\\`()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
 	$('#member_nickname').on('keyup', function(e){
 		 var chkNickname = $('#member_nickname').val();      
 		 
