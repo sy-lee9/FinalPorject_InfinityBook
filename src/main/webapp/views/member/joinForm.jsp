@@ -161,8 +161,7 @@ function join() {
     $member_nickname.focus();
   } else if ($location.val() == '') {
     alert('주소를 입력해 주세요!');
-  } else if (!isVerificationCodeSent($member_email.val())) {
-    alert('인증번호가 전송된 아이디가 아닙니다. 인증번호를 요청해주세요.');
+  
   } else if (pweq && overlayNicknameChk) {
     // 입력한 값을 배열에 담음
     // 회원 가입 로직 실행
@@ -197,7 +196,10 @@ function join() {
         alert('회원가입에 실패했습니다. 다시 시도해 주세요');
       }
     });
-  } 
+  } else {
+    alert('중복된 닉네임입니다.');
+    $member_nickname.focus();
+  }
   console.log('컨트롤러도 못탐');
 }
 
