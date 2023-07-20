@@ -184,7 +184,4 @@
 		ORDER BY rent_state ASC LIMIT 5 OFFSET #{offset}
 	</select>
 
-
-
-
 </mapper>
