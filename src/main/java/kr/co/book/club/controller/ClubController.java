@@ -346,14 +346,23 @@ public class ClubController {
 	@RequestMapping("/clubReReply.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> clubReReply(@RequestParam String reply_idx,@RequestParam String reply_content,@RequestParam String club_idx,HttpSession session) {
+		
+		// 대댓글 작성자
 		String member_idx = String.valueOf(session.getAttribute("loginIdx")); 
 		
 		clubService.clubReReply(member_idx,reply_idx,reply_content);
 		
 		String clubTitle = clubService.clubTitle(club_idx);
+		// 원댓 작성자
 		String replyMemberIdx = clubService.replyMember(reply_idx);
 		
-		clubService.reReplyAlarm(replyMemberIdx,club_idx,clubTitle);
+		logger.info("replyMemberIdx : " + replyMemberIdx);
+		logger.info("member_idx : " + member_idx);
+		
+		if (!replyMemberIdx.equals(member_idx)) {
+			clubService.reReplyAlarm(replyMemberIdx,club_idx,clubTitle);
+		}		
+		//clubService.reReplyAlarm(replyMemberIdx,club_idx,clubTitle);
 		
 		HashMap<String, Object> reply = new HashMap<String, Object>();
 		reply.put("success", true);

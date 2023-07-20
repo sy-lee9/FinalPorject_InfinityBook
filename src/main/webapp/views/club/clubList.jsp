@@ -38,7 +38,7 @@
 		 		border:none;
 			}
 			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-			h4{
+			h3, h4{
 				font-family: 'IBM Plex Sans KR';	
 				font-weight: 600;
 				margin: 10 0 0 0;
@@ -115,7 +115,7 @@
 		</ul>
 		<ul class="tab">
 			<li class="search-box" style="text-align:center;list-style-type: none;">
-				<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right;">
+				<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right; padding:10px; margin-right:180px;">
 				<i class="icon icon-search"></i> 
 				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="제목 을 입력해주세요" type="search">
 				<input type="button" id="searchButton" value="검색">	
@@ -230,7 +230,7 @@
 	    content += '	<th width="8%" style="text-align:center;"> 인원 </th>';
 	    content += '	<th width="20%" style="text-align:center;">도서</th>';
 	    content += '	<th width="40%" style="text-align:center;"> 모임정보 </th>';
-	    content += '	<th width="20%" style="text-align:left;"> 모임장소 및 일시 </th>';
+	    content += '	<th width="20%" style="text-align:left;"> 모임장소 / 일시 </th>';
 	    content += '	<th width="2%" style="text-align:center;"></th>';
 		content += '<tr>';
 	
@@ -243,9 +243,9 @@
 			}else{
 	    		content += '	<td style="text-align:center;"><input type="button" style="cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="종료"></td>';
 			}
-	    	content += '	<td style="text-align:center;"><input type="button" style=" cursor:default; display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
+	    	content += '	<td style="text-align:center;"><input type="button" style=" cursor:default; border:none; display:inline; margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.meet_num+'/'+item.club_num + '"></td>';  
 	    	content += '	<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"></td>';
-		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h4><b>'+item.club_name+'</b></h4></a>';
+		    content += '	<td><a href="/clubDetail.go?club_idx='+item.club_idx+'"><h3><b>'+item.club_name+'</b></h3></a>';
 		    content += '<a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a><br/>	';
 		    content += item.title.split("-")[0]+'	</td>';
 		    content += '	<td>';

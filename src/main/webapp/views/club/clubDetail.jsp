@@ -176,6 +176,7 @@
 						</tr>
 						<tr>
 							<td colspan="3" style="text-align:center;">
+							<br/><br/>
 							<c:if test="${loginIdx == club.member_idx}">
 								<c:if test="${club.club_state eq 0}">
 									<input type="button" onclick="clubUpdate(${club.club_idx})" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집종료">	
@@ -211,6 +212,7 @@
 			</tr>
 			
 		</table>
+		<br/><br/>
 		<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>

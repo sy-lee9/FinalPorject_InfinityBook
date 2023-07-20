@@ -13,6 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.book.config.ServerEndpointConfig;
@@ -24,11 +25,8 @@ public class ChatsocketService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	private final ChatService service;
+	@Autowired ChatService service;
 	
-	public ChatsocketService(ChatService service) {
-		this.service = service;
-	}	
 	
 	// 클라이언트가 접속할 때마다 생성되어 클라이언트와 직접 통신하는 클래스
 	// 따라서 새로운 클라이언트가 접속 할 떄마다 
