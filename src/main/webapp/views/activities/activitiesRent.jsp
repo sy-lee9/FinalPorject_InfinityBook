@@ -263,8 +263,8 @@
 	    	var memberReview = parseInt(item.memberReview);
 	    	var bookReview = parseInt(item.bookReview);
 	    	var memberIdx = parseInt(item.memberIdx);
+	    	console.log(memberIdx);
 	    	var loginIdx = <%=session.getAttribute("loginIdx")%>;
-	    	console.log(loginIdx);
 	    	
 	    	if (state == 0 || state == 1) {
 	    		content += '	<td style="text-align: center; padding-left: 2%;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:MediumSeaGreen; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>';  
@@ -284,17 +284,25 @@
 	    	}
 	    	
 	    	//대출자
-	    	if (loginIdx == memberIdx && state == 4 && memberReview == 0){
+	    	if (loginIdx != item.lenderIdx && state == 4 && memberReview == 0){
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a> <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    	}else if(loginIdx == item.lenderIdx && state == 4 && memberReview == 0){
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a></td>';
+	    	}else if(state == 4 && memberReview == 1){
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a></td>';
 	    	}else {
-	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.memberIdx+')" style="cursor: pointer;">' + item.renter + '</a> <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
-	    	}  	
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a></td>';
+	    	}
 
 	    	//대여자
 	    	if (loginIdx != memberIdx && state == 4 && memberReview == 0){
-	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.memberIdx+')" style="cursor: pointer;">' + item.renter + '</a> <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+memberIdx+')" style="cursor: pointer;">' + item.renter + '</a> <input type="button" onclick="review('+item.memberIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
+	    	}else if(loginIdx == memberIdx && state == 4 && memberReview == 0){
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+memberIdx+')" style="cursor: pointer;">' + item.renter + '</a></td>';
+	    	}else if(state == 4 && memberReview == 1){
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+memberIdx+')" style="cursor: pointer;">' + item.renter + '</a></td>';
 	    	}else {
-	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.memberIdx+')" style="cursor: pointer;">' + item.renter + '</a></td>';
+	    		content += '<td style="text-align:center;"><a onclick="profilePop('+memberIdx+')" style="cursor: pointer;">' + item.renter + '</a></td>';
 	    	}  		    	
 	    	
 	    	content += '<td style="text-align:center;">' + item.rent_startdate + '</td>';
@@ -321,7 +329,11 @@
 
 	function review(lenderIdx,library_idx,rent_idx,review_type) {
 		var my_memberIdx = ${sessionScope.loginIdx};
-		location.href="/Review.go?member_sender="+my_memberIdx+"&member_reciever="+lenderIdx+"&book_reciever="+library_idx+"%20&review_transaction_type=1&review_tracnsaction_idx="+rent_idx+"&review_type="+review_type;
+		var width = 787;
+	    var height = 600;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    var popupWindow = window.open('/Review.go?member_sender='+my_memberIdx+'&member_reciever='+lenderIdx+'&book_reciever='+library_idx+'%20&review_transaction_type=1&review_tracnsaction_idx='+rent_idx+'&review_type='+review_type+'', 'read', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	}
 
 

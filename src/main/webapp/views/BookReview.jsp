@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<meta charset="UTF-8">
+	<head>
+		<title>Infinite B∞k</title>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,26 +19,37 @@
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
 
-		<!-- script
-		================================================== -->
+		<!-- script -->
 		<script src="/js/modernizr.js"></script>
-
-	<style>
-	div{
-	display:block;
-	}
-	input.review_content{
-	width: 80%;
-    resize: none;
-    margin-bottom: 0;
-	}
-	figure.product-style{
-	width:25%;
-	}
+		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
+		
+		<style>
+			.pagination .page-link {
+	  		color: gray; /* 기본 글자색을 검정색으로 지정 */
+			}
 	
-	</style>
-</head>
+			.pagination .page-item.active .page-link {
+		 		background-color: #C5A992;
+		 		border:none;
+			}
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h3{
+				font-family: 'IBM Plex Sans KR';	
+				font: bold;
+				margin: 10 0 0 0;
+			}
+			h2,h4{
+				font-family: 'IBM Plex Sans KR';	
+			}
+			
+		</style>	
+	</head>
+
 <body>
+<<<<<<< HEAD
+=======
 <c:choose>
         <c:when test="${sessionScope.loginIdx != null}">
             <jsp:include page="loginAfterBox.jsp" />
@@ -75,49 +86,50 @@
 					</nav>
 
 				</div>
+>>>>>>> origin/master
 
+<section class="hero-section jarallax">
+	
+	<div class="container">
+		<div class="row">
+			<div class="section-header align-center">
+				<h4 class="section-title" style="margin: 30px; font-size: 35; font-weight: 600;">도서 리뷰 작성</h4>
 			</div>
 		</div>
-	</header>
-    
-	<form action="BookReview.do" method="post">
-		<input type="hidden" id="review_type" value="${param.review_type}"/>
-		<input type="hidden" id="review_transaction_type" value="${param.review_transaction_type}"/>
-		<input type="hidden" id="review_tracnsaction_idx" value="${param.review_tracnsaction_idx}"/>
-		<input type="hidden" id="review_reciever" value="${param.book_reciever}"/>
-		<div class="section-header align-center">
-					<div class="title">
-						<span>도서 리뷰 작성</span>
-					</div>
-					<h2 class="section-title" >${library.library_title}</h2>
-				</div>
-				<table style="width:100%">
-					<tr>
-						<th>
-							<figure class="product-style">
-								<img src="${library.library_cover}" alt="Books" class="product-item">
-								<figcaption>
-									<p>저자 : ${library.library_author}<p>
-									<p>출판사 : ${library.library_publisher}</p>
-								</figcaption>
-							</figure>
-						</th>
-					</tr>
-					<tr>
-					<th>
-						<p>${library.library_info}<p>
-					</th>
-					</tr>
-				</table>
-				
-		
-		<input type="text" class= "review_content" id="review_content" value="리뷰 내용을 입력해주세요."/>
-		<input type="submit" value="등록"/>
-		<input type="button" value="취소"/>
-	</form>
+	</div>
+</section>
+
+<section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px; padding-bottom: 10px; margin-bottom: 10px;">
+	<div class="container" >
+		<form action="/BookReview.do" method="post">
+			<table>
+				<tr>
+					<td>
+						<img src="${library.library_cover}" style="width:500px; height:250px;" alt="Books" class="product-item">	
+					</td>
+					<td>
+						<div class="item-price" style="width:500px;"><h3>${library.library_title}</h3></div>
+						<div class="item-price"><h4>${library.library_author}</h4></div>
+						<div class="item-price"><h4>${library.library_publisher}</h4></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center;">
+						<input type="text" class="review_content" id="review_content" style="width:600px;" placeholder="리뷰 내용을 입력해주세요.">
+						<input type="submit" value="등록"/>
+						<input type="button" onclick="window.close()" value="취소"/>
+					</td>
+				</tr>
+			</table>
+			<input type="hidden" id="review_type" value="${param.review_type}"/>
+			<input type="hidden" id="review_transaction_type" value="${param.review_transaction_type}"/>
+			<input type="hidden" id="review_tracnsaction_idx" value="${param.review_tracnsaction_idx}"/>
+			<input type="hidden" id="review_reciever" value="${param.book_reciever}"/>
+		</form>
+	</div>
+	
+</section>
+
 </body>
-<script src="/js/jquery-1.11.0.min.js"></script>
-<script src="/js/plugins.js"></script>
-<script src="/js/script.js"></script>
-<script></script>
+
 </html>
