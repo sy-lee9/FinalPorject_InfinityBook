@@ -375,7 +375,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 								if(data == 1){													
 									alert('보증금이 부족합니다.');																										
 								}else if(data == 2){
-									alert('약속을 수락했습니다.');													
+									alert('약속을 수락했습니다.');	
 								}																																			
 							},error : function(e){
 								console.log(e);
@@ -421,7 +421,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 							data:{
 								code_idx : code_idx,
 								room : room,
-								library : library
+								library : library,
+								apply_user : apply_user
 							},
 							datatype: 'json',
 							success:function(data){
@@ -586,7 +587,10 @@ const SendMessage = function(code_idx,room){
 				MessageContentList(code_idx,room,library,apply_user);
 									
 				// 메세지 리스트 리로드
-				FirstMessageList();				
+				FirstMessageList();	
+				
+				// 대화방 정보업데이트
+				Messagebook(code_idx,room,library,apply_user);
 			},
 			error : function() {
 				alert('서버 에러');
@@ -632,7 +636,10 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
 		  
 		  // 리스트 리로드
-		  //FirstMessageList();
+		  FirstMessageList();
+		  
+		// 대화방 정보업데이트
+		Messagebook(code_idx,room,library,apply_user);
 		  		  			  		    
 	  }else if(code_idx == receivedData.code && room == receivedData.room){
 		// 그냥 메세지일시 
@@ -644,7 +651,10 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);  		
 		  
 		  // 리스트 리로드
-		  FirstMessageList();			  		  
+		  FirstMessageList();	
+		  
+		// 대화방 정보업데이트
+		Messagebook(code_idx,room,library,apply_user);
 	  }else {
 		  // 리스트 리로드
 		  FirstMessageList();			

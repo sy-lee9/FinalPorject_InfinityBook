@@ -80,7 +80,7 @@
 					
 					  	<figure class="product-style">
 					  		<figcaption>
-								<button type="button" onclick="location.href='#'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; border:1px solid black; height:150px;"><h4>감상문관리</h4></button>
+								<button type="button" onclick="location.href='/admin/adminBookReport'" class="btn btn-outline-accent btn-accent-arrow" style="width:200px; border:1px solid black; height:150px;"><h4>감상문관리</h4></button>
 							</figcaption>
 						</figure>
 					

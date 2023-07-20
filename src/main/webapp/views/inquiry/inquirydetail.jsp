@@ -107,7 +107,7 @@
 		<hr>
 		
 		<div style=" text-align: center;">
-			<button onclick="location.href='/admin/inquiryreplywrite.go?inquiry_idx=${inquiry.inquiry_idx}&code_idx=${inquiry.code_idx}&member_i=${inquiry.member_i}&inq_title=${inquiry.inquiry_title}'">답변 하기</button>
+			<button onclick="location.href='/admin/inquiryreplywrite.go?inquiry_idx=${inquiry.inquiry_idx}&code_idx=${inquiry.code_idx}&member_i=${inquiry.member_idx}&inq_title=${inquiry.inquiry_title}'">답변 하기</button>
 		  	<button onclick="location.href='/admin/inquirylist.go'">목록</button>
 		</div>
 	</div>
