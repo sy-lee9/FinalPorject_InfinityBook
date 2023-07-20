@@ -4,85 +4,105 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+<link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+<link rel="stylesheet" type="text/css" href="/css/vendor.css">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f1f1f1;
-  font-family: Arial, sans-serif;
 }
 
-.container {
-  width: 470px;
-  padding: 40px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+#header-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
 }
 
-h4 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  text-align: center;
+input[type="submit"] {
+  width: 150px;
+  height: 70px;
 }
 
-h5 {
-  font-size: 14px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-form {
+.container form {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  flex-direction: column; /* 요소들을 세로 방향으로 쌓습니다. */
 }
 
-input[type="email"],
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  box-sizing: border-box; /* 입력 값에 패딩과 테두리를 포함하도록 설정 */
-}
 
-a {
-  display: inline-block;
-  margin-top: 10px;
-  text-decoration: none;
-  color: #ffffff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  padding: 12px 24px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+input[type]{
+	width : 300px;
 }
-
-a:hover {
-  background-color: #0056b3;
-}
-
+  h4{
+            font-family: 'IBM Plex Sans KR';   
+            font-weight: 600;
+            margin: 10 0 0 0;
+         }
 
 </style>
+<link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">
+
+
+
 </head>
 <body>
+<div id="header-wrap" class="show">
+	
+	
+	<header id="header">
+		<div class="container">
+			<div class="row">
 
+				<div class="col-md-2">
+					<div class="main-logo">
+					
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
+					</div>
+
+				</div>
+
+				<div class="col-md-10">
+					
+					<nav id="navbar">
+						<div class="main-menu stellarnav">
+							<ul class="menu-list">
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+		</div>
+	</header>
+</div>
 <div class="container">
-  <h4>비밀번호를 찾고자하는 이메일과 닉네임을 입력해주세요.</h4>
-  <h4>임시 비밀번호를 보내드립니다.</h4>
+  <h4 align="center">비밀번호를 찾고자하는 이메일과 닉네임을 입력해주세요.</h4>
+  <h4 align="center">임시 비밀번호를 보내드립니다.</h4>
+  <br>
   <form action="pw_Search.do">
   	이메일
+  	<br>
     <input type="email" id="member_email" placeholder="이메일을 입력해주세요.">
+    <br>
     닉네임
+    <br>
     <input type="text" id="member_nickname" placeholder="닉네임을 입력해주세요.">
+    <br>
     <span><a onclick="findmemberpw()">확인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./login.go">취소</a></span>
   </form>
 </div>

@@ -51,7 +51,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title">Library</h2>
+				<h2 class="section-title" style="margin: 30px;">Library</h2>
 			</div>
 		</div>
 	</div>
@@ -77,14 +77,14 @@
 						<img src="${book.library_cover}" style="width:200px; height:200px;" alt="Books" class="product-item">	
 					</td>
 					<td>
-						<div class="item-price" style="width:600px;"><h3>${book.library_title}</h3></div>
+						<div class="item-price" style="width:500px;"><h3>${book.library_title}</h3></div>
 						<div class="item-price"><h4>${book.library_author}</h4></div>
 						<div class="item-price"><h4>${book.library_ppublisher}</h4></div>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align:center;">
-						<input type="text" name="library_info" id="library_info" style="width:700px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. ">
+						<input type="text" name="library_info" id="library_info" style="width:600px;" placeholder="책 상태를 설명해 주세요 ex) 표지 찢김 있지만 읽는 데 문제는 없습니다. ">
 						<input type="submit"value="등록"/>
 					</td>
 				</tr>
@@ -100,7 +100,7 @@
 		</form>
 	</div>
 	<div style="text-align:center;">
-		<input type="button" onclick="location.href='/mypage/bookSelectPop.go?text='" value="검색 목록"/>
+		<input type="button" onclick="location.href='/mypage/bookSelectPop.go?text='" value="재검색"/>
 		<input type="button" onclick="window.close()" id="closeBtn" value="닫기"/>
 	</div>
 	

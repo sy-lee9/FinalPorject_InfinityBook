@@ -50,4 +50,6 @@ public interface AdminInquiryDAO {
 
 	ArrayList<MyInquriyDTO> inquirySearchListAll(int offset, Object inqstate, String categoryCode, String searchText);
 
+	void inquiryalarm(HashMap<String, Object> params);
+
 }

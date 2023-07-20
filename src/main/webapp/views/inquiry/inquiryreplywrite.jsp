@@ -118,6 +118,8 @@
 	<form id="inquiry" action="/admin/inquiryreplywrite.do" method="post">
 	<input type="hidden" name="inquiry_idx" value="${inquiry_idx}"/>
 	<input type="hidden" name="code_idx" value="${code_idx}"/>
+	<input type="hidden" name="member_i" value="${member_i}"/>
+	<input type="hidden" name="inq_title" value="${inq_title}"/>
 		<table>			
 			<tr>
 				<td><input type="text" name="inquiry_title" placeholder="문의 답변 제목"/></td>
@@ -186,6 +188,8 @@
 		}else{
 			$('input[id="content"]').val(content);
 			$('form').submit();
+			
+			
 		}
 		
 	}

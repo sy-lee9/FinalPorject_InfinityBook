@@ -33,6 +33,15 @@ public interface RentDAO {
 	// 대여 약속정보 메세지 보내기
 	void chatrentreservation(HashMap<String, Object> params);
 
+	// 상태 변경
+	void rentend(HashMap<String, Object> params);
+
+	// 보증금 들고오기
+	int rentenddeposit(HashMap<String, Object> params);
+
+	// 보증금 돌려주기
+	void rentendreturn(HashMap<String, Object> params);
+
 
 
 }

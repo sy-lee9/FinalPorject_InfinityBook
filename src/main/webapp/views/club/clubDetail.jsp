@@ -38,6 +38,13 @@
 		 		border:none;
 			}
 			
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+	         h4{
+	            font-family: 'IBM Plex Sans KR';   
+	            font-weight: 600;
+	            margin: 10 0 0 0;
+	         }
+			
 	
 	</style>	
 	</head>
@@ -91,18 +98,18 @@
 	</div>
 </section>
 
-<section id="best-selling" class="leaf-pattern-overlay" style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">
+<section id="best-selling" class="leaf-pattern-overlay" style="padding-top: 50px;padding-bottom: 10px;margin-bottom: 10px;">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
 		<table>
 			<tr>
-				<th style="width: 30%; text-align:center;">
+				<th style="width: 25%; text-align:center;">
 					<img src="${club.cover}" style="text-align:center; width: 90%;" alt="book" class="single-image">
 				</th>
 				<th style="width: 5%;">
 					
 				</th>
-				<td style="width: 55%;">
+				<td style="width: 50%;">
 					<c:if test="${club.club_state eq 0}"> 
 	    				<input type="button" style="cursor:default; padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="모집 중 ">
 					</c:if>
@@ -169,31 +176,33 @@
 						</tr>
 						<tr>
 							<td colspan="3" style="text-align:center;">
+							<br/><br/>
 							<c:if test="${loginIdx == club.member_idx}">
 								<c:if test="${club.club_state eq 0}">
 									<input type="button" onclick="clubUpdate(${club.club_idx})" style="padding:5 10 5 10; color:Crimson;" class="btn btn-outline-accent btn-accent-arrow" value="모집종료">	
 								</c:if>
 								
 							</c:if>
-							<c:if test="${loginIdx != club.member_idx || loinIdx != null}">
-								<c:if test="${club.club_state eq 0}">
-									<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+							<c:if test="${loginIdx != null}">
+								<c:if test="${loginIdx != club.member_idx}">
+									<c:if test="${club.club_state eq 0}">
+										<input type="button" onclick="clubApply(${club.club_idx})" style="padding:5 10 5 10; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="신청">	
+									</c:if>
 								</c:if>
 							</c:if>
-							
 								<input type="button" style="padding:5 10 5 10;" onclick="location.href='/clubList.go'" class="btn btn-outline-accent btn-accent-arrow" value="목록 ">
 							</td>
 						</tr>
 					</table>
 				</td>
-				<th style="width: 10%; vertical-align: top; text-align:center;">
+				<th style="width: 20%; vertical-align: top; text-align:center;">
 					<c:if test="${loginIdx == club.member_idx}">
 						<input type="button" onclick="clubDelete(${club.club_idx})" style="padding:5 10 5 10;"  class="btn btn-outline-accent btn-accent-arrow" value="삭제 ">
-						<h3>신청자</h3>
+						<h4>신청자</h4><br/>
 						<c:forEach items="${apply}" var="apply">
-						<a onclick="profilePop(${apply.member_idx})" style="cursor: pointer;">${apply.member_nickname}</a>
-						<input type="button" style="padding:0 ; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
-						<input type="button" style="padding:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/>
+						<a onclick="profilePop(${apply.member_idx})" style="cursor: pointer;">${apply.member_nickname}</a> <br/>
+						<input type="button" style="padding:0 ; margin:0; color:CornflowerBlue; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyAccept.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="수락"/> / 
+						<input type="button" style="padding:0; margin:0; color:Crimson; border:none; " class="btn btn-outline-accent btn-accent-arrow" onclick="location.href='/applyReject.do?club_idx='+${club.club_idx}+'&member_idx='+${apply.member_idx}" value="거절"/><br/><br/>
 						</c:forEach>
 					</c:if>  
 					<c:if test="${loginIdx != club.member_idx}">
@@ -203,6 +212,7 @@
 			</tr>
 			
 		</table>
+		<br/><br/>
 		<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
@@ -449,13 +459,14 @@ function reReplyPrint(replyList) {
 	    content += '<th style="width:15%; text-align:right;">' + reply.reg_date.split(" ")[0] + '</th>';
 	    content += '<th style="width:10%;">';
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
-	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
+	    	content += '<a onclick="showEditForm2(' + reply.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
 	    } else{
 	    	content += '<a onclick="reportPop(\'reply_report\',\''+reply.reply_idx+'\')" style=" cursor: pointer;">신고<img src="/images/siren.png" alt="siren" style="width: 28; height: 28; margin-top:-5;"></a>';
 	    }
 	    content += '</th>';
 	    content += '</tr>';
-	    content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; 
+	    content += '<tr id="editForm'+reply.reply_idx+'" style="display: none;">'; // 입력 필드를 감싸는 행
+	    //content += '<tr id="editForm' + reply.reply_idx + '" style="display: none;">'; 
 	    content += '<th style="width:15%;"></th>';
 	    content += '<th style="width:10%;"></th>';
 	    content += '<th colspan="2">';
@@ -486,6 +497,14 @@ function showEditForm(replyIdx) {
 	  }
 }
 
+function showEditForm2(replyIdx) {
+    var editForm = document.getElementById('editForm' + replyIdx);
+    if (editForm.style.display === 'table-row') {
+    	editForm.style.display = 'none';
+	  } else {
+		  editForm.style.display = 'table-row';
+	  }
+}
 
 
 function showRe_ReplyForm(replyIdx) {
@@ -520,6 +539,8 @@ function clubReReply(reply_idx){
 			console.log(data.success);
 			if(data.success == 1){
 				listCall(showPage);	
+				var temp = JSON.stringify("a");
+				ws.send(temp);		
 			}
         }
     });
@@ -572,7 +593,8 @@ function clubUpdate(club_idx){
 			if(meetNum<=clubNum){
 				location.href='/clubUpdate.do?club_idx='+club_idx;
 			}else{
-				confirm('모집 확정 인원보다 참가 인원이 많습니다.그대로 진행하시겠습니까?');
+				alert('모집 확정 인원보다 참가 인원이 많습니다. ');
+				return false;
 			}
 		}else{
 			alert('참가 확정 인원이 2명 이상일때만 모집 종료가 가능합니다. ' );
@@ -610,6 +632,9 @@ function clubApply(club_idx){
 	if(${sessionScope.loginIdx != null}){
 		if(confirm('모임 신청시 취소가 불가능합니다. \n 정말 신청하시겠습니까?')){
 				location.href='/clubApply.do?club_idx='+club_idx;
+				
+				var temp = JSON.stringify("a");
+				ws.send(temp);		
 		}
 		
 	}else{

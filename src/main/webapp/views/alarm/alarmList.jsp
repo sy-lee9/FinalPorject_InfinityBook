@@ -6,13 +6,20 @@
 	<button onclick="alarmdel_all()" style="width: 100%; height: 45px; margin-top: 0px;">알림 전체 삭제</button>
 <c:forEach var="tmp" items="${alarmlist.list}">
 		<div class="alarm_list" type="button" code="${tmp.code_idx}" idx="${tmp.idx}" style="text-overflow: ellipsis;">
+		<c:if test="${tmp.code_idx >= 69 && tmp.code_idx <= 73}">		
+				<span style="font-size:15px; color: black;">${tmp.alarm_content}</span>
+				<br/>						
+				<span style="font-size:13px; color: black;">${tmp.alarm_date}</span>
+				<span class="del" idx="${tmp.alarm_idx}"style="cursor: pointer; float: right; margin-right: 10px;font-size: 20px;">🗑</span>			
+		</c:if>
+		<c:if test="${tmp.code_idx <=69 || tmp.code_idx >=73}">
 			<a href="/alarmdetail.go?code_idx=${tmp.code_idx}&idx=${tmp.idx}">
 				<span style="font-size:15px; color: black;">${tmp.alarm_content}</span>
 				<br/>						
 				<span style="font-size:13px; color: black;">${tmp.alarm_date}</span>
 			</a>									
 			<span class="del" idx="${tmp.alarm_idx}"style="cursor: pointer; float: right; margin-right: 10px;font-size: 20px;">🗑</span>
-				
+		</c:if>
 						
 		</div>
 	</c:forEach>		

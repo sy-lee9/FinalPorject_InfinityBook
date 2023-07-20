@@ -212,8 +212,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 				let book = '<div style="display: flex;">';
 				book += '<img src="' + data.cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
 				book += '<div class="library" style="width:660px;">';
-				book += '<div style="width:500px;">' + data.club_name + '</div>';
-				book += '<div style="font-size: 10px;">' + data.nicknames + '</div>';
+				book += '<div style="width:500px; font-weight: 600;">' + data.club_name + '</div>';
+				book += '<div style="font-size: 11px; font-weight: 600;">' + data.nicknames + '</div>';
 				book += '</div>';
 				book += '</div>';
 				
@@ -279,8 +279,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 			let book = '<div style="display: flex;">';
 			book += '<img src="' + data.library_cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
 			book += '<div class="library" style="width:660px;">';
-			book += '<div>' + data.library_title + '</div>';
-			book += '<div style="font-size: 10px;">' + data.library_info + '</div>';
+			book += '<div style="font-weight: 600;">' + data.library_title + '</div>';
+			book += '<div style="font-size: 11px; font-weight: 600;">' + data.library_info + '</div>';
 			book += '</div>';
 			book += '</div>';
 			
@@ -303,14 +303,16 @@ const Messagebook = function(code_idx,room,library,apply_user){
 					var chkbutton = '';
 					// 책 정보의 상태에 따라 다르게 표시
 					if(data.librarystate == 1 && data.rentck > 0 && data.rentstate == 0){
-						chkbutton +='<div>현재 다름사람에게 대여 중인 책입니다.</div>';
+						chkbutton +='<div style="font-weight: 600;">현재 다름사람에게 대여 중인 책입니다.</div>';
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px" >나가기</button>';
-					}else if(data.rentstate == 3){
-						chkbutton +='<div>현재 대여 중인 책입니다.</div>';
+					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user){						
+						chkbutton +='<div style="font-weight: 600;">현재 상대방의 의사를 기다리고 있어요!</div>';
+					}else if(data.rentstate == 2 && ${sessionScope.loginIdx} != apply_user){
+						chkbutton +='<button class="rentend" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">확인</button>';
+						chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여 후 책을 돌려받으신 다음 눌러주세요!</div>';
+					}else if(data.rentstate == 3 && ${sessionScope.loginIdx} != apply_user){
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-					}else if(data.rentstate == 4){
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="review" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">후기 작성</button>';						
+						chkbutton +='<button class="review" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">후기 작성</button>';
 					}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
 						chkbutton +='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
@@ -319,14 +321,13 @@ const Messagebook = function(code_idx,room,library,apply_user){
 						chkbutton +='<button class="reservation" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 잡기</button>';						
 					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} == apply_user || data.changestate == 1 && ${sessionScope.loginIdx} == apply_user){
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 취소</button>';
+						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 거절</button>';
 						chkbutton +='<button class="reservationok" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 승인</button>';												
-					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user || data.changestate == 1 && ${sessionScope.loginIdx} != apply_user){
+					}else if(data.rentstate == 2 && ${sessionScope.loginIdx} == apply_user || data.changestate == 2 && ${sessionScope.loginIdx} != apply_user){						
+
+					}else if(data.rentstate == 3 && ${sessionScope.loginIdx} == apply_user || data.changestate == 3 && ${sessionScope.loginIdx} != apply_user){
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 취소</button>';						
-					}else if(data.rentstate == 2 || data.changestate == 2){
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 취소</button>';						
+						chkbutton +='<button class="review" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">후기 작성</button>';						
 					}else{
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 					}
@@ -411,7 +412,31 @@ const Messagebook = function(code_idx,room,library,apply_user){
 						});						
 					});
 					
-					// 나가기 버튼 클릭시	 													
+					// 확인 버튼 클릭 시
+					$('.rentend').on('click',function(){
+						
+						$.ajax({
+							url: "/rentend.ajax",
+							method:"GET",
+							data:{
+								code_idx : code_idx,
+								room : room,
+								library : library
+							},
+							datatype: 'json',
+							success:function(data){
+								// 책 상태 다시 불러오기
+								Messagebook(code_idx,room,library,apply_user);																								
+								
+						
+							},error : function(e){
+								console.log(e);
+							}
+						});
+						
+					});
+					
+					// 나가기 버튼 클릭 시	 													
 					$('.chatout').on('click',function(){							
 						console.log('나가기 버튼 이벤 발생');	
 						
@@ -622,7 +647,8 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  FirstMessageList();			  		  
 	  }else {
 		  // 리스트 리로드
-		  FirstMessageList();				
+		  FirstMessageList();			
+		  		  
 	  }	 
 }
 	
@@ -683,6 +709,7 @@ $(document).ready(function(){
 				</div>
 
 				<div class="col-md-10">
+					<br>
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
@@ -690,8 +717,7 @@ $(document).ready(function(){
 								<li class="menu-item active"><a href="#home">대여/교환</a></li>
 								<li class="menu-item"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>								
 								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
 						</div>

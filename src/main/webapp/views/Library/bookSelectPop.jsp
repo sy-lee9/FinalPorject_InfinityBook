@@ -52,7 +52,7 @@
       </div>
    </div>
 </section>
-   <form onsubmit="call()" class="search-box" style="text-align:center;" id="form">
+   <form onsubmit="event.preventDefault(); call();" class="search-box" style="text-align:center;" id="form">
       
       <input type="hidden" name=start value="1">
       <i class="icon icon-search"></i> 
@@ -89,6 +89,7 @@ function call() {
    text=$('#text').val();
    listCall(showPage,text);
 }
+
 
 function listCall(page,text){
       $.ajax({
@@ -130,7 +131,7 @@ function listCall(page,text){
          content += '      <img src="' + item.image + '" style="width:200px; height:200px;" alt="Books" class="product-item">';
          content += '    </td>';
          content += '    <td>';
-         content += '      <div class="item-price" style="width:500px;">' + item.title + '</div>';
+         content += '      <div class="item-price" style="width:400px;">' + item.title + '</div>';
          content += '      <div class="item-price">' + item.author + '</div>';
          content += '      <div class="item-price">' + item.publisher + '</div>';
          content += '      <div class="item-price">' + item.pubdate + '</div>';

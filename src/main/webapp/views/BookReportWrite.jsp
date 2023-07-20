@@ -43,14 +43,51 @@
             <jsp:include page="loginBeforeBox.jsp" />            
         </c:otherwise>
     </c:choose>
-	<form action="BookReportWrite.do" method="post">
-	<h3>감상문 등록</h3>
+    <header id="header">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-2">
+					<div class="main-logo">
+					
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
+					</div>
+
+				</div>
+
+				<div class="col-md-10">
+					
+					<nav id="navbar">
+						<div class="main-menu stellarnav">
+							<ul class="menu-list">
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+		</div>
+	</header>
+    
+	<form id="write" action="BookReportWrite.do" method="post"  onsubmit='return formSubmit();'>
+	<div class="section-header align-center">
+		<div class="title">
+					</div>
+					<h2 class="section-title" >감상문 등록</h2>
+				</div>
 	<select name="reportOpen" id="reportOpen">
 	    <option value="select">공개여부</option>
 	    <option value="1">공개</option>
 	    <option value="0">비공개</option>
   	</select>
-	<input type="text"  name="reportTitle" value="제목을 입력해주세요."/>
+	<input type="text"  id ="reportTitle" name="reportTitle" value="제목을 입력해주세요." style="width:80%"/>
 	<div class="form-group" style="text-align:center;">
 			<a href="#" id="reportBookPop">
 		 		<img src="/images/book.png" id="cover2" style="width:120px; height:150px;" alt="Books" ><br/>책 선택
@@ -65,10 +102,9 @@
 				<input type="hidden" id="pubdate" name="pubdate"/>
 				<input type="hidden" id="cover" name="cover"/>
     </div>
-	<h3>텍스트 에디터 들어갈 자리</h3>
 	<div id="div_editor"></div>
-	<input type="button" onclick="save()" value="등록"/>
-	<input type="hidden" name="content"/>
+	<input type="submit" value="등록"/>
+	<input type="hidden" id= "content" name="content"/>
 	</form>
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
@@ -103,18 +139,28 @@ config.file_upload_handler = function(file,callback){
 
 var editor = new RichTextEditor("#div_editor", config);
 
-function save(){
-console.log('저장');
-var content = editor.getHTMLCode();
-console.log(content.length);
-console.log(content);
-if(content.length>(4*1024*1024)){
-	alert('컨텐츠의 크기가 너무 큽니다. 이미지의 크기나 갯수를 줄여주세요');
-}else{
+
+
+function formSubmit() {
+	var content = editor.getHTMLCode();
 	$('input[name="content"]').val(content);
-	$('form').submit();
-}
-}
+	if(document.getElementById("reportOpen").value !== "1" && document.getElementById("reportOpen").value !== "0"){
+		alert('공개여부를 선택해주세요.');
+		  return false;
+	}else if(document.getElementById("reportTitle").value == "" ) {
+	  alert('제목을 입력해주세요.');
+	  return false;
+	 }else if(document.getElementById("content").value == "" ){
+		 alert('내용을 입력해주세요.');
+		  return false;
+	 }else if(document.getElementById("isbn").value == "" ){
+		 alert('책을 선택해주세요.');
+		  return false;
+	 }else{
+		 return true;
+	 }
+	
+	}
 
 </script>
 </html>

@@ -114,7 +114,7 @@
 	 </select>
 	 
 	 <select id="myApplyList" resultType="club">
-		SELECT c.club_state, ca.club_appstate, b.cover, b.title, c.club_name, m.member_nickname, co.code_codename, c.club_meetdate  
+		SELECT c.club_idx, c.club_state, ca.club_appstate, b.cover, b.title, c.club_name, m.member_nickname, co.code_codename, c.club_meetdate  
 		FROM club_apply ca
 		JOIN `member` m ON ca.member_idx=m.member_idx 
 		JOIN club c ON c.club_idx = ca.club_idx AND c.club_blind = 0
@@ -249,4 +249,10 @@
 		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check)
 		VALUES(75, #{param2}, #{param1}, #{param3}, 0);
 	</insert>
+	
+	<!-- 닉네임 -->
+	<select id="findmembernickname" resultType="String">
+		SELECT member_nickname FROM member
+		WHERE member_idx = #{member_idx}
+	</select>
 </mapper>
