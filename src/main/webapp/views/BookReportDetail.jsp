@@ -32,6 +32,9 @@
 	div{
 	display:block;
 	}
+	button{
+	background-color: #C5A992;
+	}
 	
 	</style>
 </head>
@@ -44,16 +47,56 @@
             <jsp:include page="loginBeforeBox.jsp" />            
         </c:otherwise>
     </c:choose>
-	<h3>${book.title}</h3>
+<header id="header">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-2">
+					<div class="main-logo">
+					
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
+					</div>
+
+				</div>
+
+				<div class="col-md-10">
+					
+					<nav id="navbar">
+						<div class="main-menu stellarnav">
+							<ul class="menu-list">
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+		</div>
+	</header>
+	
+				<div class="section-header align-center">
+					<div class="title">
+						<span>감상문</span>
+					</div>
+					<h2 class="section-title" >${book.title}</h2>
+					<div class="toggle">
+				    <button id='btn'>
+				      <i id="like" class="fa fa-heart"></i>
+				    </button>
+				    <h5 id="aLike">${like}</h5>
+				</div>
 	<h3><img src="${book.cover}"></h3>
 	<h3>${book.author}</h3>
 	<h3>${book.publisher}</h3>
 	<h3>${book.pubdate}</h3>
-	
- <div class="toggle">
-    <button id='btn'>
-      <i class="fa fa-heart"></i>
-    </button>
+	<input type="hidden" id ="myLike" value="${myLike}"/>
+ 
   </div>
 	
 	<h3>${report.book_report_title}</h3>
@@ -61,12 +104,19 @@
 	<h3>${report.book_report_date}</h3>
 	<h3>${report.book_report_hit}</h3>
 	<h3>${report.isbn}</h3>
-	
 	<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
-				<textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
-				<button onclick="clubReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
+				<c:choose>
+				  <c:when test="${loginIdx != null}">
+				    <textarea id="reply_content" placeholder="댓글을 입력하세요." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				  </c:when>
+				  <c:otherwise>
+				    <textarea id="replycontent" placeholder="댓글은 로그인 이후 이용가능합니다." style="width: 80%; resize: none ;margin-bottom:0;"></textarea>
+				  </c:otherwise>
+				</c:choose>
+
+				<button onclick="bookReplyWrite()" class="btn-subscribe" style="width: 10%;" value="작성">
 					<span>작성</span> 
 					<i class="icon icon-send"></i>
 				</button>
@@ -84,37 +134,63 @@
 			</div>							
 		</div>
 
+
+
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
 <script>
-	
+var showPage = 1;
+
 window.onload = () => {
+	
+		listCall(showPage);
 	  var like = document.querySelector('.fa');
-	  if(like){
-		  
+	  if(document.getElementById("myLike").value == "0"){
 		  like.addEventListener("click", (e) => {
-			    e.target.classList.toggle("fa-heart-o");
+			  	var val = 0;
+			  	if(e.target.className == 'fa fa-heart'){
+			  		val = 1;
+			  	}else{
+			  		val = -1;
+			  	}
+			    e.target.classList.toggle('fa-heart-o');
+			    e.target.classList.toggle('fa-heart');
+			    likeCheck(val);
 			  });
-	  }
+	  }else{
+		  document.getElementById('like').className = 'fa fa-heart-o'
+		  like.addEventListener("click", (e) => {
+			  	var val = 0;
+			  	if(e.target.className == "fa fa-heart"){
+			  		val = 1;
+			  	}else{
+			  		val = -1;
+			  	}
+			    e.target.classList.toggle("fa-heart");
+			    e.target.classList.toggle('fa-heart-o');
+			    likeCheck(val);
+		  });
+	  };
+	  
 	  
 	};
 	
-function like(){
+function likeCheck(val){
 	$.ajax({
         url: '/like.ajax',
         type: 'post',
         data: {
-        	'reply_content':document.getElementById("reply_content").value,
-        	'book_report_idx':book_report_idx
+        	'book_report_idx':${report.book_report_idx}
+			,'like_state':val
         },
 		dataType:'json',
+		async: false,
 		success: function(data) {
 			console.log(data.success);
 			if(data.success == 1){
-				document.getElementById("reply_content").value = "";
-				listCall(showPage);	
+				document.getElementById("aLike").innerText = data.like;
 			}
         },
 		error:function(e){
@@ -124,38 +200,35 @@ function like(){
 	
 }
 
-
-var showPage = 1;
-
-$(document).ready(function() {	
-	listCall(showPage);
-});
-
 var book_report_idx = ${report.book_report_idx};
-function clubReplyWrite() {
-    
-    $.ajax({
-        url: '/bookReplyWrite.ajax',
-        type: 'post',
-        data: {
-        	'reply_content':document.getElementById("reply_content").value,
-        	'book_report_idx':book_report_idx
-        },
-		dataType:'json',
-		success: function(data) {
-			console.log(data.success);
-			if(data.success == 1){
-				document.getElementById("reply_content").value = "";
-				listCall(showPage);	
+
+function bookReplyWrite() {
+	
+		$.ajax({
+	        url: '/bookReplyWrite.ajax',
+	        type: 'post',
+	        data: {
+	        	'reply_content':document.getElementById("reply_content").value,
+	        	'book_report_idx':book_report_idx
+	        },
+			dataType:'json',
+			success: function(data) {
+				console.log(data.success);
+				if(data.success == 1){
+					document.getElementById("reply_content").value = "";
+					listCall(showPage);	
+				}
+	        },
+			error:function(e){
+				console.log(e);
 			}
-        },
-		error:function(e){
-			console.log(e);
-		}
-    });
+	    });
+	
+    
+    
 }
 
-function clubReplyDelete(reply_idx) {
+function bookReplyDelete(reply_idx) {
 	
 	if(confirm('정말 삭제하시겠습니까?')){
 		$.ajax({
@@ -218,12 +291,12 @@ function listPrint(list) {
 	  list.forEach(function(item) {
 	    content += '<tr>';
 	    content += '<th style="width:10%;"></th>';
-	    content += '<th style="width:10%;">'+item.member_nickname+'</th>';
+	    content += '<th style="width:10%;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a></th>';
 	    content += '<th style="width:50%;">'+item.reply_content+'</th>';
-	    content += '<th style="width:15%;">'+item.reg_date+'</th>';
+	    content += '<th style="width:15%; text-align:right;">'+item.reg_date.split(" ")[0]+'</th>';
 	    content += '<th style="width:15%;">';
 	    if (${sessionScope.loginIdx} == item.member_idx) {
-	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="clubReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
+	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>/<a onclick="showEditForm(' + item.reply_idx + ')">수정 </a>/<a onclick="bookReplyDelete(' + item.reply_idx + ')"> 삭제</a>';
 	    } else {
 	      content += '<a onclick="showRe_ReplyForm(' + item.reply_idx + ')">답글 </a>';
 	    }
@@ -237,7 +310,7 @@ function listPrint(list) {
 	    content += '<input style="width:100%;" type="text" value="' + item.reply_content + '">';
 	    content += '</th>';
 	    content += '<th style="width:15%;">'
-	    content += '<button onclick="clubReplyUpdate('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
+	    content += '<button onclick="bookReplyUpdate('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
 	    content += '<span>수정</span> ';
 	    content += '<i class="icon icon-send"></i>';
 	    content += '</button>';
@@ -251,7 +324,7 @@ function listPrint(list) {
 	    content += '<input style="width:100%;" type="text" >';
 	    content += '</th>';
 	    content += '<th style="width:15%;">'
-	    content += '<button onclick="clubReReply('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
+	    content += '<button onclick="bookReReply('+item.reply_idx+')" class="btn-subscribe" style="width: 10%;" value="수정">';
 	    content += '<span>작성</span> ';
 	    content += '<i class="icon icon-send"></i>';
 	    content += '</button>';
@@ -279,7 +352,7 @@ function reReplyCall(reply_idx, callback) {
 	  console.log(reply_idx);
 	  $.ajax({
 	    type: 'post',
-	    url: 'bookreReplyList.ajax',
+	    url: 'bookReReplyList.ajax',
 	    data: {
 	      'reply_idx': reply_idx
 	    },
@@ -297,11 +370,13 @@ function reReplyCall(reply_idx, callback) {
 function reReplyPrint(replyList) {
 	  var content = '';
 	  replyList.forEach(function(reply) {
+		  
+		  
 	    content += '<tr>';
 	    content += '<th style="width:15%; text-align:right;">ㄴ</th>';
-	    content += '<th style="width:10%;">' + reply.member_nickname + '</th>';
-	    content += '<th style="width:50%;">' + reply.reply_content + '</th>';
-	    content += '<th style="width:15%;">' + reply.reg_date + '</th>';
+	    content += '<th style="width:10%;"><a onclick="profilePop('+reply.member_idx+')" style="cursor: pointer;">'+reply.member_nickname+'</a></th>';
+	    content += '<th style="width:661px;">' + reply.reply_content + '</th>';
+	    content += '<th style="width:15%; text-align:right;">' + reply.reg_date.split(" ")[0] + '</th>';
 	    content += '<th style="width:10%;">';
 	    if (${sessionScope.loginIdx} == reply.member_idx) {
 	    	content += '<a onclick="showEditForm(' + reply.reply_idx + ')">수정 </a>/<a onclick="bookReplyDelete(' + reply.reply_idx + ')"> 삭제</a>';
@@ -329,15 +404,33 @@ function reReplyPrint(replyList) {
 
 function showEditForm(replyIdx) {
     var editForm = document.getElementById('editForm' + replyIdx);
-    editForm.style.display = 'table-row';
+    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+    if (editForm.style.display === 'table-row') {
+    	re_ReplyForm.style.display = 'none';
+    	editForm.style.display = 'none';
+	  } else {
+		  re_ReplyForm.style.display = 'none';
+		  editForm.style.display = 'table-row';
+	  }
 }
+
+
 
 function showRe_ReplyForm(replyIdx) {
-    var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
-    re_ReplyForm.style.display = 'table-row';
-}
+	var editForm = document.getElementById('editForm' + replyIdx);
+   	var re_ReplyForm = document.getElementById('re_ReplyForm' + replyIdx);
+	  if (re_ReplyForm.style.display === 'table-row') {
+		  re_ReplyForm.style.display = 'none';
+	    	editForm.style.display = 'none';
+	  } else {
+		  editForm.style.display = 'none';
+	    re_ReplyForm.style.display = 'table-row';
+	  }
+	}
 
-function clubReReply(reply_idx){
+
+
+function bookReReply(reply_idx){
 	var re_ReplyForm = document.getElementById('re_ReplyForm' + reply_idx);
 	var inputField = re_ReplyForm.querySelector('input');
 	var newContent = inputField.value;
@@ -347,7 +440,8 @@ function clubReReply(reply_idx){
         type: 'post',
         data: {
         	'reply_idx':reply_idx,
-        	'reply_content':newContent
+        	'reply_content':newContent,
+        	'book_report_idx':book_report_idx
         },
 		dataType:'json',
 		success: function(data) {
@@ -360,7 +454,7 @@ function clubReReply(reply_idx){
 	
 }
 
-function clubReplyUpdate(reply_idx){
+function bookReplyUpdate(reply_idx){
 	var editForm = document.getElementById('editForm' + reply_idx);
 	var inputField = editForm.querySelector('input');
 	var newContent = inputField.value;
@@ -388,6 +482,7 @@ var msg = "${msg}";
 if(msg != ""){
 	alert(msg);
 }
+
 
 
 </script>

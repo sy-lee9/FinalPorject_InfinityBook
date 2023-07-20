@@ -147,7 +147,7 @@ public class BookReportService {
 			return dao.bookReportList();
 		}
 		
-		public HashMap<String, Object> replyList(String sPage, String book_idx) {
+		public HashMap<String, Object> replyList(String sPage, String book_report_idx) {
 			HashMap<String, Object> reply = new HashMap<String, Object>();	
 			ArrayList<BookReportDTO> list = null;
 			int page = Integer.parseInt(String.valueOf(sPage)); 
@@ -155,9 +155,9 @@ public class BookReportService {
 			int total = 0;
 			
 			
-			total = dao.totalReplyList(book_idx);
+			total = dao.bookTotalReplyList(book_report_idx);
 			logger.info("total list : "+total);
-			list = dao.bookReplyList(book_idx,offset);
+			list = dao.bookReplyList(book_report_idx,offset);
 			logger.info(" list : "+list);
 			
 			int range = total%10  == 0 ? total/10 : total/10+1;
@@ -171,8 +171,8 @@ public class BookReportService {
 		}
 
 
-		public void bookReplyWrite(String member_idx, String reply_content, String book_idx) {
-			dao.bookReplyWrite(member_idx,reply_content,book_idx);
+		public void bookReplyWrite(String member_idx, String reply_content, String book_report_idx) {
+			dao.bookReplyWrite(member_idx,reply_content,book_report_idx);
 			
 		}
 
@@ -193,14 +193,45 @@ public class BookReportService {
 		}
 
 
-		public HashMap<String, Object> bookreReplyList(String reply_idx) {
+		public HashMap<String, Object> reReplyList(String reply_idx) {
 			HashMap<String, Object> reply = new HashMap<String, Object>();	
 			ArrayList<BookReportDTO> list = null;
 			
-			list = dao.reReplyList(reply_idx);
+			list = dao.bookReReplyList(reply_idx);
 			logger.info(" list : "+list);
 			reply.put("list", list);
 			return reply;
+		}
+
+
+
+		public String replyMember(String reply_idx) {
+			return dao.bookReplyMember(reply_idx);
+		}
+		
+		public void reReplyAlarm(String member_idx, String idx, String bookTitle) {
+			String content = "["+bookTitle+"] 댓글에 답댓글이 달렸습니다.";
+			dao.bookReReplyAlarm(member_idx,idx,content);
+		}
+		
+		public String bookTitle(String book_report_idx) {
+			return dao.bookTitle(book_report_idx);
+		}
+
+
+		public Object getLike(String book_report_idx) {
+			
+			return dao.getLike(book_report_idx);
+		}
+
+		public void likeCheck(HashMap<String, Object> map) {
+			dao.likeCheck(map);
+			
+		}
+
+		public Object myLike(String book_report_idx, String member_idx) {
+			
+			return dao.myLike(book_report_idx,member_idx);
 		}
 
 

@@ -36,76 +36,66 @@
         </c:otherwise>
     </c:choose>
 
-<div id="header-wrap">
-	<div class="top-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="right-element">
-						<a href="#" class="user-account for-buy"><i class="icon icon-user"></i><span>Account</span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Alarm:(0 $)</span></a>
-
-						<div class="action-menu">
-							<div class="search-bar">
-								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-									<i class="icon icon-search"></i>
-								</a>
-								<form role="search" method="get" class="search-box">
-									<input class="search-field text search-input" placeholder="Search" type="search">
-								</form>
-							</div>
-						</div>
-					</div><!--top-right-->
-				</div>				
-			</div>
-		</div>
-	</div><!--top-content-->
-
 	<header id="header">
 		<div class="container">
 			<div class="row">
+
 				<div class="col-md-2">
 					<div class="main-logo">
-						<a href="index.move"><img src="/images/main-logo.png" alt="logo"></a>
+					
+						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
 					</div>
+
 				</div>
+
 				<div class="col-md-10">
+					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home" data-effect="Home">서재</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link" data-effect="About">감상문</a></li>
-								<li class="menu-item"><a href="#popular-books" class="nav-link" data-effect="Shop">트래커</a></li>
-								<li class="menu-item"><a href="#latest-blog" class="nav-link" data-effect="Articles">일정</a></li>
-								<li class="menu-item"><a href="#contact" class="nav-link" data-effect="Contact">보증금</a></li>
-								<li class="menu-item has-sub">
-									<a href="#pages" class="nav-link" data-effect="Pages">내 정보</a>
-									<ul>
-								        <li class="active"><a href="index.move">회원 정보</a></li>
-								        <li><a href="about.move">활동 내역</a></li>
-								        <li><a href="styles.move">문의 내역</a></li>
-								     </ul>
-								</li>								
+								<li class="menu-item active"><a href="#home">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
+								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 							</ul>
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
 						</div>
 					</nav>
+
 				</div>
+
 			</div>
 		</div>
 	</header>
-</div>
+
+<section id="billboard" style="margin-bottom: 100px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="action-menu">
+					<form role="search" method="get" class="search-box" action="/search.do" id ="search" style="text-align:center;"> 
+						<select name="QueryType">
+							<option value="Keyword">제목+저자</option>
+							<option value="Title">제목</option>
+							<option value="Author">저자</option>
+							<option value="Publisher">출판사</option>
+						</select>
+						<input class="search-field text search-input" autocomplete='off' placeholder="제목 또는 저자명 "  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
+						<input type="submit" value="검색">	
+					</form>
+				</div>				
+			</div>
+		</div>
+	</div>	
+</section>
 
 <section class="hero-section jarallax">
 	
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title">Library</h2>
+				<h2 class="section-title">대여/교환 신청</h2>
 			</div>
 		</div>
 	</div>
@@ -158,7 +148,6 @@
 									<input type="button" onclick="location.href='TransactionChange.do?library_idx='+${book.library_idx}" value="교환신청"> 
 								 </c:when>
 							</c:choose>
-								<input type="button" onclick="location.href='library.delete?library_idx='+${book.library_idx}" value="리스트">
 							</th>
 						</tr>
 					</table>
