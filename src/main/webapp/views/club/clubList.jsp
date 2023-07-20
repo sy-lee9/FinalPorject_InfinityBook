@@ -115,7 +115,7 @@
 			  <li data-tab-target="#business" class="tab"><a href="/myClubList.go">참여 모임</a></li>
 		</ul>
 		<ul class="tab">
-			<li class="search-box" style="text-align:center;list-style-type: none;">
+			<li class="search-box" style="text-align:center;list-style-type: none;margin-left: 300px;">
 				<input type="button" value="모임 등록" onclick="clubWriteGo()" style="float: right; padding:10px; margin-right:180px;">
 				<i class="icon icon-search"></i> 
 				<input id="serchText" name="serchText" class="search-field text search-input" style="width:40%; "placeholder="제목 을 입력해주세요" type="search">

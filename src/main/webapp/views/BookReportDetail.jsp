@@ -150,19 +150,6 @@
 	<input type="hidden" id ="isbn" value="${report.isbn}"/>
 </section>
 			
-	
-  
-  	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
