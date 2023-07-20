@@ -24,7 +24,6 @@
 		<script src="/js/jquery-1.11.0.min.js"></script>
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
-
 	</head>
 
 <body>
@@ -36,6 +35,7 @@
             <jsp:include page="loginBeforeBox.jsp" />            
         </c:otherwise>
     </c:choose>
+
 	<header id="header">
 		<div class="container">
 			<div class="row">
@@ -53,8 +53,8 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
+								<li class="menu-item active"><a href="/BookSearch.go" class="nav-link">대여/교환</a></li>
+								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
 								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
@@ -88,50 +88,6 @@
 			</div>
 		</div>
 	</div>	
-</section>
-<section class="hero-section jarallax">
-	
-	<div class="container">
-		<div class="row">
-			<div class="section-header align-center">
-				<h2 class="section-title">교환</h2>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section id="best-selling" class="leaf-pattern-overlay">
-	<div class="corner-pattern-overlay"></div>
-	<div class="container">
-		
-		
-		<img src="${book.library_cover}" alt="book" class="single-image">
-		<h3 class="item-title">${book.library_title}</h3>
-		
-		<c:if test="${mybook.size() == 0}">
-			<h3>교환할 책이 없습니다.</h3>
-		</c:if>
-		<h3>교환 일정 선택</h3>
-		<form action="changeapply.do" method="post">
-		<input type="hidden" name="library_idx" value="${book.library_idx}"/>
-		<input type="date" id="date" name="change_date"/>
-		<input type="hidden" id="library_idx2" name="library_idx2" value=""/>
-		</form>
-		<h3>내 책 목록</h3>
-		
-		<c:forEach var="mybook" items="${mybook}" varStatus="status">
-			<input type="hidden" id="${mybook.library_idx}" value="${mybook.library_idx}"/>
-			<img src="${mybook.library_cover}" alt="book" class="single-image">
-			<h3 class="item-title">${mybook.library_title}</h3>
-				<input type="button" onclick="(function(){
-					var div = $('#'+'${mybook.library_idx}').val();
-					$('input[name=library_idx2]').val(div);
-					$('form').submit();
-				})()" value="교환"/>
-					<br>
-		</c:forEach>
-		
-	</div>
 </section>
 
 
@@ -275,12 +231,5 @@
 
 
 </body>
-				<script>
-		var now_utc = Date.now() // 지금 날짜를 밀리초로
-		// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
-		var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
-		// new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
-		var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
-		document.getElementById("date").setAttribute("min", today);
-		</script>
+
 </html>	
