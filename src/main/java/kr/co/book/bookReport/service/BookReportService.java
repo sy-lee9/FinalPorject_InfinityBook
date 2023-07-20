@@ -131,7 +131,7 @@ public class BookReportService {
 		public BookReportDTO bookReportDetail(String book_report_idx) {
 			
 			logger.info("book_report_idx = "+book_report_idx);
-			
+			hit(book_report_idx);
 			return dao.reportDetail(book_report_idx);
 		}
 
@@ -232,6 +232,16 @@ public class BookReportService {
 		public Object myLike(String book_report_idx, String member_idx) {
 			
 			return dao.myLike(book_report_idx,member_idx);
+		}
+
+		public void hit(String book_report_idx) {
+			
+			 dao.hit(book_report_idx);
+		}
+
+		public Object getName(String book_report_idx) {
+			
+			return dao.getName(book_report_idx);
 		}
 
 

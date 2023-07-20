@@ -38,6 +38,7 @@
 		,br.book_report_content
 		,br.book_report_date
 		,br.book_report_open
+		,br.book_report_hit
 		,m.member_nickname 
 		,b.title 
 		,b.cover 
@@ -121,6 +122,14 @@
 		VALUES(75, #{param2}, #{param1}, #{param3}, 0);
 	</insert>
 	
+	<update id="hit">
+		update book_report set book_report_hit = book_report_hit + 1 where 
+book_report_idx = #{book_report_idx};
+	</update>
+	
+	<select id="getName">
+	select m.member_nickname from book_report br join member m on br.member_idx = m.member_idx where book_report_idx = #{book_report_idx}; 
+	</select>
 	
 		
 </mapper>

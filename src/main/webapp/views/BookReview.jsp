@@ -91,14 +91,25 @@
 					</div>
 					<h2 class="section-title" >${library.library_title}</h2>
 				</div>
-				<figure class="product-style">
-							<img src="${library.library_cover}" alt="Books" class="product-item">
-							<figcaption>
-								<p>저자 : ${library.library_author}<p>
-								<p>출판사 : ${library.library_publisher}</p>
-								<p>${library.library_info}<p>
-							</figcaption>
-						</figure>
+				<table style="width:100%">
+					<tr>
+						<th>
+							<figure class="product-style">
+								<img src="${library.library_cover}" alt="Books" class="product-item">
+								<figcaption>
+									<p>저자 : ${library.library_author}<p>
+									<p>출판사 : ${library.library_publisher}</p>
+								</figcaption>
+							</figure>
+						</th>
+					</tr>
+					<tr>
+					<th>
+						<p>${library.library_info}<p>
+					</th>
+					</tr>
+				</table>
+				
 		
 		<input type="text" class= "review_content" id="review_content" value="리뷰 내용을 입력해주세요."/>
 		<input type="submit" value="등록"/>

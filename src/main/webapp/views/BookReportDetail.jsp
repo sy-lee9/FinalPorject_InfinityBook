@@ -27,15 +27,39 @@
 		<script src="/js/modernizr.js"></script>
 		<script src="/richtexteditor/rte.js"></script>
 		<script src="/richtexteditor/plugins/all_plugins.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
 
 	<style>
 	div{
 	display:block;
 	}
-	button{
+	#btn{
 	background-color: #C5A992;
+	  border: none; /* 테두리 제거 */
+	  background-color: transparent;
 	}
-	
+	#like{
+	display:block;
+	}
+	#btn{
+	float:right;
+	}
+	#aLike{
+	float:right;
+	margin-top:27px;
+	}
+	.section-title{
+	font-size:30px;
+	}
+	i{
+	color:ff0000;
+	}
+	.author-name{
+	line-height:2.5;
+	}
+	table{
+	    width: 100%;
+	}
 	</style>
 </head>
 <body>
@@ -84,26 +108,42 @@
 					<div class="title">
 						<span>감상문</span>
 					</div>
-					<h2 class="section-title" >${book.title}</h2>
+					<h2 class="section-title" >${report.book_report_title}</h2>
 					<div class="toggle">
-				    <button id='btn'>
-				      <i id="like" class="fa fa-heart"></i>
-				    </button>
-				    <h5 id="aLike">${like}</h5>
+				  
 				</div>
-	<h3><img src="${book.cover}"></h3>
-	<h3>${book.author}</h3>
-	<h3>${book.publisher}</h3>
-	<h3>${book.pubdate}</h3>
+			<table>
+				<tr>
+					<th>
+						 <div class="author-name" style="padding:0px 0px; float:left; margin-right:30px;">${report.book_report_date}</div>
+						 <div class="author-name" style="padding:0px 0px; float:left;">${name}</div>
+					</th>
+					<td style="padding:0px 0px;">
+					<div class="author-name" id="aLike">${like}</div>
+					 <button id='btn'>
+					      <i id="like" class="fa fa-heart"></i>
+					    </button>
+					    <div class="author-name" style="	float:right;
+					margin-top:27px;">${report.book_report_hit}</div>
+					</td>
+				</tr>
+				<tr>
+					<th><h3><img src="${book.cover}"></h3></th>
+					<th>
+			<div class="author-name">${book.title}</div>
+			<div class="author-name">저자 ${book.author}</div>
+			<div class="author-name">출판사 ${book.publisher}</div>
+			<div class="author-name">발행일 ${book.pubdate}</div>
+		</th>
+	</tr>	
+		<tr >
+			<td colspan="2"><div class="author-name">${report.book_report_content}</div></td>
+		</tr>	
+			</table>
 	<input type="hidden" id ="myLike" value="${myLike}"/>
- 
+	<input type="hidden" id ="isbn" value="${report.isbn}"/>
   </div>
-	
-	<h3>${report.book_report_title}</h3>
-	<h3>${report.book_report_content}</h3>
-	<h3>${report.book_report_date}</h3>
-	<h3>${report.book_report_hit}</h3>
-	<h3>${report.isbn}</h3>
+  	
 	<div class="subscribe-content" style="align-items: center;">
 			<div style="display: flex; width: 100%;align-items: center;">
 				<div style="width: 10%;"></div>
@@ -137,6 +177,7 @@
 
 
 </body>
+<script src="/js/twbsPagination.js"></script>    
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>

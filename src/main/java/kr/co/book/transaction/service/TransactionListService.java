@@ -56,16 +56,16 @@ public class TransactionListService {
 	}
 
 
-	public ArrayList<TransactionListDTO> searchUserChange(String isbn) {
+	public ArrayList<TransactionListDTO> searchUserChange(String isbn, String member_idx) {
 
-		ArrayList<TransactionListDTO> change = dao.searchUserChange(isbn);
+		ArrayList<TransactionListDTO> change = dao.searchUserChange(isbn,member_idx);
 		
 		return change;
 	}
 	
-	public ArrayList<TransactionListDTO> searchUserRent(String isbn) {
+	public ArrayList<TransactionListDTO> searchUserRent(String isbn, String member_idx) {
 
-		ArrayList<TransactionListDTO> rent = dao.searchUserRent(isbn);
+		ArrayList<TransactionListDTO> rent = dao.searchUserRent(isbn,member_idx);
 		
 		return rent;
 	}
