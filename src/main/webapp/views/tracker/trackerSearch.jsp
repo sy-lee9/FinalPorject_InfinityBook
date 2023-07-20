@@ -33,14 +33,6 @@
 			font-weight: 600;
 			margin: 10 0 0 0;
 		}
-		.pagination .page-link {
-	 		color: gray; /* 기본 글자색을 검정색으로 지정 */
-		}
-	
-		.pagination .page-item.active .page-link {
-	 		background-color: #C5A992;
-	 		border:none;
-		}
 		.popup{
 		  position: fixed;
 		  top: 50%;
@@ -138,21 +130,21 @@
 					</c:if>
 					<c:forEach var="item" items="${list}" varStatus="status">
 						<c:if test="${status.index==2}"> 						
-								<c:forEach var="book" items="${item.value}" varStatus="status">
-									<figure class="product-style" style="margin-bottom: 40px;">
-										<input type="hidden" name=isbn value="${book.isbn13}">
-										<input type="hidden" name="cover" value="${book.cover}">
-										<input type="hidden" name="jsp" value="trackerSearch.jsp">
-											<img id="cover" src="${book.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
-											<button onclick="addReadBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
-											<button onclick="addReadingBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
-											<figcaption>
-												<p style="font-weight: 600;">ISBN : ${book.isbn13}</p>
-												<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${book.title}</h3>
-												<p id="author" style="height: 11%; font-size: 15;">${book.author}</p>
-											</figcaption>
-										</figure>												
-								</c:forEach>							
+							<c:forEach var="book" items="${item.value}" varStatus="status">
+								<figure class="product-style" style="margin-bottom: 40px;">
+									<input type="hidden" name=isbn value="${book.isbn13}">
+									<input type="hidden" name="cover" value="${book.cover}">
+									<input type="hidden" name="jsp" value="trackerSearch.jsp">
+									<img id="cover" src="${book.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
+									<button onclick="addReadBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; background-color: #987559; color: #ffffff; left: 20px;">완독!</button>
+									<button onclick="addReadingBook('${book.isbn13}','${book.cover}')" class="add-to-cart" style="width: 40%; height: 40px; padding: 0; font-size: 15px; margin-left: 100px; background-color: #987559; color: #ffffff; left: 20px;">읽는 중!</button>
+									<figcaption>
+										<p style="font-weight: 600;">ISBN : ${book.isbn13}</p>
+										<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${book.title}</h3>
+										<p id="author" style="height: 11%; font-size: 15;">${book.author}</p>
+									</figcaption>
+								</figure>												
+							</c:forEach>							
 						</c:if>	
 					</c:forEach>
 		    	</div>
