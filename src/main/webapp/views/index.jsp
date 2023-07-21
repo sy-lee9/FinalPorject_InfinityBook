@@ -183,7 +183,7 @@
 					</div>
 					<h2 class="section-title" >Popular Report</h2>
 				<div class="btn-wrap align-right">
-					<a href="/ReportList.go" class="btn-accent-arrow">감상문 더보기 <i class="icon icon-ns-arrow-right"></i></a>
+					<a href="/BookReportList.go" class="btn-accent-arrow">감상문 더보기 <i class="icon icon-ns-arrow-right"></i></a>
 				</div>
 				</div>
 				

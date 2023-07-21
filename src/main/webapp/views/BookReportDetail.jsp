@@ -143,7 +143,7 @@
                     <div class="author-name">${report.book_report_content}</div>
                     <div class="author-name" id="aLike" style="margin-right: 550px;  margin-top: 125px">${like}</div>
                     <button id='btn' style="margin-right: 2px; margin-top: 111px; margin-bottom: -20px;">
-                        <i id="like" class="fa fa-heart-o"></i>
+                        <i id="like" class="fa fa-heart"></i>
                     </button>
 				</th>
 			</tr>
@@ -193,26 +193,26 @@ window.onload = () => {
 	  if(document.getElementById("myLike").value == "0"){
 		  like.addEventListener("click", (e) => {
 			  	var val = 0;
-			  	if(e.target.className == 'fa fa-heart-o'){
+			  	if(e.target.className == 'fa fa-heart'){
 			  		val = 1;
 			  	}else{
 			  		val = -1;
 			  	}
-			    e.target.classList.toggle('fa-heart-o');
 			    e.target.classList.toggle('fa-heart');
+			    e.target.classList.toggle('fa-heart-o');
 			    likeCheck(val);
 			  });
 	  }else{
-		  document.getElementById('like').className = 'fa fa-heart'
+		  document.getElementById('like').className = 'fa fa-heart-o'
 		  like.addEventListener("click", (e) => {
 			  	var val = 0;
-			  	if(e.target.className == "fa fa-heart"){
+			  	if(e.target.className == "fa fa-heart-o"){
 			  		val = -1;
 			  	}else{
 			  		val = 1;
 			  	}
-			    e.target.classList.toggle("fa-heart");
-			    e.target.classList.toggle('fa-heart-o');
+			    e.target.classList.toggle("fa-heart-o");
+			    e.target.classList.toggle('fa-heart');
 			    likeCheck(val);
 		  });
 	  };

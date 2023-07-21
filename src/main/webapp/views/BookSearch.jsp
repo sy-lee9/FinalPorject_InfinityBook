@@ -31,6 +31,23 @@
 				var url = "/searchUser.do?Isbn="+isbn;
 				var win = window.open(url, "PopupWin", "width=500,height=600");
 				}
+			
+			var idx = document.getElementById("idx").value;
+
+			function SearchUser(index,idx) {
+				
+				console.log(idx);
+				
+				if(idx != null){
+				var isbn = document.getElementById("id"+index).value;
+				var url = "/searchUser.do?Isbn="+isbn;
+				var win = window.open(url, "PopupWin", "width=500,height=600");
+				}else{
+					alert('로그인 해 주세요.');
+					location.href="/login.go";
+				};
+			};
+
 		</script>
 		<style>
 			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
@@ -154,7 +171,7 @@
 </div>
 
 
-
+	<input type="hidden" value="${sessionScope.loginIdx}" id="idx"/>	
 </body>
 
 </html>	

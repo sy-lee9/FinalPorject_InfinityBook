@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Infinite B∞k</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,15 +24,7 @@
 		<script src="/js/modernizr.js"></script>
 		<script>
 		
-		function SearchUser(index) {
-			if(${sessionScope.loginIdx != null}){
-			var isbn = document.getElementById("id"+index).value;
-			var url = "/searchUser.do?Isbn="+isbn;
-			var win = window.open(url, "PopupWin", "width=500,height=600");
-			}else{
-				alert('로그인 해 주세요.');
-			}
-			}
+		
 		
 		</script>
 	<style>
@@ -137,9 +129,27 @@
 		</div>
 	</div>
 </section>
+	<input type="hidden" value="${sessionScope.loginIdx}" id="idx"/>	
 </body>
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/script.js"></script>
-<script></script>
+<script>
+var idx = document.getElementById("idx").value;
+
+function SearchUser(index,idx) {
+	
+	console.log(idx);
+	
+	if(idx != null){
+	var isbn = document.getElementById("id"+index).value;
+	var url = "/searchUser.do?Isbn="+isbn;
+	var win = window.open(url, "PopupWin", "width=500,height=600");
+	}else{
+		alert('로그인 해 주세요.');
+		location.href="/login.go";
+	};
+};
+
+</script>
 </html>

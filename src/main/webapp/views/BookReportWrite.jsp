@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Infinite B∞k</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -67,11 +67,12 @@
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item"><a href="#home">대여/교환</a></li>
-								<li class="menu-item active"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="/BookSearch.go" class="nav-link">대여/교환</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link"  >독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link"  >공지사항</a></li>
+								<!-- <li class="menu-item"><a href="/eventList.go" class="nav-link"  >이벤트</a></li> -->
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link"  >마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
