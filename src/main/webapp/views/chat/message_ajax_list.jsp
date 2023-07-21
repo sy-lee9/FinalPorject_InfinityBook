@@ -4,7 +4,6 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <c:forEach var="tmp" items="${list}">
-	<div class="chat_list_box${tmp.code_idx}-${tmp.idx } chat_list_box">
 		<div type="button" class="chat_list" code="${tmp.code_idx }" room="${tmp.idx}" library="${tmp.library_idx}" apply-user="${tmp.applyuser}">
 			<!-- active-chat -->
 			<div class="chat_people">
@@ -25,5 +24,4 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </c:forEach>

@@ -104,96 +104,64 @@ var room = '';
 var library = '';
 var apply_user = '';
 // 가장 처음 메세지 리스트를 가져온다.
-const FirstMessageList = function(){
-	$.ajax({
-		url:"/message_list.ajax",
-		method:"get",
-		data:{
-		},
-		success:function(data){
-			console.log("메세지 리스트 리로드 성공");
-			
-			$('.inbox_chat').html(data);
-			
-			
-			// 메세지 리스트중 하나를 클릭했을 때
-			$('.chat_list').on('click', function(){
-				code_idx = $(this).attr('code');
-				room = $(this).attr('room');
-				library = $(this).attr('library');					
-				apply_user = $(this).attr('apply-user');
-				
-				// 메세지 내용을 불러오는 함수 호출
-				MessageContentList(code_idx,room,library,apply_user);
-							
-				// 클릭한 방의 책 정보 호출
-				Messagebook(code_idx,room,library,apply_user);	
-
-				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
-				
-				// 선택한 메세지빼고 나머지는 active 효과 해제하기
-				$('.chat_list_box').not('.chat_list_box'+code_idx+'-'+room).removeClass('active_chat');
-				
-				// 선택한 메세지만 active 효과 주기
-				$('.chat_list_box'+code_idx+'-'+room).addClass('active_chat');
-			
-			
-				
-				let send_msg = "";
-				send_msg += "<div class='type_msg'>";
-				send_msg += "	<div class='input_msg_write row'>";
-				send_msg += "		<div class='col-11'>";
-				send_msg += "			<input type='file' id='fileInput' name='photo'/>";
-				send_msg += "			<label for='fileInput'></label>";
-				send_msg += "			<p id='fileName'></p>";					
-				send_msg += "			<input type='text' class='write_msg' placeholder='메세지를 입력...' style='width:705px;'/>";
-				send_msg += "		</div>";
-				send_msg += "		<div class='col-1'>";
-				send_msg += "			<button class='msg_send_btn' type='button'><i class='fa fa-paper-plane-o' aria-hidden='true'></i></button>";
-				send_msg += "		</div>";
-				send_msg += "	</div>";
-				send_msg += "</div>";
-
-				
-				// 메세지 입력, 전송 칸을 보인다.
-				$('.send_message').html(send_msg);	
-				
-				// 메세지입력칸에서 엔터키 입력 시
-				$('.write_msg').on('keyup',function(ev){
-					if(ev.keyCode == 13){
-
-						SendMessage(code_idx,room);
-						// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
-						// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
-						$('.chat_list_box:first').addClass('active_chat');
-					}
-				});
-
-				// 메세지 전송버튼을 눌렀을 때
-				$('.msg_send_btn').on('click',function(){
-
-					// 메세지 전송 함수 호출
-					SendMessage(code_idx,room);
-					// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
-					// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
-					$('.chat_list_box:first').addClass('active_chat');
-				});
-
-				// 사진 업로드 시  
-				$('#fileInput').on('change',function(event) {
-				 
-					SendPhoto(code_idx,room, event.target.files[0]);
-					// 전송버튼을 누르면 메세지 리스트가 리로드 되면서 현재 열린 메세지의 선택됨 표시가 사라진다.
-					// 이걸 해결하기 위해 메세지 전송버튼을 누르고 메세지 리스트가 리로드되면 메세지 리스트의 첫번째 메세지(현재 열린 메세지)가 선택됨 표시 되도록 한다.
-					$('.chat_list_box:first').addClass('active_chat');
-				});
-			});// 채팅방 클릭 끝
-		}// 처음리스트 들고오기 성공 끝
-	});// 리스트 ajax 끝
+function FirstMessageList() {
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url: "/message_list.ajax",
+      method: "get",
+      data: {},
+      success: function(data) {
+        $('.inbox_chat').html(data);
+        $('.chat_list').on('click', function() {
+          code_idx = $(this).attr('code');
+          room = $(this).attr('room');
+          library = $(this).attr('library');
+          apply_user = $(this).attr('apply-user');
+          MessageContentList(code_idx, room, library, apply_user);
+          Messagebook(code_idx, room, library, apply_user);
+          $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
+          $('.chat_list').not($(this)).removeClass('active_chat');
+          $(this).addClass('active_chat');
+          let send_msg = "";
+          send_msg += "<div class='type_msg'>";
+          send_msg += "	<div class='input_msg_write row'>";
+          send_msg += "		<div class='col-11'>";
+          send_msg += "			<input type='file' id='fileInput' name='photo'/>";
+          send_msg += "			<label for='fileInput'></label>";
+          send_msg += "			<p id='fileName'></p>";
+          send_msg += "			<input type='text' class='write_msg' placeholder='메세지를 입력...' style='width:705px;'/>";
+          send_msg += "		</div>";
+          send_msg += "		<div class='col-1'>";
+          send_msg += "			<button class='msg_send_btn' type='button'><i class='fa fa-paper-plane-o' aria-hidden='true'></i></button>";
+          send_msg += "		</div>";
+          send_msg += "	</div>";
+          send_msg += "</div>";
+          $('.send_message').html(send_msg);
+          $('.write_msg').on('keyup', function(ev) {
+            if (ev.keyCode == 13) {
+              SendMessage(code_idx, room);
+              $('.chat_list:first').addClass('active_chat');
+            }
+          });
+          $('.msg_send_btn').on('click', function() {
+            SendMessage(code_idx, room);
+          });
+          $('#fileInput').on('change', function(event) {
+            SendPhoto(code_idx, room, event.target.files[0]);
+          });
+        });
+        resolve();
+      },
+      error: function(error) {
+        reject(error);
+      }
+    });
+  });
 }
 const Messagebook = function(code_idx,room,library,apply_user){
-	// 대화방의 상품정보를 넣는다.
-	$('.mmgs').html('');
+	
+		$('.mmgs').html("");
+		$('.library').html("");
 	
 	if(code_idx == 4){
 		
@@ -206,8 +174,6 @@ const Messagebook = function(code_idx,room,library,apply_user){
 			},							
 			datatype: 'json',
 			success:function(data){
-				console.log("모임 정보 가져오기 성공");
-				console.log(data);
 											
 				let book = '<div style="display: flex;">';
 				book += '<img src="' + data.cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
@@ -225,7 +191,6 @@ const Messagebook = function(code_idx,room,library,apply_user){
 				
 				// 나가기 버튼 클릭시	 													
 				$('.chatout').on('click',function(){							
-					console.log('나가기 버튼 이벤 발생');	
 					
 					$.ajax({
 						url: "/chatout.ajax",
@@ -237,8 +202,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 							apply_user :  apply_user
 						},
 						datatype: 'json',
-						success:function(data){
-							console.log(data);																				
+						success:function(data){														
 																																																								
 							if(data == 1){
 								alert('현재 약속 수락대기 상태입니다. \r\n약속 취소 후 시도해주세요.');
@@ -267,241 +231,231 @@ const Messagebook = function(code_idx,room,library,apply_user){
 			}			
 		});			
 	}else if (code_idx != 4){		
-	$.ajax({
-		url:"/message_librarydetail.ajax",
-		method:"GET",
-		data:{library : library},							
-		datatype: 'json',
-		success:function(data){
-			console.log("책 가져오기 성공");
-			console.log(data);
-										
-			let book = '<div style="display: flex;">';
-			book += '<img src="' + data.library_cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
-			book += '<div class="library" style="width:660px;">';
-			book += '<div style="font-weight: 600;">' + data.library_title + '</div>';
-			book += '<div style="font-size: 11px; font-weight: 600;">' + data.library_info + '</div>';
-			book += '</div>';
-			book += '</div>';
-			
-			$('.mmgs').html(book);
-			
-			
-			// 상품에 대한 상태정보
-			$.ajax({
-				url: "/total_state.ajax",
-				method:"GET",
-				data:{
-					code_idx : code_idx,
-					room : room,
-					library : library
-				},
-				datatype: 'json',
-				success:function(data){
-					console.log(data);
-					
-					var chkbutton = '';
-					// 책 정보의 상태에 따라 다르게 표시
-					if(data.librarystate == 1 && data.rentck > 0 && data.rentstate == 0){
-						chkbutton ='<div style="font-weight: 600;">현재 다름사람에게 대여 중인 책입니다.</div>';
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px" >나가기</button>';
-					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user){						
-						chkbutton ='<div style="font-weight: 600;">현재 상대방의 의사를 기다리고 있어요!</div>';
-					}else if(data.rentstate == 2 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton ='<button class="rentend" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">확인</button>';
-						chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여 후 책을 돌려받으신 다음 눌러주세요!</div>';
-					}else if(data.rentstate == 3 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
-						chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
-					}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
-						chkbutton ='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-					}else if(!data.librarystate && data.rentck == 0 && data.rentstate == 0 && ${sessionScope.loginIdx} != apply_user  || data.chgck == 0 && data.changestate == 0 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="reservation" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 잡기</button>';						
-					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} == apply_user || data.changestate == 1 && ${sessionScope.loginIdx} == apply_user){
-						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 거절</button>';
-						chkbutton +='<button class="reservationok" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 승인</button>';												
-					}else if(data.rentstate == 2 && ${sessionScope.loginIdx} == apply_user || data.changestate == 2 && ${sessionScope.loginIdx} != apply_user){						
-
-					}else if(data.rentstate == 3 && ${sessionScope.loginIdx} == apply_user || data.changestate == 3 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
-						chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
-					}else{
-						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-					}
-					
-					$('.library').html($('.library').html() + chkbutton);
-					
-					// 약속 잡기 클릭 시
-					$('.reservation').on('click',function(){
-						console.log('약속잡기 이벤트 발생');
-
-						openPopup()
-
-						function openPopup() {
-						    var screenWidth = window.screen.availWidth;
-						    var screenHeight = window.screen.availHeight;
-						    var popupWidth = 500;
-						    var popupHeight = 850;
-						    var left = (screenWidth - popupWidth) / 2;
-						    var top = (screenHeight - popupHeight) / 2;    
-
-						    window.open('reservation.go?code_idx='+code_idx+'&idx='+room, '약속 잡기',  'width=500, height=500, left=' + left + ', top=' + top);
-						}
-
-					});
-					
-					// 수락 버튼 클릭 시
-					$('.reservationok').on('click',function(){																	
-						console.log('약속 수락 이벤 발생');
+	
+		$.ajax({
+			url:"/message_librarydetail.ajax",
+			method:"GET",
+			data:{library : library},							
+			datatype: 'json',
+			success:function(data){
+											
+				let book = '<div style="display: flex;">';
+				book += '<img src="' + data.library_cover + '" style="width: 80px; height: 90px; margin-right: 10px;"/>';
+				book += '<div class="library" style="width:660px;">';
+				book += '<div style="font-weight: 600;">' + data.library_title + '</div>';
+				book += '<div style="font-size: 11px; font-weight: 600;">' + data.library_info + '</div>';
+				book += '</div>';
+				book += '</div>';
+				
+				$('.mmgs').html(book);
+				
+				
+				// 상품에 대한 상태정보
+				$.ajax({
+					url: "/total_state.ajax",
+					method:"GET",
+					data:{
+						code_idx : code_idx,
+						room : room,
+						library : library
+					},
+					datatype: 'json',
+					success:function(data){
 						
-						$.ajax({
-							url: "/reservationok.ajax",
-							method:"GET",
-							data:{
-								code_idx : code_idx,
-								room : room,
-								library : library
-							},
-							datatype: 'json',
-							success:function(data){
-								console.log(data);
-								
-								// 책 상태 다시 불러오기
-								Messagebook(code_idx,room,library,apply_user);
-																												
-								if(data == 1){													
-									alert('보증금이 부족합니다.');																										
-								}else if(data == 2){
-									alert('약속을 수락했습니다.');	
-								}																																			
-							},error : function(e){
-								console.log(e);
+						var chkbutton = '';
+						// 책 정보의 상태에 따라 다르게 표시
+						if(data.librarystate == 1 && data.rentck > 0 && data.rentstate == 0){
+							chkbutton ='<div style="font-weight: 600;">현재 다름사람에게 대여 중인 책입니다.</div>';
+							chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px" >나가기</button>';
+						}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user){						
+							chkbutton ='<div style="font-weight: 600;">현재 상대방의 의사를 기다리고 있어요!</div>';
+						}else if(data.rentstate == 2 && ${sessionScope.loginIdx} != apply_user){
+							chkbutton ='<button class="rentend" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">확인</button>';
+							chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여 후 책을 돌려받으신 다음 확인을 눌러 주세요!</div>';							
+						}else if(data.rentstate == 3 && ${sessionScope.loginIdx} != apply_user){
+							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+							chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
+							chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
+						}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
+							chkbutton ='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
+							chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+						}else if(!data.librarystate && data.rentck == 0 && data.rentstate == 0 && ${sessionScope.loginIdx} != apply_user  || data.chgck == 0 && data.changestate == 0 && ${sessionScope.loginIdx} != apply_user){
+							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+							chkbutton +='<button class="reservation" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 잡기</button>';						
+						}else if(data.rentstate == 1 && ${sessionScope.loginIdx} == apply_user || data.changestate == 1 && ${sessionScope.loginIdx} == apply_user){
+							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+							chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 거절</button>';
+							chkbutton +='<button class="reservationok" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 승인</button>';												
+						}else if(data.rentstate == 2 && ${sessionScope.loginIdx} == apply_user || data.changestate == 2 && ${sessionScope.loginIdx} != apply_user){						
+							chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여자가 대여 후 책을 돌려받았는지 확인 중입니다.</div>';
+						}else if(data.rentstate == 3 && ${sessionScope.loginIdx} == apply_user || data.changestate == 3 && ${sessionScope.loginIdx} != apply_user){
+							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+							chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
+							chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
+						}else{
+							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+						}
+						
+						$('.library').html($('.library').html() + chkbutton);					
+						// 약속 잡기 클릭 시
+						$('.reservation').on('click',function(){
+	
+							openPopup()
+	
+							function openPopup() {
+							    var screenWidth = window.screen.availWidth;
+							    var screenHeight = window.screen.availHeight;
+							    var popupWidth = 500;
+							    var popupHeight = 850;
+							    var left = (screenWidth - popupWidth) / 2;
+							    var top = (screenHeight - popupHeight) / 2;    
+	
+							    window.open('reservation.go?code_idx='+code_idx+'&idx='+room, '약속 잡기',  'width=500, height=500, left=' + left + ', top=' + top);
 							}
+	
 						});
 						
-					});
-					
-					// 거절 버튼 클릭 시
-					$('.reservationno').on('click',function(){																	
-						console.log('약속 취소 이벤 발생');						 
-						
-						$.ajax({
-							url: "/reservationno.ajax",
-							method:"GET",
-							data:{
-								code_idx : code_idx,
-								room : room,
-								library : library
-							},
-							datatype: 'json',
-							success:function(data){
-								console.log(data);																									
-								
-								if(data > 0){
+						// 수락 버튼 클릭 시
+						$('.reservationok').on('click',function(){																	
+							
+							$.ajax({
+								url: "/reservationok.ajax",
+								method:"GET",
+								data:{
+									code_idx : code_idx,
+									room : room,
+									library : library
+								},
+								datatype: 'json',
+								success:function(data){
+									
 									// 책 상태 다시 불러오기
 									Messagebook(code_idx,room,library,apply_user);
-									
-									alert('약속 취소 했습니다.');
-								}							
-							},error : function(e){
-								console.log(e);
-							}
-						});						
-					});
-					
-					// 확인 버튼 클릭 시
-					$('.rentend').on('click',function(){
-						
-						$.ajax({
-							url: "/rentend.ajax",
-							method:"GET",
-							data:{
-								code_idx : code_idx,
-								room : room,
-								library : library,
-								apply_user : apply_user
-							},
-							datatype: 'json',
-							success:function(data){
-								// 책 상태 다시 불러오기
-								Messagebook(code_idx,room,library,apply_user);																								
-								
-						
-							},error : function(e){
-								console.log(e);
-							}
+																													
+									if(data == 1){													
+										alert('보증금이 부족합니다.');																										
+									}else if(data == 2){
+										alert('약속을 수락했습니다.');	
+									}																																			
+								},error : function(e){
+									console.log(e);
+								}
+							});
+							
 						});
 						
-					});
-					
-					
-					// 유저 후기 작성 버튼 클릭 시
-					$('.mreview').on('click',function(){
-						location.href='/Review.go';
-						
-					});
-					
-					// 책 후기 작성 버튼 클릭 시
-					$('.breview').on('click',function(){
-						
-						
-					});
-					
-					
-					// 나가기 버튼 클릭 시	 													
-					$('.chatout').on('click',function(){							
-						console.log('나가기 버튼 이벤 발생');	
-						
-						$.ajax({
-							url: "/chatout.ajax",
-							method:"GET",
-							data:{
-								code_idx : code_idx,
-								room : room,
-								library : library,
-								apply_user :  apply_user
-							},
-							datatype: 'json',
-							success:function(data){
-								console.log(data);																				
-																																																									
-								if(data == 1){
-									alert('현재 약속 수락대기 상태입니다. \r\n약속 취소 후 시도해주세요.');
+						// 거절 버튼 클릭 시
+						$('.reservationno').on('click',function(){																							 
+							
+							$.ajax({
+								url: "/reservationno.ajax",
+								method:"GET",
+								data:{
+									code_idx : code_idx,
+									room : room,
+									library : library
+								},
+								datatype: 'json',
+								success:function(data){																						
 									
-								}else if(data == 2){
-									alert('현재 예약중인 상태입니다. \r\n약속 취소 후 시도해주세요.');
+									if(data > 0){
+										// 책 상태 다시 불러오기
+										Messagebook(code_idx,room,library,apply_user);
+										
+										alert('약속 취소 했습니다.');
+									}							
+								},error : function(e){
+									console.log(e);
+								}
+							});						
+						});
+						
+						// 확인 버튼 클릭 시
+						$('.rentend').on('click',function(){
+							
+							$.ajax({
+								url: "/rentend.ajax",
+								method:"GET",
+								data:{
+									code_idx : code_idx,
+									room : room,
+									library : library,
+									apply_user : apply_user
+								},
+								datatype: 'json',
+								success:function(data){
+									// 책 상태 다시 불러오기
+									Messagebook(code_idx,room,library,apply_user);																								
 									
-								}else if(data == 3){
-									alert('현재 대여중인 상태입니다. \r\n책을 돌려받거나 돌려준 후 가능합니다.');
-									
-								}else{
-									// 해당 채팅내역, 책 정보, 메세지 전송칸 지우기
-									$('.msg_history').html("");
-									$('.mmgs').html("");
-									$('.send_message').html("");																					
-									// 메세지 리스트 리로드
-									FirstMessageList();
-									
-									alert('채팅방을 나갔습니다.');
-								}						
-							},error : function(e){
-								console.log(e);
-							}
-						});											 
-					});// 나가기 끝														
-				},error : function(){// 책불러오기 성공 후
-					alert('에러');
-				}
-			});// 상태 불러오기 후							
-		},error : function(){// 상태 불러오기 성공 후
-			alert('서버 에러');
-		}		
-	});
+							
+								},error : function(e){
+									console.log(e);
+								}
+							});
+							
+						});
+						
+						
+						// 유저 후기 작성 버튼 클릭 시
+						$('.mreview').on('click',function(){
+							location.href='/Review.go';
+							
+						});
+						
+						// 책 후기 작성 버튼 클릭 시
+						$('.breview').on('click',function(){
+							
+							
+						});
+						
+						
+						// 나가기 버튼 클릭 시	 													
+						$('.chatout').on('click',function(){							
+							
+							$.ajax({
+								url: "/chatout.ajax",
+								method:"GET",
+								data:{
+									code_idx : code_idx,
+									room : room,
+									library : library,
+									apply_user :  apply_user
+								},
+								datatype: 'json',
+								success:function(data){																	
+																																																										
+									if(data == 1){
+										alert('현재 약속 수락대기 상태입니다. \r\n약속 취소 후 시도해주세요.');
+										
+									}else if(data == 2){
+										alert('현재 예약중인 상태입니다. \r\n약속 취소 후 시도해주세요.');
+										
+									}else if(data == 3){
+										alert('현재 대여중인 상태입니다. \r\n책을 돌려받거나 돌려준 후 가능합니다.');
+										
+									}else{
+										// 해당 채팅내역, 책 정보, 메세지 전송칸 지우기
+										$('.msg_history').html("");
+										$('.mmgs').html("");
+										$('.send_message').html("");																					
+										// 메세지 리스트 리로드
+										FirstMessageList();
+										
+										alert('채팅방을 나갔습니다.');
+									}						
+								},error : function(e){
+									console.log(e);
+								}
+							});											 
+						});// 나가기 끝														
+					},error : function(){// 책불러오기 성공 후
+						alert('에러');
+					}
+				});// 상태 불러오기 후							
+			},error : function(){// 상태 불러오기 성공 후
+				alert('서버 에러');
+			}		
+		});
 	}
 }
 	
@@ -516,7 +470,6 @@ const MessageContentList = function(code_idx,room,library,apply_user) {
 			room : room
 		},
 		success:function(data){
-			console.log("메세지 내용 가져오기 성공");
 			
 			// 메세지 내용을 html에 넣는다
 			$('.msg_history').html(data);
@@ -555,7 +508,7 @@ const SendPhoto = function(code_idx,room, photo){
 		      processData: false, // 데이터를 처리하지 않음
 		      contentType: false, // 컨텐츠 타입을 설정하지 않음
 		      success: function (data) {
-		    	  console.log(data);			    	  
+		    	  
 		    	// 웹소캣으로 실시간 전달
 				send(code_idx,room,data);
 		    	
@@ -592,7 +545,6 @@ const SendMessage = function(code_idx,room){
 				content: content
 			},
 			success:function(data){
-				console.log("메세지 전송 성공");
 				
 				// 웹소캣으로 실시간 전달
 				send(code_idx,room,content);		
@@ -603,10 +555,10 @@ const SendMessage = function(code_idx,room){
 				MessageContentList(code_idx,room,library,apply_user);
 									
 				// 메세지 리스트 리로드
-				FirstMessageList();	
+				//FirstMessageList();	
 				
 				// 대화방 정보업데이트
-				Messagebook(code_idx,room,library,apply_user);
+				//Messagebook(code_idx,room,library,apply_user);
 			},
 			error : function() {
 				alert('서버 에러');
@@ -633,55 +585,54 @@ var msg = getName('write_msg');
 var ws = new WebSocket("ws://" + location.host + "/chat");	
 
 	ws.onmessage = function(msg) {
-		// 리스트 리로드
-		FirstMessageList();
 		
-		var receivedData = JSON.parse(msg.data);
-		
-		console.log(receivedData.content);
-		
-	
+		var receivedData = JSON.parse(msg.data);	
 		
 	  // 받은 메세지가 
 	  // 사진을 받았을 시 ext != 'jpg' && ext !='png' && ext !='gif'
-	  if (code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('jpg') || receivedData.content.endsWith('png') || receivedData.content.endsWith('gif')) {
+	  if (code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('jpg') || code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('png') || code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('gif')) {
 	      let img = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><image src="'+receivedData.content+'"width="auto" height="auto"/><span class="time_date">'+receivedData.date+'</span></div></div>';
-	      console.log('들어와?');
+	      
 		  $('.msg_history').html($('.msg_history').html() + img);
 
-		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
+		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);		
+
+			ox();
 		  
-		  // 리스트 리로드
-		  FirstMessageList();
-		  
-		  $('.mmgs').html("");
 		// 대화방 정보업데이트
 		Messagebook(code_idx,room,library,apply_user);
 		  		  			  		    
 	  }else if(code_idx == receivedData.code && room == receivedData.room){
 		// 그냥 메세지일시 
 	      let chat = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><p>'+receivedData.content+'</p><span class="time_date">'+receivedData.date+'</span></div></div>';
-	      console.log('들어와?');
 
 		  $('.msg_history').html($('.msg_history').html() + chat);
 
-		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);  		
+		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);  				 
+
+			ox();
 		  
-		  // 리스트 리로드
-		  FirstMessageList();	
-		
-		 
-		  $('.mmgs').html("");
+
 		// 대화방 정보업데이트
 		Messagebook(code_idx,room,library,apply_user);
+		
 	  }else {
-		  // 리스트 리로드
-		  FirstMessageList();			
+		  // 현재 열린 대화방이 아닌 곳에서 대화 중일경우		  
+			ox();	
 		  		  
 	  }	 
 }
-	
-
+async function ox() {
+	try {
+		await FirstMessageList();
+	    console.log(code_idx);
+	    console.log(room);
+	    $('.chat_list[code="'+code_idx+'"][room="'+room+'"]').addClass('active_chat');
+	    $('.chat_list').not($('.chat_list[code="'+code_idx+'"][room="'+room+'"]')).removeClass('active_chat');
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
 
 Date.prototype.toLocaleString = function() {
     var formattedDate = this.getFullYear() + "-" +

@@ -3,12 +3,9 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 alarmchk();
 
 ws.onmessage = function(msg) {
-	
-	
-	setInterval(alarmchk(), 1000);
-
-	console.log('받아?');
-			  		  
+	if(msg.data == "\"a\""){
+		setInterval(alarmchk(), 1000);
+	}  		  
 }
 
 var data = {};//전송 데이터(JSON)
