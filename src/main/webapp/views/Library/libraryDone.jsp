@@ -38,7 +38,12 @@
 	 		background-color: #C5A992;
 	 		border:none;
 		}
-	
+		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h3,h4 {
+				font-family: 'IBM Plex Sans KR';	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
 	</style>	
 </head>
 
@@ -48,6 +53,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
+				<br><br>
 				<h2 class="section-title">Library</h2>
 			</div>
 		</div>
@@ -55,8 +61,8 @@
 </section>
 
   <div class="container">
-    <div style="text-align: center; margin-top:200px;">
-      <h4><span class="item"> 등록이 완료되었습니다.</span></h4>
+    <div style="text-align: center; margin-top:150px;">
+      <h3><span class="item"> 등록이 완료되었습니다.</span></h3><br>
       <input type="button" onclick="closeRe()" id="closeBtn" value="닫기" />
     </div>
   </div>
