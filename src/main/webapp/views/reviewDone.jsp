@@ -25,19 +25,11 @@
   <script src="/js/script.js"></script>
 
   <style>
-	    body {
-	  
-	      text-align: center;
+  		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+	    h2,h4 {
+			font-family: 'IBM Plex Sans KR';		  
+	        text-align: center;
 	    }
- 	
-		.pagination .page-link {
-  		color: gray; /* 기본 글자색을 검정색으로 지정 */
-		}
-
-		.pagination .page-item.active .page-link {
-	 		background-color: #C5A992;
-	 		border:none;
-		}
 	
 	</style>	
 </head>
@@ -48,7 +40,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="section-header align-center">
-				<h2 class="section-title">리뷰 작성</h2>
+				<h2 class="section-title" style="margin: 30px; font-size: 35; font-weight: 600;">리뷰 작성</h2>
 			</div>
 		</div>
 	</div>

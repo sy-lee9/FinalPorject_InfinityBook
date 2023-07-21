@@ -32,37 +32,37 @@
 	<style>
 		
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-         h2,h3,h4{
+         h3,h4{
             font-family: 'IBM Plex Sans KR';   
             font-weight: 600;
             margin: 10 0 0 0;
             }
-	#btn{
-	background-color: #C5A992;
-	  border: none; /* 테두리 제거 */
-	  background-color: transparent;
-	}
-	#like{
-	display:block;
-	}
-	#btn{
-	float:right;
-	}
-	#aLike{
-	float:right;
-	margin-top:27px;
-	}
-
-	i{
-	color:ff0000;
-	}
-	.author-name{
-	line-height:2.5;
-	}
+		#btn{
+		background-color: #C5A992;
+		  border: none; /* 테두리 제거 */
+		  background-color: transparent;
+		}
+		#like{
+		display:block;
+		}
+		#btn{
+		float:right;
+		}
+		#aLike{
+		float:right;
+		margin-top:27px;
+		}
 	
-	.fa{
-	font-size: x-large;
-	}
+		i{
+		color:ff0000;
+		}
+		.author-name{
+		line-height:2.5;
+		}
+		
+		.fa{
+		font-size: x-large;
+		}
 	</style>
 </head>
 <body>
