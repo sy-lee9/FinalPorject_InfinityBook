@@ -188,6 +188,8 @@ var showPage = 1;
 
 window.onload = () => {
 	  var like = document.querySelector('.fa');
+	  if(${sessionScope.loginIdx == null}){
+	  }else{
 	  if(document.getElementById("myLike").value == "0"){
 		  like.addEventListener("click", (e) => {
 			  	var val = 0;
@@ -196,8 +198,8 @@ window.onload = () => {
 			  	}else{
 			  		val = -1;
 			  	}
-			    e.target.classList.toggle('fa-heart');
 			    e.target.classList.toggle('fa-heart-o');
+			    e.target.classList.toggle('fa-heart');
 			    likeCheck(val);
 			  });
 	  }else{
@@ -205,17 +207,17 @@ window.onload = () => {
 		  like.addEventListener("click", (e) => {
 			  	var val = 0;
 			  	if(e.target.className == "fa fa-heart"){
-			  		val = 1;
-			  	}else{
 			  		val = -1;
+			  	}else{
+			  		val = 1;
 			  	}
-			    e.target.classList.toggle("fa-heart-o");
-			    e.target.classList.toggle('fa-heart');
+			    e.target.classList.toggle("fa-heart");
+			    e.target.classList.toggle('fa-heart-o');
 			    likeCheck(val);
 		  });
 	  };
 	  
-	  
+	  };
 	};
 	
 
