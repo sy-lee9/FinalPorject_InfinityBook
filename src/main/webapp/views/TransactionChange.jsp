@@ -24,72 +24,19 @@
 		<script src="/js/jquery-1.11.0.min.js"></script>
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
-
+			
+			<style>
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+         h2,h3,h4{
+            font-family: 'IBM Plex Sans KR';   
+            font-weight: 600;
+            margin: 10 0 0 0;
+         }
+			</style>
 	</head>
 
 <body>
 
-<c:choose>
-        <c:when test="${sessionScope.loginIdx != null}">
-            <jsp:include page="loginAfterBox.jsp" />
-        </c:when>
-        <c:otherwise>
-            <jsp:include page="loginBeforeBox.jsp" />            
-        </c:otherwise>
-    </c:choose>
-	<header id="header">
-		<div class="container">
-			<div class="row">
-
-				<div class="col-md-2">
-					<div class="main-logo">
-					
-						<a href="/"><img src="/images/mainLogo.png" alt="logo"></a>
-					</div>
-
-				</div>
-
-				<div class="col-md-10">
-					
-					<nav id="navbar">
-						<div class="main-menu stellarnav">
-							<ul class="menu-list">
-								<li class="menu-item"><a href="/BookSearch.go" class="nav-link">대여/교환</a></li>
-								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link"  >독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link"  >공지사항</a></li>
-								<!-- <li class="menu-item"><a href="/eventList.go" class="nav-link"  >이벤트</a></li> -->
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link"  >마이페이지</a></li>
-							</ul>
-						</div>
-					</nav>
-
-				</div>
-
-			</div>
-		</div>
-	</header>
-
-<section id="billboard" style="margin-bottom: 100px;">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="action-menu">
-					<form role="search" method="get" class="search-box" action="/search.do" id ="search" style="text-align:center;"> 
-						<select name="QueryType">
-							<option value="Keyword">제목+저자</option>
-							<option value="Title">제목</option>
-							<option value="Author">저자</option>
-							<option value="Publisher">출판사</option>
-						</select>
-						<input class="search-field text search-input" autocomplete='off' placeholder="제목 또는 저자명 "  style="width:50%; height:50px; margin:0px;" type="search" name="Query">
-						<input type="submit" value="검색">	
-					</form>
-				</div>				
-			</div>
-		</div>
-	</div>	
-</section>
 <section class="hero-section jarallax">
 	
 	<div class="container">
@@ -101,36 +48,52 @@
 	</div>
 </section>
 
-<section id="best-selling" class="leaf-pattern-overlay">
+<section id="best-selling" class="leaf-pattern-overlay" style="margin-bottom: 0px; padding:0px;">
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
+		<table style="width:100%">
+		<tr>
+			<th style="width:28%">
+				<img src="${book.library_cover}" alt="book" class="single-image" style="width: 89%; height: 46%; padding: 10;">
+				<h3 id="title" style="font-size: 22; font-weight: 800; height: auto;">${book.library_title}</h3>
+				<form action="changeapply.do" method="post" onsubmit='return formSubmit();'>
+				<input type="hidden" name="library_book" value="${book.library_idx}"/>
+				<h3>교환 일정 선택</h3> <input type="date" id="date" name="change_date"/>
+				<input type="hidden" id="library_book2" name="library_book2" value=""/>
+				</form>
+			</th>
+			<th style="width:80%">
+				<c:if test="${mybook.size() == 0}">
+				<h3>교환할 책이 없습니다.</h3>
+				</c:if>
+					<h3>내 책 목록</h3>
+							<div class="products-grid grid">						
+							<c:forEach var="mybook" items="${mybook}" varStatus="status">
+								<figure class="product-style" style="margin-bottom: 20px; height: 555px;">
+									<img id="cover" src="${mybook.library_cover}" class="product-item" style="width: 100%; height: 25%; padding: 10;">
+									<figcaption style="height: 200px; margin-top:13%;">
+										<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${mybook.library_title}</h3>
+										<input type="button" onclick="(function(){
+												var div = $('#'+'${mybook.library_idx}').val();
+												$('input[name=library_book2]').val(div);
+												$('form').submit();
+											})()" value="교환"/>
+									</figcaption>
+									<input type="hidden" id="${mybook.library_idx}" value="${mybook.library_idx}"/>						
+								</figure>
+							</c:forEach>
+						</div>
+		
+			</th>
+		</tr>
+		</table>
 		
 		
-		<img src="${book.library_cover}" alt="book" class="single-image">
-		<h3 class="item-title">${book.library_title}</h3>
 		
-		<c:if test="${mybook.size() == 0}">
-			<h3>교환할 책이 없습니다.</h3>
-		</c:if>
-		<h3>교환 일정 선택</h3>
-		<form action="changeapply.do" method="post">
-		<input type="hidden" name="library_idx" value="${book.library_idx}"/>
-		<input type="date" id="date" name="change_date"/>
-		<input type="hidden" id="library_idx2" name="library_idx2" value=""/>
-		</form>
-		<h3>내 책 목록</h3>
 		
-		<c:forEach var="mybook" items="${mybook}" varStatus="status">
-			<input type="hidden" id="${mybook.library_idx}" value="${mybook.library_idx}"/>
-			<img src="${mybook.library_cover}" alt="book" class="single-image">
-			<h3 class="item-title">${mybook.library_title}</h3>
-				<input type="button" onclick="(function(){
-					var div = $('#'+'${mybook.library_idx}').val();
-					$('input[name=library_idx2]').val(div);
-					$('form').submit();
-				})()" value="교환"/>
-					<br>
-		</c:forEach>
+		
+	
+		
 		
 	</div>
 </section>
@@ -143,5 +106,18 @@
 		// new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
 		var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
 		document.getElementById("date").setAttribute("min", today);
+		
+		function formSubmit() {
+			
+			
+			if(document.getElementById("date").value == ""){
+				alert('날짜를 선택 해 주세요.');
+				  return false;
+			}else{
+				 return true;
+			 }
+		};
+		
+		
 		</script>
 </html>	

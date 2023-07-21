@@ -7,6 +7,7 @@ public class TransactionListDTO {
 	private long library_isbn;
 	private int member_idx;
 	private int code_idx;
+	private int code_code;
 	private String member_nickname;
 	private String code_codename;
 	private int library_idx;
@@ -129,6 +130,12 @@ public class TransactionListDTO {
 	}
 	public void setLibrary_reg_date(Date library_reg_date) {
 		this.library_reg_date = library_reg_date;
+	}
+	public int getCode_code() {
+		return code_code;
+	}
+	public void setCode_code(int code_code) {
+		this.code_code = code_code;
 	}
 	
 	
