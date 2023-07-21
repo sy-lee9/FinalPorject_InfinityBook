@@ -36,7 +36,7 @@
 		}
 		
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-		h3{
+		h3, h4, p{
 			font-family: 'IBM Plex Sans KR';	
 			font-weight: 600;
 			margin: 10 0 0 0;
@@ -258,8 +258,50 @@
 	</div>
 	
 </section>
+
+
 <div id="footer-bottom">
 	<div class="container">
+	<div class="row" style="margin-left: 30%; width: 100%; margin-bottom: 5%;">
+		<div>
+			<div class="col-md-1">
+
+				<div class="footer-menu">
+					<p>이명아</p>
+				</div>
+
+			</div>
+
+			<div class="col-md-1">
+
+				<div class="footer-menu">
+					<p>이수연</p>
+				</div>
+			</div>
+
+			<div class="col-md-1">
+
+				<div class="footer-menu">
+					<p>박희준</p>
+				</div>
+			</div>
+
+			<div class="col-md-1">
+
+				<div class="footer-menu">
+					<p>엄상원</p>
+				</div>
+			</div>
+
+			<div class="col-md-1">
+
+				<div class="footer-menu">
+					<p>이창훈</p>
+				</div>
+			</div>
+		</div>	
+
+		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="copyright">

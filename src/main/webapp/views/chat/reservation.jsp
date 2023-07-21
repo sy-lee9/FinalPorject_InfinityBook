@@ -72,14 +72,31 @@
 		<div>보증금</div>
 		<input type="number" name ="rent_deposit" value="${reservation.rent_deposit}">
 		<div>대여 일</div>
-		<input type="date" name ="rent_startdate" value="${reservation.rent_startdate}">
+		<input type="date" id="date" name ="rent_startdate" value="${reservation.rent_startdate}">
 		<div>반납 일</div>
-		<input type="date" name ="rent_enddate" value="${reservation.rent_enddate}">
+		<input type="date" id="date2" name ="rent_enddate" value="${reservation.rent_enddate}">
 		<br/>
 		<button type="submit" style="font-size:15px; width: 100px; height: 50px;">확인</button>							
 	</form>
 	</c:if>
 	
 </body>
-<script></script>
+<script>
+var now_utc = Date.now() // 지금 날짜를 밀리초로
+// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
+// new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
+var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+document.getElementById("date").setAttribute("min", today);
+document.getElementById("date2").setAttribute("min", today);
+
+window.onload = () => {
+var date = document.getElementById("date");
+  date.addEventListener("change", (e) => {
+	  var val = document.getElementById("date").value;
+	  document.getElementById("date2").setAttribute("min", val);
+	  });
+};
+
+</script>
 </html>

@@ -55,9 +55,11 @@
 		<c:if test="${RentList.size() != 0}">
 			
 		</c:if>
-		<c:forEach var="user" items="${RentList}" varStatus="status">
 		<div class="top-content">
-			<table width="90%">
+		<table width="90%">
+		<c:forEach var="user" items="${RentList}" varStatus="status">
+		
+			
 				<tr>
 					<td width="60%"><h5 style="font-size:15px;">📖 ${user.member_nickname} (${user.code_codename})</h5></td>
 					<td width="30%"><button type="button" onclick="(function() {
@@ -66,9 +68,12 @@
 					  self.close();
 					})()" input type="button" style="display:inline; margin:0; padding:0; width:50px; height:30px;" class="btn btn-outline-accent btn-accent-arrow" >신청</button></td>
 				</tr>
-			</table>
-		</div>	
+			
+		
 		</c:forEach>
+		</table>
+		</div>	
+		
 				
 		<h4 class="menu-item">교환 가능 사용자</h4><br/>
 		<c:if test="${ChangeList.size() == 0}">
@@ -77,9 +82,11 @@
 		<c:if test="${ChangeList.size() != 0}">
 			
 		</c:if>
-		<c:forEach var="user" items="${ChangeList}" varStatus="status">
-			<div class="top-content">
-				<table width="90%">
+		
+		<div class="top-content">
+			<table width="90%">
+				<c:forEach var="user" items="${ChangeList}" varStatus="status">
+			
 					<tr>
 						<td width="60%"><h5 style="font-size:15px;">📖 ${user.member_nickname} (${user.code_codename})</h5></td>
 						<td width="30%"><button type="button" onclick="(function() {
@@ -88,9 +95,9 @@
 							  self.close();
 							})()" input type="button" style="display:inline; margin:0; padding:0; width:50px; height:30px;" class="btn btn-outline-accent btn-accent-arrow" >신청</button></td>
 					</tr>
-				</table>
-			</div>
-		</c:forEach>
+				</c:forEach>
+			</table>
+		</div>
    
 </body>
 

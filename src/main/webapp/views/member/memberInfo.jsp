@@ -72,13 +72,13 @@
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub active">
-									<a href="#" class="nav-link">내 정보</a>
+									<a class="active">내 정보</a>
 									<ul>
-								        <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
-								        <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
-								        <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
-								     </ul>
-								</li>								
+		                                <li><a href="/mypage/memberInfo.go" >회원 정보</a></li>
+		                                <li><a href="/mypage/activitiesChange.go" style="color:black;">대여/교환 내역</a></li>
+		                                <li><a href="/mypage/myinquirylist.go" style="color:black;">문의 내역</a></li>
+		                             </ul>
+								</li>									
 							</ul>
 
 							<div class="hamburger">
@@ -162,7 +162,7 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12" style="margin-top: 5%;">
+						<div class="col-md-12" style="margin-top: 5%;" style="text-align:center;"> 
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
 
