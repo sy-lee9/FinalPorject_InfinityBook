@@ -182,7 +182,7 @@
 var showPage = 1;
 var selectedcategoryCode = 'default';
 var selectedprocess = 'default';
-var content = '';
+
 
 listCall(showPage);
 
@@ -239,10 +239,10 @@ function listCall(page){
 }	
 
 function listPrint(list) {
-			
+	var content = '';
     if (list.length > 0 ){
     	list.forEach(function(item) {
-    		content = '<tr>';
+    		content += '<tr>';
     		 if(item.code_idx == 64){
              	content += '	<td width="20%" style="text-align:center;">이벤트 문의</td>';            	      	
              }else if(item.code_idx == 65){

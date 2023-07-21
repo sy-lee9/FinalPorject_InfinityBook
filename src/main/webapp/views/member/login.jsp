@@ -82,14 +82,13 @@ input[type="submit"] {
 	</header>
 </div>
 
-
-<div class="input-container">
-  <input type="email" id="member_email" name="member_email" placeholder="이메일을 입력하세요." style="display: block;">
-  <input type="password" id="member_pw" name="member_pw" placeholder="비밀번호를 입력하세요.">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="input-container" style="margin-top: 50px;">
+  <input type="email" id="member_email" name="member_email" placeholder="이메일을 입력하세요." style=" width:240px; display: block;">
+  <input type="password" id="member_pw" name="member_pw" placeholder="비밀번호를 입력하세요." style=" width:240px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="button" onclick="login()" value="로그인" style="display: inline-block; margin-top: -45px;">
   <br>
   	  <input type="checkbox" id="rememberMe">&nbsp;&nbsp;&nbsp;<label for="rememberMe" style="display: inline-block; vertical-align: middle;">아이디 저장</label>
-  <br>
+ 
 	
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="join.go" onclick="closePopup1()">회원가입</a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="pw_Search.go" onclick="closePopup2()">비밀번호 찾기</a>
@@ -198,7 +197,15 @@ $(document).ready(function() {
 	    $("#login").html(content);
 	  });
 
+	  function handleKeyPress(event) {
+		    if (event.keyCode === 13) {
+		      login();
+		    }
+		  }
 
+		  // 엔터키 이벤트 리스너 등록
+		  document.addEventListener("keypress", handleKeyPress);
+		
 
 </script>
 </html>

@@ -2,51 +2,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-  		<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+	<meta charset="UTF-8">
+	<head>
+		<title>Infinite B∞k</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="author" content="">
+	    <meta name="keywords" content="">
+	    <meta name="description" content="">
+
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	    <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
 	    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
 	    <link rel="stylesheet" type="text/css" href="/style.css">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	    
+		<!-- script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="/js/twbsPagination.js"></script>    
+		<script src="/js/modernizr.js"></script>		
+		<script src="/js/plugins.js"></script>
+		<script src="/js/script.js"></script>
+		 <link rel="icon" href="/images/mainLogo.png" class="images">
 <style>
-	 button{
-            width: 165px;
-            height: 45px;
+	.slick-track{
+		height:300px;
 	}
-	.container {
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    height: 100vh;
+
+	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+	h3{
+		font-family: 'IBM Plex Sans KR';	
+		font-weight: 600;
+		margin: 10 0 0 0;
 	}
-	.container2 {
-	 	margin-top : 100px
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    height: 1vh;
-	}
-	input{
-		width: 268px;
-	}
-	h1{
-			text-align: center;
-		  margin-top: 0px
-		  transform: translateY(-50%);
-            font-family: 'IBM Plex Sans KR';   
-            font-weight: 600;
-            margin: 10 0 0 0;
-         }
+	input[type="text"],input[type="password"],input[type="email"]{
+		width: 300px;
+	}         
 </style>
-<link rel="icon" href="/images/KakaoTalk_20230613_123518647.png" class="images">
 </head>
-<body>	
-	<div id="header-wrap" class="show">
+<body>
+
+<div id="header-wrap" class="show">
 	
+	<c:choose>
+        <c:when test="${sessionScope.loginIdx != null}">
+            <jsp:include page="../loginAfterBox.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../loginBeforeBox.jsp" />            
+        </c:otherwise>
+    </c:choose>
 	
 	<header id="header">
-		<div class="container2">
+		<div class="container">
 			<div class="row">
 
 				<div class="col-md-2">
@@ -58,16 +71,17 @@
 				</div>
 
 				<div class="col-md-10">
-					
+					<br>
+
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
-								<li class="menu-item active"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="#home" >대여/교환</a></li>
+								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
+								<li class="menu-item"><a href="/clubList.go" class="nav-link"  >독서모임</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link"  >공지사항</a></li>
+								<!-- <li class="menu-item"><a href="/eventList.go" class="nav-link"  >이벤트</a></li> -->
+								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link"  >마이페이지</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -78,7 +92,8 @@
 		</div>
 	</header>
 </div>
-	<div class="container">
+<section id="billboard" style="margin-bottom:50px;">
+	<div class="container" style="margin: 1% 31%;">
 		<table>
 			<tr>
 				<th>
@@ -90,7 +105,7 @@
                     <span id="email_msg"></span>
                                         
                     &nbsp;
-                    <button onclick="member_email_check()">메일 전송</button>
+                    <input type="button" onclick="member_email_check()" value="메일 전송">
                     <div id="duplicate_email_message"></div>
                 </td>
 	        </tr>
@@ -134,18 +149,36 @@
 		        <th>주소(시/군/구)</th>	              
 				<td>
 				<input type="text" id="location" name="location"  readonly /> &nbsp;&nbsp;
-				<input type="button" id="address_kakao" value="주소 검색" style="width: 150px; margin: 5px; font-size: 15px;" class="btn btn-outline-dark"/>
+				<input type="button" id="address_kakao" value="주소 검색" style="width: 120px; margin: 5px; font-size: 15px; padding: 6px;" class="btn btn-outline-dark"/>
 
 				</td>
 		    </tr>
 			<tr>
-				<th colspan="2">
-					<button onclick="join()">회원가입</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;							
-					<button onclick="location.href='./login.go'">취소</button>
+				<th colspan="2" style="padding-left: 25%;">
+					<input type="button" onclick="join()" value="회원가입">&nbsp;&nbsp;					
+					<input type="button" onclick="location.href='./login.go'" value="취소">
 				</th>
 			</tr>
 		</table>
 	</div>
+</section>
+
+<div id="footer-bottom">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="copyright">
+					<div class="row">
+						<div class="col-md-12" style="text-align:center;">
+							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

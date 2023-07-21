@@ -29,39 +29,43 @@
 		<script src="/richtexteditor/plugins/all_plugins.js"></script>
 		<script src="/js/twbsPagination.js"></script>    
 
-	<style>
-		
+	<style>		
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
          h3,h4{
             font-family: 'IBM Plex Sans KR';   
             font-weight: 600;
             margin: 10 0 0 0;
-            }
+         }
 		#btn{
-		background-color: #C5A992;
-		  border: none; /* 테두리 제거 */
-		  background-color: transparent;
+			background-color: #C5A992;
+			border: none; /* 테두리 제거 */
+			background-color: transparent;
 		}
 		#like{
-		display:block;
+			display:block;
 		}
 		#btn{
-		float:right;
+			float:right;
 		}
 		#aLike{
-		float:right;
-		margin-top:27px;
-		}
-	
-		i{
-		color:ff0000;
-		}
-		.author-name{
-		line-height:2.5;
+			float:right;
+			margin-top:27px;
 		}
 		
+		i{
+			color:ff0000;
+		}
+		.author-name{
+			line-height:2.5;
+		}			
 		.fa{
-		font-size: x-large;
+			font-size: x-large;
+		}
+		.fa-heart:before {
+		    content: "\f08a";
+		}
+		.fa-heart-o:before {
+		    content: "\f004";
 		}
 	</style>
 </head>
@@ -138,7 +142,7 @@
                     <br>
                     <div class="author-name">${report.book_report_content}</div>
                     <div class="author-name" id="aLike" style="margin-right: 550px;  margin-top: 125px">${like}</div>
-                    <button id='btn' style="    margin-right: 2px; margin-top: 111px; margin-bottom: -20px;">
+                    <button id='btn' style="margin-right: 2px; margin-top: 111px; margin-bottom: -20px;">
                         <i id="like" class="fa fa-heart-o"></i>
                     </button>
 				</th>
@@ -164,7 +168,7 @@
 
 				<button class="btn-subscribe" style="width: 10%;" value="작성">
 					<span>작성</span> 
-					<i class="icon icon-send"></i>
+					<i class="icon icon-send" style="color: black;"></i>
 				</button>
 			</div> 
 			<hr>

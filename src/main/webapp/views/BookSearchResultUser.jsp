@@ -46,10 +46,11 @@
    </div>
    		<br>
 </section>
-		<h4 class="menu-item">대여 가능 사용자</h4>
+		<h4 class="menu-item">대여 가능 사용자</h4><br/>
 
    		<c:if test="${RentList.size() == 0}">
-			<h4>대여 가능 사용자가 없습니다.</h4>
+   			
+			<p>대여가능 사용자가 없습니다. <br/> 위시 도서로 등록 하고 알림을 기다려 주세요 😊</p>
 		</c:if>
 		<c:if test="${RentList.size() != 0}">
 			
@@ -69,9 +70,9 @@
 		</div>	
 		</c:forEach>
 				
-		<h4 class="menu-item">교환 가능 사용자</h4>
+		<h4 class="menu-item">교환 가능 사용자</h4><br/>
 		<c:if test="${ChangeList.size() == 0}">
-			<h4>교환 가능 사용자가 없습니다.</h4>
+			<p>교환가능 사용자가 없습니다. <br/> 위시 도서로 등록 하고 알림을 기다려 주세요 😊</p>
 		</c:if>
 		<c:if test="${ChangeList.size() != 0}">
 			
