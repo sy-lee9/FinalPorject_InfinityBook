@@ -30,7 +30,7 @@
 	<style>
 		
 	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-         h4,h3{
+         h4,h3,h2{
             font-family: 'IBM Plex Sans KR';   
             font-weight: 600;
             margin: 10 0 0 0;
@@ -109,7 +109,7 @@
 					<td></td>
 					<td rowspan="5">
 						<div class="form-group" style="text-align:center;">
-							<a href="#" id="clubBookPop">
+							<a href="#" id="reportBookPop">
 							 	<img src="/images/book.png" id="cover2" style="width:120px; height:150px;" alt="Books" ><br/>책 선택
 							</a>
 							<br/><br/>
@@ -179,7 +179,7 @@ var link = document.getElementById('reportBookPop');
 
 link.addEventListener('click',function(){
     win = window.open('/reportBookPop.go','Infinity_Book','width=800px,height=600px');
-})
+});
 
 // editor 크기 조절 불가
 config.editorResizeMode = "none"; 
