@@ -69,13 +69,12 @@
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
-						<br/><br/>
+						<br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/BookSearch.go" class="nav-link">대여/교환</a></li>
 								<li class="menu-item"><a href="/ReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
+								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>							
 								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
 
 							</ul>
