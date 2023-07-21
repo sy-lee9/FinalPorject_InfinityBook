@@ -64,10 +64,10 @@
 				</div>
 
 				<div class="col-md-10">
-					<br>
 	
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br><br>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/BookSearch.go" class="nav-link">대여/교환</a></li>
 								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
@@ -109,8 +109,8 @@
 					<c:forEach var="entry" items="${result}" varStatus="status">
 						<c:if test="${status.index==2}"> 
 							<c:forEach var="result" items="${entry.value}" varStatus="id">
-								<figure class="product-style" style="margin-bottom: 20px;">
-									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
+								<figure class="product-style" style="margin-bottom: 20px; height: 555px;">
+									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 50%; padding: 10;">
 									 <input type="button" onclick ="SearchUser(${id.index})" value="대여/교환" style="margin: 10% 26% 0%;">
 									<figcaption style="height: 200px; margin-top:13%;">
 										<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${result.title}</h3>
