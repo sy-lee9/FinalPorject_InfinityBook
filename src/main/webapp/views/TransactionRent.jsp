@@ -152,6 +152,9 @@
 			}else if(document.getElementById("rent_deposit").value >${rent_deposit}){
 				alert('최대 보증금을 넘을 수 없습니다.');
 				  return false;
+			}else if(document.getElementById("rent_deposit").value == 0){
+				alert('보증금은 0원 이상 입력해주세요.');
+				  return false;
 			}else{
 				 return true;
 			 }

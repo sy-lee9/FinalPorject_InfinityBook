@@ -26,15 +26,18 @@
 		<script src="/js/script.js"></script>
 		
 		<script>
-		var idx = document.getElementById("idx").value;
+		
 
 		function SearchUser(index,idx) {
 			
+			var idx = document.getElementById("idx").value;
 			console.log(idx);
 			
 			if(idx != null){
 			var isbn = document.getElementById("id"+index).value;
 			var url = "/searchUser.do?Isbn="+isbn;
+			var width = 500;
+			var height = 600;
 			var left = window.innerWidth / 2 - width / 2;
 			var top = window.innerHeight / 2 - height / 2;
 			var win = window.open(url, "PopupWin", 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
