@@ -43,7 +43,7 @@
 			}
 			
 			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-			h3{
+			h3,h4{
 				font-family: 'IBM Plex Sans KR';	
 				font-weight: 600;
 				margin: 10 0 0 0;
@@ -78,15 +78,15 @@
 						<div class="main-menu stellarnav">
 						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item "><a href="/mypage/libraryList.get" >서재</a></li>
 								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
 								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
-								<li class="menu-item  active"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item active"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub">
 									<a href="#" class="nav-link">내 정보</a>
 									<ul>
-		                                <li class="active"><a href="/mypage/memberInfo.go">회원 정보</a></li>
+		                                <li><a href="/mypage/memberInfo.go">회원 정보</a></li>
 		                                <li><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
 		                                <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
 		                             </ul>
@@ -113,11 +113,11 @@
 
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 0px;"> 
 	<div class="container">
-		<h3 class="menu-item">충전 / 결제</h3>
+		<h4 class="menu-item">충전 / 결제</h4>
 		<hr/>
 		<div style="text-align:center;">
 			<form onsubmit="submitForm(event)" id="depositForm">
-				<h3 style="display:inline; margin-right:100px;">현재 잔액 : ${deposit_now} 원</h3>
+				<h4 style="display:inline; margin-right:100px;">현재 잔액 : ${deposit_now} 원</h4>
 				<select name="deposit_type">
 					<option value="충전">충전</option>
 					<option value="출금">출금</option>
@@ -137,7 +137,7 @@
 		
 		
 			
-		<h3 class="menu-item">사용 내역</h3>
+		<h4 class="menu-item">사용 내역</h4>
 			<div style="text-align:center;">
 				<hr/>	
 				<div class="row" id="list">
@@ -163,7 +163,7 @@
 				<div class="copyright">
 					<div class="row">
 
-						<div class="col-md-12">
+						<div class="col-md-12" style="text-align:center;">
 							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
 						</div>
 
