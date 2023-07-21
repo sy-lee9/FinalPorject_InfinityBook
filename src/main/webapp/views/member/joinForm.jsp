@@ -268,11 +268,7 @@ function join() {
         alert('회원가입에 실패했습니다. 다시 시도해 주세요');
       }
     });
-  } else {
-    alert('중복된 닉네임입니다.');
-    $member_nickname.focus();
   }
-  console.log('컨트롤러도 못탐');
 }
 
 
@@ -332,6 +328,7 @@ $('#member_nickname').on('keyup', function(e) {
 
 
 $('#member_pw').on('keyup', function(e) {
+	pweq = false;
 	  var password = $('#member_pw').val();
 	  var confirmPassword = $('#pw_confirm').val();
 	  var errorMessage = '';
@@ -350,6 +347,7 @@ $('#member_pw').on('keyup', function(e) {
 	      'font-size': '10px',
 	      'color': 'darkgreen'
 	    }).text('사용 가능한 비밀번호입니다.');
+	    pweq = true;
 	  }
 
 	  // 비밀번호가 변경될 때마다 1차와 2차 비밀번호를 비교하여 일치 여부를 표시
@@ -363,7 +361,7 @@ $('#member_pw').on('keyup', function(e) {
 	      'font-size': '10px',
 	      'color': 'darkgreen'
 	    }).text('비밀번호가 일치합니다.');
-	    pweq =true;
+	    pweq = true;
 	  }
 	});
 
