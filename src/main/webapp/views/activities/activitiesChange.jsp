@@ -88,21 +88,14 @@
 								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
 								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
 								<li class="menu-item has-sub active">
-									<a href="#" class="nav-link">내 정보</a>
+									<a class="active">내 정보</a>
 									<ul>
-								        <li><a href="/mypage/memberInfo.go">회원 정보</a></li>
-								        <li class="active"><a href="/mypage/activitiesChange.go">대여/교환 내역</a></li>
-								        <li><a href="/mypage/myinquirylist.go">문의 내역</a></li>
-								     </ul>
-								</li>								
+		                                <li><a href="/mypage/memberInfo.go" style="color:black;">회원 정보</a></li>
+		                                <li><a href="/mypage/activitiesChange.go" >대여/교환 내역</a></li>
+		                                <li><a href="/mypage/myinquirylist.go" style="color:black;">문의 내역</a></li>
+		                             </ul>
+								</li>									
 							</ul>
-
-							<div class="hamburger">
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				                <span class="bar"></span>
-				            </div>
-
 						</div>
 					</nav>
 

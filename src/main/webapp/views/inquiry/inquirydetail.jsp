@@ -63,13 +63,21 @@
 				<div class="col-md-10">
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br/><br/>
 							<ul class="menu-list">
-								<li class="menu-item"><a href="#home">대여/교환</a></li>
-								<li class="menu-item"><a href="#about" class="nav-link">감상문</a></li>
-								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
-								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>
-								<li class="menu-item"><a href="/eventList.go" class="nav-link">이벤트</a></li>
-								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
+								<li class="menu-item"><a href="/mypage/libraryList.get" >서재</a></li>
+								<li class="menu-item"><a href="/mypage/myBookreportList.get" >감상문</a></li>
+								<li class="menu-item"><a href="/mypage/trackerList.go" >트래커</a></li>
+								<li class="menu-item"><a href="/mypage/calender.go" >일정</a></li>
+								<li class="menu-item"><a href="/mypage/deposit" class="nav-link">보증금</a></li>
+								<li class="menu-item has-sub active">
+									<a class="active">내 정보</a>
+									<ul>
+		                                <li><a href="/mypage/memberInfo.go" style="color:black;">회원 정보</a></li>
+		                                <li><a href="/mypage/activitiesChange.go" style="color:black;">대여/교환 내역</a></li>
+		                                <li class="active"><a href="/mypage/myinquirylist.go">문의 내역</a></li>
+		                             </ul>
+								</li>								
 							</ul>
 						</div>
 					</nav>
