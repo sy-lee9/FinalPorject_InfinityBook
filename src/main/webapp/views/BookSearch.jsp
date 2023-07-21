@@ -24,8 +24,23 @@
 		<script src="/js/jquery-1.11.0.min.js"></script>
 		<script src="/js/plugins.js"></script>
 		<script src="/js/script.js"></script>
+		
+		<script>
+			function SearchUser(index) {
+				var isbn = document.getElementById("id"+index).value;
+				var url = "/searchUser.do?Isbn="+isbn;
+				var win = window.open(url, "PopupWin", "width=500,height=600");
+				}
+		</script>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+			h3{
+				font-family: 'IBM Plex Sans KR', serif;	
+				font-weight: 600;
+				margin: 10 0 0 0;
+			}
+		</style>
 	</head>
-
 <body>
 <c:choose>
         <c:when test="${sessionScope.loginIdx != null}">

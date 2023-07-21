@@ -75,7 +75,7 @@
 
 				<div class="col-md-10">
 					<br>
-
+	
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
 							<ul class="menu-list">
