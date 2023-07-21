@@ -23,9 +23,7 @@
 		================================================== -->
 		<script src="/js/modernizr.js"></script>
 		<script>
-		
-		
-		
+
 		</script>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
@@ -65,14 +63,13 @@
 					
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
-						<br/>
+						<br/><br/>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/BookSearch.go" class="nav-link">대여/교환</a></li>
 								<li class="menu-item"><a href="/BookReportList.go" class="nav-link">감상문</a></li>
 								<li class="menu-item"><a href="/clubList.go" class="nav-link">독서모임</a></li>
 								<li class="menu-item"><a href="/noticelist.go" class="nav-link">공지사항</a></li>							
 								<li class="menu-item"><a href="/mypage/libraryList.get" class="nav-link">마이페이지</a></li>
-
 							</ul>
 						</div>
 					</nav>
@@ -109,10 +106,10 @@
 					<c:forEach var="entry" items="${result}" varStatus="status">
 						<c:if test="${status.index==2}"> 
 							<c:forEach var="result" items="${entry.value}" varStatus="id">
-								<figure class="product-style" style="margin-bottom: 20px;">
-									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
+								<figure class="product-style" style="margin-bottom: 20px; height: 555px;">
+									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 50%; padding: 10;">
 									 <input type="button" onclick ="SearchUser(${id.index})" value="대여/교환" style="margin: 10% 26% 0%;">
-									<figcaption style="height: 200px; margin-top:13%;">
+									<figcaption style="height: 150px; margin-top:13%;">
 										<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${result.title}</h3>
 										<p id="author" style="height: 11%; font-size: 15;">${result.author}</p>
 									</figcaption>
@@ -144,7 +141,9 @@ function SearchUser(index,idx) {
 	if(idx != null){
 	var isbn = document.getElementById("id"+index).value;
 	var url = "/searchUser.do?Isbn="+isbn;
-	var win = window.open(url, "PopupWin", "width=500,height=600");
+	var left = window.innerWidth / 2 - width / 2;
+	var top = window.innerHeight / 2 - height / 2;
+	var win = window.open(url, "PopupWin", 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	}else{
 		alert('로그인 해 주세요.');
 		location.href="/login.go";

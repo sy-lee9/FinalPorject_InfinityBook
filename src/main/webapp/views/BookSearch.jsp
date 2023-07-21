@@ -26,27 +26,23 @@
 		<script src="/js/script.js"></script>
 		
 		<script>
-			function SearchUser(index) {
-				var isbn = document.getElementById("id"+index).value;
-				var url = "/searchUser.do?Isbn="+isbn;
-				var win = window.open(url, "PopupWin", "width=500,height=600");
-				}
-			
-			var idx = document.getElementById("idx").value;
+		var idx = document.getElementById("idx").value;
 
-			function SearchUser(index,idx) {
-				
-				console.log(idx);
-				
-				if(idx != null){
-				var isbn = document.getElementById("id"+index).value;
-				var url = "/searchUser.do?Isbn="+isbn;
-				var win = window.open(url, "PopupWin", "width=500,height=600");
-				}else{
-					alert('로그인 해 주세요.');
-					location.href="/login.go";
-				};
+		function SearchUser(index,idx) {
+			
+			console.log(idx);
+			
+			if(idx != null){
+			var isbn = document.getElementById("id"+index).value;
+			var url = "/searchUser.do?Isbn="+isbn;
+			var left = window.innerWidth / 2 - width / 2;
+			var top = window.innerHeight / 2 - height / 2;
+			var win = window.open(url, "PopupWin", 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+			}else{
+				alert('로그인 해 주세요.');
+				location.href="/login.go";
 			};
+		};
 
 		</script>
 		<style>
@@ -81,10 +77,10 @@
 				</div>
 
 				<div class="col-md-10">
-					<br>
 	
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
+						<br><br>
 							<ul class="menu-list">
 								<li class="menu-item active"><a href="/BookSearch.go" class="nav-link">대여/교환</a></li>
 								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>
@@ -126,8 +122,8 @@
 					<c:forEach var="entry" items="${result}" varStatus="status">
 						<c:if test="${status.index==2}"> 
 							<c:forEach var="result" items="${entry.value}" varStatus="id">
-								<figure class="product-style" style="margin-bottom: 20px;">
-									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 54%; padding: 10;">
+								<figure class="product-style" style="margin-bottom: 20px; height: 555px;">
+									<img id="cover" src="${result.cover}" class="product-item" style="width: 100%; height: 50%; padding: 10;">
 									 <input type="button" onclick ="SearchUser(${id.index})" value="대여/교환" style="margin: 10% 26% 0%;">
 									<figcaption style="height: 200px; margin-top:13%;">
 										<h3 id="title" style="font-size: 17; font-weight: 800; height: auto;">${result.title}</h3>

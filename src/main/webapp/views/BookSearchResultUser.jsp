@@ -46,7 +46,7 @@
    </div>
    		<br>
 </section>
-		<h4 class="menu-item">대여 가능 사용자</h4><br/>
+		<h4 class="menu-item">대여 가능 사용자</h4>
 
    		<c:if test="${RentList.size() == 0}">
    			
@@ -62,11 +62,7 @@
 			
 				<tr>
 					<td width="60%"><h5 style="font-size:15px;">📖 ${user.member_nickname} (${user.code_codename})</h5></td>
-					<td width="30%"><button type="button" onclick="(function() {
-					  var url = '/searchDetail.do?library_idx=' + '${user.library_idx}';
-					  window.opener.location.href = url;
-					  self.close();
-					})()" input type="button" style="display:inline; margin:0; padding:0; width:50px; height:30px;" class="btn btn-outline-accent btn-accent-arrow" >신청</button></td>
+					<td width="30%"><input type="button" onclick="searchDetail(${user.library_idx})" style="display:inline; margin:0; padding:0; width:50px; height:30px;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>
 				</tr>
 			
 		
@@ -75,7 +71,7 @@
 		</div>	
 		
 				
-		<h4 class="menu-item">교환 가능 사용자</h4><br/>
+		<h4 class="menu-item">교환 가능 사용자</h4>
 		<c:if test="${ChangeList.size() == 0}">
 			<p>교환가능 사용자가 없습니다. <br/> 위시 도서로 등록 하고 알림을 기다려 주세요 😊</p>
 		</c:if>
@@ -89,11 +85,7 @@
 			
 					<tr>
 						<td width="60%"><h5 style="font-size:15px;">📖 ${user.member_nickname} (${user.code_codename})</h5></td>
-						<td width="30%"><button type="button" onclick="(function() {
-							  var url = '/searchDetail.do?library_idx=' + '${user.library_idx}';
-							  window.opener.location.href = url;
-							  self.close();
-							})()" input type="button" style="display:inline; margin:0; padding:0; width:50px; height:30px;" class="btn btn-outline-accent btn-accent-arrow" >신청</button></td>
+						<td width="30%"><input type="button" onclick="searchDetail(${user.library_idx})" style="display:inline; margin:0; padding:0; width:50px; height:30px;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -101,5 +93,17 @@
    
 </body>
 
-<script></script>
+<script>
+
+	function searchDetail(library_idx) {
+		var width = 1070;
+	    var height = 860;
+	    var left = window.innerWidth / 2 - width / 2;
+	    var top = window.innerHeight / 2 - height / 2;
+	    self.close();
+	    
+	    var popupWindow = window.open('/searchDetail.do?library_idx=' + library_idx, 'reading', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	}
+	
+</script>
 </html> 

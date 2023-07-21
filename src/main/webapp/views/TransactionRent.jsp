@@ -92,179 +92,33 @@
 	</div>	
 </section>
 
+
 <section class="hero-section jarallax">
 	
 	<div class="container">
 		<div class="row">
-			<div class="section-header align-center">
-				<h2 class="section-title">대여</h2>
+			<div class="section-header align-center"><br><br>
+				<h2 class="section-title">대여</h2><br><br>
 			</div>
 		</div>
 	</div>
 </section>
-
-<section id="best-selling" class="leaf-pattern-overlay" style="margin: auto;
-    width: 92%;">
-	<div class="corner-pattern-overlay"></div>
-	<div class="container" style="    float: left;
-    width: 36%;">
-		<img src="${book.library_cover}" alt="book" class="single-image">
-		
-	</div>
-	<div class="container" style="line-height: 5;
-    width: 47%;">
-	<h3 class="item-title">${book.library_title}</h3>
-		<form action="rentapply.do"  method="post" onsubmit='return formSubmit();'>
-			<input type="hidden" name="library_idx" value="${book.library_idx}">
-			<div>현재 보증금 : ${rent_deposit}</div>
-			<input type="number" id="rent_deposit" name="rent_deposit" placeholder="희망 보증금액">
-			<input type="date" id ="date" name="rent_startdate" placeholder="희망 대여일자" style="height: 30px; position:static">
-			<input type="date" id ="date2" name="rent_enddate" placeholder="희망 반납일자" style="height: 30px;">
-			<button type="submit" style="    height: 47px;">신청</button>
-		</form>
+	<div style="margin: 5% 0% 0% 20%; height: 76%;">
+		<div class="container" style="float: left; width: 36%; margin-right:5%;">
+			<img src="${book.library_cover}" alt="book" class="single-image">		
 		</div>
-</section>
-
-
-<footer id="footer">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-4">
-				
-				<div class="footer-item">
-					<div class="company-brand">
-						<img src="/images/main-logo.png" alt="logo" class="footer-logo">
-						<p>Infinity Book은 한권의 책으로 무한의 책을 읽을 수 있도록 해주는 중고 책 대여/교환 서비스 입니다. </p>
-					</div>
-				</div>
-				
-			</div>
-
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>About Us</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							이명아
-						</li>
-						<li class="menu-item">
-							이수연
-						</li>
-						<li class="menu-item">
-							최은영
-						</li>
-						<li class="menu-item">
-							엄상원
-						</li>
-						<li class="menu-item">
-							이창훈
-						</li>
-						<li class="menu-item">
-							박희준
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Discover</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Home</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Books</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Authors</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Subjects</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Advanced Search</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>My account</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Sign In</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">View Cart</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">My Wishtlist</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Track My Order</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			<div class="col-md-2">
-
-				<div class="footer-menu">
-					<h5>Help</h5>
-					<ul class="menu-list">
-						<li class="menu-item">
-							<a href="#">Help center</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Report a problem</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Suggesting edits</a>
-						</li>
-						<li class="menu-item">
-							<a href="#">Contact us</a>
-						</li>
-					</ul>
-				</div>
-
-			</div>
-
-		</div>
-		<!-- / row -->
-
-	</div>
-</footer>
-
-<div id="footer-bottom">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-
-				<div class="copyright">
-					<div class="row">
-
-						<div class="col-md-12">
-							<p>Â© 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a></p>
-						</div>
-
-						
-
-					</div>
-				</div><!--grid-->
-
-			</div><!--footer-bottom-content-->
+		<div class="container" style="line-height: 5; width: 47%; ">
+			<h3 class="item-title">${book.library_title}</h3>
+			<form action="rentapply.do"  method="post" onsubmit='return formSubmit();'>
+				<input type="hidden" name="library_idx" value="${book.library_idx}">
+				<div>현재 보증금 : ${rent_deposit}</div>
+				<input type="number" id="rent_deposit" name="rent_deposit" placeholder="희망 보증금액">
+				<input type="date" id ="date" name="rent_startdate" placeholder="희망 대여일자" style="height: 30px; position:static">
+				<input type="date" id ="date2" name="rent_enddate" placeholder="희망 반납일자" style="height: 30px;"><br>
+				<button type="submit" style="    height: 47px;">신청</button>
+			</form>
 		</div>
 	</div>
-</div>
-
-
-
 </body>
 		<script>
 		var now_utc = Date.now() // 지금 날짜를 밀리초로
