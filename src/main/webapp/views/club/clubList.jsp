@@ -77,7 +77,7 @@
 
 					<nav id="navbar">
 						<div class="main-menu stellarnav">
-						<br/><br/>
+						<br/>
 							<ul class="menu-list">
 								<li class="menu-item"><a href="#home" >대여/교환</a></li>
 								<li class="menu-item"><a href="/BookReportList.go" class="nav-link" >감상문</a></li>

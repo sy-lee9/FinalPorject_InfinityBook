@@ -235,13 +235,20 @@
 	   
 	    list.forEach(function(item) {
 	        content += '<figure class="product-style" style="text-align:center;">';
-	        content += '  <input type="button" style="margin-bottom:10px; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
 	        if(item.library_use == "위시"){
+	        	content += '  <input type="button" style="margin-bottom:10px; color:CornflowerBlue; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
 	        	content += '  <a href="/mypage/bookDetail.go?library_idx=' + item.library_idx + '">';
 		        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 		        content += '  </a>';
 	        	
-	        }else{
+	        }else if (item.library_use == "소장"){
+	        	content += '  <input type="button" style="margin-bottom:10px; color:DimGray; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
+	        	content += '  <a href="/mypage/libraryDetail.go?library_idx=' + item.library_idx + '">';
+		        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
+		        content += '  </a>';
+	        }
+	        else{
+	        	content += '  <input type="button" style="margin-bottom:10px; color:MediumSeaGreen; padding:5 10 5 10;" class="btn btn-outline-accent btn-accent-arrow" value="' + item.library_use + '">';
 	        	content += '  <a href="/mypage/libraryDetail.go?library_idx=' + item.library_idx + '">';
 		        content += '    <img src="' + item.library_cover + '" alt="Books" style="width:230px; height:300px;" class="product-item">';
 		        content += '  </a>';
