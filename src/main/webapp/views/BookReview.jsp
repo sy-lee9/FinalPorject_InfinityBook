@@ -76,16 +76,16 @@
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align:center;">
-						<input type="text" class="review_content" id="review_content" style="width:600px;" placeholder="리뷰 내용을 입력해주세요."><br>
+						<input type="text" class="review_content" name="review_content" style="width:600px;" placeholder="리뷰 내용을 입력해주세요."><br>
 						<input type="submit" value="등록"/>
 						<input type="button" onclick="window.close()" value="취소"/>
 					</td>
 				</tr>
 			</table>
-			<input type="hidden" id="review_type" value="${param.review_type}"/>
-			<input type="hidden" id="review_transaction_type" value="${param.review_transaction_type}"/>
-			<input type="hidden" id="review_tracnsaction_idx" value="${param.review_tracnsaction_idx}"/>
-			<input type="hidden" id="review_reciever" value="${param.book_reciever}"/>
+			<input type="hidden" name="review_type" value="${param.review_type}"/>
+			<input type="hidden" name="review_transaction_type" value="${param.review_transaction_type}"/>
+			<input type="hidden" name="review_tracnsaction_idx" value="${param.review_tracnsaction_idx}"/>
+			<input type="hidden" name="review_reciever" value="${param.book_reciever}"/>
 		</form>
 	</div>
 	

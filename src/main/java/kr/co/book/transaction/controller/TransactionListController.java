@@ -118,7 +118,7 @@ public class TransactionListController {
 		params.put("member_sender", member_idx);
 		service.reviewWrite(params);
 		
-	return "";
+	return "reviewDone";
 	}
 	
 	@RequestMapping("/BookSearch.go")
