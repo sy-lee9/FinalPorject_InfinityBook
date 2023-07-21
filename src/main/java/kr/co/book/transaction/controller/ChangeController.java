@@ -31,7 +31,7 @@ public class ChangeController {
 		
 		service.changeapply(params);				
 		
-		return "/chat/message_list";
+		return "/transactionDone";
 	}
 	
 	// 교환 약속 시
