@@ -19,7 +19,7 @@ img{ max-width:100%;}
   width: 35%; border-right:1px solid #f7f7f7;
 }
 .inbox_msg {
-  border: 1px solid gold;
+  border: 1px solid #CC9966;
   border-radius: 15px;
   clear: both;
   overflow: hidden;
