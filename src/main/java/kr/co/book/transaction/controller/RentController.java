@@ -31,7 +31,7 @@ public class RentController {
 		params.put("member_idx", member_idx);
 		service.rentapply(params);
 		
-		return "/chat/message_list";
+		return "/transactionDone";
 	}
 	
 	// 대여 약속 잡기 시 

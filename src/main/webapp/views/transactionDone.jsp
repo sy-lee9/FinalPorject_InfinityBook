@@ -55,7 +55,6 @@
 
   <script>
     function closeRe() {
-      window.opener.location.reload();
       window.close();
     }
   </script>
