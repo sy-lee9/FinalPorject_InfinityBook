@@ -42,6 +42,9 @@ public interface RentDAO {
 	// 보증금 돌려주기
 	void rentendreturn(HashMap<String, Object> params);
 
+	// 책 상태 돌리기
+	void chglibrary(String library_idx);
+
 
 
 }

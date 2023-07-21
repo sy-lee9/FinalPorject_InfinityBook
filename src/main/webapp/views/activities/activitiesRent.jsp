@@ -259,13 +259,13 @@
 	    	console.log(memberIdx);
 	    	var loginIdx = <%=session.getAttribute("loginIdx")%>;
 	    	
-	    	if (state == 0 || state == 1) {
+	    	if (state == 0) {
 	    		content += '	<td style="text-align: center; padding-left: 2%;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:MediumSeaGreen; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>';  
-			}else if (state == 2){
+			}else if (state == 1){
 				content += '	<td style="text-align:center; padding-left: 2%;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="예약"></td>';  
+			}else if (state == 2){
+				content += '	<td style="text-align:center; padding-left: 2%;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Tomato; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="대여중"></td>';  
 			}else if (state == 3){
-				content += '	<td style="text-align:center; padding-left: 2%;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Tomato; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="대여"></td>';  
-			}else if (state == 4){
 				content += '	<td style="text-align:center; padding-left: 2%;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="반납"></td>';  
 			}
 	    	

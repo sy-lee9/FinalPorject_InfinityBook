@@ -94,6 +94,10 @@ public class RentService {
 		// 보증금 돌려주기
 		dao.rentendreturn(params);
 		
+		String library_idx = params.get("library").toString();
+		// 책상태 되돌리기
+		dao.chglibrary(library_idx);
+		
 		
 	}
 

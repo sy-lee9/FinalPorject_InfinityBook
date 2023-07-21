@@ -303,33 +303,35 @@ const Messagebook = function(code_idx,room,library,apply_user){
 					var chkbutton = '';
 					// 책 정보의 상태에 따라 다르게 표시
 					if(data.librarystate == 1 && data.rentck > 0 && data.rentstate == 0){
-						chkbutton +='<div style="font-weight: 600;">현재 다름사람에게 대여 중인 책입니다.</div>';
+						chkbutton ='<div style="font-weight: 600;">현재 다름사람에게 대여 중인 책입니다.</div>';
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px" >나가기</button>';
 					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} != apply_user){						
-						chkbutton +='<div style="font-weight: 600;">현재 상대방의 의사를 기다리고 있어요!</div>';
+						chkbutton ='<div style="font-weight: 600;">현재 상대방의 의사를 기다리고 있어요!</div>';
 					}else if(data.rentstate == 2 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton +='<button class="rentend" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">확인</button>';
+						chkbutton ='<button class="rentend" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">확인</button>';
 						chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여 후 책을 돌려받으신 다음 눌러주세요!</div>';
 					}else if(data.rentstate == 3 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="review" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">후기 작성</button>';
+						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+						chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
+						chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
 					}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
-						chkbutton +='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
+						chkbutton ='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
 						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 					}else if(!data.librarystate && data.rentck == 0 && data.rentstate == 0 && ${sessionScope.loginIdx} != apply_user  || data.chgck == 0 && data.changestate == 0 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 						chkbutton +='<button class="reservation" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 잡기</button>';						
 					}else if(data.rentstate == 1 && ${sessionScope.loginIdx} == apply_user || data.changestate == 1 && ${sessionScope.loginIdx} == apply_user){
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 						chkbutton +='<button class="reservationno" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 거절</button>';
 						chkbutton +='<button class="reservationok" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">약속 승인</button>';												
 					}else if(data.rentstate == 2 && ${sessionScope.loginIdx} == apply_user || data.changestate == 2 && ${sessionScope.loginIdx} != apply_user){						
 
 					}else if(data.rentstate == 3 && ${sessionScope.loginIdx} == apply_user || data.changestate == 3 && ${sessionScope.loginIdx} != apply_user){
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-						chkbutton +='<button class="review" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">후기 작성</button>';						
+						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+						chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
+						chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
 					}else{
-						chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
+						chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 					}
 					
 					$('.library').html($('.library').html() + chkbutton);
@@ -436,6 +438,20 @@ const Messagebook = function(code_idx,room,library,apply_user){
 						});
 						
 					});
+					
+					
+					// 유저 후기 작성 버튼 클릭 시
+					$('.mreview').on('click',function(){
+						location.href='/Review.go';
+						
+					});
+					
+					// 책 후기 작성 버튼 클릭 시
+					$('.breview').on('click',function(){
+						
+						
+					});
+					
 					
 					// 나가기 버튼 클릭 시	 													
 					$('.chatout').on('click',function(){							
@@ -638,6 +654,7 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  // 리스트 리로드
 		  FirstMessageList();
 		  
+		  $('.mmgs').html("");
 		// 대화방 정보업데이트
 		Messagebook(code_idx,room,library,apply_user);
 		  		  			  		    
@@ -652,7 +669,9 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		  
 		  // 리스트 리로드
 		  FirstMessageList();	
-		  
+		
+		 
+		  $('.mmgs').html("");
 		// 대화방 정보업데이트
 		Messagebook(code_idx,room,library,apply_user);
 	  }else {
