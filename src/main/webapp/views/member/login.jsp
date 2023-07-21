@@ -197,7 +197,15 @@ $(document).ready(function() {
 	    $("#login").html(content);
 	  });
 
+	  function handleKeyPress(event) {
+		    if (event.keyCode === 13) {
+		      login();
+		    }
+		  }
 
+		  // 엔터키 이벤트 리스너 등록
+		  document.addEventListener("keypress", handleKeyPress);
+		
 
 </script>
 </html>
