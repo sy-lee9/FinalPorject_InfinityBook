@@ -22,7 +22,7 @@
 	</select>
 	
 	
-			<select id="changeMyBook" resultType="TransactionListDTO">
+	<select id="changeMyBook" resultType="TransactionListDTO">
 		SELECT * FROM library WHERE member_idx =#{member_idx}
 	</select>
 	

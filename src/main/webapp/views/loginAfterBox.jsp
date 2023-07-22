@@ -59,8 +59,7 @@
     		method:"get",
     		data:{
     		},
-    		success:function(data){
-    			console.log("알림가져오기 성공");    		
+    		success:function(data){ 		
     			$('#alarmlist').html(data);
 
     			$('.alarm').html('');
@@ -86,7 +85,6 @@
     		data:{
     		},
     		success:function(data){
-    			console.log("알림 지우기 성공");    
     			
     		    if (alarmlist.style.display === "none") {
     		        alarmlist.style.display = "block";

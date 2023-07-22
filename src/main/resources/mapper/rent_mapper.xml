@@ -71,7 +71,7 @@
 		</insert>
 		
 		<update id="chglibrary">
-			UPDATE library SET library_state = 0
+			UPDATE library SET library_sharestate = 0
 			WHERE library_idx = #{library_idx}
 		</update>
 		

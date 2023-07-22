@@ -29,7 +29,6 @@ function alarmchk(){
 			data:{
 			},
 			success:function(data){
-				console.log(data);
 				if(data > 0){
 					$('.alarm').html(data);
 					$('.alarm').css('display', 'block');

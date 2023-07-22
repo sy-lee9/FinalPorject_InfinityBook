@@ -274,8 +274,7 @@ const Messagebook = function(code_idx,room,library,apply_user){
 							chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여 후 책을 돌려받으신 다음 확인을 눌러 주세요!</div>';							
 						}else if(data.rentstate == 3 && ${sessionScope.loginIdx} != apply_user){
 							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-							chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
-							chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
+							chkbutton +='<button class="reviewPop(0)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';							
 						}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
 							chkbutton ='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
 							chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
@@ -290,8 +289,8 @@ const Messagebook = function(code_idx,room,library,apply_user){
 							chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여자가 대여 후 책을 돌려받았는지 확인 중입니다.</div>';
 						}else if(data.rentstate == 3 && ${sessionScope.loginIdx} == apply_user || data.changestate == 3 && ${sessionScope.loginIdx} != apply_user){
 							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-							chkbutton +='<button class="mreview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
-							chkbutton +='<button class="breview" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
+							chkbutton +='<button onclick="reviewPop(0)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
+							chkbutton +='<button onclick="reviewPop(1)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
 						}else{
 							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 						}
@@ -591,11 +590,15 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 	  // 받은 메세지가 
 	  // 사진을 받았을 시 ext != 'jpg' && ext !='png' && ext !='gif'
 	  if (code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('jpg') || code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('png') || code_idx == receivedData.code && room == receivedData.room && receivedData.content.startsWith('/upload/') && receivedData.content.endsWith('gif')) {
-	      let img = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><image src="'+receivedData.content+'"width="auto" height="auto"/><span class="time_date">'+receivedData.date+'</span></div></div>';
-	      
-		  $('.msg_history').html($('.msg_history').html() + img);
+		  if(receivedData.send_nickname != "${sessionScope.loginNickname}"){
+	      	let img = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><image src="'+receivedData.content+'"width="auto" height="auto"/><span class="time_date">'+receivedData.date+'</span></div></div>';
+	      	
+			  $('.msg_history').html($('.msg_history').html() + img);
 
-		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);		
+			  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
+			  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
+		  }
+		
 
 			ox();
 		  
@@ -603,14 +606,16 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 		Messagebook(code_idx,room,library,apply_user);
 		  		  			  		    
 	  }else if(code_idx == receivedData.code && room == receivedData.room){
-		// 그냥 메세지일시 
-	      let chat = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><p>'+receivedData.content+'</p><span class="time_date">'+receivedData.date+'</span></div></div>';
-
-		  $('.msg_history').html($('.msg_history').html() + chat);
-
-		  $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);  				 
-
-			ox();
+		  if(receivedData.send_nickname != "${sessionScope.loginNickname}"){
+				// 그냥 메세지일시 
+				let chat = '<div class="incoming_msg"><div class="received_withd_msg"><span>'+receivedData.send_nickname+'</span><p>'+receivedData.content+'</p><span class="time_date">'+receivedData.date+'</span></div></div>';
+			
+				$('.msg_history').html($('.msg_history').html() + chat);
+	
+				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
+				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
+		  }
+		ox();
 		  
 
 		// 대화방 정보업데이트
@@ -625,8 +630,7 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 async function ox() {
 	try {
 		await FirstMessageList();
-	    console.log(code_idx);
-	    console.log(room);
+
 	    $('.chat_list[code="'+code_idx+'"][room="'+room+'"]').addClass('active_chat');
 	    $('.chat_list').not($('.chat_list[code="'+code_idx+'"][room="'+room+'"]')).removeClass('active_chat');
 	} catch (error) {
@@ -652,8 +656,22 @@ function profilePop(member_idx) {
     var top = window.innerHeight / 2 - height / 2;
     var popupWindow = window.open('/profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 };
+function reviewPop(type){	
+	var width = 1100;
+    var height = 800;
+    var left = window.innerWidth / 2 - width / 2;
+    var top = window.innerHeight / 2 - height / 2;
+    var member_reciever =  "";
+    if(apply_user == "${sessionScope.loginIdx}"){
+    	member_reciever = ;
+    }else if(apply_user != "${sessionScope.loginIdx}"){
+    	member_reciever = apply_user;
+    }
+    
+	var popupWindow = window.open('/Review.go?review_type='+type+'&review_transaction_type='+code_idx+'&review_tracnsaction_idx='+room+'&review_reciever='++'&book_reciever='+library+'&member_reciever='+, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	
-		  
+}
+	  
 function send(code_idx,room,content){			
 	data.	code =  code_idx;
 	data.	room =  room;
