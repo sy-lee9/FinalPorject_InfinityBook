@@ -112,6 +112,12 @@ public interface ChatDAO {
 
 	HashMap<String, Object> club_detail(HashMap<String, Object> params);
 
+	String findbookuser(String library_idx);
+
+	Object bookreviewchk(String code_idx, String room, String member_idx);
+
+	Object userreviewchk(String code_idx, String room, String member_idx);
+
 
 
 

@@ -54,6 +54,13 @@ public class ChatService {
 				
 				// 교환 신청한 유저 IDX
 				cto.setApplyuser(dao.chgapplyuser(idx));
+				// 상대방 세팅
+				if(member_idx.equals(cto.getApplyuser())) {
+					cto.setOther(dao.findbookuser(cto.getLibrary_idx()));
+				} else {
+					cto.setOther(cto.getApplyuser());
+				}
+				
 				
 			// 대여일 경우
 			}else if (codeidx ==3) {
@@ -64,11 +71,20 @@ public class ChatService {
 				
 				// 대여 신청한 유저 IDX
 				cto.setApplyuser(dao.rentapplyuser(idx));
+				// 상대방 세팅
+				if(member_idx.equals(cto.getApplyuser())) {
+					cto.setOther(dao.findbookuser(cto.getLibrary_idx()));
+				} else {
+					cto.setOther(cto.getApplyuser());
+				}
+				
 				
 			// 모임일 경우
 			}else if(codeidx == 4) {
 				cto.setClub_name(dao.findclub_name(idx));
 			}
+			
+
 		}
 
 		return list;
@@ -151,7 +167,8 @@ public class ChatService {
 		logger.info(code_idx,room,member_idx,library);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+		map.put("bookreview", dao.bookreviewchk(code_idx,room,member_idx));
+		map.put("userreview", dao.userreviewchk(code_idx,room,member_idx));
 		// 대화 방의 책 상태
 		map.put("librarystate", dao.librarystate(library));
 		

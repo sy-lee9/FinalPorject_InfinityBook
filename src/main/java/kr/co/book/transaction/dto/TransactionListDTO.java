@@ -23,6 +23,24 @@ public class TransactionListDTO {
 	private boolean library_sharestate;
 	private boolean library_blind;
 	private Date library_reg_date;
+	private String review_content;
+	private String review_date;
+	
+	
+	
+	
+	public String getReview_date() {
+		return review_date;
+	}
+	public void setReview_date(String review_date) {
+		this.review_date = review_date;
+	}
+	public String getReview_content() {
+		return review_content;
+	}
+	public void setReview_content(String review_content) {
+		this.review_content = review_content;
+	}
 	public long getLibrary_isbn() {
 		return library_isbn;
 	}

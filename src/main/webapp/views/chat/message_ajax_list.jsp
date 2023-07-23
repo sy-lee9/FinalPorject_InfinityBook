@@ -4,7 +4,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <c:forEach var="tmp" items="${list}">
-		<div type="button" class="chat_list" code="${tmp.code_idx }" room="${tmp.idx}" library="${tmp.library_idx}" apply-user="${tmp.applyuser}">
+		<div type="button" class="chat_list" code="${tmp.code_idx }" room="${tmp.idx}" library="${tmp.library_idx}" apply-user="${tmp.applyuser}" other="${tmp.other}">
 			<!-- active-chat -->
 			<div class="chat_people">
 				<div class="chat_ib">

@@ -63,10 +63,10 @@
 <section id="latest-blog" class="scrollspy-section padding-large" style="padding-top: 10px; padding-bottom: 10px; margin-bottom: 10px;">
 	<div class="container" >
 		<form action="/BookReview.do" method="post">
-			<table>
+			<table style="display: grid; place-items: center;">
 				<tr>
 					<td>
-						<img src="${library.library_cover}" style="width:500px; height:250px;" alt="Books" class="product-item">	
+						<img src="${library.library_cover}" style="height:250px;" alt="Books" class="product-item">	
 					</td>
 					<td>
 						<div class="item-price" style="width:500px;"><h3>${library.library_title}</h3></div>

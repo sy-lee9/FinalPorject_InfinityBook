@@ -27,7 +27,7 @@
 	</head>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-		h2,h3,h4{
+		h2,h3,h4,h5{
 			font-family: 'IBM Plex Sans KR', serif;	
 		}
 	</style>
@@ -78,7 +78,12 @@
 									<p>리뷰가 없습니다.</p>
 								</c:if>
 							<c:forEach var="re" items="${review}" >
-							<h3>${re.review_content}</h3>${re.member_nickname}<h3>${re.review_content}</h3><br/>
+								<tr>
+									<td><div>${re.member_nickname}</div></td>
+									<td><div>${re.review_content}</div></td>
+									<td><div>${re.review_date}</div></td>																	
+								</tr>
+								<br/>
 							</c:forEach>
 							</td>
 						</tr>

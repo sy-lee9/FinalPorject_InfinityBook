@@ -103,6 +103,7 @@ var code_idx = '';
 var room = '';
 var library = '';
 var apply_user = '';
+var other = '';
 // 가장 처음 메세지 리스트를 가져온다.
 function FirstMessageList() {
   return new Promise(function(resolve, reject) {
@@ -117,6 +118,17 @@ function FirstMessageList() {
           room = $(this).attr('room');
           library = $(this).attr('library');
           apply_user = $(this).attr('apply-user');
+          other = $(this).attr('other');
+          
+          
+          console.log(code_idx);
+          console.log(room);
+          console.log(library);
+          console.log(apply_user);
+          console.log(other);
+          
+          
+          
           MessageContentList(code_idx, room, library, apply_user);
           Messagebook(code_idx, room, library, apply_user);
           $('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
@@ -274,7 +286,10 @@ const Messagebook = function(code_idx,room,library,apply_user){
 							chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여 후 책을 돌려받으신 다음 확인을 눌러 주세요!</div>';							
 						}else if(data.rentstate == 3 && ${sessionScope.loginIdx} != apply_user){
 							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-							chkbutton +='<button class="reviewPop(0)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';							
+							if(data.userreview == 0){
+								chkbutton +='<button onclick="reviewPop(0)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';	
+							}
+																					
 						}else if(!data.librarystate && data.rentck > 0 && data.rentstate == 0 || data.chgck > 0 && data.changestate == 0){
 							chkbutton ='<div>현재 다른사람과 약속이 잡힌 책입니다.</div>';
 							chkbutton +='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
@@ -289,8 +304,12 @@ const Messagebook = function(code_idx,room,library,apply_user){
 							chkbutton +='<div style="float: right; margin-right: 5px; font-weight: 600;">대여자가 대여 후 책을 돌려받았는지 확인 중입니다.</div>';
 						}else if(data.rentstate == 3 && ${sessionScope.loginIdx} == apply_user || data.changestate == 3 && ${sessionScope.loginIdx} != apply_user){
 							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
-							chkbutton +='<button onclick="reviewPop(0)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';
-							chkbutton +='<button onclick="reviewPop(1)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';
+							if(data.userreview == 0){
+								chkbutton +='<button onclick="reviewPop(0)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">유저 후기 작성</button>';	
+							}
+							if(data.bookreview == 0){
+								chkbutton +='<button onclick="reviewPop(1)" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">책 후기 작성</button>';	
+							}							
 						}else{
 							chkbutton ='<button class="chatout" style="float: right; font-size:10px; height: 25px; margin-right: 5px; border-radius: 10px">나가기</button>';
 						}
@@ -476,7 +495,6 @@ const MessageContentList = function(code_idx,room,library,apply_user) {
 										
 		},
 		error : function() {
-			alert('서버 에러');
 		}
 	});
 
@@ -656,19 +674,14 @@ function profilePop(member_idx) {
     var top = window.innerHeight / 2 - height / 2;
     var popupWindow = window.open('/profilePop.go?member_idx='+member_idx, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 };
+
 function reviewPop(type){	
 	var width = 1100;
     var height = 800;
     var left = window.innerWidth / 2 - width / 2;
     var top = window.innerHeight / 2 - height / 2;
-    var member_reciever =  "";
-    if(apply_user == "${sessionScope.loginIdx}"){
-    	member_reciever = ;
-    }else if(apply_user != "${sessionScope.loginIdx}"){
-    	member_reciever = apply_user;
-    }
     
-	var popupWindow = window.open('/Review.go?review_type='+type+'&review_transaction_type='+code_idx+'&review_tracnsaction_idx='+room+'&review_reciever='++'&book_reciever='+library+'&member_reciever='+, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
+	var popupWindow = window.open('/Review.go?review_type='+type+'&review_transaction_type='+code_idx+'&review_tracnsaction_idx='+room+'&book_reciever='+library+'&member_reciever='+other, 'pop', 'width=' + width + 'px,height=' + height + 'px,left=' + left + 'px,top=' + top + 'px');
 	
 }
 	  

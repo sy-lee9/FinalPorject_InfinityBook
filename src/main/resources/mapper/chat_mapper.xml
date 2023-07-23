@@ -244,6 +244,24 @@
 			WHERE library_idx = #{param1}
 		</select>
 		
+		<!-- 교환 책 주인 들고오기 -->
+		<select id="findbookuser">
+			SELECT member_idx FROM library
+			WHERE library_idx = #{param1}
+		</select>
+		
+		<!-- 책 리뷰 작성 체크 -->
+		<select id="bookreviewchk" resultType="int">
+			SELECT COUNT(review_idx) FROM review
+			WHERE review_type = 1 AND review_transaction_type = #{param1} AND review_transaction_idx = #{param2} AND sender_idx = #{param3}
+		</select>
+		
+		<!-- 유저 리뷰 작성 체크 -->
+		<select id="userreviewchk" resultType="int">
+			SELECT COUNT(review_idx) FROM review
+			WHERE review_type = 0 AND review_transaction_type = #{param1} AND review_transaction_idx = #{param2} AND sender_idx = #{param3}
+		</select>
+		
 				
 		 
 	</mapper>
