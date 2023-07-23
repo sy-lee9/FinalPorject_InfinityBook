@@ -3,8 +3,10 @@ var ws = new WebSocket("ws://" + location.host + "/chat");
 alarmchk();
 
 ws.onmessage = function(msg) {
+console.log(msg);
 	if(msg.data == "\"a\""){
-		setInterval(alarmchk(), 1000);
+		console.log("들어와?");
+		setTimeout(alarmchk, 1000); // 1초 후에 alarmchk() 함수를 실행
 	}  		  
 }
 
@@ -22,6 +24,8 @@ function alarm_send(){
 
 
 function alarmchk(){
+	
+	console.log('들와?');
 
 		$.ajax({
 			url:"/alarmchk.ajax",
