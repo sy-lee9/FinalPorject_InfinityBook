@@ -155,19 +155,19 @@
 							</td>
 						</tr>
 						<tr>
-							<td><div class="author-name">참가자 </div></td>
-							<td colspan="2">
-								<div class="author-name">
-								    <c:forEach items="${member}" var="member">
-								    	<a onclick="profilePop(${member.member_idx})" style="cursor: pointer;">${member.member_nickname}</a>
-								    	
-								    	<c:if test="${member.member_idx ne club.member_idx}">								    	
-								    		<button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
-								    	</c:if>
-								    </c:forEach>
-								</div>
-							</td>
-						</tr>
+	                     	<td><div class="author-name">참가자 </div></td>
+	                     	<td colspan="2">
+	                       	 <div class="author-name">
+	                            <c:forEach items="${member}" var="member">
+	                               <a onclick="profilePop(${member.member_idx})" style="cursor: pointer;">${member.member_nickname}</a>
+	                               
+	                               <c:if test="${sessionScope.loginIdx eq club.member_idx}">                               
+	                                  <button onclick="deleteMem('${member.member_idx}','${club.club_idx} ')" class="btn btn-outline-accent btn-accent-arrow" style="border:none; width:10px; height:10px;padding-top: 0px;margin-top: 0px;padding-left: 0px;top: -20;">⊗</button>
+	                               </c:if>
+	                            </c:forEach>
+	                        </div>
+	                     </td>
+	                  </tr>
 						<tr>
 							<td><div class="author-name">모임장소</div></td>
 							<td colspan="2"><div class="author-name">${club.code_codename}</div></td>

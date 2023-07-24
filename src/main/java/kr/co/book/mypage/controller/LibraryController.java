@@ -216,7 +216,7 @@ public class LibraryController {
 			String clientSecret = "Dth4K5OkPp";
 
 			URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com").path("/v1/search/book.json")
-					.queryParam("query", text).queryParam("display", 10).queryParam("start", start*10+1)
+					.queryParam("query", text).queryParam("display", 10).queryParam("start", start)
 					.queryParam("sort", "sim").encode().build().toUri();
 
 			// Spring 요청 제공 클래스

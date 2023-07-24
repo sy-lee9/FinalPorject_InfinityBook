@@ -43,7 +43,7 @@
 		,b.title 
 		,b.cover 
 		,b.author 
-		from book_report br inner join member m on br.member_idx = m.member_idx inner join book b on br.isbn = b.isbn  where book_report_open = 1 order by br.book_report_idx asc;
+		from book_report br inner join member m on br.member_idx = m.member_idx inner join book b on br.isbn = b.isbn  where book_report_open = 1 order by br.book_report_idx desc;
 	</select>
 
 	<select id="getLike" resultType="String">

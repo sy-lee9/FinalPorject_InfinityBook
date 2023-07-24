@@ -106,7 +106,7 @@ function listCall(page,text){
                        
             $('#pagination').twbsPagination({
             startPage:1, // 시작 페이지
-            totalPages:10,// 총 페이지 수 
+            totalPages:data.length/10+1,// 총 페이지 수 
             visiblePages:5,// 보여줄 페이지
             onPageClick:function(event,page){ // 페이지 클릭시 동작되는 (콜백)함수
                console.log(page,showPage);

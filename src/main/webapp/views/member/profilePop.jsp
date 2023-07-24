@@ -181,26 +181,25 @@
 	function reviewListPrint(list) {
 	    var content = '';
 	    content += '<table>';
-    	content += '<tr>';
 	    
 	    if (list.length === 0) {
 			content +='<th style="text-align: center; border:none;">받은 리뷰가 없습니다.</th>';
 	    } else{
 	    
 	    list.forEach(function(item) {	    	
-	    	
+
+	    		content += '<tr>';
 		    	content += '<td width="20%" style="padding-left:5%;"><a onclick="profilePop('+item.member_idx+')" style="cursor: pointer;">'+item.member_nickname+'</a></td>';
 		    	content += '<td width="60%">'+item.review_content+'</td>';
 		    	content += '<td width="20%" style="text-align:center;">'+item.review_date;
 		    	if(${sessionScope.loginIdx == member_idx}){
 		    		content += '<a onclick="reportPop('+item.review_idx+')" style="font-size: 13; cursor: pointer; color:black;">신고<img src="/images/siren.png" alt="siren" style="width: 25; height: 25; margin-top:-5;"></a>';
 		    	}		
-		    	content += '</td>';		    	
-	    	
+		    	content += '</td>';		    
+		        content += '</tr>';
 	  	    });
 	    }
 	    
-        content += '</tr>';
 	    content += '</table>'; 
 
 	    $('#reviewList').empty();

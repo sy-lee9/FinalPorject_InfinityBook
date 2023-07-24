@@ -164,7 +164,7 @@
 							<option value="1">비대면</option>
 						</select>
 						<select name="code_idx" autocomplete='off'  id="code_idx" style="margin-bottom:0px; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom-width: 1;background: transparent;">
-							<option value="26">대면지역</option>
+							<option value="31">대면지역</option>
 							<c:forEach items="${location}" var="location">
 								<option value="${location.code_idx}">${location.code_codename}</option>
 							</c:forEach>
