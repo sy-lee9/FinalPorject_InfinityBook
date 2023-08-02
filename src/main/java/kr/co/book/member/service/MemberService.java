@@ -28,6 +28,48 @@ public class MemberService {
 	}
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
+	
+
+	//회원정보 불러오기
+	public ModelAndView getProfileInfo(int member_idx) {
+		ModelAndView mav = new ModelAndView("/member/profilePop");
+
+		HashMap<String, Object> map =  dao.getProfileInfo(member_idx);
+		
+		String region = dao.getRegion((int) map.get("code_idx"));
+		map.put("region", region);
+		
+		mav.addObject("info",map);
+		   
+		return mav;
+	}
+
+	//받은 리뷰 불러오기
+	public HashMap<String, Object> getReview(HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<HashMap<String, Object>> list = null;
+		int page = Integer.parseInt(String.valueOf(params.get("page"))); 
+		int total = 0;
+		int offset = 5*(page-1);
+		params.put("offset", offset);
+		
+		list = dao.reviewList(params);
+		total = list.size();
+		
+		int range = total%5  == 0 ? total/5 : total/5+1;
+		page = page>range ? range:page;
+		
+		map.put("offset", offset);
+		map.put("list", list);
+		map.put("currPage", page);
+		map.put("pages", range);
+		
+		return map;
+	}
+	
+	
 
 	public HashMap<String, Object> join(HashMap<String, String> params) {
 	
@@ -245,131 +287,5 @@ public class MemberService {
 	    return sb;
 	}
 
-	public ModelAndView getMemberInfo(int loginIdx, String flag) {
-		ModelAndView mav = new ModelAndView();
-		
-		if(flag.equals("info")) {
-			mav.setViewName("/member/memberInfo");
-		}else {
-			mav.setViewName("/member/memberInfoUpdate");
-		}
-		
-		HashMap<String, Object> map = dao.getMemberInfo(loginIdx);
-		mav.addObject("info",map);
-		return mav;
-	}
-
-	public HashMap<String, Object> memberInfoUpdate(HttpSession session, HashMap<String, Object> params) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		int code_idx = dao.findLocationCode((String) params.get("location"));
-		logger.info("codeIdx : "+code_idx);
-		params.put("code_idx", code_idx);
-		
-		int success = dao.memberInfoUpdate(params);
-		if(success == 1) {
-			map.put("success", success);
-			session.setAttribute("loginNickname", (String)params.get("nickname"));			
-		}
-		
-		return map;
-	}
-
-	public HashMap<String, Object> pwChk(String exPw, int loginIdx) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		String encodePassWord = dao.getPw(loginIdx);
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        boolean isMatched = encoder.matches(exPw, encodePassWord);
-        
-        if(isMatched) {
-    		map.put("pwChk", true);
-        }
-		
-		return map;
-	}
-
-	public HashMap<String, Object> pwUpdate(String newPw, int loginIdx) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String encodedPassword = encoder.encode(newPw);
-		
-		int success = dao.pwUpdate(encodedPassword,loginIdx);
-		
-		map.put("success", success);
-		return map;
-	}
-
-	public HashMap<String, Object> leave(String pw, int loginIdx, HttpSession session) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		String encodePassWord = dao.getPw(loginIdx);
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        boolean isMatched = encoder.matches(pw, encodePassWord);
-        
-        if(isMatched) {
-        	int row = dao.leave(loginIdx);
-        	
-        	if(row == 1) {
-        		map.put("success", true);
-        		session.invalidate();
-        	}
-        }
-		
-		return map;
-	}
-
-	public ModelAndView getProfileInfo(int member_idx) {
-		ModelAndView mav = new ModelAndView("/member/profilePop");
-
-		HashMap<String, Object> map =  dao.getProfileInfo(member_idx);
-		
-		String region = dao.getRegion((int) map.get("code_idx"));
-		map.put("region", region);
-		
-		mav.addObject("info",map);
-		   
-		return mav;
-	}
-
-	public HashMap<String, Object> getReview(HashMap<String, Object> params) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		ArrayList<HashMap<String, Object>> list = null;
-		int page = Integer.parseInt(String.valueOf(params.get("page"))); 
-		int offset = 5*(page-1);
-		params.put("offset", offset);
-		int total = 0;
-		
-		list = dao.reviewList(params);
-		logger.info("list : "+list);
-		total = list.size();
-		logger.info("total : "+total);		
-		
-		int range = total%5  == 0 ? total/5 : total/5+1;
-		page = page>range ? range:page;
-		
-		map.put("offset", offset);
-		map.put("list", list);
-		map.put("currPage", page);
-		map.put("pages", range);
-		
-		return map;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -17,6 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.admin.service.AdminReportService;
 
+/*
+ * AdminReportController : 신고관리 컨트롤러
+ * @author 이수연
+ */
 @Controller
 public class AdminReportController {
 	
@@ -24,6 +28,7 @@ public class AdminReportController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	//신고 팝업
 	@RequestMapping(value = "/reportPop.go")
 	public String reportPopGo(Model model, String code, String idx) {
 		
@@ -33,6 +38,7 @@ public class AdminReportController {
 		return "reportPop";
 	}
 	
+	//신고 
 	@PostMapping(value = "/reportSend.ajax")
 	@ResponseBody
 	public HashMap<String, Object> reportSend(HttpSession session, @RequestParam HashMap<String, Object> params) {
@@ -43,40 +49,39 @@ public class AdminReportController {
 		return adminReportService.reportSend(params);
 	}
 
+	//신고 페이지 이동
 	@RequestMapping(value = "/admin/adminReport.go")
 	public String reportListGo() {
 		return "/admin/adminReport";
 	}
 	
+	//신고 내역 리스트
 	@PostMapping(value = "/admin/reportList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> reportList(@RequestParam HashMap<String, Object> params) {
 		return adminReportService.reportList(params);
 	}
 	
+	//신고 내역 디테일
 	@RequestMapping(value = "/admin/adminReportDetail.go")
 	public ModelAndView adminReportDetailGo(@RequestParam HashMap<String, Object> params) {	
-		logger.info("params : "+params);
 		return adminReportService.getReportInfor(params);
 	}
 	
+	//신고 처리 내역
 	@PostMapping(value = "/admin/reportRecordList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> reportRecordList(@RequestParam HashMap<String, Object> params) {
-		logger.info("params : "+params);
 		return adminReportService.reportRecordList(params);
 	}
 	
+	//신고 처리
 	@PostMapping(value = "/admin/reportHandling.ajax")
 	@ResponseBody
 	public HashMap<String, Object> reportHandling(HttpSession session, @RequestParam HashMap<String, Object> params) {
 		params.put("member_idx", session.getAttribute("loginIdx"));
-		logger.info("params : "+params);
 		return adminReportService.reportHandling(params);
 	}
-	
-	
-	
 	
 	
 }

@@ -19,6 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.book.mypage.service.TrackerService;
 
+/*
+ * TrackerController : 트래커 컨트롤러
+ * @author 이수연
+ */
 @Controller
 public class TrackerController {
 	
@@ -32,71 +36,56 @@ public class TrackerController {
 		return "/tracker/trackerSearch";
 	}
 	
-	@GetMapping(value = "/mypage/clubBookSearch.do")
-	public ModelAndView clubBookSearch(String searchValue) {
-		return TrackerService.clubBookSearch("title",searchValue);
-	}
-	
-	@GetMapping(value = "/clubBookSearch.do")
-	public ModelAndView clubBookSearch2(String searchValue) {
-		return TrackerService.clubBookSearch("title",searchValue);
-	}
-	
 	//트래커에 추가할 책 검색
 	@GetMapping(value = "/mypage/trackerSearch.do")
 	public ModelAndView trackerBookSearch(String searchType, String searchValue) {	
-		logger.info("searchType : {} / searchValue : {}",searchType,searchValue);
 		return TrackerService.trackerBookSearch(searchType,searchValue);
 	}
 	
 	//트래커 추가 페이지로 이동
-	@GetMapping(value = "/mypage/tracker/add/{state}/book.go")
-	public String trackerAddBookGo(@RequestParam HashMap<String, Object> params, Model model,@PathVariable String state) {	
-		logger.info("trackerAddBookGo params : ",params);
+	@GetMapping(value = "/mypage/tracker/add/{state}/book.go") 	//state : read OR reading
+	public String trackerAddBookGo(@RequestParam HashMap<String, Object> params, Model model,@PathVariable String state) {
+		//isbn이 null이 아니면
 		if(!params.get("isbn").equals("undefined")) {
+			//해당 책 정보 내려보내기
 			model.addAttribute("isbn",params.get("isbn"));
 			model.addAttribute("cover",params.get("cover"));
 			model.addAttribute("jsp",params.get("jsp"));
-		}else {
+		}else { //isbn이 null이면
 			model.addAttribute("msg","해당 도서는 추가할 수 없습니다.");
 		}
 		return "/tracker/trackerAdd"+state+"Book";
 	}
 	
 	//트래커에 완독 / 읽고 있는 책 추가
-	@GetMapping(value = "/mypage/tracker/add/{state}/book.ajax")
+	@GetMapping(value = "/mypage/tracker/add/{state}/book.ajax") //state : read OR reading
 	@ResponseBody
 	public HashMap<String, Object> trackerAddBook(HttpSession session, @PathVariable String state, @RequestParam HashMap<String, Object> params) {
-		logger.info("state : {} / params : {}",state,params);
 		
 		HashMap<String, Object> map =  new HashMap<String, Object>();
-		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);
 		params.put("loginIdx", loginIdx);
 		params.put("state", state);
 		
+		//트래커에 해당 도서 추가
 		boolean success = TrackerService.trackerAddBook(params);
 		
 		map.put("success",success);
 		return map;
 	}
 	
-	//읽고 있는 책 등록 페이지에 총페이지 수 가져가기
+	//읽고 있는 책 등록 시 총페이지 수 불러오기
 	@GetMapping(value = "/mypage/getTotalPage.ajax")
 	@ResponseBody
 	public HashMap<String, Object> getTotalPage(HttpSession session, @RequestParam HashMap<String, Object> params) {
-		logger.info("params : "+params);
 		
 		HashMap<String, Object> map =  new HashMap<String, Object>();
 		
-		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		params.put("loginIdx", loginIdx);
-		logger.info("loginIdx : "+loginIdx);
 		
+		//해당 도서의 총 페이지 수 불러오기
 		int totalPage = TrackerService.getTotalPage(params);
-		logger.info("totalPage : "+totalPage);
 
 		map.put("totalPage",totalPage);
 		return map;
@@ -105,13 +94,11 @@ public class TrackerController {
 	//트래커 리스트로 이동
 	@GetMapping(value = "/mypage/trackerList.go")
 	public ModelAndView trackerListGo(HttpSession session) {
-		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);		
 		return TrackerService.trackerList(loginIdx);
 	}
 	
-	//트래커 디테일
+	//트래커 디테일로 이동
 	@GetMapping(value = "/mypage/trackerDetail.go")
 	public ModelAndView trackerDetail(HttpSession session, String trackerIdx) {
 		return TrackerService.trackerDetail(trackerIdx);
@@ -120,34 +107,31 @@ public class TrackerController {
 	//트래커 업데이트 페이지로 이동
 	@GetMapping(value = "/mypage/trackerUpdateBook.go")
 	public String trackerUpdateBookGo(@RequestParam HashMap<String, Object> params, Model model) {	
-		logger.info("params : ",params);
-			model.addAttribute("isbn",params.get("isbn"));
-			model.addAttribute("readPage",params.get("readPage"));
-			model.addAttribute("startDate",params.get("startDate"));
-			model.addAttribute("jsp",params.get("jsp"));
+		//해당 도서 정보 내려보내기
+		model.addAttribute("isbn",params.get("isbn"));
+		model.addAttribute("readPage",params.get("readPage"));
+		model.addAttribute("startDate",params.get("startDate"));
+		model.addAttribute("jsp",params.get("jsp"));
 		return "/tracker/trackerAddReadingBook";
 	}
 	
-	//트래커 수정
+	//트래커 도서정보 수정
 	@GetMapping(value = "/mypage/trackerUpdateBook.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerUpdateBook(HttpSession session, @RequestParam HashMap<String, Object> params) {
-		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);		
 		params.put("loginIdx", loginIdx);			
 		return TrackerService.trackerUpdateBook(params);
 	}
 	
-	//트래커 삭제
+	//트래커 도서정보 삭제
 	@GetMapping(value = "/mypage/trackerDeleteBook.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerDeleteBook(HttpSession session, String isbn) {
-		//session.setAttribute("loginIdx", 3);
 		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);		
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//삭제완료되면 success 내려보내기
 		if(TrackerService.trackerDeleteBook(isbn,loginIdx) == 1) {
 			map.put("success", "success");
 		}
@@ -159,12 +143,8 @@ public class TrackerController {
 	@PostMapping(value = "/mypage/trackerAddMemo.ajax")
 	@ResponseBody
 	public HashMap<String, Object> trackerAddMemo(HttpSession session, @RequestParam HashMap<String, Object> params) {
-		logger.info("memo params: "+params);
-		
-		//session.setAttribute("loginIdx", 3);
-		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);	
-		
+
+		int loginIdx = (int) session.getAttribute("loginIdx");		
 		params.put("loginIdx", loginIdx);
 		
 		return TrackerService.trackerAddMemo(params);
@@ -174,7 +154,6 @@ public class TrackerController {
 	@PostMapping(value = "/mypage/getMemoList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> getMemoList(String trackerIdx){
-		logger.info("memo trackerIdx : "+trackerIdx);
 		return TrackerService.getMemoList(trackerIdx);
 	}
 	
@@ -182,14 +161,13 @@ public class TrackerController {
 	@PostMapping(value = "/mypage/memoDelete.ajax")
 	@ResponseBody
 	public HashMap<String, Object> memoDelete(@RequestParam HashMap<String, Object> params){
-		logger.info("memo delete : "+params);
 		return TrackerService.memoDelete(params);
 	}
 	
 	//메모 수정 페이지 이동
 	@GetMapping(value = "/mypage/trackerMemoUpdate.go")
 	public String trackerMemoUpdateGo(@RequestParam HashMap<String, Object> params, Model model) {	
-		logger.info("params : ",params);
+		//기존 메모내용 가져와서 메모정보와 함께 내려보내기
 		String content = TrackerService.getContent(params);
 		model.addAttribute("content",content);
 		model.addAttribute("trackerIdx",params.get("trackerIdx"));
@@ -201,41 +179,25 @@ public class TrackerController {
 	//메모 수정
 	@PostMapping(value = "/mypage/trackerMemoUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> trackerMemoUpdate(@RequestParam HashMap<String, Object> params){
-		logger.info("memo update : "+params);
-		return TrackerService.memoUpdate(params);
+	public HashMap<String, Object> trackerMemoUpdate(@RequestParam HashMap<String, Object> params){	
+		return TrackerService.memoUpdate(params);		
 	}
 	
 	
 	
+	//ClubController에서 사용
+	
+	//모임 도서 검색
+	@GetMapping(value = "/clubBookSearch.do")
+	public ModelAndView clubBookSearch2(String searchValue) {
+		return TrackerService.clubBookSearch("title",searchValue);
+	}
+	
+	//마이페이지에서 모임 도서 검색
+	@GetMapping(value = "/mypage/clubBookSearch.do")
+	public ModelAndView clubBookSearch(String searchValue) {
+		return TrackerService.clubBookSearch("title",searchValue);
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

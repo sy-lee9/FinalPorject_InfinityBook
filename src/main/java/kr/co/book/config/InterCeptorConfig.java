@@ -13,23 +13,23 @@ import kr.co.book.utils.StateCheck;
 public class InterCeptorConfig implements WebMvcConfigurer {
 
 	
-	@Autowired LoginCheck check;
-	@Autowired GradeCheck gCheck;
-	@Autowired StateCheck sCheck;
+	@Autowired LoginCheck check; //로그인 확인
+	@Autowired GradeCheck gCheck; //관리자 확인
+	@Autowired StateCheck sCheck; //이용제한 확인
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
-		registry.addInterceptor(check) // 1. 실행할 클래스
+		registry.addInterceptor(check) 
 		.addPathPatterns("/admin/**")
 		.addPathPatterns("/mypage/**")
 		.addPathPatterns("/myClubList.go")
 		.addPathPatterns("/message_list.go");
 		
-		registry.addInterceptor(gCheck) // 1. 실행할 클래스
+		registry.addInterceptor(gCheck) 
 		.addPathPatterns("/admin/**");
 
-		registry.addInterceptor(sCheck) // 1. 실행할 클래스
+		registry.addInterceptor(sCheck) 
 		.addPathPatterns("/**")
         .excludePathPatterns("/logout.do");
 	}	

@@ -25,13 +25,8 @@ public class TransactionListController {
 	@Autowired TransactionListService service;
 
 	@GetMapping(value = "/search.do")
-	public String search(
-			String Query, String QueryType, Model model) {
-		
- // http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?
- // ttbkey=ttbtyhn00000921001&Query=안녕&QueryType=Keyword&
- // MaxResults=100&Start=1&Cover=Big&SearchTarget=Book&output=JS
- // &Version=20131101
+	public String search(String Query, String QueryType, Model model) {
+
 		String sQuery = Query.replaceAll("\\s", "");
 		
 		Map<String, Object> result = service.bookSearch(sQuery, QueryType);
@@ -104,9 +99,6 @@ public class TransactionListController {
 		model.addAttribute("library", service.searchDetail((String)params.get("book_reciever")));
 		model.addAttribute("user",service.getUserNickname((String) params.get("member_reciever")));
 		model.addAttribute("param", params);
-		// /Review.go?member_sender=(하는사람)1&review_type=0
-		// &member_reciever=(받는사람)&book_reciever=(받는책)
-		// &review_transaction_type=(대여/교환여부)&review_tracnsaction_idx=(idx)
 		
 		return page;
 	}

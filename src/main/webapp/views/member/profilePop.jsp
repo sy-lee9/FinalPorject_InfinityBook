@@ -210,7 +210,7 @@
 	function reportListCall(page){
 	   $.ajax({
 	      type:'post',
-	      url:'/profileBookreportList.ajax',
+	      url:'/mypage/profileBookreportList.ajax',
 	      data:{
 	    	  'page':page,
 	    	  'searchText':searchText,

@@ -253,14 +253,14 @@
 	    		content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:CornflowerBlue; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="신청"></td>';  
 			}else if (state == 2){
 				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; color:Tomato; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="예약"></td>';  
-			}else if (state == 4){
+			}else if (state == 3){
 				content += '	<td style="text-align:center;"><input type="button" style="display:inline; margin-bottom:10px; padding:5 10 5 10; cursor: default;" class="btn btn-outline-accent btn-accent-arrow" value="교환"></td>';  
 			}
 	    	
 	    	content += '<td style="text-align:center;"><img src="' + item.myBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.myBook+'</h4></td>';
 	    	content += '<td style="text-align:center;"><img src="' + item.changeBook_cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.changeBook+'</h4></td>';
 	    	
-	    	if (state == 4 && reviewChk == 0) {
+	    	if (state == 3 && reviewChk == 0) {
 		    	content += '<td style="text-align:center;"><a onclick="profilePop('+item.changer_idx+')" style="cursor: pointer;">' + item.changer +
 		    				 '</a> <input type="button" onclick="review('+item.changer_idx+','+item.changeBook_idx+','+item.change_idx+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
 	    	}else { 

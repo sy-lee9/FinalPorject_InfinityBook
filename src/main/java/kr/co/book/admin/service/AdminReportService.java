@@ -15,6 +15,10 @@ import kr.co.book.admin.dao.AdminReportDAO;
 import kr.co.book.chat.service.ChatService;
 import kr.co.book.club.service.ClubService;
 
+/*
+ * AdminReportService : 신고관리 서비스
+ * @author 이수연
+ */
 @Service
 @MapperScan(value = {"kr.co.book.admin.dao"}) 
 public class AdminReportService {
@@ -24,6 +28,7 @@ public class AdminReportService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
+	//신고 제출
 	public HashMap<String, Object> reportSend(HashMap<String, Object> params) {
 		
 		int row = adminReportDAO.reportSend(params);
@@ -34,19 +39,19 @@ public class AdminReportService {
 		return map;
 	}
 
+	//신고 내역 리스트
 	public HashMap<String, Object> reportList(HashMap<String, Object> params) {
-		logger.info("params : "+params);
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		ArrayList<HashMap<String, Object>> list = null;
+		
+		//페이징
 		int page = Integer.parseInt(String.valueOf(params.get("page"))); 
+		int total = 0;
 		int offset = 10*(page-1);
 		params.put("offset", offset);
-		int total = 0;
 		
 		list = adminReportDAO.reportList(params);
-		logger.info("list : "+list);
 		total = list.size();
-		logger.info("total : "+total);		
 			
 		int range = total%10  == 0 ? total/10 : total/10+1;
 		page = page>range ? range:page;
@@ -58,6 +63,7 @@ public class AdminReportService {
 		return map;
 	}
 
+	//신고내용 및 신고 게시물 정보
 	public ModelAndView getReportInfor(HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("/admin/adminReportDetail");
 		
@@ -67,19 +73,19 @@ public class AdminReportService {
 		return mav;
 	}
 
+	//신고 처리 내역
 	public HashMap<String, Object> reportRecordList(HashMap<String, Object> params) {
-		logger.info("params : "+params);
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		ArrayList<HashMap<String, Object>> list = null;
+		
+		//페이징
 		int page = Integer.parseInt(String.valueOf(params.get("page"))); 
+		int total = 0;
 		int offset = 5*(page-1);
 		params.put("offset", offset);
-		int total = 0;
 		
 		list = adminReportDAO.reportRecordList(params);
-		logger.info("list : "+list);
 		total = list.size();
-		logger.info("total : "+total);		
 			
 		int range = total%5  == 0 ? total/5 : total/5+1;
 		page = page>range ? range:page;
@@ -92,6 +98,7 @@ public class AdminReportService {
 		return map;
 	}
 
+	//신고처리
 	public HashMap<String, Object> reportHandling(HashMap<String, Object> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -102,6 +109,7 @@ public class AdminReportService {
 		String alarmContent = "";
 		String result = "";
 
+		//블라인드 처리
 		if(blind == 1) {
 			
 			if(adminReportDAO.blind(params) == 1) {
@@ -127,20 +135,24 @@ public class AdminReportService {
 				adminReportDAO.blindAlarm(params);
 				result += "블라인드 처리";		
 				
+				//회원 이용제한
 				adminReportDAO.updateMemberState(params);
 				result += " / "+memberState;
 			}			
 			
-		} else{
+		} else{ //블라인드 미처리 or 게시물 재공개
 			adminReportDAO.blind(params);
 			result += "	공개";
-			
+
+			//회원 이용제한
 			adminReportDAO.updateMemberState(params);
 			result += " / "+ memberState;
 		}
 		
 		params.put("result", result);
 		int row = 0;
+		
+		//신고처리 및 신고처리내역 저장
 		if(adminReportDAO.reportHandlingCompleted(params) == 1) {
 			row = adminReportDAO.reportHandlingRecord(params);
 		}

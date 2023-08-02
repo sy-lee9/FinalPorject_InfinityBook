@@ -19,10 +19,10 @@
 		    c.change_date,
 		    (select count(review_idx) from review where review_transaction_type = 0 and review_transaction_idx = c.change_idx) as reviewChk
 		FROM `change` c
-			JOIN `library` l1 ON l1.library_idx = c.library_book
-			JOIN `library` l2 ON l2.library_idx = c.library_book2			
-			JOIN `member` m1 ON m1.member_idx = #{loginIdx}
-			JOIN `member` m2 ON m2.member_idx = (SELECT l.member_idx FROM `library` l WHERE l.library_idx = c.library_book)
+			INNER JOIN `library` l1 ON l1.library_idx = c.library_book
+			INNER JOIN `library` l2 ON l2.library_idx = c.library_book2			
+			INNER JOIN `member` m1 ON m1.member_idx = #{loginIdx}
+			INNER JOIN `member` m2 ON m2.member_idx = (SELECT l.member_idx FROM `library` l WHERE l.library_idx = c.library_book)
 				WHERE c.member_idx = #{loginIdx})
 		UNION
 		(SELECT
@@ -62,10 +62,10 @@
 		    c.change_date,
 		    (SELECT COUNT(r.review_idx) FROM review r WHERE r.review_transaction_type = 0 AND r.review_transaction_idx = c.change_idx) AS reviewChk
 		FROM `change` c
-		    JOIN `library` l1 ON l1.library_idx = c.library_book
-		    JOIN `library` l2 ON l2.library_idx = c.library_book2
-		    JOIN `member` m1 ON m1.member_idx = #{loginIdx}
-		    JOIN `member` m2 ON m2.member_idx = (SELECT l.member_idx FROM `library` l WHERE l.library_idx = c.library_book)
+		    INNER JOIN `library` l1 ON l1.library_idx = c.library_book
+		    INNER JOIN `library` l2 ON l2.library_idx = c.library_book2
+		    INNER JOIN `member` m1 ON m1.member_idx = #{loginIdx}
+		    INNER JOIN `member` m2 ON m2.member_idx = (SELECT l.member_idx FROM `library` l WHERE l.library_idx = c.library_book)
 		WHERE c.member_idx = #{loginIdx} AND (l1.library_title LIKE CONCAT('%', #{searchText}, '%') OR l2.library_title LIKE CONCAT('%', #{searchText}, '%')))
 		UNION
 		(SELECT
@@ -109,8 +109,8 @@
 			(select count(rv.review_idx) from review rv where rv.review_type = 1 
 				and rv.review_transaction_type = 1 and rv.review_transaction_idx = r.rent_idx) as bookReview		
 		FROM rent r
-			JOIN library l ON l.library_idx = r.library_idx	
-			JOIN `member` m ON m.member_idx = r.member_idx 
+			INNER JOIN library l ON l.library_idx = r.library_idx	
+			INNER JOIN `member` m ON m.member_idx = r.member_idx 
 		WHERE r.member_idx = #{loginIdx})
 		UNION
 		(SELECT 
@@ -131,8 +131,8 @@
 			(select count(rv.review_idx) from review rv where rv.review_type = 1 
 				and rv.review_transaction_type = 1 and rv.review_transaction_idx = r.rent_idx) as bookReview			
 		FROM rent r
-			JOIN library l ON l.library_idx = r.library_idx 
-			JOIN `member` m ON m.member_idx = r.member_idx
+			INNER JOIN library l ON l.library_idx = r.library_idx 
+			INNER JOIN `member` m ON m.member_idx = r.member_idx
 		WHERE l.library_idx IN (SELECT l2.library_idx FROM library l2 WHERE member_idx = #{loginIdx}))
 		ORDER BY rent_state ASC  LIMIT 5 OFFSET #{offset}
 	</select>
@@ -156,8 +156,8 @@
 			(select count(rv.review_idx) from review rv where rv.review_type = 1 
 				and rv.review_transaction_type = 1 and rv.review_transaction_idx = r.rent_idx) as bookReview		
 		FROM rent r
-			JOIN library l ON l.library_idx = r.library_idx	
-			JOIN `member` m ON m.member_idx = r.member_idx 
+			INNER JOIN library l ON l.library_idx = r.library_idx	
+			INNER JOIN `member` m ON m.member_idx = r.member_idx 
 		WHERE r.member_idx = #{loginIdx} AND l.library_title LIKE CONCAT('%', #{searchText}, '%'))
 		UNION
 		(SELECT 
@@ -178,8 +178,8 @@
 			(select count(rv.review_idx) from review rv where rv.review_type = 1 
 				and rv.review_transaction_type = 1 and rv.review_transaction_idx = r.rent_idx) as bookReview			
 		FROM rent r
-			JOIN library l ON l.library_idx = r.library_idx 
-			JOIN `member` m ON m.member_idx = r.member_idx
+			INNER JOIN library l ON l.library_idx = r.library_idx 
+			INNER JOIN `member` m ON m.member_idx = r.member_idx
 		WHERE l.library_idx IN (SELECT l2.library_idx FROM library l2 WHERE member_idx = #{loginIdx}) AND l.library_title LIKE CONCAT('%', #{searchText}, '%'))
 		ORDER BY rent_state ASC LIMIT 5 OFFSET #{offset}
 	</select>

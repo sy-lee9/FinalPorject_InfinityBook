@@ -21,15 +21,6 @@ public interface MemberDAO {
 
 	void RandomPassword(String member_email, String member_nickname, String encodedPassword);
 
-	HashMap<String, Object> getMemberInfo(int loginIdx);
-
-	int memberInfoUpdate(HashMap<String, Object> params);
-
-	String getPw(int loginIdx);
-
-	int pwUpdate(String encodedPassword, int loginIdx);
-
-	int leave(int loginIdx);
 
 	HashMap<String, Object> getProfileInfo(int member_idx);
 

@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.book.mypage.service.ActivitiesService;
 
+/*
+ * ActivitiesController : 대여/교환 활동내역 컨트롤러
+ * @author 이수연
+ */
 @Controller
 public class ActivitiesController {
 	

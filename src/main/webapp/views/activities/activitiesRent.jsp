@@ -270,16 +270,16 @@
 			}
 	    	
 	    	
-	    	if (loginIdx == memberIdx && state == 4 && bookReview == 0){
+	    	if (loginIdx == memberIdx && state == 3 && bookReview == 0){
 		    	content += '<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.title+' <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+book+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></h4></td>';
 	    	}else {
 		    	content += '<td style="text-align:center;"><img src="' + item.cover + '" alt="Books" style="width:100px; height:150px;" class="product-item"><h4 style="font-family: IBM Plex Sans KR;">'+item.title+'</h4></td>';
 	    	}
 	    	
 	    	//대출자
-	    	if (loginIdx != item.lenderIdx && state == 4 && memberReview == 0){
+	    	if (loginIdx != item.lenderIdx && state == 3 && memberReview == 0){
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a> <input type="button" onclick="review('+item.lenderIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
-	    	}else if(loginIdx == item.lenderIdx && state == 4 && memberReview == 0){
+	    	}else if(loginIdx == item.lenderIdx && state == 3 && memberReview == 0){
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a></td>';
 	    	}else if(state == 4 && memberReview == 1){
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+item.lenderIdx+')" style="cursor: pointer;">' + item.lender + '</a></td>';
@@ -288,9 +288,9 @@
 	    	}
 
 	    	//대여자
-	    	if (loginIdx != memberIdx && state == 4 && memberReview == 0){
+	    	if (loginIdx != memberIdx && state == 3 && memberReview == 0){
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+memberIdx+')" style="cursor: pointer;">' + item.renter + '</a> <input type="button" onclick="review('+item.memberIdx+','+item.library_idx+','+item.rent_idx+','+member+')" style="display:inline; margin-bottom:10px; padding:5 10 5 10; margin: 0%; color:CornflowerBlue;" class="btn btn-outline-accent btn-accent-arrow" value="리뷰"></td>';
-	    	}else if(loginIdx == memberIdx && state == 4 && memberReview == 0){
+	    	}else if(loginIdx == memberIdx && state == 3 && memberReview == 0){
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+memberIdx+')" style="cursor: pointer;">' + item.renter + '</a></td>';
 	    	}else if(state == 4 && memberReview == 1){
 	    		content += '<td style="text-align:center;"><a onclick="profilePop('+memberIdx+')" style="cursor: pointer;">' + item.renter + '</a></td>';

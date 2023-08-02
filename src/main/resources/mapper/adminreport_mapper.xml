@@ -5,44 +5,70 @@
 <mapper namespace="kr.co.book.admin.dao.AdminReportDAO">
 
 	<insert id="reportSend" parameterType="hashMap">
-		INSERT INTO report(code_idx,idx,member_idx,report_content,report_state,reg_member_idx,reg_screen) 
-			VALUES((SELECT c.code_idx FROM code c WHERE code_code = #{code_code}), #{idx}, #{member_idx}, #{content}, '접수', #{member_idx}, #{jsp})
+		/* reportSend - 신고 */
+		INSERT INTO report
+			(code_idx
+			,idx
+			,member_idx
+			,report_content
+			,report_state
+			,reg_member_idx
+			,reg_screen) 
+		VALUES(
+			(SELECT 
+				c.code_idx 
+			FROM code c 
+			WHERE code_code = #{code_code})
+			,#{idx}
+			,#{member_idx}
+			,#{content}
+			,'접수'
+			,#{member_idx}
+			,#{jsp})
 	</insert>
 	
 	<select id="reportList" resultType="hashmap">
+		/* reportList - 신고 리스트 불러오기*/
 		SELECT 
-			r.report_idx,
-			r.code_idx,
-			r.idx,
-			r.member_idx, 
-			c.code_codeName AS reportType, 
-			(SELECT DATE_FORMAT(report_date, '%Y-%m-%d %H:%i')) AS report_date, 
-			m.member_nickname, 
-			report_content, 
-			report_state, 
-			(SELECT DATE_FORMAT(rc.report_handlingdate, '%Y-%m-%d %H:%i')) AS report_handlingdate
+			r.report_idx
+			,r.code_idx
+			,r.idx
+			,r.member_idx
+			,c.code_codeName AS reportType
+			,(DATE_FORMAT(report_date, '%Y-%m-%d %H:%i')) AS report_date
+			,m.member_nickname
+			,report_content
+			,report_state
+			,(DATE_FORMAT(rc.report_handlingdate, '%Y-%m-%d %H:%i')) AS report_handlingdate
 		FROM report r 
-			LEFT JOIN reportrecord rc ON r.report_idx = rc.report_idx
-			LEFT JOIN code c ON r.code_idx  = c.code_idx
-			LEFT JOIN `member` m ON r.member_idx = m.member_idx			
-				<if test="!reportType.equals('default')">
-					WHERE r.code_idx = (SELECT code_idx FROM code WHERE code_code = #{reportType})
-				</if>	
-				GROUP BY r.report_idx			
-				ORDER BY report_state ASC, report_idx DESC
-				LIMIT 10 OFFSET #{offset}
+		LEFT JOIN reportrecord rc ON r.report_idx = rc.report_idx
+		LEFT JOIN code c ON r.code_idx  = c.code_idx
+		LEFT JOIN `member` m ON r.member_idx = m.member_idx			
+			<if test="!reportType.equals('default')">
+				WHERE 
+					r.code_idx = 
+						(SELECT 
+							code_idx 
+						FROM code 
+						WHERE code_code = #{reportType})
+			</if>	
+		GROUP BY r.report_idx			
+		ORDER BY report_state ASC, report_idx DESC
+		LIMIT 10 OFFSET #{offset}
 	</select>
 	
 	<select id="getReportInfor" resultType="hashMap">
+		/* getReportInfor - 신고 상세정보 가져오기*/
 		SELECT 
-			r.report_idx, 
-			r.code_idx,
-			r.idx,
-			c.code_codeName AS reportType, 
-			(SELECT DATE_FORMAT(report_date, '%Y-%m-%d %H:%i')) AS report_date, 
-			r.member_idx AS reportMemberIdx,
-			m.member_nickname AS reportMemberNick, 
-			r.report_content,			
+			r.report_idx
+			,r.code_idx
+			,r.idx
+			,c.code_codeName AS reportType 
+			,(DATE_FORMAT(report_date, '%Y-%m-%d %H:%i')) AS report_date 
+			,r.member_idx AS reportMemberIdx
+			,m.member_nickname AS reportMemberNick
+			,r.report_content
+			,			
 				<if test="code_idx.equals('69')"><!-- 감상문 신고 -->
 					(SELECT m2.member_nickname FROM member m2 WHERE m2.member_idx = 
 						(SELECT b.member_idx FROM book_report b WHERE b.book_report_idx = r.idx)) AS targetMemberNick,   
@@ -83,25 +109,27 @@
 						(SELECT l.member_idx FROM library l WHERE l.library_idx = r.idx)) AS targetMemberNick   
 		       </if>			
 		FROM report r
-			LEFT JOIN code c ON r.code_idx  = c.code_idx
-			LEFT JOIN `member` m ON r.member_idx = m.member_idx	
-				WHERE report_idx = #{report_idx}
+		LEFT JOIN code c ON r.code_idx  = c.code_idx
+		LEFT JOIN `member` m ON r.member_idx = m.member_idx	
+		WHERE report_idx = #{report_idx}
 	</select>
 	
 	<select id="reportRecordList" resultType="hashMap">
+		/* reportRecordList - 신고처리 기록 불러오기*/
 		SELECT  
-			report_result, 
-			report_reason, 
-			m.member_nickname, 
-			(SELECT DATE_FORMAT(report_handlingdate, '%Y-%m-%d %H:%i')) AS report_handlingdate
+			report_result
+			,report_reason 
+			,m.member_nickname 
+			,(DATE_FORMAT(report_handlingdate, '%Y-%m-%d %H:%i')) AS report_handlingdate
 		FROM reportrecord r
-		JOIN member m ON r.reportrecord_member_idx = m.member_idx
-			WHERE report_idx = #{reportIdx}				
-				ORDER BY report_handlingdate DESC
-				LIMIT 5 OFFSET #{offset}
+		INNER JOIN member m ON r.reportrecord_member_idx = m.member_idx
+		WHERE report_idx = #{reportIdx}				
+		ORDER BY report_handlingdate DESC
+		LIMIT 5 OFFSET #{offset}
 	</select>
 	
 	<update id="blind" parameterType="hashmap">
+		/* blind - 게시물 블라인드 처리 */
 		UPDATE 
 			<if test="code_idx.equals('69')"><!-- 감상문 신고 -->
 				book_report    
@@ -135,7 +163,9 @@
   	     		library_blind = #{blind},    
     	   </if>
     	   
-    	   mod_member_idx = #{member_idx}, mod_date = NOW(), mod_screen = #{jsp}
+    	   mod_member_idx = #{member_idx}
+    	   ,mod_date = NOW()
+    	   ,mod_screen = #{jsp}
     	   
    	   	<where>
    	   		<if test="code_idx.equals('69')"><!-- 감상문 신고 -->
@@ -158,39 +188,63 @@
 	</update>
 	
 	<insert id="blindAlarm" parameterType="hashmap">
-		INSERT INTO alarm(code_idx, idx, member_idx, alarm_content, alarm_check, reg_member_idx, reg_screen) 
-			VALUES(#{code_idx},#{idx},#{targetMemberIdx},#{alarmContent},0,#{member_idx},#{jsp})
+		/* blindAlarm - 블라인드 알림 */
+		INSERT INTO alarm
+			(code_idx
+			,idx
+			,member_idx
+			,alarm_content
+			,alarm_check
+			,reg_member_idx
+			,reg_screen) 
+		VALUES
+			(#{code_idx}
+			,#{idx}
+			,#{targetMemberIdx}
+			,#{alarmContent}
+			,0
+			,#{member_idx}
+			,#{jsp})
 	</insert>	
 	
 	<update id="updateMemberState" parameterType="hashMap">
-		UPDATE member SET member_state = #{memberState}, mod_member_idx = #{member_idx}, mod_date = NOW(), mod_screen = #{jsp}
-			WHERE member_idx = #{targetMemberIdx}
+		/* updateMemberState - 회원 이용상태 변경*/
+		UPDATE member 
+		SET 
+			member_state = #{memberState}
+			,mod_member_idx = #{member_idx}
+			,mod_date = NOW()
+			,mod_screen = #{jsp}
+		WHERE member_idx = #{targetMemberIdx}
 	</update>
 	
 	<insert id="reportHandlingRecord" parameterType="hashMap">
-		INSERT INTO reportrecord(report_idx, reportrecord_member_idx, report_result, report_reason, reg_member_idx, reg_screen)
-			VALUES(#{reportIdx}, #{member_idx}, #{result}, #{reason}, #{member_idx}, #{jsp})
+		/* reportHandlingRecord - 신고처리 기록 저장*/
+		INSERT INTO reportrecord
+			(report_idx
+			,reportrecord_member_idx
+			,report_result
+			,report_reason
+			,reg_member_idx
+			,reg_screen)
+		VALUES
+			(#{reportIdx}
+			,#{member_idx}
+			,#{result}
+			,#{reason}
+			,#{member_idx}
+			,#{jsp})
 	</insert>
 	
 	<update id="reportHandlingCompleted" parameterType="hashMap">
+		/* 신고처리일 저장*/
 		UPDATE report 
-			SET report_state = '처리완료', mod_member_idx = #{member_idx}, mod_date = NOW(), mod_screen = #{jsp}
-				WHERE  report_idx = #{reportIdx}
+		SET 
+			report_state = '처리완료'
+			,mod_member_idx = #{member_idx}
+			,mod_date = NOW()
+			,mod_screen = #{jsp}
+		WHERE  report_idx = #{reportIdx}
 	</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 </mapper>

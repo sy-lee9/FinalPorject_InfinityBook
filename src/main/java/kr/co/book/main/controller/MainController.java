@@ -18,11 +18,6 @@ public class MainController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired MainService mainService;
-	
-	@RequestMapping(value = "/sample")
-	public String sample() {
-		return "sample";
-	}
 
 	@RequestMapping(value = "/")
 	public String Main(Model model) {
@@ -32,7 +27,7 @@ public class MainController {
 		
 		model.addAttribute("report", report);
 		model.addAttribute("library", library);
-		return "index";
+		return "main";
 	}
 	
 	

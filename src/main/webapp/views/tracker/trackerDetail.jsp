@@ -131,54 +131,54 @@
 		<div class="row">
 			<div class="col-md-12">
 
-	<div class="section-header align-center"">
-		<h2 class="section-title" style="margin-botton:25px;">Tracker</h2>
-	</div>					
-	<input type="button" value="삭제" onclick="trackerDelete()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
-	<input type="button" value="수정" onclick="trackerUpdate()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
-
-	<input type="hidden" id="trackerIdx" name="trackerIdx" value="${book.tracker_idx}">
-	<div class="corner-pattern-overlay"></div>
-	<div class="container">	
-		<div class="row" style=" margin-top: 11%; padding-right: 17%;">			
-			<div class="col-md-8 col-md-offset-2">				
-				<div class="row">	
-					<div class="col-md-6" style="height: 48%; margin-top: -5%;">
-						<figure class="products-thumb" style="height: 96%; width: 100%; display: flex; justify-content: center; align-items: center;">
-							<img src="${book.cover}" alt="book" class="single-image" style="height: 90%; width: 72%;">
-						</figure>	
-					</div>
-
-					<div class="col-md-6">
-						<div class="product-entry">
-							<h2 class="section-title divider" style=" width: 161%; height: 12%; font-size: 30px; font-weight: 600; margin-bottom: 5%; top: -43px; font-family: 'IBM Plex Sans KR', serif; line-height: 40px;">${book.title}</h2>
-
-							<div class="products-content">
-								<div class="item-price" style=" font-size: 20px; font-weight: 600; height: 9%; width: 160%; margin-bottom: 5%;">${book.author}</div>
-								<div class="links-element" style="width: 155%;">
-								    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.startDate}</div>
-								    <div class="categories" style="float: right; font-size: 16; font-weight: 600;">${book.endDate}</div>
-								    <div class="social-links" ><progress value="${book.progress}" min="0" max="100"></progress></div>
-								    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.progress}%</div>
-								    <div class="categories" style="float: right; font-size: 16;">${book.readPage} / ${book.totalPage} page</div>
+			<div class="section-header align-center"">
+				<h2 class="section-title" style="margin-botton:25px;">Tracker</h2>
+			</div>					
+			<input type="button" value="삭제" onclick="trackerDelete()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
+			<input type="button" value="수정" onclick="trackerUpdate()" style="float: right; bottom: 80px; margin-right: 1%; margin-top: 2%;">
+		
+			<input type="hidden" id="trackerIdx" name="trackerIdx" value="${book.tracker_idx}">
+			<div class="corner-pattern-overlay"></div>
+			<div class="container">	
+				<div class="row" style=" margin-top: 11%; padding-right: 17%;">			
+					<div class="col-md-8 col-md-offset-2">				
+						<div class="row">	
+							<div class="col-md-6" style="height: 48%; margin-top: -5%;">
+								<figure class="products-thumb" style="height: 96%; width: 100%; display: flex; justify-content: center; align-items: center;">
+									<img src="${book.cover}" alt="book" class="single-image" style="height: 90%; width: 72%;">
+								</figure>	
+							</div>
+		
+							<div class="col-md-6">
+								<div class="product-entry">
+									<h2 class="section-title divider" style=" width: 161%; height: 12%; font-size: 30px; font-weight: 600; margin-bottom: 5%; top: -43px; font-family: 'IBM Plex Sans KR', serif; line-height: 40px;">${book.title}</h2>
+		
+									<div class="products-content">
+										<div class="item-price" style=" font-size: 20px; font-weight: 600; height: 9%; width: 160%; margin-bottom: 5%;">${book.author}</div>
+										<div class="links-element" style="width: 155%;">
+										    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.startDate}</div>
+										    <div class="categories" style="float: right; font-size: 16; font-weight: 600;">${book.endDate}</div>
+										    <div class="social-links" ><progress value="${book.progress}" min="0" max="100"></progress></div>
+										    <div class="categories" style="float: left; font-size: 16; font-weight: 600;">${book.progress}%</div>
+										    <div class="categories" style="float: right; font-size: 16;">${book.readPage} / ${book.totalPage} page</div>
+										</div>
+									</div>
+		
 								</div>
 							</div>
-
+		
 						</div>
+						<!-- / row -->
+		
 					</div>
-
+		
 				</div>
-				<!-- / row -->
-
 			</div>
 
 		</div>
 	</div>
 
-
-			<h2 class="section-title divider" style="margin: 9% 17% 6%;">MEMO</h2>
-		</div>
-	</div>
+	<h2 class="section-title divider" style="margin: 9% 17% 6%;">MEMO</h2>
 	<div class="container">
 		<div class="row">
 
