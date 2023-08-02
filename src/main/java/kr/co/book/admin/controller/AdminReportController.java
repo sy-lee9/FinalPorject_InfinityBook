@@ -32,24 +32,27 @@ public class AdminReportController {
 	@RequestMapping(value = "/reportPop.go")
 	public String reportPopGo(Model model, String code, String idx) {
 		
+		//해당 게시물 분류 code
 		model.addAttribute("code",code);
+		//해당 게시물 idx
 		model.addAttribute("idx",idx);
 		
 		return "reportPop";
 	}
 	
-	//신고 
+	//신고내역 저장
 	@PostMapping(value = "/reportSend.ajax")
 	@ResponseBody
 	public HashMap<String, Object> reportSend(HttpSession session, @RequestParam HashMap<String, Object> params) {
 		
+		//신고자 idx 
 		int member_idx = (int) session.getAttribute("loginIdx");
 		params.put("member_idx", member_idx);
 		
 		return adminReportService.reportSend(params);
 	}
 
-	//신고 페이지 이동
+	//신고관리 페이지 이동
 	@RequestMapping(value = "/admin/adminReport.go")
 	public String reportListGo() {
 		return "/admin/adminReport";
@@ -62,13 +65,13 @@ public class AdminReportController {
 		return adminReportService.reportList(params);
 	}
 	
-	//신고 내역 디테일
+	//신고 내역 디테일 페이지 이동
 	@RequestMapping(value = "/admin/adminReportDetail.go")
 	public ModelAndView adminReportDetailGo(@RequestParam HashMap<String, Object> params) {	
 		return adminReportService.getReportInfor(params);
 	}
 	
-	//신고 처리 내역
+	//신고 처리 기록
 	@PostMapping(value = "/admin/reportRecordList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> reportRecordList(@RequestParam HashMap<String, Object> params) {

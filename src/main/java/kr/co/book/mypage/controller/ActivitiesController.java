@@ -25,30 +25,32 @@ public class ActivitiesController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
+	//교환내역 페이지로 이동
 	@RequestMapping(value = "/mypage/activitiesChange.go")
 	public String activitiesChange() {
 		return "/activities/activitiesChange";
 	}
 	
+	//교환내역 리스트 불러오기
 	@RequestMapping("/mypage/activitiesChangeList.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> activitiesChangeList(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);
 		params.put("loginIdx", loginIdx);
 		return ActivitiesService.getChangeList(params); 
 	}
 	
+	//대여내역 페이지로 이동
 	@RequestMapping(value = "/mypage/activitiesRent.go")
 	public String activitiesRent() {
 		return "/activities/activitiesRent";
 	}
 	
+	//대여내역 리스트 불러오기
 	@RequestMapping("/mypage/activitiesRentList.ajax") 
 	@ResponseBody
 	public HashMap<String, Object> activitiesRentList(@RequestParam HashMap<String, Object> params, HttpSession session) {
 		int loginIdx = (int) session.getAttribute("loginIdx");
-		logger.info("loginIdx : "+loginIdx);
 		params.put("loginIdx", loginIdx);
 		return ActivitiesService.getActivitiesRentList(params); 
 	}
