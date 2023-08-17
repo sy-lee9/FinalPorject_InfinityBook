@@ -29,14 +29,14 @@ public class MemberInfoController {
 	
 	//회원정보 페이지 이동
 	@RequestMapping(value = "/mypage/memberInfo.go")
-	public ModelAndView memberInfoGo(HttpSession session) {
+	public ModelAndView memberInfoGo(HttpSession session) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		return memberInfoService.getMemberInfo(loginIdx,"info");
 	}
 	   
     //회원정보 수정 페이지 이동
     @RequestMapping(value = "/mypage/memberInfoUpdate.go")
-    public ModelAndView memberInfoUpdateGo(HttpSession session) {
+    public ModelAndView memberInfoUpdateGo(HttpSession session) throws Exception {
     	int loginIdx = (int) session.getAttribute("loginIdx");
     	return memberInfoService.getMemberInfo(loginIdx,"updateInfo");
 	}
@@ -44,7 +44,7 @@ public class MemberInfoController {
 	//회원정보 수정
 	@PostMapping(value="/mypage/memberInfoUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> memberInfoUpdate(HttpSession session, @RequestParam HashMap<String, Object> params){
+	public HashMap<String, Object> memberInfoUpdate(HttpSession session, @RequestParam HashMap<String, Object> params) throws Exception {
 	   
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		params.put("loginIdx", loginIdx);
@@ -54,14 +54,14 @@ public class MemberInfoController {
 	   
 	//비밀번호 변경 팝업
 	@RequestMapping(value = "/mypage/pwUpdate.go")
-	public String pwUpdateGo() {
+	public String pwUpdateGo() throws Exception {
 		return "/member/pwUpdate";
 	}
 	   
 	//현재 비밀번호 확인
 	@PostMapping(value="/mypage/pwChk.ajax")
 	@ResponseBody
-	public HashMap<String, Object> pwChk(HttpSession session, @RequestParam String exPw){		   
+	public HashMap<String, Object> pwChk(HttpSession session, @RequestParam String exPw) throws Exception {		   
 		int loginIdx = (int) session.getAttribute("loginIdx");		   
 		return memberInfoService.pwChk(exPw,loginIdx);      
 	}
@@ -69,21 +69,21 @@ public class MemberInfoController {
 	//비밀번호 변경
 	@PostMapping(value="/mypage/pwUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> pwUpdate(HttpSession session, @RequestParam String newPw){		   
+	public HashMap<String, Object> pwUpdate(HttpSession session, @RequestParam String newPw) throws Exception {		   
 		int loginIdx = (int) session.getAttribute("loginIdx");		   
 		return memberInfoService.pwUpdate(newPw,loginIdx);      
 	}
 	   
 	//회원탈퇴 페이지 이동
 	@RequestMapping(value = "/mypage/leave.go")
-	public String leaveGo() {
+	public String leaveGo() throws Exception {
 		return "/member/leave";
 	}
 	   
 	//회원탈퇴 처리
 	@PostMapping(value="/mypage/leave.ajax")
 	@ResponseBody
-	public HashMap<String, Object> leave(HttpSession session, @RequestParam String pw){
+	public HashMap<String, Object> leave(HttpSession session, @RequestParam String pw) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");		   
 		return memberInfoService.leave(pw,loginIdx,session);      
 	}

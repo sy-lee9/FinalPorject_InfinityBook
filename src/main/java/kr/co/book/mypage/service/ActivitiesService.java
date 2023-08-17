@@ -21,7 +21,7 @@ public class ActivitiesService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	//대여내역 리스트 불러오기
-	public HashMap<String, Object> getChangeList(HashMap<String, Object> params) {
+	public HashMap<String, Object> getChangeList(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		ArrayList<HashMap<String, Object>> list = null;
 		
@@ -62,7 +62,7 @@ public class ActivitiesService {
 	}
 
 	//교환내역 리스트 불러오기
-	public HashMap<String, Object> getActivitiesRentList(HashMap<String, Object> params) {
+	public HashMap<String, Object> getActivitiesRentList(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		ArrayList<HashMap<String, Object>> list = null;
 		

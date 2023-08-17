@@ -129,7 +129,7 @@ public class ClubController {
 	}
 	
 	@RequestMapping("/clubWrite.do")
-	public String clubWrite(@RequestParam HashMap<String, Object> params, HttpSession session) {
+	public String clubWrite(@RequestParam HashMap<String, Object> params, HttpSession session) throws Exception {
 		logger.info("글쓰기 정보" + params);
 		int member_idx = (int)session.getAttribute("loginIdx"); 		
 		params.put("loginIdx", member_idx);

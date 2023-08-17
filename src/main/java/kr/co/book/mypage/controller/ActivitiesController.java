@@ -27,14 +27,14 @@ public class ActivitiesController {
 
 	//교환내역 페이지로 이동
 	@RequestMapping(value = "/mypage/activitiesChange.go")
-	public String activitiesChange() {
+	public String activitiesChange() throws Exception {
 		return "/activities/activitiesChange";
 	}
 	
 	//교환내역 리스트 불러오기
 	@RequestMapping("/mypage/activitiesChangeList.ajax") 
 	@ResponseBody
-	public HashMap<String, Object> activitiesChangeList(@RequestParam HashMap<String, Object> params, HttpSession session) {
+	public HashMap<String, Object> activitiesChangeList(@RequestParam HashMap<String, Object> params, HttpSession session) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		params.put("loginIdx", loginIdx);
 		return ActivitiesService.getChangeList(params); 
@@ -42,14 +42,14 @@ public class ActivitiesController {
 	
 	//대여내역 페이지로 이동
 	@RequestMapping(value = "/mypage/activitiesRent.go")
-	public String activitiesRent() {
+	public String activitiesRent() throws Exception {
 		return "/activities/activitiesRent";
 	}
 	
 	//대여내역 리스트 불러오기
 	@RequestMapping("/mypage/activitiesRentList.ajax") 
 	@ResponseBody
-	public HashMap<String, Object> activitiesRentList(@RequestParam HashMap<String, Object> params, HttpSession session) {
+	public HashMap<String, Object> activitiesRentList(@RequestParam HashMap<String, Object> params, HttpSession session) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		params.put("loginIdx", loginIdx);
 		return ActivitiesService.getActivitiesRentList(params); 

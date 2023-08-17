@@ -25,7 +25,7 @@ public class CalenderService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	//대여/교환, 모임 일정 불러오기
-	public HashMap<String, Object> calendarGetEvents(int loginIdx) {
+	public HashMap<String, Object> calendarGetEvents(int loginIdx) throws Exception {
 		//뷰로 내려보낼 정보를 담을 map
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//모든 일정을 담을 list

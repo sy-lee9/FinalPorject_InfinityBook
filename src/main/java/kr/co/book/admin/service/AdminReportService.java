@@ -29,7 +29,7 @@ public class AdminReportService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	//신고내역 저장
-	public HashMap<String, Object> reportSend(HashMap<String, Object> params) {
+	public HashMap<String, Object> reportSend(HashMap<String, Object> params) throws Exception {
 		
 		int row = adminReportDAO.reportSend(params);
 		
@@ -41,7 +41,7 @@ public class AdminReportService {
 	}
 
 	//신고 내역 리스트 불러오기
-	public HashMap<String, Object> reportList(HashMap<String, Object> params) {
+	public HashMap<String, Object> reportList(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		ArrayList<HashMap<String, Object>> list = null;
 		
@@ -72,7 +72,7 @@ public class AdminReportService {
 	}
 
 	//신고내용 및 신고 게시물 정보 불러오기
-	public ModelAndView getReportInfor(HashMap<String, Object> params) {
+	public ModelAndView getReportInfor(HashMap<String, Object> params) throws Exception {
 		ModelAndView mav = new ModelAndView("/admin/adminReportDetail");
 		
 		HashMap<String, Object> map = adminReportDAO.getReportInfor(params);
@@ -82,7 +82,7 @@ public class AdminReportService {
 	}
 
 	//신고처리 내역 불러오기
-	public HashMap<String, Object> reportRecordList(HashMap<String, Object> params) {
+	public HashMap<String, Object> reportRecordList(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		ArrayList<HashMap<String, Object>> list = null;
 		
@@ -114,7 +114,7 @@ public class AdminReportService {
 	}
 
 	//신고처리
-	public HashMap<String, Object> reportHandling(HashMap<String, Object> params) {
+	public HashMap<String, Object> reportHandling(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//입력된 블라인드 처리 여부

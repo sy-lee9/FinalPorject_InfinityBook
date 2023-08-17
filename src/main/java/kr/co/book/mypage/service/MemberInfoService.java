@@ -23,7 +23,7 @@ public class MemberInfoService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	//회원 정보 불러오기
-	public ModelAndView getMemberInfo(int loginIdx, String flag) {
+	public ModelAndView getMemberInfo(int loginIdx, String flag) throws Exception {
 		ModelAndView mav = new ModelAndView();
 			
 		//flag 값에 따라
@@ -39,7 +39,7 @@ public class MemberInfoService {
 	}
 
 	//회원정보 수정
-	public HashMap<String, Object> memberInfoUpdate(HttpSession session, HashMap<String, Object> params) {
+	public HashMap<String, Object> memberInfoUpdate(HttpSession session, HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 			
 		//지역 코드 가져오기
@@ -58,7 +58,7 @@ public class MemberInfoService {
 	}
 
 	//비밀번호 확인
-	public HashMap<String, Object> pwChk(String exPw, int loginIdx) {
+	public HashMap<String, Object> pwChk(String exPw, int loginIdx) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 			
 		//암호화된 비밀번호 가져와서 사용자가 입력한 비밀번호와 일치하는지 확인
@@ -75,7 +75,7 @@ public class MemberInfoService {
 	}
 
 	//비밀번호 변경
-	public HashMap<String, Object> pwUpdate(String newPw, int loginIdx) {
+	public HashMap<String, Object> pwUpdate(String newPw, int loginIdx) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 			
 		//비밀번호 해시화
@@ -90,7 +90,7 @@ public class MemberInfoService {
 	}
 
 	//회원탈퇴
-	public HashMap<String, Object> leave(String pw, int loginIdx, HttpSession session) {
+	public HashMap<String, Object> leave(String pw, int loginIdx, HttpSession session) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		//암호화된 비밀번호 가져와서 사용자가 입력한 비밀번호와 일치하는지 확인

@@ -38,13 +38,13 @@ public class TrackerController {
 	
 	//트래커에 추가할 책 검색
 	@GetMapping(value = "/mypage/trackerSearch.do")
-	public ModelAndView trackerBookSearch(String searchType, String searchValue) {	
+	public ModelAndView trackerBookSearch(String searchType, String searchValue) throws Exception {	
 		return TrackerService.trackerBookSearch(searchType,searchValue);
 	}
 	
 	//트래커 추가 페이지로 이동
 	@GetMapping(value = "/mypage/tracker/add/{state}/book.go") 	//state : read OR reading
-	public String trackerAddBookGo(@RequestParam HashMap<String, Object> params, Model model,@PathVariable String state) {
+	public String trackerAddBookGo(@RequestParam HashMap<String, Object> params, Model model,@PathVariable String state) throws Exception {
 		//isbn이 null이 아니면
 		if(!params.get("isbn").equals("undefined")) {
 			//해당 책 정보 내려보내기
@@ -60,7 +60,7 @@ public class TrackerController {
 	//트래커에 완독 / 읽고 있는 책 추가
 	@GetMapping(value = "/mypage/tracker/add/{state}/book.ajax") //state : read OR reading
 	@ResponseBody
-	public HashMap<String, Object> trackerAddBook(HttpSession session, @PathVariable String state, @RequestParam HashMap<String, Object> params) {
+	public HashMap<String, Object> trackerAddBook(HttpSession session, @PathVariable String state, @RequestParam HashMap<String, Object> params) throws Exception {
 		
 		HashMap<String, Object> map =  new HashMap<String, Object>();
 		int loginIdx = (int) session.getAttribute("loginIdx");
@@ -77,7 +77,7 @@ public class TrackerController {
 	//읽고 있는 책 등록 시 총페이지 수 불러오기
 	@GetMapping(value = "/mypage/getTotalPage.ajax")
 	@ResponseBody
-	public HashMap<String, Object> getTotalPage(HttpSession session, @RequestParam HashMap<String, Object> params) {
+	public HashMap<String, Object> getTotalPage(HttpSession session, @RequestParam HashMap<String, Object> params) throws Exception {
 		
 		HashMap<String, Object> map =  new HashMap<String, Object>();
 		
@@ -93,20 +93,20 @@ public class TrackerController {
 	
 	//트래커 리스트로 이동
 	@GetMapping(value = "/mypage/trackerList.go")
-	public ModelAndView trackerListGo(HttpSession session) {
+	public ModelAndView trackerListGo(HttpSession session) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		return TrackerService.trackerList(loginIdx);
 	}
 	
 	//트래커 디테일로 이동
 	@GetMapping(value = "/mypage/trackerDetail.go")
-	public ModelAndView trackerDetail(HttpSession session, String trackerIdx) {
+	public ModelAndView trackerDetail(HttpSession session, String trackerIdx) throws Exception {
 		return TrackerService.trackerDetail(trackerIdx);
 	}
 
 	//트래커 업데이트 페이지로 이동
 	@GetMapping(value = "/mypage/trackerUpdateBook.go")
-	public String trackerUpdateBookGo(@RequestParam HashMap<String, Object> params, Model model) {	
+	public String trackerUpdateBookGo(@RequestParam HashMap<String, Object> params, Model model) throws Exception {	
 		//해당 도서 정보 내려보내기
 		model.addAttribute("isbn",params.get("isbn"));
 		model.addAttribute("readPage",params.get("readPage"));
@@ -118,7 +118,7 @@ public class TrackerController {
 	//트래커 도서정보 수정
 	@GetMapping(value = "/mypage/trackerUpdateBook.ajax")
 	@ResponseBody
-	public HashMap<String, Object> trackerUpdateBook(HttpSession session, @RequestParam HashMap<String, Object> params) {
+	public HashMap<String, Object> trackerUpdateBook(HttpSession session, @RequestParam HashMap<String, Object> params) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		params.put("loginIdx", loginIdx);			
 		return TrackerService.trackerUpdateBook(params);
@@ -127,7 +127,7 @@ public class TrackerController {
 	//트래커 도서정보 삭제
 	@GetMapping(value = "/mypage/trackerDeleteBook.ajax")
 	@ResponseBody
-	public HashMap<String, Object> trackerDeleteBook(HttpSession session, String isbn) {
+	public HashMap<String, Object> trackerDeleteBook(HttpSession session, String isbn) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -142,7 +142,7 @@ public class TrackerController {
 	//메모 저장
 	@PostMapping(value = "/mypage/trackerAddMemo.ajax")
 	@ResponseBody
-	public HashMap<String, Object> trackerAddMemo(HttpSession session, @RequestParam HashMap<String, Object> params) {
+	public HashMap<String, Object> trackerAddMemo(HttpSession session, @RequestParam HashMap<String, Object> params) throws Exception {
 
 		int loginIdx = (int) session.getAttribute("loginIdx");		
 		params.put("loginIdx", loginIdx);
@@ -153,20 +153,20 @@ public class TrackerController {
 	//메모 리스트 출력
 	@PostMapping(value = "/mypage/getMemoList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> getMemoList(String trackerIdx){
+	public HashMap<String, Object> getMemoList(String trackerIdx) throws Exception {
 		return TrackerService.getMemoList(trackerIdx);
 	}
 	
 	//메모 삭제
 	@PostMapping(value = "/mypage/memoDelete.ajax")
 	@ResponseBody
-	public HashMap<String, Object> memoDelete(@RequestParam HashMap<String, Object> params){
+	public HashMap<String, Object> memoDelete(@RequestParam HashMap<String, Object> params) throws Exception {
 		return TrackerService.memoDelete(params);
 	}
 	
 	//메모 수정 페이지 이동
 	@GetMapping(value = "/mypage/trackerMemoUpdate.go")
-	public String trackerMemoUpdateGo(@RequestParam HashMap<String, Object> params, Model model) {	
+	public String trackerMemoUpdateGo(@RequestParam HashMap<String, Object> params, Model model) throws Exception {	
 		//기존 메모내용 가져와서 메모정보와 함께 내려보내기
 		String content = TrackerService.getContent(params);
 		model.addAttribute("content",content);
@@ -179,7 +179,7 @@ public class TrackerController {
 	//메모 수정
 	@PostMapping(value = "/mypage/trackerMemoUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> trackerMemoUpdate(@RequestParam HashMap<String, Object> params){	
+	public HashMap<String, Object> trackerMemoUpdate(@RequestParam HashMap<String, Object> params) throws Exception {	
 		return TrackerService.memoUpdate(params);		
 	}
 	
@@ -189,13 +189,13 @@ public class TrackerController {
 	
 	//모임 도서 검색
 	@GetMapping(value = "/clubBookSearch.do")
-	public ModelAndView clubBookSearch2(String searchValue) {
+	public ModelAndView clubBookSearch2(String searchValue) throws Exception {
 		return TrackerService.clubBookSearch("title",searchValue);
 	}
 	
 	//마이페이지에서 모임 도서 검색
 	@GetMapping(value = "/mypage/clubBookSearch.do")
-	public ModelAndView clubBookSearch(String searchValue) {
+	public ModelAndView clubBookSearch(String searchValue) throws Exception {
 		return TrackerService.clubBookSearch("title",searchValue);
 	}
 	

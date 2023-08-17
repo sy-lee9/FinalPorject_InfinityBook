@@ -36,7 +36,7 @@ public class TrackerService {
 	@Value("${aladin.key}") private String KEY;
    
 	//트래커에 저장할 책 검색 
-    public ModelAndView trackerBookSearch(String searchType, String searchValue) {
+    public ModelAndView trackerBookSearch(String searchType, String searchValue) throws Exception {
     	
     	//알라딘 API URI
     	String uri = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
@@ -82,7 +82,7 @@ public class TrackerService {
 	}
   
     //트래커에 책 추가
-	public boolean trackerAddBook(HashMap<String, Object> params) {
+	public boolean trackerAddBook(HashMap<String, Object> params) throws Exception {
 		boolean success = false;
 		
 		String isbn = (String) params.get("isbn");
@@ -111,7 +111,7 @@ public class TrackerService {
 	}
 	
 	//책정보를 저장하는 메서드
-	public int saveBookInfo(HashMap<String, Object> params) {
+	public int saveBookInfo(HashMap<String, Object> params) throws Exception {
 		int row = 0;
 		
     	//알라딘 API URI(총페이지 수 포함) 및 검색결과 설정
@@ -166,13 +166,13 @@ public class TrackerService {
 	}
 	
 	//트래커에 저장하는 메서드
-	public int saveTracker(HashMap<String, Object> params) {
+	public int saveTracker(HashMap<String, Object> params) throws Exception {
 		int row = TrackerDAO.saveTracker(params);
 		return row;
 	}
 
 	//총 페이지 수 가져오는 메서드
-	public int getTotalPage(HashMap<String, Object> params) {
+	public int getTotalPage(HashMap<String, Object> params) throws Exception {
 		int totalPage = 0;
 		String isbn = String.valueOf(params.get("isbn"));
 		
@@ -191,7 +191,7 @@ public class TrackerService {
 	}
 
 	//트래커 리스트 가져오기
-	public ModelAndView trackerList(int loginIdx) {
+	public ModelAndView trackerList(int loginIdx) throws Exception {
 		
 		ModelAndView mav = new ModelAndView("/tracker/trackerList");		
 		ArrayList<HashMap<String, Object>> trackerList = null;
@@ -207,7 +207,7 @@ public class TrackerService {
 	}
 
 	//트래커 책 상세보기 페이지
-	public ModelAndView trackerDetail(String trackerIdx) {
+	public ModelAndView trackerDetail(String trackerIdx) throws Exception {
 		ModelAndView mav = new ModelAndView("/tracker/trackerDetail");
 		
 		//책 상세정보 가져와서 내려보내기
@@ -218,7 +218,7 @@ public class TrackerService {
 	}
 	
 	//트래커 읽은 기록 수정
-	public HashMap<String, Object> trackerUpdateBook(HashMap<String, Object> params) {
+	public HashMap<String, Object> trackerUpdateBook(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//읽은 기록 수정
@@ -243,12 +243,12 @@ public class TrackerService {
 	}
 
 	//트래커 기록 삭제
-	public int trackerDeleteBook(String isbn, int loginIdx) {
+	public int trackerDeleteBook(String isbn, int loginIdx) throws Exception {
 		return TrackerDAO.trackerDeleteBook(isbn,loginIdx);
 	}
 
 	//메모 저장
-	public HashMap<String, Object> trackerAddMemo(HashMap<String, Object> params) {
+	public HashMap<String, Object> trackerAddMemo(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row = TrackerDAO.trackerAddMemo(params);
 		if(row == 1) {
@@ -258,7 +258,7 @@ public class TrackerService {
 	}
 
 	//메모 리스트 가져오기
-	public HashMap<String, Object> getMemoList(String trackerIdx) {
+	public HashMap<String, Object> getMemoList(String trackerIdx) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		List<HashMap<String, Object>> list = TrackerDAO.getMemoList(trackerIdx);
@@ -268,7 +268,7 @@ public class TrackerService {
 	}
 
 	//메모 삭제
-	public HashMap<String, Object> memoDelete(HashMap<String, Object> params) {
+	public HashMap<String, Object> memoDelete(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row = TrackerDAO.memoDelete(params);
 		
@@ -280,12 +280,12 @@ public class TrackerService {
 	}
 
 	//수정할 메모 내용 가져오기
-	public String getContent(HashMap<String, Object> params) {
+	public String getContent(HashMap<String, Object> params) throws Exception {
 		return TrackerDAO.getContent(params);
 	}
 
 	//메모 내용 수정
-	public HashMap<String, Object> memoUpdate(HashMap<String, Object> params) {
+	public HashMap<String, Object> memoUpdate(HashMap<String, Object> params) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row = TrackerDAO.memoUpdate(params);
 		
@@ -301,7 +301,7 @@ public class TrackerService {
 	/*모임에서 사용하는 메서드*/
 	  
 	//모임에서 사용할 책 검색 
-	public ModelAndView clubBookSearch(String searchType, String searchValue) {
+	public ModelAndView clubBookSearch(String searchType, String searchValue) throws Exception {
 
     	//알라딘 API URI
 		String uri = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx";

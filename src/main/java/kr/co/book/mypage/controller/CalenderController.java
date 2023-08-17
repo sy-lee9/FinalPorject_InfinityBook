@@ -27,14 +27,14 @@ public class CalenderController {
 	
 	//캘린더 페이지로 이동
 	@RequestMapping(value = "/mypage/calender.go")
-	public String calenderPageGo() {
+	public String calenderPageGo() throws Exception {
 		return "calender";
 	}
 	
 	//대여/교환, 모임 일정 불러오기
 	@GetMapping(value = "/mypage/calendarGetEvents.ajax")
 	@ResponseBody
-	public HashMap<String, Object> calendarGetEvents(HttpSession session){
+	public HashMap<String, Object> calendarGetEvents(HttpSession session) throws Exception {
 		int loginIdx = (int) session.getAttribute("loginIdx");
 		return CalenderService.calendarGetEvents(loginIdx);
 	}
